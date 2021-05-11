@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-21 13:37-0300\n"
+"POT-Creation-Date: 2021-05-10 15:58-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Generated-By: Babel 2.5.3\n"
 "X-Generator: Poedit 2.2.1\n"
 "X-Loco-Parser: loco_parse_po\n"
+
+#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
+msgid "This string should be translated"
+msgstr ""
 
 #: docs/_templates_simple/layout.html:3
 msgid "Documentation"
@@ -89,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:54 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:89
+#: src/ej_conversations/models/conversation.py:98
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -127,6 +131,20 @@ msgstr "Boas vindas!"
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
 
+#: src/ej_analysis/apps.py:7 src/ej_conversations/models/conversation.py:34
+msgid "Analysis"
+msgstr "Analises"
+
+#: src/ej_analysis/opinion_component/aquisition.py:29
+#, fuzzy
+msgid "Engagement"
+msgstr "Engajamento"
+
+#: src/ej_analysis/opinion_component/aquisition.py:33
+#, fuzzy
+msgid "Aquisition"
+msgstr "Aquisição"
+
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:44
 msgid "Boards"
 msgstr "Murais"
@@ -163,7 +181,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:36
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:45
 msgid "Title"
 msgstr "Título"
 
@@ -498,66 +516,70 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:38
+#: src/ej_conversations/models/conversation.py:35
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: src/ej_conversations/models/conversation.py:47
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:40
+#: src/ej_conversations/models/conversation.py:49
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:40
+#: src/ej_conversations/models/conversation.py:49
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:45
+#: src/ej_conversations/models/conversation.py:54
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:60
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:55
+#: src/ej_conversations/models/conversation.py:64
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:57
+#: src/ej_conversations/models/conversation.py:66
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:60
+#: src/ej_conversations/models/conversation.py:69
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:63
+#: src/ej_conversations/models/conversation.py:72
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:88
+#: src/ej_conversations/models/conversation.py:97
 #: src/ej_conversations/roles/conversations.py:133
 #: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
 #: src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:91
+#: src/ej_conversations/models/conversation.py:100
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:92
+#: src/ej_conversations/models/conversation.py:101
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:188
+#: src/ej_conversations/models/conversation.py:197
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:252
+#: src/ej_conversations/models/conversation.py:261
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -622,25 +644,31 @@ msgstr "URL interna"
 msgid "Rasa conversation with this Conversation and Domain already exists."
 msgstr "Uma persona com esse nome já existe nessa conversa."
 
-#: src/ej_conversations/tools/forms.py:21
+#: src/ej_conversations/tools/forms.py:22
 #, fuzzy
 msgid "Authentication Type"
 msgstr "Autenticação"
 
-#: src/ej_conversations/tools/forms.py:25
-#: src/ej_conversations/tools/forms.py:36
+#: src/ej_conversations/tools/forms.py:26
+#: src/ej_conversations/tools/forms.py:37
 msgid "Theme"
 msgstr "Tema"
 
-#: src/ej_conversations/tools/forms.py:31
-msgid "Select a marketing tool to generate a compatible template"
-msgstr ""
-"Escolha uma ferramenta de marketing para que o template compatível seja "
-"gerado."
+#: src/ej_conversations/tools/forms.py:32
+msgid "Template type"
+msgstr "Tipo de template"
 
-#: src/ej_conversations/tools/forms.py:41
+#: src/ej_conversations/tools/forms.py:42
 msgid "Redirect user to a custom domain"
 msgstr "Redirecione o usuário para um endereço personalizado"
+
+#: src/ej_conversations/tools/forms.py:46
+msgid "Adds a custom title to the template (optional)."
+msgstr "Adicione um título customizado ao template (opicional)."
+
+#: src/ej_conversations/tools/forms.py:51
+msgid "selects a specific comment for user to vote (optional)."
+msgstr "Selecione um comentário específico para o usuário votar (opicional)."
 
 #: src/ej_conversations/tools/models.py:15
 msgid "Domain"
@@ -701,18 +729,17 @@ msgstr ""
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:42
+#: src/ej_conversations/tools/routes.py:43
 #: src/ej_conversations/tools/table.py:11
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_conversations/tools/routes.py:55
-#: src/ej_conversations/tools/table.py:17
+#: src/ej_conversations/tools/routes.py:56
 #, fuzzy
 msgid "Conversation component"
 msgstr "Componente de coleta"
 
-#: src/ej_conversations/tools/routes.py:72
+#: src/ej_conversations/tools/routes.py:73
 #: src/ej_conversations/tools/table.py:23
 msgid "Rasa chatbot"
 msgstr ""
@@ -725,6 +752,11 @@ msgstr ""
 "Gere um template html desta conversa, e faça coletas de opinião via disparo "
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
+
+#: src/ej_conversations/tools/table.py:17
+#, fuzzy
+msgid "Opinion component"
+msgstr "Componente de opinião"
 
 #: src/ej_conversations/tools/table.py:18
 #, fuzzy
@@ -2309,6 +2341,59 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:3
+msgid "Engagement vs Aquisition"
+msgstr "Engajamento vs Aquisição"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:12
+#, fuzzy
+msgid "Start date"
+msgstr "data de inicio"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:16
+msgid "End date"
+msgstr "data de fim"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:21
+msgid "Analytics view id"
+msgstr "view id do analytics"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:42
+msgid "Invalid analytics view id"
+msgstr "view id do analytics invalida"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:45
+msgid "end date must be gratter then start date"
+msgstr "data de fim deve ser maior que data de inicio"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:69
+msgid "Total access to component (engagement): "
+msgstr "Total de acessos ao componente (engajamento): "
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/aquisition.jinja2:71
+#, fuzzy
+msgid "Total votes on component (aquisition): "
+msgstr "Total de votos no componente (aquisição): "
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:13
+msgid "Dashboards and analysis"
+msgstr "Dashboards e analises"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:17
+#, fuzzy
+msgid "Opinion Component"
+msgstr "Componente de coleta"
+
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:24
+#: src/ej_analysis/jinja2/ej_conversations_analysis/index.jinja2:26
+#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
+#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
+#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:33
+msgid "Back to conversation"
+msgstr "Voltar para conversas"
+
 #: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
 msgid "Create board"
 msgstr "Criar mural"
@@ -2683,14 +2768,6 @@ msgstr "Não há comentários para votar :)"
 msgid "Back (skip changes)"
 msgstr "Voltar (ignorar mudanças)"
 
-#: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
-#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
-#: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:31
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:33
-msgid "Back to conversation"
-msgstr "Voltar para conversas"
-
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:13
 msgid "Edit conversation"
 msgstr "Editar conversa"
@@ -2740,14 +2817,6 @@ msgstr "Voltar para conversa"
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:15
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:15
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:13
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:15
-msgid "Tools"
-msgstr "Ferramentas"
-
 #: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:16
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
@@ -2759,82 +2828,94 @@ msgid "Integration"
 msgstr "Integração"
 
 #: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:26
+msgid "Learn more about this integration"
+msgstr "Aprenda mais sobre esta integração"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:23
 #, fuzzy
-msgid "More information"
-msgstr "Saiba mais"
+msgid "Selects template type you want to use."
+msgstr "Selecione o tipo de template que deseja utilizar."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:28
+#, fuzzy
+msgid "Changes template appearence."
+msgstr "Altere a aparência (cores) do template."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:32
+msgid "Custom fields"
+msgstr "Campos personalizáveis"
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:34
+#, fuzzy
+msgid "Changes fields like comment and title."
+msgstr "Altere campos como comentário e título."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:42
 msgid "domain to redirect the user on template"
-msgstr ""
+msgstr "domínio que será embutido para redirecionamento do usuário"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:47
 #, fuzzy
 msgid "Download"
 msgstr "Download"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:38
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:48
 #, fuzzy
 msgid "Preview"
 msgstr "Pré visualização"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:51
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:53
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:61
+#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:124
 #: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:126
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:128
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:45
 #: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:47
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:49
 #, fuzzy
 msgid "Back to tools"
 msgstr "Voltar para ferramentas"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:18
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:22
 #, fuzzy
-msgid ""
-"With this tool you can collect opinions from your audience without using EJ "
-"interface directly. This component can be included in yoursite's html, and "
-"it will allow visitors to participate on this conversation,voting and adding "
-"comments."
-msgstr ""
-"Com esta ferramenta você pode coletar opiniões do seu público sem precisar "
-"utilizar a interface convencional da EJ. Esse componente pode ser incluído "
-"no html do seu site, e irá permitir que visitantes participem desta "
-"conversa, votando e adicionando comentários."
+msgid "Selects authentication type you want to use."
+msgstr "Selecione o tipo de autenticação que deseja utilizar."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:27
 #, fuzzy
-msgid ""
-"To add this conversation to your site/platform, first select the "
-"authentication method and which visual theme the component will use. Than, "
-"just generate the script and adds it to the header and body tags."
-msgstr ""
-"Para adicionar esta conversa no seu site/plataforma, primeiro selecione o "
-"tipo de autenticação e qual tema visual o componente irá utilizar. Depois, "
-"basta gerar o script e adiciona-lo às tags header e body do html. "
+msgid "Selects a palette color."
+msgstr "Selecione uma paleta de cor."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:32
+msgid "Componente de coleta"
+msgstr ""
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:33
+msgid "Generate the script to integrates the opinion component on your site."
+msgstr "Gere o script para integrar o componente de opinião ao seu site."
+
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:37
 msgid "Add the following snippet of code to your page header:"
 msgstr ""
 "Gere o script e adicione o seguinte trecho de código no header da sua página"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:40
 msgid "Generate Script"
 msgstr "Gerar Script"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:46
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:112
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:110
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:51
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:113
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:49
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:111
 msgid "Code was copied to your clipboard."
 msgstr "O código foi copiado!"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:110
+#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:108
 msgid "and this snippet of code on the page body:"
 msgstr "e esse trecho no body da página:"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:19
 msgid ""
 "To integrate EJ chatbot with your site, enter the site domain in the field "
 "below."
@@ -2842,7 +2923,7 @@ msgstr ""
 "Para integrar o chatbot EJ ao seu site, digite o domínio do site no campo "
 "abaixo."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:22
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:20
 msgid ""
 "When a new user reaches your site, the webchat will send to EJ the location "
 "where it is hosted, and will receive back this conversation."
@@ -2850,22 +2931,22 @@ msgstr ""
 "Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
 "localização onde está hospedado e receberá de volta esta conversa."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:21
 msgid ""
 "All chatbots that have access to this conversation are also displayed here."
 msgstr ""
 "Todos os chatbots que têm acesso a esta conversa também são exibidos aqui."
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:31
 #, fuzzy
 msgid "Add Integration"
 msgstr "Adicionar Integração"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:35
 msgid "Linked websites"
 msgstr "Sites integrados"
 
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:41
 #, fuzzy
 msgid ""
 "There are no webchats linked with this conversation yet. What are you "
@@ -3649,6 +3730,49 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid ""
+#~ "With this tool you can collect opinions from your audience without using "
+#~ "EJ interface directly. This component can be included in yoursite's html, "
+#~ "and it will allow visitors to participate on this conversation,voting and "
+#~ "adding comments."
+#~ msgstr ""
+#~ "Com esta ferramenta você pode coletar opiniões do seu público sem "
+#~ "precisar utilizar a interface convencional da EJ. Esse componente pode "
+#~ "ser incluído no html do seu site, e irá permitir que visitantes "
+#~ "participem desta conversa, votando e adicionando comentários."
+
+#, fuzzy
+#~ msgid ""
+#~ "To add this conversation to your site/platform, first select the "
+#~ "authentication method and which visual theme the component will use. "
+#~ "Than, just generate the script and adds it to the header and body tags."
+#~ msgstr ""
+#~ "Para adicionar esta conversa no seu site/plataforma, primeiro selecione o "
+#~ "tipo de autenticação e qual tema visual o componente irá utilizar. "
+#~ "Depois, basta gerar o script e adiciona-lo às tags header e body do html. "
+
+#, fuzzy
+#~ msgid "More information"
+#~ msgstr "Saiba mais"
+
+#~ msgid "If you want a custom title for the e-mail template, enter here"
+#~ msgstr "Caso queira um título diferente para o e-mail, digite aqui"
+
+#~ msgid "If you want a specific comment for the e-mail template, choose here"
+#~ msgstr "Caso queira um comentário específico para votação, escolha aqui"
+
+#~ msgid "Select a marketing tool to generate a compatible template"
+#~ msgstr ""
+#~ "Escolha uma ferramenta de marketing para que o template compatível seja "
+#~ "gerado."
+
+#~ msgid "Caso queira um título diferente para o e-mail, digite aqui"
+#~ msgstr "If you want a custom title for the e-mail template, enter here"
+
+#~ msgid "Caso queira um comentário específico para votação, escolha aqui"
+#~ msgstr "If you want a specific comment for the e-mail template, choose here"
 
 #~ msgid "Administration Guides"
 #~ msgstr "Guias de Administração"
