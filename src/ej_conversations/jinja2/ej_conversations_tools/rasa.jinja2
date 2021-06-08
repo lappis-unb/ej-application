@@ -35,8 +35,9 @@
     <h2>{{_("Linked websites")}}</h2>
         {% if connections %}
             {% for connection in connections %}
-                <a href={{connection.domain}} target="_blank">{{connection.domain}}</a><br>
-           {% endfor %}
+                <a href={{connection.domain}} target="_blank">{{connection.domain}}</a>
+                <a href="{{ conversation.url('conversation-tools:rasa') }}/delete/{{connection.id}}"><i class="far fa-trash-alt"></i></a><br>
+           {% endfor %} 
         {% else %}
             <p>{{ _("There are no webchats linked with this conversation yet. What are you waiting for?") }}</p>
         {% endif %}
@@ -47,4 +48,5 @@
 	    <i class="fa fa-chevron-left"></i>{% trans %}Back to tools{% endtrans %}
     </a></p>
 </div>
+
 {% endblock %}

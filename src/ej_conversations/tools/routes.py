@@ -2,15 +2,17 @@ import json
 from boogie.router import Router
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from .utils import npm_version
 from .forms import RasaConversationForm, ConversationComponentForm, ConversationComponent, MailingToolForm
-
+from .models import RasaConversation
 from .. import models
 from ..tools.table import Tools
 
+
 app_name = "ej_conversations_tools"
 urlpatterns = Router(
-    template="ej_conversations_tools/{name}.jinja2", models={"conversation": models.Conversation}
+    template="ej_conversations_tools/{name}.jinja2", models={"conversation": models.Conversation, "connection": RasaConversation}
 )
 conversation_tools_url = f"<model:conversation>/<slug:slug>/tools"
 
@@ -30,8 +32,9 @@ def mailing(request, conversation, slug):
     template = None
     form = MailingToolForm(request.POST, conversation_id=conversation)
     if request.method == "POST" and form.is_valid():
-        generator = TemplateGenerator(conversation, request, "mautic")
-        generator.set_custom_values(form.cleaned_data['custom_title'], form.cleaned_data['custom_comment'])
+        form_data = form.cleaned_data
+        generator = TemplateGenerator(conversation, request, form_data['template_type'], form_data['theme'])
+        generator.set_custom_values(form_data['custom_title'], form_data['custom_comment'])
         template = generator.get_template()
         if 'download' in request.POST:
             response = HttpResponse(template, content_type="text/html")
@@ -71,3 +74,17 @@ def rasa(request, conversation, slug):
     connections = models.RasaConversation.objects.filter(conversation=conversation)
     tools = Tools(conversation)
     return {"conversation": conversation, "connections": connections, "tool": tools.get(_('Rasa chatbot')), "form": form}
+
+
+@urlpatterns.route(conversation_tools_url + "/rasa/delete/<model:connection>")
+def delete_connection(request, conversation, slug, connection):
+    user = request.user
+    
+    if user.is_staff or user.is_superuser or connection.conversation.author.id == user.id:
+        connection.delete()
+    elif connection.conversation.author.id != user.id:
+        raise PermissionError("cannot delete connection from another user")
+    else:
+        raise PermissionError("user is not allowed to delete connections")
+
+    return redirect(conversation.url("conversation-tools:rasa"))
