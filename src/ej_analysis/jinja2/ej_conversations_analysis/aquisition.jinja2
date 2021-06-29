@@ -1,4 +1,11 @@
 <div class="row">
+  {% if mongodb_timeout %}
+    <div class="empty-viz">
+      <p>{{ _('Welcome to EJ analysis area. Here we presents data crossing between EJ and other tools, like Analytics and Mautic. Before starting collecting, it is necessary to check if this conversation is available to data crossing. Read more on our documentation.')}}.</p>
+      <p class="pad-x3 rounded-3 color-negative border-1">{{ _('Could not connect to analysis database, try later')}}.</p>
+    </div>
+  {% endif %}
+  {% if data_exists %}
     <div class="card">
         <div class="card-title">{{ _('Engagement vs Aquisition') }} </div>
         <div class="card-body">
@@ -20,6 +27,28 @@
                     <div class="card-filters-body-input">
                         <label> {{ _('Analytics view id') }}</label>
                         <input id="aquisition-analytics-view-id" type="text" minlength="9">
+                    </div>
+                    <div class="card-filters-body-utm">
+                      <label> {{ _('utm_source') }}</label>
+                      <select name="utm source" id="aquisition-utm-source">
+                        {% for utm_source_option in utm_source_options %}
+                        <option value={{utm_source_option}}>{{utm_source_option}}</option>
+                        {% endfor %}
+                      </select>
+
+                      <label> {{ _('utm_campaign') }}</label>
+                      <select name="utm campaign" id="aquisition-utm-campaign">
+                        {% for utm_campaign_option in utm_campaign_options %}
+                        <option value={{utm_campaign_option}}>{{utm_campaign_option}}</option>
+                        {% endfor %}
+                      </select>
+
+                      <label> {{ _('utm_medium') }}</label>
+                      <select name="utm medium" id="aquisition-utm-medium">
+                        {% for utm_campaign_medium in utm_medium_options %}
+                        <option value={{utm_campaign_medium}}>{{utm_campaign_medium}}</option>
+                        {% endfor %}
+                      </select>
                     </div>
                 </div>
             </div>
@@ -47,52 +76,94 @@
             </div>
         </div>
     </div>
+    {% elif ( not data_exists and not mongodb_timeout) %}
+    <div class="empty-viz">
+      <p>{{ _('Welcome to EJ analysis area. Here we presents data crossing between EJ and other tools, like Analytics and Mautic. Before starting collecting, it is necessary to check if this conversation is available to data crossing. Read more on our documentation.')}}.</p>
+    <input onClick="showRequirementsToStartCollecting()" name="trigger-collect" type="button" value="{{ _('Trigger Collect')}}">
+    <div class="requirements-to-collect">
+			<span class="helptext">{{_('Please inform analytics property ID from the page, and clink to start collecting')}}</span>
+      <div>
+        <input name="analytics-view-id" type="text">
+      </div>
+      <input onClick="triggerCollect()" name="trigger-collect" type="button" value="{{ _('Start')}}">
+    </div>
+    </div>
+    {% endif %}
 </div>
 
 {% block javascript %}
 <script>
 
+  function showRequirementsToStartCollecting() {
+    document.querySelector(".requirements-to-collect").style.display = "block";
+    document.querySelector("input[name=trigger-collect]").style.display = "none";
+  }
+
+  async function triggerCollect() {
+    var analyticsViewId = document.querySelector("input[name=analytics-view-id]").value;
+    var url =
+        "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz_trigger_collect?analytics_view_id="+analyticsViewId;
+    await fetch(url);
+  }
+
 async function requestData() {
   var endDate = document.querySelector("#aquisition-date-end").value;
   var startDate = document.querySelector("#aquisition-date-start").value;
   var viewID = document.querySelector("#aquisition-analytics-view-id").value;
+  var utmMedium = document.querySelector("#aquisition-utm-medium").value;
+  var utmCampaign = document.querySelector("#aquisition-utm-campaign").value;
+  var utmSource = document.querySelector("#aquisition-utm-source").value;
   var url =
     "/conversations/{{conversation.id}}/{{conversation.slug}}/analysis/aquisition_viz?startDate=" +
     startDate +
     "&endDate=" +
     endDate +
     "&viewId=" +
-    viewID;
+    viewID +
+    "&utmMedium=" +
+    utmMedium +
+    "&utmCampaign=" +
+    utmCampaign +
+    "&utmSource="+
+    utmSource;
   var response = await fetch(url);
   var data = await response.json();
   document.querySelector("#page-engagement-value").textContent =
       "{{ _('Total access to component (engagement): ') }}" + data["value"];
   document.querySelector("#page-aquisition-value").textContent =
-      "{{ _('Total votes on component (aquisition): ') }}" +
+      "{{ _('Total voters on component (aquisition): ') }}" +
     data["children"][0]["value"];
   return data;
 }
 
 function setDefaultDateFilter() {
-  var day = new Date(Date.now()).getDate();
-  day = day <= 9 ? "0" + day : day;
-  var month = new Date(Date.now()).getMonth() + 1;
-  month = month <= 9 ? "0" + month : month;
-  var year = new Date(Date.now()).getFullYear();
-  var formatedEndDate = [year, month, day].join("-");
-  document.querySelector("#aquisition-date-end").value = formatedEndDate;
+  var localStorageEndDate = localStorage.getItem("aquisitionDateEnd");
+  var localStorageStartDate = localStorage.getItem("aquisitionDateStart");
 
-  var day = new Date(Date.now() - 5184000000).getDate();
-  day = day <= 9 ? "0" + day : day;
-  var month = new Date(Date.now() - 5184000000).getMonth() + 1;
-  month = month <= 9 ? "0" + month : month;
-  var year = new Date(Date.now() - 5184000000).getFullYear();
-  document.querySelector("#aquisition-date-start").value = [
-    year,
-    month,
-    day,
-  ].join("-");
-  document.querySelector("#aquisition-date-start").max = formatedEndDate;
+  if(localStorageStartDate && localStorageStartDate) {
+      document.querySelector("#aquisition-date-end").value = localStorageEndDate;
+      document.querySelector("#aquisition-date-start").value = localStorageStartDate;
+      document.querySelector("#aquisition-date-start").max = localStorageEndDate;
+    } else {
+      var day = new Date(Date.now()).getDate();
+      day = day <= 9 ? "0" + day : day;
+      var month = new Date(Date.now()).getMonth() + 1;
+      month = month <= 9 ? "0" + month : month;
+      var year = new Date(Date.now()).getFullYear();
+      var formatedEndDate = [year, month, day].join("-");
+      document.querySelector("#aquisition-date-end").value = formatedEndDate;
+
+      var day = new Date(Date.now() - 5184000000).getDate();
+      day = day <= 9 ? "0" + day : day;
+      var month = new Date(Date.now() - 5184000000).getMonth() + 1;
+      month = month <= 9 ? "0" + month : month;
+      var year = new Date(Date.now() - 5184000000).getFullYear();
+      var formatedStartDate = [year, month, day].join("-");
+
+      document.querySelector("#aquisition-date-start").value = formatedStartDate;
+      document.querySelector("#aquisition-date-start").max = formatedEndDate;
+  }
+
 }
 
 function hideLoading() {
@@ -110,6 +181,15 @@ function showLoading() {
 }
 
 async function updateVisualization() {
+  var endDateInput = document.querySelector("#aquisition-date-end");
+  var startDateInput = document.querySelector("#aquisition-date-start");
+  var analyticsIdInput = document.querySelector(
+    "#aquisition-analytics-view-id"
+  );
+  localStorage.setItem("aquisitionDateEnd", endDateInput.value);
+  localStorage.setItem("aquisitionDateStart", startDateInput.value);
+  localStorage.setItem("analyticsViewId", analyticsIdInput.value);
+
   if(!validAnalyticsID()) {
       showErrors("invalid-analytics");
       return;
@@ -162,9 +242,17 @@ function listenToChanges() {
   var analyticsIdInput = document.querySelector(
     "#aquisition-analytics-view-id"
   );
+  var utmMedium = document.querySelector("#aquisition-utm-medium");
+  var utmCampaign = document.querySelector("#aquisition-utm-campaign");
+  var utmSource = document.querySelector("#aquisition-utm-source");
+
   endDateInput.onchange = updateVisualization;
   startDateInput.onchange = updateVisualization;
   analyticsIdInput.onchange = updateVisualization;
+  utmMedium.onchange = updateVisualization;
+  utmCampaign.onchange = updateVisualization;
+  utmSource.onchange = updateVisualization;
+
 }
 
 function storeAnalyticsViewIdOnLocalStorage() {
