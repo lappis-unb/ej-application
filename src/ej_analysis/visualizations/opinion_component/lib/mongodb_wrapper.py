@@ -13,13 +13,14 @@ class MongodbWrapper:
         utm_source=False,
     ):
         client_variables = self.get_mongodb_connection_variables()
-        client = MongoClient(
+        self.client = MongoClient(
             client_variables["DB_HOST"],
             client_variables["DB_PORT"],
             username=client_variables["DB_USERNAME"],
             password=client_variables["DB_PASSWORD"],
+            serverSelectionTimeoutMS=1000,
         )
-        self.db = client.admin.conversations
+        self.db = self.client.admin.conversations
         self.start_date = start_date
         self.end_date = end_date
         self.utm_medium = utm_medium
@@ -27,19 +28,43 @@ class MongodbWrapper:
         self.utm_source = utm_source
         self.conversation_id = conversation_id
 
+    def try_mongodb_connection(self):
+        self.client.server_info()
+
     def get_page_aquisition(self):
         if self.utm_source == "None" and self.utm_medium == "None" and self.utm_campaign == "None":
-            return len(self.db.distinct("author"))
+            return len(
+                list(
+                    self.db.aggregate(
+                        [
+                            {
+                                "$match": {"conversation_id": self.conversation_id},
+                            },
+                            {
+                                "$group": {"_id": "$email", "count": {"$sum": 1}},
+                            },
+                        ]
+                    )
+                )
+            )
         return len(
-            self.db.find(
-                {
-                    "$or": [
-                        {"analytics_source": self.utm_source},
-                        {"analytics_campaign": self.utm_campaign},
-                        {"analytics_medium": self.utm_medium},
+            list(
+                self.db.aggregate(
+                    [
+                        {
+                            "$match": {
+                                "$or": [
+                                    {"analytics_source": self.utm_source},
+                                    {"analytics_campaign": self.utm_campaign},
+                                    {"analytics_medium": self.utm_medium},
+                                ],
+                                "conversation_id": self.conversation_id,
+                            },
+                        },
+                        {"$group": {"_id": "$email", "count": {"$sum": 1}}},
                     ]
-                }
-            ).distinct("author")
+                )
+            )
         )
 
     def get_utm_sources(self):
