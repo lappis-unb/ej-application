@@ -1,6 +1,9 @@
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import RegexValidator
 from boogie import models
 from boogie.rest import rest_api
+from django.core.exceptions import ValidationError
+from .constants import MAX_CONVERSATION_DOMAINS
 
 
 @rest_api(["conversation", "domain"])
@@ -22,6 +25,19 @@ class RasaConversation(models.Model):
     class Meta:
         unique_together = (("conversation", "domain"),)
         ordering = ["-id"]
+
+    @property
+    def reached_max_number_of_domains(self):
+        try:
+            num_domains = RasaConversation.objects.filter(conversation=self.conversation).count()
+            return num_domains >= MAX_CONVERSATION_DOMAINS
+        except Exception as e:
+            return False
+
+    def clean(self):
+        super().clean()
+        if self.reached_max_number_of_domains:
+            raise ValidationError(_("a conversation can have a maximum of five domains"))
 
 
 class ConversationComponent:
@@ -84,3 +100,23 @@ class MailingTool:
         "mailchimp": _("Mailchimp campaign"),
         "mautic": _("Uses a mautic campaign "),
     }
+
+
+class ConversationMautic(models.Model):
+    """
+    Allows correlation between a conversation and an instance of Mautic
+    """
+
+    user_name = models.CharField(_("Mautic username"), max_length=100)
+
+    password = models.CharField(_("Mautic password"), max_length=200)
+
+    url = models.URLField(_("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic."))
+
+    conversation = models.ForeignKey(
+        "Conversation", on_delete=models.CASCADE, related_name="mautic_integration"
+    )
+
+    class Meta:
+        unique_together = (("conversation", "url"),)
+        ordering = ["-id"]

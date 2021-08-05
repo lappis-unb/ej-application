@@ -1,11 +1,12 @@
 from django import forms
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment
 from ej.forms import EjModelForm
-from .models import RasaConversation, ConversationComponent, MailingTool
+from .models import RasaConversation, ConversationComponent, MailingTool, ConversationMautic
 
 
 class CustomChoiceWidget(forms.RadioSelect):
@@ -48,7 +49,9 @@ class MailingToolForm(forms.Form):
     theme = forms.ChoiceField(
         label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
     )
-    is_custom_domain = forms.BooleanField(required=False, label=_("Redirect user to a custom domain"))
+    is_custom_domain = forms.BooleanField(
+        required=False, label=_("Redirect user to a custom domain (optional)")
+    )
     custom_title = forms.CharField(
         required=False, label=_("Adds a custom title to the template (optional).")
     )
@@ -68,6 +71,8 @@ class RasaConversationForm(EjModelForm):
         fields = ["conversation", "domain"]
         help_texts = {"conversation": None, "domain": None}
 
-    def __init__(self, *args, conversation, **kwargs):
-        kwargs.update(initial={"conversation": conversation})
-        super(RasaConversationForm, self).__init__(*args, **kwargs)
+
+class MauticConversationForm(EjModelForm):
+    class Meta:
+        model = ConversationMautic
+        fields = ["user_name", "url", "conversation", "password"]

@@ -24,12 +24,20 @@ class Tools:
                 "about": "/docs/?page=user-docs/tools-opinion-component.html",
             },
             {
-                "integration": _("Rasa chatbot"),
+                "integration": _("Rasa Webchat"),
                 "description": _(
                     "Collect opinions using EJ's chatbot, also known as Duda. Allows, via webchat, to vote and comment on EJ's conversations."
                 ),
                 "link": self.conversation.url("conversation-tools:rasa"),
-                "about": "/docs/?page=user-docs/tools-rasa.html",
+                "about": "/docs/?page=user-docs/tools-chatbot.html",
+            },
+            {
+                "integration": _("Mautic"),
+                "description": _(
+                    "Integrate this conversation with the Mautic platform API, allowing users who participate in this conversation to be automatically synchronized with Mautic's contact base."
+                ),
+                "link": self.conversation.url("conversation-tools:mautic"),
+                "about": "/docs/?page=user-docs/tools-mautic.html",
             },
         ]
 

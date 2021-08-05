@@ -22,7 +22,7 @@ class TestTemplateGenerator(BoardRecipes):
         assert mailing_tool["link"] != ""
 
     def test_get_tool_rasa(self, tools):
-        rasa_tool = tools.get("Rasa chatbot")
+        rasa_tool = tools.get("Rasa Webchat")
         assert rasa_tool
         assert rasa_tool["integration"] != ""
         assert rasa_tool["description"] != ""
@@ -34,6 +34,13 @@ class TestTemplateGenerator(BoardRecipes):
         assert conversation_component_tool["integration"] != ""
         assert conversation_component_tool["description"] != ""
         assert conversation_component_tool["link"] != ""
+
+    def test_get_tool_mautic(self, tools):
+        mautic_tool = tools.get("Mautic")
+        assert mautic_tool
+        assert mautic_tool["integration"] != ""
+        assert mautic_tool["description"] != ""
+        assert mautic_tool["link"] != ""
 
     def test_raise_on_invalid_tool(self, tools):
         with pytest.raises(Exception):

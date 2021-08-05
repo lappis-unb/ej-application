@@ -29,6 +29,8 @@ db.sqlite3
 local/
 deploy/
 ej/media/
+src/ej_analysis/visualizations/opinion_component/lib/analytics/client_secrets\.json
+
 
 
 # Editors and system specific files
@@ -60,10 +62,6 @@ dump.rdb
 .ipynb_checkpoints/
 *.mo
 lib/assets/css/main*.css
-
-# Ignore automatic migrations
-src/*/migrations/*_auto_*.py
-src/*/migrations/*_merge_*.py
 
 # Themes
 lib/assets/cpa
