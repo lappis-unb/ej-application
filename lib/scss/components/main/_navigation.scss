@@ -85,7 +85,7 @@ body {
     }
 
     &__avatar {
-        object-fit: cover;
+        object-fit: contain !important;
         border-radius: $avatar-border;
         width: $avatar-height;
         height: $avatar-height;
@@ -145,7 +145,7 @@ body {
         bottom: initial;
         box-shadow: none;
         justify-content: flex-end;
-        margin-right: 1rem;
+        margin-right: 2.1rem;
         right: 0;
         width: initial;
         z-index: 1001;
@@ -169,7 +169,7 @@ body {
         }
 
         &__avatar {
-            object-fit: cover;
+            object-fit: contain;
             border-radius: $avatar-border;
             width: $avatar-height;
             height: $avatar-height;
@@ -249,6 +249,30 @@ body {
                 margin-right: 0.5rem; 
                 font-weight: 700;
             }
+        }
+    }
+    .report-section {
+        .display-reports {
+            label {
+                cursor: pointer;
+                color: unset;
+                text-indent: unset;
+                margin-bottom: unset;
+            }
+            #isexpanded3 {
+                display: none;
+            }
+        }
+        ul {
+            display: none;
+            position: relative;
+            left: 20px;
+            li a{
+                font-weight: unset;
+            }
+        }
+        #isexpanded3:checked + label > i {
+            transform: rotate(180deg);
         }
     }
 }

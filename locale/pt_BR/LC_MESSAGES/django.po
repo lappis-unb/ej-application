@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-30 14:24-0300\n"
+"POT-Creation-Date: 2021-09-14 14:08-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -158,7 +158,7 @@ msgstr "Você não pode alterar este valor depois"
 msgid "My Board"
 msgstr "Meu mural"
 
-#: src/ej_boards/models.py:20 src/ej_conversations/tools/models.py:68
+#: src/ej_boards/models.py:20 src/ej_tools/models.py:68
 msgid "Default"
 msgstr "Padrão"
 
@@ -211,11 +211,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:62
+#: src/ej_boards/routes.py:60
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:90
+#: src/ej_boards/routes.py:85
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -293,10 +293,6 @@ msgstr "Editar grupos"
 msgid "Manage personas"
 msgstr "Gerenciar personas"
 
-#: src/ej_clusters/models/__init__.py:59 src/ej_clusters/roles.py:18
-msgid "Opinion groups"
-msgstr "Grupos de opinião"
-
 #: src/ej_clusters/models/cluster.py:26 src/ej_clusters/models/stereotype.py:22
 #: src/ej_dataviz/roles.py:139 src/ej_dataviz/routes.py:452
 #: src/ej_gamification/admin.py:33 src/ej_gamification/routes.py:124
@@ -345,6 +341,10 @@ msgid ""
 msgstr ""
 "Esta conversa possui {n_groups} grupos e você está no grupo {group_id}."
 
+#: src/ej_clusters/roles.py:18
+msgid "Opinion groups"
+msgstr "Grupos de opinião"
+
 #: src/ej_clusters/routes.py:58
 msgid "Error"
 msgstr "Erro"
@@ -354,9 +354,9 @@ msgid "here"
 msgstr "aqui"
 
 #: src/ej_clusters/tests/test_forms.py:20
-#: src/ej_conversations/tests/test_mautic_integrations.py:77
-#: src/ej_conversations/tests/test_mautic_integrations.py:78
-#: src/ej_conversations/tests/test_mautic_integrations.py:79
+#: src/ej_tools/tests/test_mautic_integrations.py:77
+#: src/ej_tools/tests/test_mautic_integrations.py:78
+#: src/ej_tools/tests/test_mautic_integrations.py:79
 msgid "This field is required."
 msgstr "Este campo é obrigatório."
 
@@ -534,7 +534,7 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:36
+#: src/ej_conversations/models/conversation.py:36 src/ej_tools/apps.py:7
 msgid "Tools"
 msgstr "Ferramentas"
 
@@ -661,7 +661,7 @@ msgstr "{n} de {m} comentários"
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:65
+#: src/ej_conversations/routes.py:67
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -677,229 +677,6 @@ msgstr ""
 #: src/ej_conversations/routes_comments.py:45
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
-
-#: src/ej_conversations/tests/test_mautic_integrations.py:63
-#: src/ej_conversations/tests/test_rasa_integrations.py:41
-#, fuzzy
-msgid "Enter a valid URL."
-msgstr "Insira uma URL válida."
-
-#: src/ej_conversations/tests/test_mautic_integrations.py:119
-#: src/ej_conversations/tools/models.py:191
-#, fuzzy
-msgid ""
-"Couldn't find a mautic instance on the url provided. Check your mautic url "
-"inserted here and the redirect url registered on Mautic page."
-msgstr ""
-"Não foi possível localizar uma instância do Mautic com a URL fornecida. "
-"Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
-
-#: src/ej_conversations/tests/test_mautic_integrations.py:151
-#: src/ej_conversations/tools/models.py:324
-msgid "There was an error connection to mautic server, please try again."
-msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
-
-#: src/ej_conversations/tests/test_rasa_integrations.py:50
-#, fuzzy
-msgid "Rasa conversation with this Conversation and Domain already exists."
-msgstr "Uma conexão com esse nome já existe nessa conversa."
-
-#: src/ej_conversations/tests/test_rasa_integrations.py:63
-#: src/ej_conversations/tools/models.py:46
-#, fuzzy
-msgid "a conversation can have a maximum of five domains"
-msgstr "Uma conversa pode ter no máximo cinco links integrados."
-
-#: src/ej_conversations/tools/forms.py:32
-#, fuzzy
-msgid "Authentication Type"
-msgstr "Autenticação"
-
-#: src/ej_conversations/tools/forms.py:38
-#: src/ej_conversations/tools/forms.py:50
-msgid "Theme"
-msgstr "Tema"
-
-#: src/ej_conversations/tools/forms.py:44
-msgid "Template type"
-msgstr "Tipo de template"
-
-#: src/ej_conversations/tools/forms.py:53
-#, fuzzy
-msgid "Redirect user to a custom domain (optional)"
-msgstr "URL para redirecionamento (opcional)."
-
-#: src/ej_conversations/tools/forms.py:56
-msgid "Adds a custom title to the template (optional)."
-msgstr "Adicione um título customizado ao template (opcional)."
-
-#: src/ej_conversations/tools/forms.py:59
-msgid "selects a specific comment for user to vote (optional)."
-msgstr "Selecione um comentário específico para o usuário votar (opcional)."
-
-#: src/ej_conversations/tools/models.py:26
-msgid "Domain"
-msgstr "Domínio"
-
-#: src/ej_conversations/tools/models.py:28
-msgid "The domain that the rasa bot webchat is hosted."
-msgstr "O domínio do site que hospeda o webchat do rasa bot."
-
-#: src/ej_conversations/tools/models.py:56
-#, fuzzy
-msgid "Register using name/email"
-msgstr "Registrar usando nome/email"
-
-#: src/ej_conversations/tools/models.py:57
-#: src/ej_conversations/tools/models.py:101
-#: src/ej_conversations/tools/routes.py:165
-#: src/ej_conversations/tools/table.py:35
-msgid "Mautic"
-msgstr ""
-
-#: src/ej_conversations/tools/models.py:58
-msgid "Analytics"
-msgstr ""
-
-#: src/ej_conversations/tools/models.py:62
-msgid ""
-"User will use EJ platform interface, creating an account using personal data"
-msgstr ""
-"Usuário interagirá com a interface da EJ, criando uma conta com dados "
-"pessoais (email e nome)."
-
-#: src/ej_conversations/tools/models.py:63
-#: src/ej_conversations/tools/models.py:107
-msgid "Uses a mautic campaign "
-msgstr "Usa uma campanha do mautic"
-
-#: src/ej_conversations/tools/models.py:64
-msgid ""
-"Uses analytics cookies allowing you to cross vote data with user browser "
-"data."
-msgstr ""
-"Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
-"do usuário."
-
-#: src/ej_conversations/tools/models.py:69
-msgid "Votorantim"
-msgstr ""
-
-#: src/ej_conversations/tools/models.py:70
-msgid "ICD"
-msgstr ""
-
-#: src/ej_conversations/tools/models.py:102
-msgid "MailChimp"
-msgstr ""
-
-#: src/ej_conversations/tools/models.py:106
-#, fuzzy
-msgid "Mailchimp campaign"
-msgstr "Campanha de email"
-
-#: src/ej_conversations/tools/models.py:116
-msgid "Client ID"
-msgstr "Chave pública"
-
-#: src/ej_conversations/tools/models.py:117
-#, fuzzy
-msgid "Client Secret"
-msgstr "Chave secreta"
-
-#: src/ej_conversations/tools/models.py:118
-#, fuzzy
-msgid "Mautic Access Token"
-msgstr "Token de acesso"
-
-#: src/ej_conversations/tools/models.py:119
-#, fuzzy
-msgid "Refresh Token"
-msgstr "Atualizar token"
-
-#: src/ej_conversations/tools/models.py:120
-msgid "Mautic URL"
-msgstr "URL do Mautic"
-
-#: src/ej_conversations/tools/models.py:120
-msgid "Generated Url from Mautic."
-msgstr "Url gerada no Mautic."
-
-#: src/ej_conversations/tools/models.py:187
-msgid "Client not found."
-msgstr "Chave do Mautic não encontrada"
-
-#: src/ej_conversations/tools/models.py:212
-msgid "Couldn't generate tokens."
-msgstr "Não foi possível gerar os tokens."
-
-#: src/ej_conversations/tools/models.py:235
-#, fuzzy
-msgid "Couldn't generate new token."
-msgstr "Não foi possível gerar os tokens."
-
-#: src/ej_conversations/tools/models.py:281
-#, fuzzy
-msgid "There was an error connection to mautic server, please check your url."
-msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
-
-#: src/ej_conversations/tools/models.py:320
-msgid "Couldn't create a new contact in Mautic."
-msgstr ""
-
-#: src/ej_conversations/tools/routes.py:57
-#: src/ej_conversations/tools/table.py:11
-msgid "Mailing campaign"
-msgstr "Campanha de email"
-
-#: src/ej_conversations/tools/routes.py:74
-#: src/ej_conversations/tools/table.py:19
-#, fuzzy
-msgid "Opinion component"
-msgstr "Componente de opinião"
-
-#: src/ej_conversations/tools/routes.py:103
-#: src/ej_conversations/tools/table.py:27
-msgid "Rasa Webchat"
-msgstr ""
-
-#: src/ej_conversations/tools/table.py:13
-msgid ""
-"Generates a html template of this conversation, for mailing marketing "
-"campaigns."
-msgstr ""
-"Gere um template html desta conversa, e faça coletas de opinião via disparo "
-"de email. Útil para campanhas de marketing com ferramentas como mautic e "
-"mailchimp."
-
-#: src/ej_conversations/tools/table.py:21
-msgid ""
-"Conduct opinion collections without your audience having to access EJ "
-"directly. Allows you to vote, comment and view groups directly on html "
-"pages, without impacting the experience of those who already access their "
-"networks and platforms."
-msgstr ""
-"Realize coletas de opinião sem que seu público tenha que acessar diretamente "
-"a EJ. Permite votar, comentar e visualizar os grupos diretamente em páginas "
-"html, sem impactar na experiência de quem já acessa suas redes e plataformas."
-
-#: src/ej_conversations/tools/table.py:29
-msgid ""
-"Collect opinions using EJ's chatbot, also known as Duda. Allows, via "
-"webchat, to vote and comment on EJ's conversations."
-msgstr ""
-"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite, "
-"via webchat, votar e comentar as conversas da EJ."
-
-#: src/ej_conversations/tools/table.py:37
-msgid ""
-"Integrate this conversation with the Mautic platform API, allowing users who "
-"participate in this conversation to be automatically synchronized with "
-"Mautic's contact base."
-msgstr ""
-"Integre esta conversa com a API da plataforma Mautic, permitindo que "
-"usuários que participarem desta conversa sejam automaticamente sincronizados "
-"com a base de contatos do Mautic."
 
 #: src/ej_conversations/tour.py:4
 msgid "Next"
@@ -992,14 +769,6 @@ msgstr "Visualização"
 #: src/ej_dataviz/models.py:13
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
-
-#: src/ej_dataviz/models.py:14
-msgid "Word cloud"
-msgstr "Nuvem de palavras"
-
-#: src/ej_dataviz/models.py:21
-msgid "Usage report"
-msgstr "Relatório de uso"
 
 #: src/ej_dataviz/roles.py:129 src/ej_gamification/routes.py:146
 msgid "Author"
@@ -1106,65 +875,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:278
+#: src/ej_dataviz/routes_report.py:298
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:279
+#: src/ej_dataviz/routes_report.py:299
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:280
+#: src/ej_dataviz/routes_report.py:300
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:281
+#: src/ej_dataviz/routes_report.py:301
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:282
+#: src/ej_dataviz/routes_report.py:302
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:283
+#: src/ej_dataviz/routes_report.py:303
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:284
+#: src/ej_dataviz/routes_report.py:304
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:285
+#: src/ej_dataviz/routes_report.py:305
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:286
+#: src/ej_dataviz/routes_report.py:306
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:287
+#: src/ej_dataviz/routes_report.py:307
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:288 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:308 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:289
+#: src/ej_dataviz/routes_report.py:309
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:290 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:310 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:291
+#: src/ej_dataviz/routes_report.py:311
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:292
+#: src/ej_dataviz/routes_report.py:312
 msgid "skipped"
 msgstr "pulados"
 
@@ -2112,6 +1881,234 @@ msgstr ""
 "Senhas vazias são permitidas somente se a variável "
 "EJ_ROCKETCHAT_ADMIN_PASSWORD estiver configurada."
 
+#: src/ej_tools/forms.py:34
+#, fuzzy
+msgid "Authentication Type"
+msgstr "Autenticação"
+
+#: src/ej_tools/forms.py:40 src/ej_tools/forms.py:52
+msgid "Theme"
+msgstr "Tema"
+
+#: src/ej_tools/forms.py:46
+msgid "Template type"
+msgstr "Tipo de template"
+
+#: src/ej_tools/forms.py:55
+#, fuzzy
+msgid "Redirect user to a custom domain (optional)"
+msgstr "URL para redirecionamento (opcional)."
+
+#: src/ej_tools/forms.py:58
+msgid "Adds a custom title to the template (optional)."
+msgstr "Adicione um título customizado ao template (opcional)."
+
+#: src/ej_tools/forms.py:61
+msgid "selects a specific comment for user to vote (optional)."
+msgstr "Selecione um comentário específico para o usuário votar (opcional)."
+
+#: src/ej_tools/forms.py:81 src/ej_tools/tests/test_rasa_integrations.py:49
+#, fuzzy
+msgid "Rasa conversation with this Conversation and Domain already exists."
+msgstr "Uma conexão com esse nome já existe nessa conversa."
+
+#: src/ej_tools/forms.py:83
+#, python-format
+msgid ""
+"Site already integrated with conversation %(conversation)s, try another url."
+msgstr ""
+"Esse site já está integrado com a conversa %(conversation)s, tente outra url."
+
+#: src/ej_tools/models.py:26
+msgid "Domain"
+msgstr "Domínio"
+
+#: src/ej_tools/models.py:28
+msgid "The domain that the rasa bot webchat is hosted."
+msgstr "O domínio do site que hospeda o webchat do rasa bot."
+
+#: src/ej_tools/models.py:46 src/ej_tools/tests/test_rasa_integrations.py:73
+#, fuzzy
+msgid "a conversation can have a maximum of five domains"
+msgstr "Uma conversa pode ter no máximo cinco links integrados."
+
+#: src/ej_tools/models.py:56
+#, fuzzy
+msgid "Register using name/email"
+msgstr "Registrar usando nome/email"
+
+#: src/ej_tools/models.py:57 src/ej_tools/models.py:101
+#: src/ej_tools/routes.py:166 src/ej_tools/table.py:35
+msgid "Mautic"
+msgstr ""
+
+#: src/ej_tools/models.py:58
+msgid "Analytics"
+msgstr ""
+
+#: src/ej_tools/models.py:62
+msgid ""
+"User will use EJ platform interface, creating an account using personal data"
+msgstr ""
+"Usuário interagirá com a interface da EJ, criando uma conta com dados "
+"pessoais (email e nome)."
+
+#: src/ej_tools/models.py:63 src/ej_tools/models.py:107
+msgid "Uses a mautic campaign "
+msgstr "Usa uma campanha do mautic"
+
+#: src/ej_tools/models.py:64
+msgid ""
+"Uses analytics cookies allowing you to cross vote data with user browser "
+"data."
+msgstr ""
+"Usa cookies do analytics para cruzar dados de voto com os dados do navegador "
+"do usuário."
+
+#: src/ej_tools/models.py:69
+msgid "Votorantim"
+msgstr ""
+
+#: src/ej_tools/models.py:70
+msgid "ICD"
+msgstr ""
+
+#: src/ej_tools/models.py:102
+msgid "MailChimp"
+msgstr ""
+
+#: src/ej_tools/models.py:106
+#, fuzzy
+msgid "Mailchimp campaign"
+msgstr "Campanha de email"
+
+#: src/ej_tools/models.py:116
+msgid "Client ID"
+msgstr "Chave pública"
+
+#: src/ej_tools/models.py:117
+#, fuzzy
+msgid "Client Secret"
+msgstr "Chave secreta"
+
+#: src/ej_tools/models.py:118
+#, fuzzy
+msgid "Mautic Access Token"
+msgstr "Token de acesso"
+
+#: src/ej_tools/models.py:119
+#, fuzzy
+msgid "Refresh Token"
+msgstr "Atualizar token"
+
+#: src/ej_tools/models.py:120
+msgid "Mautic URL"
+msgstr "URL do Mautic"
+
+#: src/ej_tools/models.py:120
+msgid "Generated Url from Mautic."
+msgstr "Url gerada no Mautic."
+
+#: src/ej_tools/models.py:187
+msgid "Client not found."
+msgstr "Chave do Mautic não encontrada"
+
+#: src/ej_tools/models.py:191
+#: src/ej_tools/tests/test_mautic_integrations.py:117
+#, fuzzy
+msgid ""
+"Couldn't find a mautic instance on the url provided. Check your mautic url "
+"inserted here and the redirect url registered on Mautic page."
+msgstr ""
+"Não foi possível localizar uma instância do Mautic com a URL fornecida. "
+"Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
+
+#: src/ej_tools/models.py:212
+msgid "Couldn't generate tokens."
+msgstr "Não foi possível gerar os tokens."
+
+#: src/ej_tools/models.py:235
+#, fuzzy
+msgid "Couldn't generate new token."
+msgstr "Não foi possível gerar os tokens."
+
+#: src/ej_tools/models.py:281
+#, fuzzy
+msgid "There was an error connection to mautic server, please check your url."
+msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
+
+#: src/ej_tools/models.py:320
+msgid "Couldn't create a new contact in Mautic."
+msgstr ""
+
+#: src/ej_tools/models.py:324
+#: src/ej_tools/tests/test_mautic_integrations.py:149
+msgid "There was an error connection to mautic server, please try again."
+msgstr "Houve um erro na conexao com o Mautic, por favor tente novamente."
+
+#: src/ej_tools/routes.py:59 src/ej_tools/table.py:11
+msgid "Mailing campaign"
+msgstr "Campanha de email"
+
+#: src/ej_tools/routes.py:76 src/ej_tools/table.py:19
+#, fuzzy
+msgid "Opinion component"
+msgstr "Componente de opinião"
+
+#: src/ej_tools/routes.py:104 src/ej_tools/table.py:27
+msgid "Rasa Webchat"
+msgstr ""
+
+#: src/ej_tools/table.py:13
+msgid ""
+"Generates a html template of this conversation, for mailing marketing "
+"campaigns."
+msgstr ""
+"Gere um template html desta conversa, e faça coletas de opinião via disparo "
+"de email. Útil para campanhas de marketing com ferramentas como mautic e "
+"mailchimp."
+
+#: src/ej_tools/table.py:21
+msgid ""
+"Conduct opinion collections without your audience having to access EJ "
+"directly. Allows you to vote, comment and view groups directly on html "
+"pages, without impacting the experience of those who already access their "
+"networks and platforms."
+msgstr ""
+"Realize coletas de opinião sem que seu público tenha que acessar diretamente "
+"a EJ. Permite votar, comentar e visualizar os grupos diretamente em páginas "
+"html, sem impactar na experiência de quem já acessa suas redes e plataformas."
+
+#: src/ej_tools/table.py:29
+msgid ""
+"Collect opinions using EJ's chatbot, also known as Duda. Allows, via "
+"webchat, to vote and comment on EJ's conversations."
+msgstr ""
+"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite, "
+"via webchat, votar e comentar as conversas da EJ."
+
+#: src/ej_tools/table.py:37
+msgid ""
+"Integrate this conversation with the Mautic platform API, allowing users who "
+"participate in this conversation to be automatically synchronized with "
+"Mautic's contact base."
+msgstr ""
+"Integre esta conversa com a API da plataforma Mautic, permitindo que "
+"usuários que participarem desta conversa sejam automaticamente sincronizados "
+"com a base de contatos do Mautic."
+
+#: src/ej_tools/tests/test_mautic_integrations.py:63
+#: src/ej_tools/tests/test_rasa_integrations.py:41
+#, fuzzy
+msgid "Enter a valid URL."
+msgstr "Insira uma URL válida."
+
+#: src/ej_tools/tests/test_rasa_integrations.py:60
+msgid ""
+"Site already integrated with conversation Conversation, try another url."
+msgstr ""
+"Esse site já está integrado com a conversa Conversation, tente outra url."
+
 #: src/ej_users/admin.py:14
 msgid "Permissions"
 msgstr "Permissões"
@@ -2295,15 +2292,14 @@ msgstr "Varíaveis de contexto"
 msgid "Navigation bar"
 msgstr "Menu de navegação"
 
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:11
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:13
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:7
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:9
 msgid "Talks"
 msgstr "Painel"
 
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:19
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:24
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:31
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:33
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:15
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:20
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:27
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
@@ -2318,8 +2314,8 @@ msgstr "Painel"
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:21
-#: src/ej/templates/jinja2/ej/includes/footer.jinja2:26
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:17
+#: src/ej/templates/jinja2/ej/includes/footer.jinja2:22
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
 #: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
 msgid "Profile picture"
@@ -2486,7 +2482,7 @@ msgid "Registered users"
 msgstr "Usuários registrados"
 
 #: src/ej/templates/jinja2/pages/info.jinja2:40
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:36
+#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:30
 msgid "More info"
 msgstr "Mais informações"
 
@@ -2503,8 +2499,8 @@ msgstr "Dashboards e analises"
 #: src/ej_conversations/jinja2/ej_conversations/edit.jinja2:9
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/moderate.jinja2:9
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:29
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:31
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:31
 msgid "Back to conversation"
 msgstr "Voltar para conversas"
 
@@ -2594,7 +2590,7 @@ msgid "Create Board"
 msgstr "Criar mural"
 
 #: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:18
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:19
 msgid "Edit board"
 msgstr "Editar mural"
 
@@ -2602,8 +2598,8 @@ msgstr "Editar mural"
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:43
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:23
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:28
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic-form.jinja2:23
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:10
+#: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:23
 msgid "Save"
 msgstr "Salvar"
 
@@ -2657,7 +2653,7 @@ msgstr "Novo mural"
 msgid "Administration"
 msgstr "Administração"
 
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:20
+#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:21
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -3021,221 +3017,23 @@ msgstr "Aprovar"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:16
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:21
+msgid "Reports"
+msgstr "Relatórios"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:25
+#, fuzzy
+msgid "General report"
+msgstr "Relatório Geral"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:27
+#, fuzzy
+msgid "Comments report"
+msgstr "Relatório de comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:39
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:14
-#, fuzzy
-msgid "Integrates this conversation with external tools and platforms."
-msgstr "Integre a sua conversa com outras ferramentas e plataformas"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:18
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic_connections.jinja2:2
-#, fuzzy
-msgid "Integration"
-msgstr "Integração"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/index.jinja2:24
-msgid "Learn more about this integration"
-msgstr "Aprenda mais sobre esta integração"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:24
-#, fuzzy
-msgid "Selects template type you want to use."
-msgstr "Selecione o tipo de template que deseja utilizar."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:30
-#, fuzzy
-msgid "Changes template appearence."
-msgstr "Altere a aparência (cores) do template."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:36
-msgid "Custom fields"
-msgstr "Campos personalizáveis"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:43
-#, fuzzy
-msgid "Changes fields like comment and title."
-msgstr "Altere campos como comentário e título."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:58
-msgid ""
-"Redirect your participant to a page with the integrated opinion component. "
-"The vote given in the email will be processed automatically by the component."
-msgstr ""
-"Redirecione seu participante para uma página com o componente de opinião "
-"integrado. O voto dado no email será processado automaticamente pelo "
-"componente."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:66
-#, fuzzy
-msgid "Preview Template"
-msgstr "Visualizar Template"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:67
-#, fuzzy
-msgid "Download Template"
-msgstr "Baixar template"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:83
-#: src/ej_conversations/jinja2/ej_conversations_tools/mailing.jinja2:85
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:42
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:44
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:77
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:79
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:89
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:91
-#, fuzzy
-msgid "Back to tools"
-msgstr "Voltar para ferramentas"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic-form.jinja2:3
-#, fuzzy
-msgid "Enter with Mautic credentials. A connection attempt will be made."
-msgstr ""
-"Informe as credenciais do Mautic. Uma tentativa de conexão será realizada."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic-form.jinja2:13
-#, fuzzy
-msgid "Mautic Client ID"
-msgstr "Chave pública do Mautic"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic-form.jinja2:16
-#, fuzzy
-msgid "Mautic Client Secret"
-msgstr "Chave secreta do Mautic"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic-form.jinja2:25
-msgid "Return"
-msgstr "Voltar"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic.jinja2:30
-#, fuzzy
-msgid "Enable Integration"
-msgstr "Habilitar Integração"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic_connections.jinja2:3
-msgid ""
-"Integrated conversation with an instance of Mautic. To remove integration, "
-"click the button next to the URL below."
-msgstr ""
-"Conversa integrada com uma instância do Mautic. Para remover integração, "
-"clique no botão ao lado da URL abaixo."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/mautic_connections.jinja2:7
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:34
-msgid "Remove"
-msgstr "Remover"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:23
-msgid ""
-"Selects the type of authentication that will be used to register the user in "
-"the EJ API."
-msgstr ""
-"Selecione o tipo de autenticação que será utilizada para registrar o usuário "
-"na API da EJ."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:24
-msgid "Not sure which option to choose?"
-msgstr "Não sabe qual opção escolher?"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:24
-#, fuzzy
-msgid "Access our documentation."
-msgstr "Acesse nossa documentação."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:29
-#, fuzzy
-msgid "Selects a color palette for the component style."
-msgstr "Selecione uma paleta de cor para o estilo do componente."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:34
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:72
-#, fuzzy
-msgid "Integration script"
-msgstr "Script de integração"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:35
-#, fuzzy
-msgid ""
-"Generate scripts by clicking on the icon to integrate the component into "
-"your html page."
-msgstr ""
-"Gere os scripts clicando no ícone, para integrar o componente na sua página "
-"html."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:40
-#, fuzzy
-msgid "Add this snippet to the website's header tag."
-msgstr "Adicione esse trecho na tag header do site."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:45
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:66
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:80
-msgid "Copy"
-msgstr "Copiar"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:51
-msgid "Generate Script"
-msgstr "Gerar Script"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/opinion-component.jinja2:61
-#, fuzzy
-msgid ""
-"Add this snippet to the body tag of the page where the component will be "
-"presented."
-msgstr ""
-"Adicione esse trecho na tag body, da página em que o componente será "
-"apresentado."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:20
-msgid ""
-"To integrate EJ chatbot with your site, enter the site domain in the field "
-"below."
-msgstr ""
-"Para integrar o chatbot EJ ao seu site, digite o domínio do site no campo "
-"abaixo."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:21
-msgid ""
-"When a new user reaches your site, the webchat will send to EJ the location "
-"where it is hosted, and will receive back this conversation."
-msgstr ""
-"Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
-"localização onde está hospedado e receberá de volta esta conversa."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:24
-msgid ""
-"All chatbots that have access to this conversation are also displayed here."
-msgstr ""
-"Todos os chatbots que têm acesso a esta conversa também são exibidos aqui."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:27
-msgid "Linked websites"
-msgstr "Sites integrados"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:28
-#, fuzzy
-msgid "Manage the integrated links of this conversation."
-msgstr "Gerencie os domínios integrados à esta conversa."
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:59
-msgid "new"
-msgstr "novo"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:63
-#, fuzzy
-msgid "Add"
-msgstr "Adicionar"
-
-#: src/ej_conversations/jinja2/ej_conversations_tools/rasa.jinja2:73
-#, fuzzy
-msgid ""
-"Add the script in the &ltbody&gt tag of the page where the collection will "
-"take place."
-msgstr ""
-"Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
 
 #: src/ej_dataviz/jinja2/ej/role/conversation-download-data.jinja2:2
 msgid "Downloads: "
@@ -3295,6 +3093,11 @@ msgstr ""
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
+msgid "Word cloud"
+msgstr "Nuvem de palavras"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:8
 msgid "Display the most commonly found words in conversation."
 msgstr "Mostra as palavras mais frequentes."
@@ -3303,6 +3106,7 @@ msgstr "Mostra as palavras mais frequentes."
 msgid "Size of the word is proportional to frequency."
 msgstr "O tamanho de cada palavra é proporcional à frequência de uso."
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:3
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:12
 msgid "Generating word cloud. Please wait..."
 msgstr "Criando nuvem de palavras. Espere..."
@@ -3363,20 +3167,30 @@ msgstr "Ordena de forma ascendente"
 msgid "Sort column descending"
 msgstr "Ordena de forma decrescente"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:5
+#, fuzzy
+msgid "Comments Report"
+msgstr "Relatório de comentários"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:5
+#, fuzzy
+msgid "General Report"
+msgstr "Relatório Geral"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:6
 #, python-format
 msgid "Basic report (%(n)s users)"
 msgstr "Relatório Básico (%(n)s usuários)"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:28
+#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:22
 msgid "{n} users"
 msgstr "{n} usuários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:39
+#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:33
 msgid "Participants"
 msgstr "Participantes"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:41
+#: src/ej_dataviz/jinja2/ej_dataviz/report/index.jinja2:35
 msgid "See statistics about each participant."
 msgstr "Veja as estatísticas de cada participante."
 
@@ -3770,6 +3584,218 @@ msgstr ""
 "Você precisa de um nome de usuário exclusivo para usar o painel Rocket.Chat. "
 "Selecione o nome de usuário e criaremos uma conta para você."
 
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:14
+#, fuzzy
+msgid "Integrates this conversation with external tools and platforms."
+msgstr "Integre a sua conversa com outras ferramentas e plataformas"
+
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:18
+#: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:2
+#, fuzzy
+msgid "Integration"
+msgstr "Integração"
+
+#: src/ej_tools/jinja2/ej_tools/index.jinja2:24
+msgid "Learn more about this integration"
+msgstr "Aprenda mais sobre esta integração"
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:24
+#, fuzzy
+msgid "Selects template type you want to use."
+msgstr "Selecione o tipo de template que deseja utilizar."
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:30
+#, fuzzy
+msgid "Changes template appearence."
+msgstr "Altere a aparência (cores) do template."
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:36
+msgid "Custom fields"
+msgstr "Campos personalizáveis"
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:43
+#, fuzzy
+msgid "Changes fields like comment and title."
+msgstr "Altere campos como comentário e título."
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:58
+msgid ""
+"Redirect your participant to a page with the integrated opinion component. "
+"The vote given in the email will be processed automatically by the component."
+msgstr ""
+"Redirecione seu participante para uma página com o componente de opinião "
+"integrado. O voto dado no email será processado automaticamente pelo "
+"componente."
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:66
+#, fuzzy
+msgid "Preview Template"
+msgstr "Visualizar Template"
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:67
+#, fuzzy
+msgid "Download Template"
+msgstr "Baixar template"
+
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:83
+#: src/ej_tools/jinja2/ej_tools/mailing.jinja2:85
+#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:42
+#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:44
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:77
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:79
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:89
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:91
+#, fuzzy
+msgid "Back to tools"
+msgstr "Voltar para ferramentas"
+
+#: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:3
+msgid ""
+"Integrated conversation with an instance of Mautic. To remove integration, "
+"click the button next to the URL below."
+msgstr ""
+"Conversa integrada com uma instância do Mautic. Para remover integração, "
+"clique no botão ao lado da URL abaixo."
+
+#: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:7
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:34
+msgid "Remove"
+msgstr "Remover"
+
+#: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:3
+#, fuzzy
+msgid "Enter with Mautic credentials. A connection attempt will be made."
+msgstr ""
+"Informe as credenciais do Mautic. Uma tentativa de conexão será realizada."
+
+#: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:13
+#, fuzzy
+msgid "Mautic Client ID"
+msgstr "Chave pública do Mautic"
+
+#: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:16
+#, fuzzy
+msgid "Mautic Client Secret"
+msgstr "Chave secreta do Mautic"
+
+#: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:25
+msgid "Return"
+msgstr "Voltar"
+
+#: src/ej_tools/jinja2/ej_tools/mautic.jinja2:30
+#, fuzzy
+msgid "Enable Integration"
+msgstr "Habilitar Integração"
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:23
+msgid ""
+"Selects the type of authentication that will be used to register the user in "
+"the EJ API."
+msgstr ""
+"Selecione o tipo de autenticação que será utilizada para registrar o usuário "
+"na API da EJ."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:24
+msgid "Not sure which option to choose?"
+msgstr "Não sabe qual opção escolher?"
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:24
+#, fuzzy
+msgid "Access our documentation."
+msgstr "Acesse nossa documentação."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:29
+#, fuzzy
+msgid "Selects a color palette for the component style."
+msgstr "Selecione uma paleta de cor para o estilo do componente."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:34
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:72
+#, fuzzy
+msgid "Integration script"
+msgstr "Script de integração"
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:35
+#, fuzzy
+msgid ""
+"Generate scripts by clicking on the icon to integrate the component into "
+"your html page."
+msgstr ""
+"Gere os scripts clicando no ícone, para integrar o componente na sua página "
+"html."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:40
+#, fuzzy
+msgid "Add this snippet to the website's header tag."
+msgstr "Adicione esse trecho na tag header do site."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:45
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:66
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:80
+msgid "Copy"
+msgstr "Copiar"
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:51
+msgid "Generate Script"
+msgstr "Gerar Script"
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:61
+#, fuzzy
+msgid ""
+"Add this snippet to the body tag of the page where the component will be "
+"presented."
+msgstr ""
+"Adicione esse trecho na tag body, da página em que o componente será "
+"apresentado."
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:20
+msgid ""
+"To integrate EJ chatbot with your site, enter the site domain in the field "
+"below."
+msgstr ""
+"Para integrar o chatbot EJ ao seu site, digite o domínio do site no campo "
+"abaixo."
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:21
+msgid ""
+"When a new user reaches your site, the webchat will send to EJ the location "
+"where it is hosted, and will receive back this conversation."
+msgstr ""
+"Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
+"localização onde está hospedado e receberá de volta esta conversa."
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:24
+msgid ""
+"All chatbots that have access to this conversation are also displayed here."
+msgstr ""
+"Todos os chatbots que têm acesso a esta conversa também são exibidos aqui."
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:27
+msgid "Linked websites"
+msgstr "Sites integrados"
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:28
+#, fuzzy
+msgid "Manage the integrated links of this conversation."
+msgstr "Gerencie os domínios integrados à esta conversa."
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:59
+msgid "new"
+msgstr "novo"
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:63
+#, fuzzy
+msgid "Add"
+msgstr "Adicionar"
+
+#: src/ej_tools/jinja2/ej_tools/rasa.jinja2:73
+#, fuzzy
+msgid ""
+"Add the script in the &ltbody&gt tag of the page where the collection will "
+"take place."
+msgstr ""
+"Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
+
 #: src/ej_users/jinja2/account/account_inactive.jinja2:2
 msgid "Account is inactive"
 msgstr "Conta inativa"
@@ -4009,6 +4035,9 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Usage report"
+#~ msgstr "Relatório de uso"
 
 #, fuzzy
 #~ msgid "A contact with your phone number already exists."

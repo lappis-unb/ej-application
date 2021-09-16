@@ -5,9 +5,9 @@ from django.test import TestCase
 from django.test.client import Client
 
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_conversations.models import RasaConversation
-from ej_conversations.tools.forms import RasaConversationForm
-from ej_conversations.tools.routes import rasa
+from ej_tools.models import RasaConversation
+from ej_tools.forms import RasaConversationForm
+from ej_tools.routes import rasa
 
 ConversationRecipes.update_globals(globals())
 
@@ -45,10 +45,20 @@ class TestRasaConversationForm(ConversationRecipes):
         RasaConversation.objects.create(conversation=conversation, domain="https://domain.com.br")
         form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation.id})
         assert not form.is_valid()
-        print(form.errors.keys())
         assert (
             _("Rasa conversation with this Conversation and Domain already exists.")
-            == form.errors["__all__"][0]
+            == form.errors["domain"][0]
+        )
+
+    def test_rasa_conversation_form_domain_already_in_use(self, db, mk_conversation, mk_user):
+        conversation1 = mk_conversation()
+        user = mk_user(email="test@domain.com")
+        conversation2 = mk_conversation(author=user)
+        RasaConversation.objects.create(conversation=conversation1, domain="https://domain.com.br")
+        form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation2.id})
+        assert (
+            _("Site already integrated with conversation Conversation, try another url.")
+            == form.errors["domain"][0]
         )
 
     def test_rasa_conversation_invalid_number_of_domains(self, db, mk_conversation):

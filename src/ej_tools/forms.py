@@ -1,7 +1,9 @@
 from django import forms
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.db.models import Q
+
 
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment
@@ -10,7 +12,7 @@ from .models import RasaConversation, ConversationComponent, MailingTool, Conver
 
 
 class CustomChoiceWidget(forms.RadioSelect):
-    template_name = "ej_conversations_tools/includes/custom-select.jinja2"
+    template_name = "ej_tools/includes/custom-select.jinja2"
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -19,7 +21,7 @@ class CustomChoiceWidget(forms.RadioSelect):
 
 
 class CustomTemplateChoiceWidget(forms.RadioSelect):
-    template_name = "ej_conversations_tools/includes/template-type.jinja2"
+    template_name = "ej_tools/includes/template-type.jinja2"
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):
@@ -66,6 +68,22 @@ class MailingToolForm(forms.Form):
 
 
 class RasaConversationForm(EjModelForm):
+    def clean_domain(self):
+        incoming_domain = str(self.cleaned_data["domain"])
+        if incoming_domain[-1] == "/":
+            incoming_domain = str(self.cleaned_data["domain"])[:-1]
+        domain = RasaConversation.objects.filter(
+            Q(domain=incoming_domain) | Q(domain=incoming_domain + "/")
+        ).first()
+        if domain == None:
+            return self.cleaned_data["domain"]
+        if domain.conversation == self.cleaned_data["conversation"]:
+            raise ValidationError(_("Rasa conversation with this Conversation and Domain already exists."))
+        raise ValidationError(
+            _("Site already integrated with conversation %(conversation)s, try another url."),
+            params={"conversation": domain.conversation},
+        )
+
     class Meta:
         model = RasaConversation
         fields = ["conversation", "domain"]
