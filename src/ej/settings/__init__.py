@@ -120,6 +120,7 @@ class Conf(
         "http://localhost",
         "https://agentesdacidadania.org.br",
         "https://ejplatform.pencillabs.com.br",
+        "https://abocadelobo.org.br",
     ]
 
     ALLOWED_HOSTS = ["*"]
