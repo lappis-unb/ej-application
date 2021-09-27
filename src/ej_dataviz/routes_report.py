@@ -48,8 +48,14 @@ def index(request, conversation, slug, check=check_promoted):
 @urlpatterns.route("general-report/")
 def general_report(request, conversation, slug, check=check_promoted):
     check(conversation, request)
+    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
+    statistics = conversation.statistics()
+
     return {
         "conversation": conversation,
+        "type_data": "votes-data",
+        "can_view_detail": can_view_detail,
+        "statistics": statistics,
     }
 
 
@@ -67,6 +73,7 @@ def comments_report(request, conversation, slug, check=check_promoted):
         "conversation": conversation,
         "clusters": get_clusters(conversation),
         "can_view_detail": can_view_detail,
+        "type_data": "comments-data",
     }
 
 
