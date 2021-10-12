@@ -50,12 +50,13 @@ def general_report(request, conversation, slug, check=check_promoted):
     check(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
     statistics = conversation.statistics()
-
+    channel_votes = statistics["channel_votes"]
     return {
         "conversation": conversation,
         "type_data": "votes-data",
         "can_view_detail": can_view_detail,
         "statistics": statistics,
+        "channel_votes": channel_votes,
     }
 
 
@@ -278,8 +279,6 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
         data.to_csv(response, index=False, mode="a", float_format="%.3f")
     elif fmt == "msgpack":
         data.to_msgpack(response, encoding="utf-8")
-    elif fmt == "xlsx":
-        data.to_excel(response, filename, index=False)
     else:
         raise ValueError(f"invalid format: {fmt}")
     return response
