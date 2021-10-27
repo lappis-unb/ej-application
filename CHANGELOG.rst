@@ -5,6 +5,20 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.14.0 release
+====================
+
+* Date: Oct 27, 2021
+* Features
+- Adds new profile menu;
+- Fixes mailing template preview;
+- Fixes export dropdown on reports pages;
+- Adds analytics_utm field on Vote model;
+- Fixes tables responsiveness;
+- Adds telegram support on Chatbot tool;
+- Adds voting by date visualization, on general report;
+- Adds opinion component preview, on Opinion Component tool page;
+
 2.13.0 release
 ====================
 
