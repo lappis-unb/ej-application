@@ -65,14 +65,14 @@ class ConversationComponent:
     }
 
     THEME_CHOICES = (
-        ("default", _("UCC")),
+        ("osf", _("OSF")),
         ("votorantim", _("Votorantim")),
         ("icd", _("ICD")),
         ("bocadelobo", _("Boca de Lobo")),
     )
 
     THEME_PALETTES = {
-        "default": ["#1D1088", "#F8127E"],
+        "osf": ["#1D1088", "#F8127E"],
         "votorantim": ["#04082D", "#F14236"],
         "icd": ["#005BAA", "#F5821F"],
         "bocadelobo": ["#83E760", "#161616"],
@@ -102,6 +102,16 @@ class ChatbotTelegramTool:
     CHANNELS_CHOICES = ("Boca De Lobo", _("BocaDeLoboBot")), ("Duda", _("DudaEjBot"))
     SHARE = _(
         "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on States and Organizations. We would like your participation in the following discussion:"
+    )
+
+
+class ChatbotWhatsappTool:
+    CHANNEL_CHOICES = (
+        ("611234", "Boca de Lobo"),
+        ("614567", "DudaEjBot"),
+    )
+    SHARE = _(
+        "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on the State and Organizations. We would like your participation in the following discussion:"
     )
 
 
