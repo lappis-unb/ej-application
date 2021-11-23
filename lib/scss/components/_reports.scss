@@ -110,14 +110,6 @@
     }
 }
 
-@media (min-width: 1460px) {
-    .report-card-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-}
-
 @media (max-width: 1200px) {
     .report-charts {
         flex-direction: column;
@@ -132,13 +124,20 @@
 }
 
 .title-export {
-    width: 97%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     margin: 10px;
+    width: auto;
+    // margins defined at lib/scss/components/_datatables.scss #stats-table_wrapper
+    margin-right: -1rem;
+    margin-left: -0.5rem;
+    @media only screen and (max-width: 560px) {
+        margin-left: -1rem;
+    }
 }
+
 
 #format-name {
     color: $color-theme-report-black;
@@ -189,18 +188,26 @@
 
 .vote-date-picker {
     display: flex;
-    :last-child {
+    .date-selector {
         display: flex; 
         margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
     #start-date, #end-date {
-        min-width: 10em;
+        min-width: 11em;
         width: 0%;
         margin-right: 4px;
+        margin-bottom: unset;
     }
 }
 #votes-over-time {
     width: 100%;
+}
+
+#svg-container {
+    position: relative;
+    top: 16px;
 }
 
 .card-body-error-invalid-dates {
@@ -213,7 +220,7 @@
     display: none;
 }
 
-@media (min-width: 1460px) {
+@media (min-width: 1510px) {
     .report-card-list {
         display: flex; 
         flex-wrap: wrap; 
@@ -221,7 +228,7 @@
     }
 }
 
-@media (max-width:1200px) {
+@media (max-width:1400px) {
     .report-charts {
         flex-direction: column;
     }
@@ -231,12 +238,6 @@
     }
     .channel-vote-chart {
         width: 100% !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .vote-date-picker :last-child {
-        display: block !important;
     }
 }
 
