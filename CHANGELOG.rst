@@ -4,32 +4,6 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
-2.15.0 release
-====================
-* Date: Oct 27, 2021
-* Features
-- Adds new profile menu;
-- Fixes mailing template preview;
-- Fixes export dropdown on reports pages;
-- Adds analytics_utm field on Vote model;
-- Fixes tables responsiveness;
-- Adds telegram support on Chatbot tool;
-- Adds voting by date visualization, on general report;
-- Adds opinion component preview, on Opinion Component tool page;
-
-2.14.0 release
-====================
-* Date: Oct 12, 2021
-* Features
-- Adds new tool page called Chatbot;
-- Removes excel export data option;
-- Adds new voting visualization on conversation general report. This visualization segments votes by
-  channel;
-- Includes Signature model on django admin;
-- Fixes bug on conversation card;
-- Implements new relation between conversation and board;
-- Removes django_rest_auth dependency;
-
 2.18.0 release
 ====================
 * Date: Dec 07, 2021
