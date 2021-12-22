@@ -6,14 +6,24 @@
     <meta name="twitter:title" content="{{ board.title }}">
 {% endblock metaOG2 %}
 
-{% set main_class = "form-container" %}
+{% set main_class = "board-container" %}
 {% set body_class = 'body theme-' + board.palette %}
 
 {% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
 
 {% block content %}
 <div class="board-statistics-container">
-    <h1 class="h2 text-accent">{{ _('My conversations') }}</h1>
+    <div id="edit-board">
+        <h1 class="h2 text-accent">{{ board.title}}</h1>
+
+        {%- if request.user.has_perm('ej.can_edit_board', board) %}
+            <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
+        {% endif %}
+
+    </div>
+    {%- if board.conversations.count() == 0 %}
+        <div class="helptext board-helptext">{{ help_title }}</div>
+    {% endif %}
     <div class="cards-divider">
         {% with value=board.statistics()["votes"], title=_('Total votes') %}
             {% include 'ej_boards/includes/stats-card.jinja2' %}
@@ -26,23 +36,21 @@
         {% endwith %}
     </div>
     <div class="signature-text">{{_('Signature model')}}: <a
-         class="signature-link">{{request.user.get_signature_display()}}</a></div>
+         class="help-text signature-link">{{board.owner.get_signature_display()}}</a>
+
+    </div>
+    {% if not (request.user.is_staff or request.user.is_superuser) %} 
+        <div class="helptext">{% trans %}In the current signature, you can create <span
+                class="text-accent">{{conversations_limit}}</span> conversations.{% endtrans %}{{ '
+            ' }}</div>
+    {% endif %}
+
+    {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
+        <a class="is-primary button square" href="{{ url('boards:conversation-create', board=board) }}">{{ _('New conversation') }}</a>
+    {% endif %}
 </div>
 
 <hr>
-{%- if board.conversations.count() == 0 %}
-    <div class="helptext helptext-center">{{ help_title }}</div>
-{% endif %}
-{% if not (request.user.is_staff or request.user.is_superuser) %} 
-    <span class="helptext">{% trans %}In the current signature, you can create {{conversations_limit}} conversations.{% endtrans %}{{ ' ' }}</span>
-{% endif %}
-
-{%- if request.user.has_perm('ej.can_edit_board', board) and  board.conversations.count() == 0%}
-    <div class="width-full margin-y4 center">
-            <a class="is-primary button" href="{{ url('boards:conversation-create', board=board) }}">
-                {{ _('New Conversation') }}</a>
-    </div>
-{% endif %}
 
     <div class="alternate-cards">
         {% for conversation in conversations %}
