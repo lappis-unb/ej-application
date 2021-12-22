@@ -5,6 +5,17 @@ CHANGELOG of EJPlatform releases
 Here you can follow all the fixes and new features on every EJPlatform release.
 
 
+2.19.0 release
+====================
+* Date: Dec 21, 2021
+* Features
+- Fixes responsiveness issues;
+- Fixes default board creation for social login;
+- Fixes bug on board signature;
+- Improves UX of board edit and conversation creation;
+- Fixes social login with Google;
+- Adds webchat preview on webchat tool page;
+
 2.18.0 release
 ====================
 * Date: Dec 07, 2021
