@@ -2,20 +2,19 @@ from django import forms
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
 
-from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.core.exceptions import ValidationError
 from django.db.models import Q
-
 
 from ej_boards.forms import PaletteWidget
 from ej_conversations.models import Comment
 from ej.forms import EjModelForm
-from .models import (
-    ChatbotWhatsappTool,
+from ej_tools.models import (
     RasaConversation,
     ConversationComponent,
-    MailingTool,
     ConversationMautic,
 )
+
+from ej_tools.tools import MailingTool
 
 
 class CustomChoiceWidget(forms.RadioSelect):
@@ -37,12 +36,6 @@ class CustomTemplateChoiceWidget(forms.RadioSelect):
 
 
 class ConversationComponentForm(forms.Form):
-    authentication_type = forms.ChoiceField(
-        label=_("Authentication Type"),
-        choices=ConversationComponent.AUTH_TYPE_CHOICES,
-        required=False,
-        widget=CustomChoiceWidget(attrs=ConversationComponent.AUTH_TOOLTIP_TEXTS),
-    )
     theme = forms.ChoiceField(
         label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
     )

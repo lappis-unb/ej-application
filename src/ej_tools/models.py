@@ -52,16 +52,10 @@ class ConversationComponent:
     configure the EJ opinion web component;
     """
 
-    AUTH_TYPE_CHOICES = (
-        ("register", _("Register using name/email")),
-        ("mautic", _("Mautic")),
-        ("analytics", _("Analytics")),
-    )
+    AUTH_TYPE_CHOICES = (("register", _("Register using name/email")),)
 
     AUTH_TOOLTIP_TEXTS = {
         "register": _("User will use EJ platform interface, creating an account using personal data"),
-        "mautic": _("Uses a mautic campaign "),
-        "analytics": _("Uses analytics cookies allowing you to cross vote data with user browser data."),
     }
 
     THEME_CHOICES = (
@@ -82,9 +76,7 @@ class ConversationComponent:
         self.form = form
 
     def _form_is_invalid(self):
-        return not self.form.is_valid() or (
-            not self.form.cleaned_data["theme"] and not self.form.cleaned_data["authentication_type"]
-        )
+        return not self.form.is_valid() or (not self.form.cleaned_data["theme"])
 
     def get_props(self):
         if self._form_is_invalid():
@@ -93,38 +85,7 @@ class ConversationComponent:
         result = ""
         if self.form.cleaned_data["theme"]:
             result = result + f"theme={self.form.cleaned_data['theme']}"
-        if self.form.cleaned_data["authentication_type"]:
-            result = result + f" authenticate-with={self.form.cleaned_data['authentication_type']}"
         return result
-
-
-class ChatbotTelegramTool:
-    CHANNELS_CHOICES = ("Boca De Lobo", _("BocaDeLoboBot")), ("Duda", _("DudaEjBot"))
-    SHARE = _(
-        "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on States and Organizations. We would like your participation in the following discussion:"
-    )
-
-
-class ChatbotWhatsappTool:
-    CHANNEL_CHOICES = (
-        ("Boca de Lobo", "611234"),
-        ("Duda", "614567"),
-    )
-    SHARE = _(
-        "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, is an opinion consultation platform focused on the State and Organizations. We would like your participation in the following discussion:"
-    )
-
-
-class MailingTool:
-    MAILING_TOOL_CHOICES = (
-        ("mautic", _("Mautic")),
-        ("mailchimp", _("MailChimp")),
-    )
-
-    MAILING_TOOLTIP_TEXTS = {
-        "mailchimp": _("Mailchimp campaign"),
-        "mautic": _("Uses a mautic campaign "),
-    }
 
 
 class ConversationMautic(models.Model):
@@ -373,7 +334,7 @@ class MauticClient:
 class WebchatHelper:
     AVAILABLE_ENVIRONMENT_MAPPING = {
         "http://localhost:8000": "http://localhost:5006/?token=thisismysecret",
-        "https://ejplatform.pencillabs.com.br/": "https://rasadefaultdev.pencillabs.com.br/?token=thisismysecret",
+        "https://ejplatform.pencillabs.com.br": "https://rasadefaultdev.pencillabs.com.br/?token=thisismysecret",
         "https://www.ejplatform.org": "https://rasadefault.pencillabs.com.br/?token=thisismysecret",
     }
 

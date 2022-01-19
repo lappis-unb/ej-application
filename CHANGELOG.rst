@@ -15,6 +15,18 @@ Here you can follow all the fixes and new features on every EJPlatform release.
 - Fixes social login with Google;
 - Adds webchat preview on webchat tool page;
 
+2.19.0 release
+====================
+* Date: Jan 19, 2022
+* Features
+- Fixes preview for opinion component tool;
+- Fixes preview for webchat tool;
+- Fixes wrong check on conversation owner signature;
+- Fixes whatsapp card tool;
+- Evolves signature arquitecture to limit tools usage;
+- Adds new UI to opinion component tool;
+- Removes django-boogie from ej_conversations API;
+
 2.18.0 release
 ====================
 * Date: Dec 07, 2021

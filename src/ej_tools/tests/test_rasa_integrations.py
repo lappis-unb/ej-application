@@ -1,5 +1,5 @@
+from ej_tools.routes import webchat
 import pytest
-import random
 from ej_users.models import User
 from django.db import IntegrityError
 from django.utils.translation import ugettext as _
@@ -7,11 +7,9 @@ from django.test.client import Client
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_tools.models import RasaConversation, WebchatHelper
 from ej_tools.forms import RasaConversationForm
+from ej_tools.tests import HTTP_HOST, TEST_DOMAIN
 
 ConversationRecipes.update_globals(globals())
-
-TEST_DOMAIN = "https://domain.com.br"
-HTTP_HOST = "docs.djangoproject.dev:8000"
 
 
 class TestRasaConversation(ConversationRecipes):
@@ -89,15 +87,15 @@ class TestRasaConversationFormRoute(ConversationRecipes):
         assert response.status_code == 200
         assert RasaConversation.objects.filter(conversation=conversation, domain=TEST_DOMAIN).exists()
 
-    def test_post_rasa_conversation_invalid_form(self, db, mk_conversation):
-        conversation = mk_conversation()
-
+    def test_post_rasa_conversation_invalid_form(self, conversation_db):
+        conversation = conversation_db
         client = Client()
         admin = User.objects.create_superuser("myemail@test.com", "password")
         client.force_login(user=admin)
         invalid_domain = "nope"
+        tool_url = conversation_db.url("conversation-tools:webchat")
         response = client.post(
-            conversation.get_absolute_url() + "tools/chatbot/webchat",
+            tool_url,
             {"conversation": conversation.id, "domain": invalid_domain},
             HTTP_HOST=HTTP_HOST,
         )
@@ -107,12 +105,14 @@ class TestRasaConversationFormRoute(ConversationRecipes):
             conversation=conversation, domain=invalid_domain
         ).exists()
 
-    def test_post_rasa_conversation_invalid_permission_form(self, db, mk_conversation):
-        conversation = mk_conversation()
+    def test_post_rasa_conversation_invalid_permission_form(self, rf, user_db, conversation_db):
+        conversation = conversation_db
         client = Client()
+        client.force_login(user_db)
+        tool_url = conversation_db.url("conversation-tools:webchat")
         with pytest.raises(PermissionError):
             client.post(
-                conversation.get_absolute_url() + "tools/chatbot/webchat",
+                tool_url,
                 {"conversation": conversation.id, "domain": "http://domain.com.br"},
                 HTTP_HOST=HTTP_HOST,
             )
@@ -143,18 +143,25 @@ class TestRasaConversationIntegrationsAPI(ConversationRecipes):
 
 
 class TestWebchatHelper:
-    EJ_POSSIBLE_URLS = [
-        "http://localhost:8000",
-        "https://ejplatform.pencillabs.com.br/",
-        "https://www.ejplatform.org",
-    ]
+    def __init__(self):
+        self.environments = {
+            "local": "http://localhost:8000",
+            "dev": "https://ejplatform.pencillabs.com.br",
+            "prod": "https://www.ejplatform.org",
+        }
 
-    def test_get_current_available_instance(self):
-        current_host = random.choice(TestWebchatHelper.EJ_POSSIBLE_URLS)
-        rasa_instance_url = WebchatHelper.get_rasa_domain(current_host)
-        assert rasa_instance_url
-        assert rasa_instance_url == WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(current_host)
+    def test_local_webchat_integration(self):
+        rasa_environment = WebchatHelper.get_rasa_domain(self.environments["local"])
+        assert rasa_environment
+
+    def test_dev_webchat_integration(self):
+        rasa_environment = WebchatHelper.get_rasa_domain(self.environments["dev"])
+        assert rasa_environment
+
+    def test_prod_webchat_integration(self):
+        rasa_environment = WebchatHelper.get_rasa_domain(self.environments["prod"])
+        assert rasa_environment
 
     def test_if_instance_not_available(self):
-        rasa_instance_url = WebchatHelper.get_rasa_domain(HTTP_HOST)
-        assert not rasa_instance_url
+        rasa_environment = WebchatHelper.get_rasa_domain(HTTP_HOST)
+        assert not rasa_environment
