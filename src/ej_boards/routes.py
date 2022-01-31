@@ -4,11 +4,12 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from ej_boards.models import Board
-from ej_boards.utils import register_app_routes
+from ej_boards.utils import patched_register_app_routes, register_app_routes
 from ej_clusters.models import Stereotype
 from ej_conversations import routes as conversations
 from ej_conversations.models import Conversation
-from ej_tools import routes as tools_routes
+from ej_signatures.models import SignatureFactory
+from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
 from ej_dataviz import routes as dataviz
@@ -85,6 +86,8 @@ def board_base(request, board):
 
 @urlpatterns.route(board_base_url)
 def conversation_list(request, board):
+    if not request.user.get_profile().completed_tour:
+        return redirect(f"{board.get_absolute_url()}tour")
     return conversations.list_view(
         request,
         queryset=board.conversations.annotate_attr(board=board),
@@ -94,6 +97,26 @@ def conversation_list(request, board):
             "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
         ),
     )
+
+
+@urlpatterns.route(board_base_url + "tour/", login=True)
+def tour(request, board):
+    if request.user.get_profile().completed_tour:
+        return redirect(f"{board.get_absolute_url()}")
+    if request.method == "POST":
+        request.user.get_profile().completed_tour = True
+        request.user.get_profile().save()
+        return redirect(f"{board.get_absolute_url()}")
+    user_signature = SignatureFactory.get_user_signature(request.user)
+    max_conversation_per_user = user_signature.get_conversation_limit()
+    return {
+        "board": board,
+        "conversations": board.conversations.annotate_attr(board=board),
+        "help_title": _(
+            "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
+        ),
+        "conversations_limit": max_conversation_per_user,
+    }
 
 
 @urlpatterns.route(board_base_url + "add/", perms=["ej.can_edit_board:board"])
@@ -120,7 +143,7 @@ def conversation_moderate(request, board, **kwargs):
     return conversations.moderate(request, **kwargs)
 
 
-register_app_routes(tools_routes, board_base_url, urlpatterns, "conversation-tools")
 register_app_routes(dataviz, board_base_url, urlpatterns, "dataviz")
 register_app_routes(report, board_base_url, urlpatterns, "report")
 register_app_routes(cluster, board_base_url, urlpatterns, "cluster")
+patched_register_app_routes(urlpatterns.urls, conversation_tools_urlpatterns, "conversation-tools")

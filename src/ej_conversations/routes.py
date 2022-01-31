@@ -13,10 +13,8 @@ from ej_boards.models import Board
 from ej_users.models import SignatureFactory
 
 from . import forms, models
-from .enums import TourStatus
 from .models import Conversation
 from .rules import next_comment
-from .tour import TOUR
 from .utils import (
     check_promoted,
     conversation_admin_menu_links,
@@ -47,12 +45,9 @@ def list_view(
 ):
     user = request.user
     user_boards = []
-    # Select the list of conversations: staff get to see hidden conversations while
-    # regular users cannot
     if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
         queryset = queryset.filter(is_hidden=False)
 
-    # Annotate queryset for efficient db access
     annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
     queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
     if user.is_authenticated:
@@ -71,18 +66,6 @@ def list_view(
         "conversations_limit": max_conversation_per_user,
         **(context or {"user_boards": user_boards}),
     }
-
-
-@urlpatterns.route("tour/")
-def tour(request):
-    if request.method == "POST":
-        status = TourStatus(request.POST["state"])
-        response = HttpResponse()
-        response.set_cookie("conversations.tour", status)
-        request.user.tour.status = TourStatus.DONE
-        request.user.tour.save()
-        return response
-    return list_view(request, context={"tour": TOUR})
 
 
 @urlpatterns.route(conversation_url, login=True)
