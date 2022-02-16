@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-26 19:26-0300\n"
+"POT-Creation-Date: 2022-02-15 16:31-0300\n"
 "PO-Revision-Date: 2019-09-09 13:55-0300\n"
 "Last-Translator: Fábio Mendes <fabiomacedomendes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -93,7 +93,7 @@ msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
 #: src/ej/routes.py:57 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:100
+#: src/ej_conversations/models/conversation.py:104
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -187,7 +187,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:46
+#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:47
 msgid "Title"
 msgstr "Título"
 
@@ -331,7 +331,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:44
+#: src/ej_conversations/models/vote.py:46
 msgid "Choice"
 msgstr "Escolha"
 
@@ -415,6 +415,21 @@ msgstr "{n} votos criados"
 #: src/ej_conversations/admin.py:160
 msgid "Compute the opinion bridge user for all conversations."
 msgstr "Calcule o usuário da ponte de opinião para todas as conversas."
+
+#: src/ej_conversations/decorators.py:9 src/ej_conversations/decorators.py:10
+#: src/ej_conversations/decorators.py:11 src/ej_tools/tools.py:92
+#: src/ej_tools/views.py:118 src/ej_tools/views.py:127
+#: src/ej_tools/views.py:137 src/ej_tools/views.py:147
+#: src/ej_tools/views.py:183 src/ej_tools/views.py:199
+#, fuzzy
+msgid "Opinion Bots"
+msgstr "Bot de Opinião"
+
+#: src/ej_conversations/decorators.py:12 src/ej_tools/tools.py:123
+#: src/ej_tools/views.py:74 src/ej_tools/views.py:99
+#, fuzzy
+msgid "Opinion component"
+msgstr "Componente de opinião"
 
 #: src/ej_conversations/enums.py:11
 msgid "User provided"
@@ -536,70 +551,69 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:36 src/ej_tools/apps.py:7
+#: src/ej_conversations/models/conversation.py:37 src/ej_tools/apps.py:7
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: src/ej_conversations/models/conversation.py:48
+#: src/ej_conversations/models/conversation.py:49
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:50
+#: src/ej_conversations/models/conversation.py:51
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:50
+#: src/ej_conversations/models/conversation.py:51
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:55
+#: src/ej_conversations/models/conversation.py:56
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:61
+#: src/ej_conversations/models/conversation.py:62
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:66
+#: src/ej_conversations/models/conversation.py:67
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:68
+#: src/ej_conversations/models/conversation.py:69
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:71
+#: src/ej_conversations/models/conversation.py:72
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:74
+#: src/ej_conversations/models/conversation.py:75
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:99
+#: src/ej_conversations/models/conversation.py:103
 #: src/ej_conversations/roles/conversations.py:133
-#: src/ej_conversations/tour.py:75 src/ej_gamification/routes.py:148
-#: src/ej_notifications/enums.py:8
+#: src/ej_gamification/routes.py:148 src/ej_notifications/enums.py:8
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:102
+#: src/ej_conversations/models/conversation.py:106
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:103
+#: src/ej_conversations/models/conversation.py:107
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:200
+#: src/ej_conversations/models/conversation.py:204
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:281
+#: src/ej_conversations/models/conversation.py:285
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -610,37 +624,41 @@ msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:31
+#: src/ej_conversations/models/vote.py:32
 #, fuzzy
 msgid "Opinion Component"
 msgstr "Componente de Opinião"
 
-#: src/ej_conversations/models/vote.py:32
+#: src/ej_conversations/models/vote.py:33
 msgid "Rasa webchat"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:33
+#: src/ej_conversations/models/vote.py:34
+msgid "EJ"
+msgstr ""
+
+#: src/ej_conversations/models/vote.py:35
 #, fuzzy
 msgid "Unknown"
 msgstr "*Desconhecido*"
 
-#: src/ej_conversations/models/vote.py:44
+#: src/ej_conversations/models/vote.py:46
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:45
+#: src/ej_conversations/models/vote.py:47
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:47
+#: src/ej_conversations/models/vote.py:49
 msgid "Channel"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:50
+#: src/ej_conversations/models/vote.py:52
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:67
+#: src/ej_conversations/models/vote.py:69
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
@@ -659,11 +677,11 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/routes.py:44
+#: src/ej_conversations/routes.py:43
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/routes.py:67
+#: src/ej_conversations/routes.py:63
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -679,61 +697,6 @@ msgstr ""
 #: src/ej_conversations/routes_comments.py:45
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
-
-#: src/ej_conversations/tour.py:4
-msgid "Next"
-msgstr "Próximo"
-
-#: src/ej_conversations/tour.py:4
-msgid "Dismiss"
-msgstr "Dispensar"
-
-#: src/ej_conversations/tour.py:12 src/ej_users/routes.py:61
-msgid "Welcome to EJ!"
-msgstr "Bem vindo ao EJ!"
-
-#: src/ej_conversations/tour.py:12
-msgid "Creating a Shepherd is easy too! Just create ..."
-msgstr "Criar um pastor também é fácil! Apenas crie ..."
-
-#: src/ej_conversations/tour.py:17 src/ej_conversations/tour.py:25
-#: src/ej_conversations/tour.py:33
-msgid "App header"
-msgstr "Cabeçalho do aplicativo"
-
-#: src/ej_conversations/tour.py:18
-msgid "This header displays the main actions you can do in each page."
-msgstr ""
-"Este cabeçalho exibe as ações principais que você pode fazer em cada página."
-
-#: src/ej_conversations/tour.py:26
-msgid "Like going back to the previous page..."
-msgstr "Como voltar para a página anterior ..."
-
-#: src/ej_conversations/tour.py:34
-msgid "... or opening the \"options\" menu."
-msgstr "... ou abrindo o menu \"Opções\"."
-
-#: src/ej_conversations/tour.py:44 src/ej_conversations/tour.py:52
-#: src/ej_conversations/tour.py:62
-msgid "Conversation Card"
-msgstr "Cartão de Conversa"
-
-#: src/ej_conversations/tour.py:45
-msgid "But here is where the magic starts..."
-msgstr "Mas aqui é onde a mágica começa ..."
-
-#: src/ej_conversations/tour.py:54
-msgid ""
-"Conversations consist questions asked by other users about interesting "
-"topics of discussion."
-msgstr ""
-"Conversas consistem em perguntas feitas por outros usuários sobre tópicos "
-"interessantes de discussão."
-
-#: src/ej_conversations/tour.py:63 src/ej_conversations/tour.py:76
-msgid "Click here to join in!"
-msgstr "Clique aqui para entrar!"
 
 #: src/ej_conversations/utils.py:48
 msgid "Edit"
@@ -882,65 +845,65 @@ msgstr "Você!"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/routes_report.py:348
+#: src/ej_dataviz/routes_report.py:353
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/routes_report.py:349
+#: src/ej_dataviz/routes_report.py:354
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/routes_report.py:350
+#: src/ej_dataviz/routes_report.py:355
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/routes_report.py:351
+#: src/ej_dataviz/routes_report.py:356
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/routes_report.py:352
+#: src/ej_dataviz/routes_report.py:357
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/routes_report.py:353
+#: src/ej_dataviz/routes_report.py:358
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupo_id"
 
-#: src/ej_dataviz/routes_report.py:354
+#: src/ej_dataviz/routes_report.py:359
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/routes_report.py:355
+#: src/ej_dataviz/routes_report.py:360
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/routes_report.py:356
+#: src/ej_dataviz/routes_report.py:361
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/routes_report.py:357
+#: src/ej_dataviz/routes_report.py:362
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/routes_report.py:358 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/routes_report.py:363 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/routes_report.py:359
+#: src/ej_dataviz/routes_report.py:364
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/routes_report.py:360 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/routes_report.py:365 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/routes_report.py:361
+#: src/ej_dataviz/routes_report.py:366
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/routes_report.py:362
+#: src/ej_dataviz/routes_report.py:367
 msgid "skipped"
 msgstr "pulados"
 
@@ -2057,16 +2020,7 @@ msgstr ""
 "Integre esta conversa com  um cliente web, chamado webchat. \n"
 " Cria um chat na página do seu site."
 
-#: src/ej_tools/tools.py:35
-#, fuzzy
-msgid ""
-"Telegram user will interact with the bot in the private chat. Use telegram "
-"API for connection."
-msgstr ""
-"O usuário do telegram irá interagir com o bot no privado. Utiliza a API do "
-"telegram para conexão."
-
-#: src/ej_tools/tools.py:39
+#: src/ej_tools/tools.py:28 src/ej_tools/tools.py:44
 #, fuzzy
 msgid ""
 "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
@@ -2077,15 +2031,24 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/tools.py:44
+#: src/ej_tools/tools.py:40
+#, fuzzy
+msgid ""
+"Telegram user will interact with the bot in the private chat. Use telegram "
+"API for connection."
+msgstr ""
+"O usuário do telegram irá interagir com o bot no privado. Utiliza a API do "
+"telegram para conexão."
+
+#: src/ej_tools/tools.py:49
 msgid "DudaEjBot"
 msgstr ""
 
-#: src/ej_tools/tools.py:45
+#: src/ej_tools/tools.py:50
 msgid "BocaDeLoboBot"
 msgstr ""
 
-#: src/ej_tools/tools.py:55
+#: src/ej_tools/tools.py:60
 #, fuzzy
 msgid ""
 "Whatsapp user will interact with the bot in the private chat.Use Twilio as a "
@@ -2094,7 +2057,7 @@ msgstr ""
 "O usuário do whatsapp irá interagir com o bot no privado. Utiliza o Twillio "
 "como broker para conexão."
 
-#: src/ej_tools/tools.py:59
+#: src/ej_tools/tools.py:64
 #, fuzzy
 msgid ""
 "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ "
@@ -2105,12 +2068,12 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/tools.py:73 src/ej_tools/tools.py:131 src/ej_tools/views.py:215
-#: src/ej_tools/views.py:268
+#: src/ej_tools/tools.py:78 src/ej_tools/tools.py:136 src/ej_tools/views.py:216
+#: src/ej_tools/views.py:269
 msgid "Mautic"
 msgstr ""
 
-#: src/ej_tools/tools.py:75
+#: src/ej_tools/tools.py:80
 msgid ""
 "Integrate this conversation with the Mautic platform API, allowing users who "
 "participate in this conversation to be automatically synchronized with "
@@ -2120,18 +2083,11 @@ msgstr ""
 "usuários que participarem desta conversa sejam automaticamente sincronizados "
 "com a base de contatos do Mautic."
 
-#: src/ej_tools/tools.py:80
+#: src/ej_tools/tools.py:85
 msgid "/docs/?page=user-docs/tools-mautic.html"
 msgstr ""
 
-#: src/ej_tools/tools.py:87 src/ej_tools/views.py:118 src/ej_tools/views.py:127
-#: src/ej_tools/views.py:137 src/ej_tools/views.py:147
-#: src/ej_tools/views.py:182 src/ej_tools/views.py:198
-#, fuzzy
-msgid "Opinion Bots"
-msgstr "Bot de Opinião"
-
-#: src/ej_tools/tools.py:89
+#: src/ej_tools/tools.py:94
 #, fuzzy
 msgid ""
 "Collect opinions using EJ's bots. You can collect on Whatsapp, Telegram and "
@@ -2140,44 +2096,39 @@ msgstr ""
 "Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
 "usuários do Telegram."
 
-#: src/ej_tools/tools.py:118 src/ej_tools/views.py:74 src/ej_tools/views.py:99
-#, fuzzy
-msgid "Opinion component"
-msgstr "Componente de opinião"
-
-#: src/ej_tools/tools.py:120
+#: src/ej_tools/tools.py:125
 msgid ""
 "Conduct opinion collections without your audience having to access EJ "
 "directly. Allows you to vote, comment and view groups directly on html "
 "pages, without impacting the experience of those who already access their "
 "networks and platforms."
 msgstr ""
-"Realize coletas de opinião em seu site ou plataforma.Permite votar, comentar "
-"e visualizar os da EJ em páginas html. A ferramenta se comunica com a EJ por "
-"meio da nossa API."
+"Realize coletas de opinião sem que seu público tenha que acessar diretamente "
+"a EJ Permite votar, comentar e visualizar os grupos diretamente em páginas "
+"html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
-#: src/ej_tools/tools.py:125
+#: src/ej_tools/tools.py:130
 msgid "/docs/?page=user-docs/tools-opinion-component.html"
 msgstr ""
 
-#: src/ej_tools/tools.py:132
+#: src/ej_tools/tools.py:137
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/tools.py:136
+#: src/ej_tools/tools.py:141
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:137
+#: src/ej_tools/tools.py:142
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_tools/tools.py:142 src/ej_tools/views.py:46
+#: src/ej_tools/tools.py:147 src/ej_tools/views.py:46
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:144
+#: src/ej_tools/tools.py:149
 msgid ""
 "Generates a html template of this conversation, for mailing marketing "
 "campaigns."
@@ -2186,7 +2137,7 @@ msgstr ""
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
 
-#: src/ej_tools/tools.py:147
+#: src/ej_tools/tools.py:152
 msgid "/docs/?page=user-docs/tools-mail-template.html"
 msgstr ""
 
@@ -2333,6 +2284,10 @@ msgstr "Token do usuário"
 #: src/ej_users/models.py:118
 msgid "Anonymous"
 msgstr "Anônimo"
+
+#: src/ej_users/routes.py:61
+msgid "Welcome to EJ!"
+msgstr "Bem vindo ao EJ!"
 
 #: src/ej_users/routes.py:175
 msgid "Please reset your password"
@@ -2749,27 +2704,27 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:28
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:41
 #, fuzzy
 msgid "Total votes"
 msgstr "Total de votos"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:31
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:44
 #, fuzzy
 msgid "Total participants"
 msgstr "Total de participantes"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:34
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:47
 #, fuzzy
 msgid "Total conversations"
 msgstr "Total de conversas"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:38
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:52
 #, fuzzy
 msgid "Signature model"
 msgstr "Modelo de assinatura"
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:43
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:57
 #, fuzzy, python-format
 msgid ""
 "In the current signature, you can create <span\n"
@@ -2778,7 +2733,7 @@ msgid ""
 msgstr ""
 "Na sua assinatura atual, você pode criar %(conversations_limit)s conversas."
 
-#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:49
+#: src/ej_boards/jinja2/ej_boards/conversation-list.jinja2:63
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -3222,7 +3177,7 @@ msgstr ""
 "com opiniões diferentes são\n"
 "            representadas por pontos distantes."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:34
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:35
 #: src/ej_dataviz/jinja2/ej_dataviz/word-cloud.jinja2:6
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
@@ -3285,6 +3240,10 @@ msgstr "Primeiro"
 msgid "Last"
 msgstr "Último"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
+msgid "Next"
+msgstr "Próximo"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
 msgid "Previous"
 msgstr "Anterior"
@@ -3302,12 +3261,12 @@ msgstr "Ordena de forma decrescente"
 msgid "Export"
 msgstr "Exportar"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:11
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:12
 #, fuzzy
 msgid "General Report"
 msgstr "Relatório Geral"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:13
+#: src/ej_dataviz/jinja2/ej_dataviz/report/general-report.jinja2:14
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channel-chart-card.jinja2:5
 msgid "Participants"
 msgstr "Participantes"
@@ -3324,6 +3283,33 @@ msgid ""
 msgstr ""
 "Sua conversa ainda não tem personas definidas. Sem personas, não é possível "
 "gerar os grupos de opinião."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:8
+msgid "Take the EJ wherever you want!"
+msgstr "Leve a EJ para onde quiser!"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:10
+msgid ""
+"Begin your collect journey with our quick links. For more integrations, "
+"access the tools area."
+msgstr ""
+"Inicie sua jornada de coleta com nossos links rápidos. Para mais "
+"integrações, acesse a área de Ferramentas."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:15
+#, fuzzy
+msgid "Use this link to make collect into Telegram."
+msgstr "Utilize esse link para realizar a coleta no telegram."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:18
+msgid "Close"
+msgstr "Fechar"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:23
+#, fuzzy
+msgid "Go to Tools"
+msgstr "Ir para Ferramentas"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:8
 #, fuzzy
@@ -3741,6 +3727,32 @@ msgid ""
 "Integrate this conversation with one of the available collection channels."
 msgstr "Integre esta conversa com um dos canais de coleta disponíveis."
 
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:4
+#, fuzzy
+msgid "Selection of comments"
+msgstr "Seleção de comentários"
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:6
+#, fuzzy
+msgid "Select which comments you would like to include in the poll."
+msgstr "Selecione quais comentários gostaria de incluir na enquete."
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:8
+#, fuzzy
+msgid "Copy and paste the generated command into the poll bot."
+msgstr "Copie e cole no bot de enquetes o comando gerado."
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:13
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:22
+msgid "Pool command: "
+msgstr "Comando da enquete: "
+
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
+#, fuzzy
+msgid "comments"
+msgstr " comentários"
+
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:15
 #, fuzzy
 msgid "Integrates this conversation with external tools and platforms."
@@ -3804,7 +3816,7 @@ msgstr ""
 "clique no botão ao lado da URL abaixo."
 
 #: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:7
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:39
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:12
 msgid "Remove"
 msgstr "Remover"
 
@@ -3833,12 +3845,12 @@ msgstr "Voltar"
 msgid "Enable Integration"
 msgstr "Habilitar Integração"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:21
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:20
 #, fuzzy
 msgid "Collection Link"
 msgstr "Link de coleta"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:22
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:21
 msgid ""
 "Select a theme and start a collection with the opinion component built into "
 "EJ."
@@ -3846,67 +3858,46 @@ msgstr ""
 "Selecione um tema e inicie uma coleta com o componente de opinião integrado "
 "à EJ."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:34
-#, fuzzy
-msgid "Selects a color palette for the component style."
-msgstr "Selecione uma paleta de cor para o estilo do componente."
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:31
+msgid ""
+"Web component that allows you to integrate EJ into external sites and "
+"systems."
+msgstr "Componente web que permite integrar a EJ em sites e sistemas externos."
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:42
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:36
+msgid "Customize the collection component with our color options."
+msgstr "Personalize o componente de coleta com nossas opções de cores."
+
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:44
 #, fuzzy
 msgid "Start Collection"
 msgstr "Iniciar coleta"
 
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:48
-msgid "Integrate opinion component with Mautic."
-msgstr "Integre o componente de opinião com o Mautic."
-
-#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:49
-msgid "Integrate opinion component with Google Analytics."
-msgstr "Integre o componente de opinião com o Google Analytics."
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:14
-msgid "Pool command: "
-msgstr ""
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:67
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:97
-msgid "You don't have enough valid comments. See more about limitations in: "
-msgstr ""
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:88
+#: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:52
 #, fuzzy
-msgid " comments"
-msgstr " comentários"
+msgid "How to integrate the opinion component to my website?"
+msgstr "Como integrar o componente de opinião ao meu site?"
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:97
-#, fuzzy
-msgid "limitations"
-msgstr "limitações"
-
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:136
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:4
 #, fuzzy
 msgid "Poll Comments"
 msgstr "Comentários da Enquete"
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:137
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:6
 msgid "It presents the list of comments that will compose the telegram poll."
 msgstr ""
 "Apresenta a lista de comentários que irão compor a enquete no telegram."
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:141
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:7
+msgid "Only comments shorter than 100 characters can be selected."
+msgstr "Apenas comentários com menos de 100 caracteres podem ser selecionados."
+
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:14
 #, fuzzy
-msgid "Selection of comments"
-msgstr "Seleção de comentários"
+msgid "You don't have enough approved comments"
+msgstr "Você não tem comentários aprovados suficientes"
 
-#: src/ej_tools/jinja2/ej_tools/survey-comments.jinja2:142
-msgid ""
-"Select which comments you would like to include in the poll. A custom "
-"command will be generated."
-msgstr ""
-"Selecione quais comentários gostaria de ver na enquete. Um comentário "
-"customizado será gerado."
-
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:24
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:27
 #, fuzzy
 msgid ""
 "Collect opinions using EJ's chatbots. Allows you to collect the opinion of "
@@ -3915,12 +3906,12 @@ msgstr ""
 "Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
 "usuários do Telegram."
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:26
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:22
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:31
 msgid "Collect Bot"
 msgstr "Bot de Coleta"
 
-#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:27
+#: src/ej_tools/jinja2/ej_tools/telegram.jinja2:30
 msgid "Use one of our bots to make collections on Telegram."
 msgstr "Utilize um dos nossos bots para realizar coletas no Telegram."
 
@@ -3933,116 +3924,70 @@ msgstr ""
 "Empurrando Juntas."
 
 #: src/ej_tools/jinja2/ej_tools/webchat.jinja2:22
-msgid ""
-"To integrate EJ chatbot with your site, enter the site domain in the field "
-"below."
-msgstr ""
-"Para integrar o chatbot EJ ao seu site, digite o domínio do site no campo "
-"abaixo."
+#, fuzzy
+msgid "Gather feedback using EJ's chatbot infrastructure."
+msgstr "Colete opiniões usando a infraestrutura de chatbots da EJ."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:24
 #, fuzzy
 msgid ""
-"When a new user reaches your site, the webchat will send to EJ the location "
-"where it is hosted, and will receive back this conversation. All chatbots "
-"that have access to this conversation are also displayed here."
+"With Webchat you can perform collections on web pages using our guided bot."
 msgstr ""
-"Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
-"localização onde está hospedado e receberá de volta esta conversa."
+"Com o Webchat você pode realizar coletas em páginas web utilizando o nosso "
+"bot guiado."
 
 #: src/ej_tools/jinja2/ej_tools/webchat.jinja2:27
-msgid "Linked websites"
-msgstr "Sites integrados"
-
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:30
 #, fuzzy
-msgid "Visualize"
-msgstr "Visualização"
+msgid "Webchat"
+msgstr "Webchat"
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:33
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:28
 #, fuzzy
 msgid ""
-"Integrate a new page with the webchat or click <b>view</b> to use our "
-"standard integration."
+"Integrate a new page with webchat or click <b>Start Collection</b> to "
+"utilize our standard integration."
 msgstr ""
-"Integre uma nova página com o webchat ou clique em <b>visualizar</b>, para "
-"utilizar nossa integração padrão."
+"Integre uma nova página com o webchat ou clique em <b>Iniciar coleta</b>, "
+"para utilizar nossa integração padrão."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:64
-msgid "new"
-msgstr "novo"
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:36
+msgid "When should I use webchat?"
+msgstr "Quando devo utilizar o webchat?"
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:68
+#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:37
+msgid "How can I integrate webchat into my website?"
+msgstr "Como posso integrar o webchat ao meu site?"
+
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:26
 #, fuzzy
-msgid "Add"
-msgstr "Adicionar"
+msgid "Collect opinions using EJ's chatbot, also known as Duda."
+msgstr "Colete opiniões usando o chatbot da EJ, também conhecido como Duda."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:77
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:27
 #, fuzzy
-msgid "Integration script"
-msgstr "Integração"
+msgid "Allows you to collect the opinion of whatsapp users."
+msgstr "Permite coletar a opinião de usuários do whatsapp."
 
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:78
-#, fuzzy
-msgid ""
-"Add the script in the &ltbody&gt tag of the page where the collection will "
-"take place."
-msgstr ""
-"Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
-
-#: src/ej_tools/jinja2/ej_tools/webchat.jinja2:85
-msgid "Copy"
-msgstr ""
-
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:20
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:28
 #, fuzzy
 msgid ""
-"Collect opinions using EJ's chatbot, also known as Duda. Allows you to "
-"collect the opinion of whatsapp users. To make the collection available, "
-"forward the participation link to groups, channels or directly in the user's "
-"private chat."
+"To make the collection available, forward the participation link to groups, "
+"channels or directly in the user's private chat."
 msgstr ""
-"Colete opiniões usando o chatbot da EJ, também conhecido como Duda. Permite "
-"coletar a opinião de usuários do whatsapp. Para disponibilizar a coleta, "
-"encaminhe o link de participação para grupos, canais ou diretamente no chat "
-"privado do usuário."
+"Para disponibilizar a coleta, encaminhe o link de participação para grupos, "
+"canais ou diretamente no chat privado do usuário."
 
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:32
 msgid "Share the participation link to start the collection."
 msgstr "Compartilhe a chamada de participação para iniciar a coleta."
 
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:20
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:29
-#, fuzzy
-msgid "Copied to clipboard!"
-msgstr "Copiado para a área de transferência!"
-
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:8
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:5
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:33
 #, fuzzy
 msgid "Opinion Bot"
 msgstr "Bot de Opinião"
 
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:34
-#, fuzzy
-msgid ""
-"Collect your audience's opinion using our guided bot. Click on the share "
-"button to send the collection to the whatsapp or other networks."
-msgstr ""
-"Colete a opinião do seu público utilizando o nosso bot guiado. Clique no "
-"botão compartilhar para enviar a coleta para o Whatsapp ou para outras redes."
-
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:9
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:37
-#, fuzzy
-msgid "Collect with:"
-msgstr "Coletar com:"
-
-#: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:50
-#, fuzzy
-msgid "To participate just click on the link: "
-msgstr "Para participar basta clicar no link:"
-
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:9
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:6
 #, fuzzy
 msgid ""
@@ -4052,24 +3997,43 @@ msgstr ""
 "Colete a opinião do seu público utilizando o nosso bot guiado. Permite que o "
 "usuário vote nos comentários da conversa via chat."
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:10
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:7
 #, fuzzy
 msgid "Select one of the bots to start collecting"
 msgstr "Selecione um dos bots para iniciar a coleta"
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:12
+#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:9
+#, fuzzy
+msgid "Collect with:"
+msgstr "Coletar com:"
+
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:20
+#, fuzzy
+msgid "Copied to clipboard!"
+msgstr "Copiado para a área de transferência!"
+
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:27
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:24
+#: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:18
 #, fuzzy
 msgid "Share Bot"
 msgstr "Compartilhar Bot"
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:34
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:31
+#: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:12
 #, fuzzy
 msgid "Starts conversation"
 msgstr "Iniciar coleta"
 
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:40
 #: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:37
-msgid "When should I use the opinion component?"
-msgstr "Quando eu devo utilizar o componente de opinião?"
+#, fuzzy
+msgid "When should I use the opinion bot?"
+msgstr "Quando eu devo utilizar o bot de opinião?"
 
 #: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:5
 msgid "Survey Bot"
@@ -4134,9 +4098,56 @@ msgstr ""
 msgid "Edit survey"
 msgstr "Editar enquete"
 
-#: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:39
+#: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:41
 msgid "When should I use the survey bot?"
 msgstr "Quando eu devo utilizar o bot de enquetes?"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:4
+#, fuzzy
+msgid "Webchat in your site"
+msgstr "Webchat no seu site"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:5
+msgid ""
+"Use EJ's web chatbot from your website or platform. It requires you to "
+"configure the integration script on the desired page and register this page "
+"in the integrations table."
+msgstr ""
+"Utilize o chatbot web da EJ a partir do seu site ou plataforma. Exige que "
+"você configure o script de integração na página desejada e cadastre esta "
+"página na tabela de integrações."
+
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:6
+#, fuzzy
+msgid "Integrations table"
+msgstr "Tabela de integrações"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:10
+msgid "Page"
+msgstr "Página"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:37
+msgid "new page"
+msgstr "nova página"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:41
+#, fuzzy
+msgid "Add"
+msgstr "Adicionar"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:4
+#, fuzzy
+msgid "Webchat in EJ"
+msgstr "Webchat na EJ"
+
+#: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:5
+msgid ""
+"Use EJ's web chatbot from our infrastructure. It does not require any "
+"additional configuration. The user will access an EJ route to participate."
+msgstr ""
+"Utilize o chatbot web da EJ a partir da nossa infraestrutura. Não exige "
+"nenhuma configuração adicional. O usuário irá acessar uma rota da EJ para "
+"participar."
 
 #: src/ej_users/jinja2/account/account_inactive.jinja2:2
 msgid "Account is inactive"
@@ -4378,6 +4389,59 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
+#~ msgid "new"
+#~ msgstr "novo"
+
+#, fuzzy
+#~ msgid "Share bot"
+#~ msgstr "Compartilhar bot"
+
+#~ msgid "Dismiss"
+#~ msgstr "Dispensar"
+
+#~ msgid "Creating a Shepherd is easy too! Just create ..."
+#~ msgstr "Criar um pastor também é fácil! Apenas crie ..."
+
+#~ msgid "App header"
+#~ msgstr "Cabeçalho do aplicativo"
+
+#~ msgid "This header displays the main actions you can do in each page."
+#~ msgstr ""
+#~ "Este cabeçalho exibe as ações principais que você pode fazer em cada "
+#~ "página."
+
+#~ msgid "Like going back to the previous page..."
+#~ msgstr "Como voltar para a página anterior ..."
+
+#~ msgid "... or opening the \"options\" menu."
+#~ msgstr "... ou abrindo o menu \"Opções\"."
+
+#~ msgid "Conversation Card"
+#~ msgstr "Cartão de Conversa"
+
+#~ msgid "But here is where the magic starts..."
+#~ msgstr "Mas aqui é onde a mágica começa ..."
+
+#~ msgid ""
+#~ "Conversations consist questions asked by other users about interesting "
+#~ "topics of discussion."
+#~ msgstr ""
+#~ "Conversas consistem em perguntas feitas por outros usuários sobre tópicos "
+#~ "interessantes de discussão."
+
+#~ msgid "Click here to join in!"
+#~ msgstr "Clique aqui para entrar!"
+
+#, fuzzy
+#~ msgid "limitations"
+#~ msgstr "limitações"
+
+#~ msgid "Selects a color palette for the component style."
+#~ msgstr "Selecione uma paleta de cor para o estilo do componente."
+
+#~ msgid "Integrate opinion component with Google Analytics."
+#~ msgstr "Integre o componente de opinião com o Google Analytics."
+
 #, fuzzy
 #~ msgid "Find @EjGroupsBot bot on Telegram;"
 #~ msgstr "Encontre o bot @EjGroupsBot no Telegram;"
@@ -4431,6 +4495,40 @@ msgstr "Autenticação"
 #~ " Cria um chat na página do seu site."
 
 #~ msgid ""
+#~ "To integrate EJ chatbot with your site, enter the site domain in the "
+#~ "field below."
+#~ msgstr ""
+#~ "Para integrar o chatbot EJ ao seu site, digite o domínio do site no campo "
+#~ "abaixo."
+
+#, fuzzy
+#~ msgid ""
+#~ "When a new user reaches your site, the webchat will send to EJ the "
+#~ "location where it is hosted, and will receive back this conversation. All "
+#~ "chatbots that have access to this conversation are also displayed here."
+#~ msgstr ""
+#~ "Quando um novo usuário chegar ao seu site, o webchat enviará para EJ a "
+#~ "localização onde está hospedado e receberá de volta esta conversa."
+
+#, fuzzy
+#~ msgid "Integration script"
+#~ msgstr "Integração"
+
+#, fuzzy
+#~ msgid ""
+#~ "Add the script in the &ltbody&gt tag of the page where the collection "
+#~ "will take place."
+#~ msgstr ""
+#~ "Adicione o script na tag &ltbody&gt da página em que a coleta será feita."
+
+#, fuzzy
+#~ msgid "Visualize"
+#~ msgstr "Visualização"
+
+#~ msgid "Linked websites"
+#~ msgstr "Sites integrados"
+
+#~ msgid ""
 #~ "Uses analytics cookies allowing you to cross vote data with user browser "
 #~ "data."
 #~ msgstr ""
@@ -4474,10 +4572,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Add this snippet to the website's body tag."
 #~ msgstr "Adicione esse trecho na tag body do site."
-
-#, fuzzy
-#~ msgid "Collect opinions using EJ's chatbot infrastructure."
-#~ msgstr "Colete opiniões usando a infraestrutura de chatbots da EJ."
 
 #, fuzzy
 #~ msgid ""
@@ -4525,10 +4619,6 @@ msgstr "Autenticação"
 #~ msgstr ""
 #~ "Adicione esse trecho na tag body, da página em que o componente será "
 #~ "apresentado."
-
-#, fuzzy
-#~ msgid "Back to tools"
-#~ msgstr "Voltar para ferramentas"
 
 #, fuzzy
 #~ msgid "Back to channels"
