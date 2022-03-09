@@ -1,4 +1,4 @@
-<nav title="{{ _('Boards') }}">
+<nav title="{{ _('Boards') }}" class="menu-padding-vertical menu-padding-horizontal">
     <h3>
         {{ _('Boards') }}
         <a href="{{ url('boards:board-create') }}" class="add-button" title="{{_('New board')}}"><i class="fa fa-plus-square fa-lg"></i></a>
@@ -6,11 +6,12 @@
     <ul class="board-list">
         {% for board in user_boards %}
         <li class="{{ board.slug }}" id="{{ board.slug }}-link">
-            <a href="{{ url('boards:conversation-list', board.slug) }}">{{board.title}}</a>
+            <a href="{{ url('boards:conversation-list', board_slug=board.slug) }}">{{board.title}}</a>
             <p>{{board.conversations.count()}}</p>
         </li>
         {% endfor %}
     </ul>
+
 </nav>
 
 <script>
@@ -23,4 +24,7 @@
         document.getElementById(selectedBoard + "-link").click();
     }
 </script>
-{{ page_menu.ACCESSIBILITY() }}
+
+<nav class = "menu-padding-vertical">
+    {{ page_menu.ACCESSIBILITY() }}
+</nav>
