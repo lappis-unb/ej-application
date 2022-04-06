@@ -1,15 +1,14 @@
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
-    <ul class="nav-header menu-padding-vertical menu-padding-horizontal">
+    <ul class="nav-header menu-padding">
         <li id="board-name">
-            <a href="{{ url('boards:conversation-list', board_slug=request.user.boards.first().slug) }}">
+            <a href="{{ url('boards:conversation-list', board_slug=conversation.board.slug) }}">
                 <i class="fa fa-arrow-circle-left"></i>
                 <span>{{ conversation.board }}</span>
             </a>
         </li>
 
         <li class="menu-item">
-            <a href={{conversation.url("report:general-report")}}><span>{{ conversation.title }}</span></a>
-            
+            <a href={{conversation.url("dataviz:dashboard")}}><span>{{ conversation.title }}</span></a>
         </li>
         
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
@@ -23,7 +22,7 @@
         {% endif %}
     </ul>
 
-    <ul class="menu-padding-vertical menu-padding-horizontal nav-categories">
+    <ul class="menu-padding nav-categories">
         <h3 id="menu-conversation">{{ _('Collect opinions') }}</h3>
         
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
@@ -36,7 +35,7 @@
 
     <hr class="nav-divider">
 
-    <ul class="menu-padding-vertical menu-padding-horizontal nav-categories">
+    <ul class="menu-padding nav-categories">
         <h3 id="menu-conversation">{{ _('Model and Analyze') }}</h3>
         {% for link in page_menu.links('conversations:detail-admin', request, conversation) %}
             <li>{{ link }}</li>
@@ -53,7 +52,6 @@
                 
             <ul id="report-options-list">
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
-                    <li><div id="general-report" class="general-item"><a href=" {{ conversation.url('report:general-report') }}">{{ _('General report') }}</a></div></li>
                     <li><div id="comments-report" class="comments-item"><a href=" {{ conversation.url('report:comments-report') }}">{{ _('Comments report') }}</a></div></li>
                     <li><div id="participants-report" class="users-item"><a href=" {{ conversation.url('report:users') }}">{{ _('Participants report') }}</a></div></li>
                     <li><div id="clusters" class="clusters-item"><a href=" {{ conversation.url('cluster:index') }}">{{ _('Opinion groups') }}</a></div></li>
@@ -65,32 +63,30 @@
     </ul>
 
 <script>
-function setChecked(check_id) {
-    event.preventDefault();
-    let checkbox = document.getElementById(check_id);
-    checkbox.checked = !checkbox.checked;
-}
-
-function showSection(check_id, section_id) {
-    let checkbox = document.getElementById(check_id)
-    let section = document.getElementById(section_id);
-    if (checkbox.checked) {
-        section.className = "show"
-    } else {
-        section.className = "hide"
-    }
-}
-
- function menuController() {
-    let url = window.location.href.split("/");
-    let menuItem = url[url.length-2].split("-")[0];
-    let backgroundColor = document.querySelector("." + menuItem + "-item"); 
-
-    if (backgroundColor) {
-        backgroundColor.className = "selected";
-        document.getElementById("reports").click();
+    function setChecked(check_id) {
+        event.preventDefault();
+        let checkbox = document.getElementById(check_id);
+        checkbox.checked = !checkbox.checked;
     }
 
-};
-window.addEventListener('load', menuController);
+    function showSection(check_id, section_id) {
+        let checkbox = document.getElementById(check_id)
+        let section = document.getElementById(section_id);
+        section.className = checkbox.checked ? "show" : "hide";
+    }
+
+    function menuStarter() {
+        let reports = document.getElementById('reports');
+        let url = window.location.href.split("/");
+        var menuItem = url[url.length-2].split("-")[0];
+        menuItem = document.querySelector("." + menuItem + "-item"); 
+
+        if (!menuItem) return
+        menuItem.classList.add("selected");
+        reports.click();
+
+        var menuProfile = document.getElementById("show-profile-menu");
+    };
+
+    menuStarter();
 </script>

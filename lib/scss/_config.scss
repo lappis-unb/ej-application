@@ -52,17 +52,43 @@ $color-theme-osf: #1D1088 !default;
 $color-theme-osf-light: #F8127E !default;
 
 //Report colors
-$color-theme-report-light: #E5E5E5 !default;
-$color-theme-report-lighter: #fefefe !default;
+$color-theme-report-light-gray: #E5E5E5 !default;
 $color-theme-report-gray: #bababa !default; 
-$color-theme-report-gray-light: #aaaaaa !default;
+$color-theme-report-dark-gray: #777777 !default;
+$color-theme-report-lighter: #fefefe !default;
 $color-theme-report-blue: #052B47 !default;
+$color-theme-report-light-blue: #30BFD3 !default;
 $color-theme-report-black: black !default;
+$color-theme-report-transparent-black: rgba(0, 0, 0, 0.12) !default;
 $color-theme-report-red: red !default;
+$color-theme-report-dark-red: #E20000 !default;
+$color-theme-info-card-report: #FFCEDB !default;
+$color-theme-report-pink: #FF3D72 !default;
+$color-theme-report-green: #18AE00 !default;
+
+//Clusters colors
+$color-bright-blue: #30C1D4 !default;
+$color-complementary-gray: #777777 !default;
+$color-pink-light: #FF3D72 !default;
+$color-gray-brigther: #E5E5E5 !default;
+$color-red-negative: #C70000 !default;
+$color-tooltip-red: #FFCEDB !default;
+$colot-errolist-red: #FF0000 !default;
 
 //Poll bot 
 $modal-transparent-backgound: rgba(0, 0, 0, 0.4);
 $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
+
+//Manage Stereotypes
+$color-button-gray: #BABABA;
+$color-card-gray-lighter: #E6EAED;
+$color-gray-middle: #979797;
+$color-gray-dark: #6C6C6C;
+$color-gray-darker: #777777;
+$color-agree: rgba(24, 174, 0, 0.8);
+$color-disagree: #C70000;
+$color-base-pink: #FF3D72;
+
 
 // Action colors
 $color-action: $color-brand !default;

@@ -17,11 +17,18 @@
 
 @import 'components/conversations/links-modal';
 
+@import 'components/reports/comment';
+@import 'components/reports/dashboard';
+@import 'components/reports/export-data';
+@import 'components/reports/users';
+@import 'components/reports/generics';
+
 // Generic
 @import 'components/collapsible';
 @import 'components/landing-page';
 @import 'components/datatables';
-@import 'components/reports';
+@import 'components/clusters';
+@import 'components/stereotypes';
 
 // FIXME (forever): remove shame ;-)
 @import 'components/main/mendeleev-shame';

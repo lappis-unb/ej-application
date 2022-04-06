@@ -4,34 +4,53 @@ import {Cookies} from "../lib/dependencies";
 
 @component('main-header')
 class MainHeader extends Component {
-    isOpen: boolean;
+    isMenuOpen: boolean;
+    isProfileOpen: boolean;
 
     constructor(element) {
         super(element);
-        this.isOpen = false;
+        this.isMenuOpen = false;
+        this.isProfileOpen = false;
     }
 
     back() {
         window.history.back();
     }
+    
+    toggleProfile() {
+        this.isProfileOpen ? this.closeProfile() : this.openProfile();
+    }
 
+    openProfile() {
+        this.isProfileOpen = true;
+        $('#show-profile-menu')
+            .removeClass('hide');
+        this.closeMenu();
+        this.createOverlay();
+    }
+
+    closeProfile() {
+        this.isProfileOpen = false;
+        $('#show-profile-menu')
+        .addClass('hide');
+        if(!this.isMenuOpen) this.removeOverlay();
+    }
+    
     toggleMenu() {
-        this.isOpen ? this.closeMenu() : this.openMenu();
+        this.isMenuOpen ? this.closeMenu() : this.openMenu();
     }
 
     openMenu() {
-        let yCoord = $('.main-header').innerHeight();
-        $('.page-menu')
-            .css('top', `${yCoord - 4}px`)
-            .attr('is-open', '');
+        this.isMenuOpen = true;
+        $('.page-menu').attr('is-open', '');
+        this.closeProfile();
         this.createOverlay();
-        this.isOpen = true;
-    }
+    }                
 
     closeMenu() {
+        this.isMenuOpen = false;
         $('.page-menu').attr('is-open', null);
-        this.removeOverlay();
-        this.isOpen = false;
+        if(!this.isProfileOpen) this.removeOverlay();
     }
 
     removeOverlay() {
@@ -39,6 +58,9 @@ class MainHeader extends Component {
     }
 
     createOverlay() {
+        if($(window).width() >= 560) return;
+        if($('#page-menu-overlay').length) return;
+        
         let self = this;
         let overlay = document.createElement('div');
         $(overlay)
@@ -46,7 +68,8 @@ class MainHeader extends Component {
             .attr('id', 'page-menu-overlay')
             .on('click', () => {
                 self.removeOverlay();
-                self.toggleMenu();
+                self.closeMenu();
+                self.closeProfile();
             });
         document.body.appendChild(overlay);
         return overlay;
@@ -67,7 +90,7 @@ class PageMenu extends Component {
         this.hicontrast = Cookies.get('hicontrast') === 'y';
         this.scaleFactor = 1.35;
         this.setContrast();
-        if (this.largefont && $('html').data('large-font') !== 'true') {
+        if (this.largefont && $('html').data('large-font') !== '                true') {
             this.makeFontsLarge();
         }
     }
@@ -121,7 +144,7 @@ class PageMenu extends Component {
         $elem.data('original-font-size', {
             size: $elem.css('font-size'),
             hasOwnStyle: $elem[0].style.fontStyle != '',
-        });
+        });                
         return $elem;
     }
 
