@@ -29,26 +29,29 @@
                 <p id="text-new-persona">{{_("Create a new persona with the group name if no other personas are selected.")}}</p>
             </div>
         </div>
-
         <div class="edit-buttons">
             <button class="delete-group" type="button" onclick="showConfirmationDelete();"><i class="fas fa-times-circle"></i> {{ _('Delete group') }}</button>
-            <input class="create-group-btn" value="{{ _('Save edits') }}" type="button" id="save-edit" onclick="changeButton(); return false;"/>
+            <hr class="divider-mobile">
+            <input class="save-group-btn" value="{{ _('Save edits') }}" type="button" id="save-edit" onclick="changeButton(); return false;"/>
         </div>
         </form>
     </div>
 </div>
+<div class="manage-personas-container">
+    <a class="button manage-personas" href="{{conversation.url('cluster:stereotype-votes')}}"><i class="fas fa-times-circle"></i> {{ _('Manage personas') }}</a>
+</div>
 
 <form method="post" id="form-confirmation-modal" class="close-modal-btn" onsubmit="closeModal();">
-{{ csrf_input }}
+    {{ csrf_input }}
     <input type="hidden" name="action" value="{{ edit_cluster.id }}">
-    <div class="overlay-modal" id="modal-confirm-delete">
-        <div class="confirmation-modal">
-            <div class="modal-confirmation-container">
-                <h3>{{_("Are you sure of this action?")}}</h3>
-                <button class="delete" name="delete">
+    <div class="modal__overlay" id="modal-confirm-delete">
+        <div class="modal__container">
+            <div class="modal__title">{{_("Are you sure of this action?")}}</div>
+            <div class="modal__buttons">
+                <button class="modal__btn modal__btn--red" name="delete">
                     <i class="fa">&#xf057;</i> {{ _('Yes, I want to delete the group') }}
                 </button>
-                <button class="return" type="button" onclick="closeModal()">
+                <button class="modal__btn modal__btn--blue" type="button" onclick="closeModal()">
                     <i class="fa">&#xf056;</i> {{ _('No, I want to go back') }}
                 </button>
             </div>
@@ -73,14 +76,14 @@ function changeButton() {
 
 function closeModal() {
     const modal = document.getElementById('form-confirmation-modal');
-    const body = document.getElementsByClassName("body")[0].classList.add('modal-deactive');
+    const body = document.getElementsByClassName("body")[0].classList.remove('overflow-deactive');
     modal.classList.add('close-modal-btn');
     modal.classList.remove('form-modal-delete-show');
 }
 
 function showConfirmationDelete() {
     const modal = document.getElementById('form-confirmation-modal');
-    const body = document.getElementsByClassName("body")[0].classList.add('modal-active');
+    const body = document.getElementsByClassName("body")[0].classList.add('overflow-deactive');
     modal.classList.add('form-modal-delete-show');
     modal.classList.remove('close-modal-btn');   
 }

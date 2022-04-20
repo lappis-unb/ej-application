@@ -2,7 +2,7 @@ from logging import getLogger
 
 from django.core.exceptions import ValidationError
 from django.http import Http404
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hyperpython import a
 from sidekick import import_later
 
@@ -48,7 +48,7 @@ def conversation_admin_menu_links(conversation, user):
         menu_links.append(a(_("Edit"), href=url))
     if user.has_perm("ej.can_moderate_conversation", conversation):
         url = conversation.patch_url("conversation:moderate")
-        menu_links.append(a(_("Moderate"), href=url))
+        menu_links.append(a(_("Manage Comments"), href=url))
     return menu_links
 
 

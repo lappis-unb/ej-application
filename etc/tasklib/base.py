@@ -6,12 +6,10 @@ python = sys.executable
 directory = Path(os.path.dirname(__file__)).parent.parent
 sys.path.append("src")
 HELP_MESSAGES = {
-    "dry-run": "Display docker commands on the screen without running them",
     "theme": "Set theme (e.g. cpa or default)",
     "watch": "Re-run when any file changes",
     "minify": "Minify resulting assets",
     "background": "Runs on background",
-    "rocket": "Enable Rocket.Chat",
 }
 
 
