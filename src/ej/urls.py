@@ -58,7 +58,7 @@ def get_urlpatterns():
         *with_app("ej_dataviz", "conversations/", routes="routes_report", namespace="report"),
         #
         #  Global stereotype and cluster management
-        *with_app("ej_clusters", "conversations/", namespace="cluster"),
+        path("conversations/", include("ej_clusters.urls", namespace="cluster")),
         *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
         #
         #  Allauth
@@ -84,8 +84,8 @@ def get_urlpatterns():
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
         #
         #  Documentation in development mode
-        re_path(r"^static_docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
-        re_path(r"^static_docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
+        re_path(r"^docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
+        re_path(r"^docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
         #
         #  Boards
         *with_app("ej_boards", "", namespace="boards"),
