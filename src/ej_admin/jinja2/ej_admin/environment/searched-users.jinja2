@@ -1,4 +1,4 @@
-{% from "ej_boards/environment/paginator.jinja2" import pagination %}
+{% from "ej_admin/environment/paginator.jinja2" import pagination %}
 <table>
     <tr class="search-table__header">
         <th class="search-table__title">{{_("User")}}</th>
@@ -13,5 +13,5 @@
         </tr>
     {% endfor %}
 </table>
-
 {{ pagination(page_object, 'updateUserSearch', _("users")) }}
+</div>

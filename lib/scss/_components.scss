@@ -15,6 +15,7 @@
 @import 'components/tools/mautic';
 @import 'components/tools/opinion-component';
 @import 'components/tools/webchat';
+@import 'components/tools/rocketchat';
 @import 'components/tools/survey';
 
 @import 'components/signatures/signatures';
@@ -28,7 +29,7 @@
 @import 'components/reports/users';
 @import 'components/reports/generics';
 
-@import 'components/boards/environment';
+@import 'components/admin/environment';
 
 // Generic
 @import 'components/collapsible';

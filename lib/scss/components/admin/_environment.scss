@@ -33,6 +33,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        font-weight: bold;
     }
 
     &__owner, &__conversation-count {
@@ -40,6 +41,18 @@
         margin-bottom: unset;
     }
 }
+
+.environment-card--large {
+    border: 2px solid $color-theme-report-light-blue;
+    border-radius: 5px;
+    width: 416px;
+    height: 119px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 26px;
+}
+
 
 .environment-statistics {
     margin-bottom: 4.75em;
@@ -112,11 +125,18 @@
 }
 
 .search-table {
+    margin-bottom: 0rem;
+
+    &__container {
+        min-height: 500px;
+    }
+
     &__header {
         height: 44px;
         
         th {
             background: $color-theme-report-light-blue !important;
+            padding: 0 1.5rem;
         }
         th:first-child {
             border-top-left-radius: 5px;
@@ -135,6 +155,7 @@
             border-bottom: 1px solid $color-theme-report-light-gray;
             font-size: 1.25rem;
             height: 60px;
+            padding: 0 1.5rem;
         }
         a {
             text-decoration: underline;
@@ -163,7 +184,7 @@
         text-align: left;
     }
     
-    &__text--elipse {
+    &__text--ellipse {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -171,8 +192,61 @@
         line-clamp: 1;
         -webkit-box-orient: vertical;
     }
+    &-favorite-count {
+        font-weight: unset;
+    }
 }
 
 .conversation-option--hide {
     display: none;
+}
+
+.button--favorite,
+.button--remove-favorite {
+    float: right;
+    i {
+        margin-left: 0;
+    }
+}
+
+.button--remove-favorite {
+    i {
+        color: rgba(48, 191, 211, 1); 
+    }
+    .button {
+        background-color: white;
+        color: rgba(48, 191, 211, 1); 
+    }
+    a:hover > i {
+        color: white;
+    }
+}
+
+.favorite-boards__container {
+    display: grid;
+    grid-gap: 1.25rem;
+    grid-template-rows: repeat(2, 1fr);
+    overflow-x: scroll;
+    grid-auto-flow: column;
+    padding-bottom: 2rem;
+}
+
+.favorite-boards__count {
+    font-family: 'Raleway';
+}
+
+@media (min-width: 1280px) {
+    .environment {
+        min-width: 840px;
+    }
+}
+
+@media (max-width: 530px) {
+    .environment-card--large {
+        width: 260px;
+    }
+
+    .favorite-boards__container {
+        grid-template-rows: repeat(3, 1fr);
+    }
 }

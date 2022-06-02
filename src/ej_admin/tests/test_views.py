@@ -1,13 +1,12 @@
-import email
+import pytest
 from django.test import Client
+from ej_users.models import User
+from ej_boards.models import Board
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations import create_conversation
-from ej_boards.models import Board
-from ej_users.models import User
-import pytest
 
 
-class TestEnvironment(ConversationRecipes):
+class TestAdministration(ConversationRecipes):
     @pytest.fixture
     def admin_user(self, db):
         admin_user = User.objects.create_superuser("admin@test.com", "pass")
@@ -21,7 +20,7 @@ class TestEnvironment(ConversationRecipes):
         return client
 
     def test_get_environment_statistics(self, logged_admin):
-        url = "/profile/boards/environment/"
+        url = "/administration/"
 
         user = User.objects.create_user("user1@email.br", "password")
         board = Board.objects.create(slug="board1", owner=user, description="board")
@@ -45,7 +44,7 @@ class TestEnvironment(ConversationRecipes):
         create_conversation("foo", "conv1", user, board=board)
         create_conversation("foo2", "conv2", user, board=board_2)
 
-        url = "/profile/boards/environment/recent-boards/?boardIsActive=true"
+        url = "/administration/recent-boards/?boardIsActive=true"
 
         response = logged_admin.get(url)
 
@@ -63,7 +62,7 @@ class TestEnvironment(ConversationRecipes):
         create_conversation("foo", "conv1", user, board=board)
         create_conversation("foo2", "conv2", user, board=board_2)
 
-        url = "/profile/boards/environment/recent-boards/?boardIsActive=false"
+        url = "/administration/recent-boards/?boardIsActive=false"
 
         response = logged_admin.get(url)
 
@@ -75,7 +74,7 @@ class TestEnvironment(ConversationRecipes):
         assert recent_boards[3].slug == "admintestcom"
 
     def test_get_searched_users_by_date(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-users/"
+        base_url = "/administration/searched-users/"
         user = User.objects.create_user("user1@email.br", "password")
         url = base_url + "?page=1&numEntries=6&orderBy=date&sort=desc&searchString="
         response = logged_admin.get(url)
@@ -85,7 +84,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_users[1].email == admin_user.email
 
     def test_get_searched_users_by_conversations_count(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-users/"
+        base_url = "/administration/searched-users/"
         url = base_url + "?page=1&numEntries=6&orderBy=conversations-count&sort=desc&searchString="
 
         user = User.objects.create_user("user1@email.br", "password")
@@ -110,7 +109,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_users[2].conversations.count() == 0
 
     def test_get_searched_users_by_comments_count(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-users/"
+        base_url = "/administration/searched-users/"
         url = base_url + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
 
         user = User.objects.create_user("user1@email.br", "password")
@@ -128,7 +127,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_users[1].comments.count() == 0
 
     def test_get_searched_boards(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-boards/"
+        base_url = "/administration/searched-boards/"
         # search by date
         url = base_url + "?page=1&numEntries=6&orderBy=date&sort=desc&searchString="
 
@@ -187,7 +186,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_boards[3].conversation_set.comments().count() == 0
 
     def test_get_searched_conversations(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-conversations/"
+        base_url = "/administration/searched-conversations/"
 
         user = User.objects.create_user("user1@email.br", "password")
         board = Board.objects.create(slug="board1", owner=user, description="board")
@@ -223,7 +222,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_conversations[2].comments.count() == 0
 
     def test_get_users_by_search_string(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-users/"
+        base_url = "/administration/searched-users/"
 
         user = User.objects.create_user("user1@email.br", "password")
         user_2 = User.objects.create_user("user2@email.br", "password")
@@ -245,7 +244,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_users[0].email == user.email
 
     def test_get_boards_by_search_string(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-boards/"
+        base_url = "/administration/searched-boards/"
 
         user = User.objects.create_user("user1@email.br", "password")
         Board.objects.create(slug="test1", owner=user, description="board")
@@ -266,7 +265,7 @@ class TestEnvironment(ConversationRecipes):
         assert searched_boards[0].slug == "test1"
 
     def test_get_conversations_by_search_string(self, logged_admin, admin_user):
-        base_url = "/profile/boards/environment/searched-conversations/"
+        base_url = "/administration/searched-conversations/"
 
         user = User.objects.create_user("user1@email.br", "password")
         board = Board.objects.create(slug="board1", owner=user, description="board")
