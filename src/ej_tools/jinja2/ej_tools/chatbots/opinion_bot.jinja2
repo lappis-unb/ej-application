@@ -1,3 +1,4 @@
+
 {% macro opinion_bot(conversation, tool, type, image) %}
 {% from "ej_tools/includes/help-card.jinja2" import help_card %}
 
@@ -37,7 +38,7 @@
           </a>
       </div>
 </div>
-{{ help_card(_("When should I use the opinion bot?"), "/static_docs/i18n/pt-br/user-docs/tools-chatbot.html")}}
+{{ help_card(_("When should I use the opinion bot?"), "/docs/user-guides/pt-br/tools-chatbot.html")}}
 
 <script charset="utf-8">
 
@@ -68,7 +69,9 @@ function getOpinionBotLink(target="") {
   if (target) {
       botName = target.value;
   }
-  let link = getLinkByPlatform("{{type}}", botName);
+  tokens = window.location.href.split("/");
+  plataform = tokens[tokens.length - 1];
+  let link = getLinkByPlatform(plataform, botName);
   botLink.href = link;
   return link;
 }

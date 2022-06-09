@@ -29,8 +29,8 @@
     <span class="helptext">{{_("Use one of our bots to make collections on Telegram.")}}</span>
 
     <div class="tools-divider">
+      {{opinion_bot(conversation, tool, "telegram", static('/img/logo/channel_telegram.svg'))}}
       {% with comments=conversation.poll_comments %}
-        {{opinion_bot(conversation, tool, "telegram", static('/img/icons/duda.png') )}}
         {% include 'ej_tools/telegram/poll_bot.jinja2' %}
       {% endwith %}
     </div>

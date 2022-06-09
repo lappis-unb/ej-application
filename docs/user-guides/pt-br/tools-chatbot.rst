@@ -2,180 +2,162 @@
 Duda: O chatbot oficial da EJ
 ##############################
 
-Para iniciar a configuração do chatbot, primeiramente é necessário
-ter uma instância do Rasa_ rodando. O Rasa é plataforma de inteligência artificial 
-utilizada para construir a personalidade do chatbot, e para integrá-lo
-a API da EJ. Para instruções técnicas de como rodar o chatbot da EJ em
+.. _Bot de Opinião:
+
+A EJ permite realizar coletas de opinião através de uma interface conversacional em que o
+participante vota nos comentários e adiciona comentários,  que ficam disponíveis para os demais
+participantes votarem. Essa estrutura de chat permite realizar coletas no Telegram, WhatsApp ou página web.
+
+Para instruções técnicas de como rodar o chatbot da EJ em
 um ambiente de homologação, acesse https://gitlab.com/pencillabs/ej/ej-bot.
 
+
+Quando devo utilizar o Bot de Opinião?
+========================================
+
+O Bot de Opinião é especialmente útil para usuários que gerenciam grupos no Telegram ou WhatsApp e
+desejam que os integrantes participem das coletas sem sair dos applicativos de mensageria.
+Também é possível utilizar o bot de opinião em páginas html, por meio da ferramenta :ref:`Webchat`.
 
 Telegram
 ==========================================
 
-Como faço para localizar o bot no Telegram?
--------------------------------------------
+Para participar de uma coleta no Telegram é necessário gerar o link de participação. Esse link é
+uma URL que aponta para o chat da Duda, nosso bot de opinião disponível no plano gratuito da ferramenta.
+Para gerar o link de participação acesse a área de **Ferramentas > Bot de Opinião > Telegram**.
+A área de ferramentas pode ser encontrada na página interna de uma conversa.
 
-Para começar a interagir com a Duda a partir do Telegram, clique no campo de busca do Telegram e digite DudaEjBot ou se preferir acesse http://t.me/dudaejbot
-
-* O bot está denominado como Duda - Empurrando Juntas.
-
-
-Como gerar um link de participação?
------------------------------------
-
-Para fazer a coleta de opinião é necessário gerar um link de participação que será enviado para grupos, canais ou pessoas específicas. A geração do 
-link é feita na Plataforma EJ pelo administrador da conversa.  Ao clicar no link gerado, o usuário do Telegram é direcionado para o bot, e inicia
-sua participação na coleta. Para gerar o link de participação, execute os seguintes passos:
-
-1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
-
-2. Depois, entre na seção **Bot de Opinião**.
-
-3. Selecione a plataforma **Telegram**.
-
-4. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
-
-5. Copie o texto e o link de participação clicando no botão **Compartilhar Bot**, conforme mostra a figura. 
+.. figure:: ../images/ej-bot-de-opiniao.png 
 
 
-O link gerado fica no seguinte formato de exemplo: *http://t.me/DudaEjBot?start=<ID da conversa>*.
+Nessa tela, você terá duas opções:
 
-.. figure:: ../images/ferramenta-chatbot_12.png 
-.. figure:: ../images/ferramenta-chatbot_3.png
-.. figure:: ../images/ferramenta-chatbot_41.png 
+1. Iniciar a coleta da conversa em questão no Telegram, por meio do botão **Iniciar Coleta**.
+2. Gerar o link da coleta, por meio do botão **Compartilhar Bot**. Esse botão irá copiar para a área
+   de transferência o link de participação e um texto de convie, que poderá ser alterado posteriormente.
 
-Como iniciar uma conversa com a Duda?
--------------------------------------
+Ao clicar no link, o participante é direcionado para o chat privado com o Bot.
 
-Repita os passos de 1 à 4 do item anterior *Como gerar um link de participação?*
-
-5. Para iniciar a conversa diretamente no bot, selecione o botão **Iniciar Coleta**.
-
-
-.. figure:: ../images/ferramenta-chatbot_42.png 
 .. figure:: ../images/coleta-telegram.png 
   :align: center
 
 
-Whatsapp
+WhatsApp
 ==========================================
 
-Como gerar um link de participação?
------------------------------------
+Para participar de uma coleta no WhatsApp é necessário gerar o link de participação. Esse link é
+uma URL que aponta para o chat da Duda, nosso bot de opinião disponível no plano pago da ferramenta.
+Para gerar o link de participação acesse a área de **Ferramentas > Bot de Opinião > WhatsApp**.
+A área de ferramentas pode ser encontrada na página interna de uma conversa.
 
-Para fazer a coleta de opinião é necessário gerar um link de participação que será enviado para grupos ou pessoas específicas. A geração do 
-link é feita na Plataforma EJ pelo administrador da conversa.  Ao clicar no link gerado, o usuário do Whatsapp é direcionado para o bot, e inicia
-sua participação na coleta. Para gerar o link de participação, execute os seguintes passos:
+.. figure:: ../images/ej-bot-de-opiniao-whatsapp.png 
 
-1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
+Nessa tela, você terá duas opções:
 
-2. Depois, entre na seção **Bot de Opinião**.
+1. Iniciar a coleta da conversa em questão no WhatsApp, por meio do botão **Iniciar Coleta**.
+2. Gerar o link da coleta, por meio do botão **Compartilhar Bot**. Esse botão irá copiar para a área
+   de transferência o link de participação e um texto de convie, que poderá ser alterado posteriormente.
 
-3. Selecione a plataforma **Whatsapp**.
+Ao clicar no link, o participante é direcionado para o chat privado com o Bot.
 
-4. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
-
-5. Copie o texto e o link de participação clicando no botão **Compartilhar Bot**, conforme mostra a figura.
-
-
-.. figure:: ../images/ferramenta-chatbot_12.png 
-.. figure:: ../images/ferramenta-chatbot-wpp_3.png
-.. figure:: ../images/ferramenta-chatbot-wpp_41.png 
-
-O link gerado fica no seguinte formato de exemplo: *https://api.whatsapp.com/send?phone=<Número de telefone>&text=start+<ID da conversa>*.
-
-
-Como iniciar uma conversa com a Duda no *Whatsapp*?
------------------------------------------------------
-
-Repita os passos de 1 à 4 do item anterior *Como gerar um link de participação?*
-
-5. Para iniciar a conversa diretamente no bot, selecione o botão **Iniciar Coleta**.
-
-A Duda precisa que o usuário envie a mensagem *start <ID da conversa>* para poder iniciar a conversa. 
-
-.. figure:: ../images/ferramenta-chatbot-wpp_42.png 
 .. figure:: ../images/coleta-whatsapp.png
-  :align: center 
 
+
+.. _Webchat:
 
 Webchat
 ==========================================
+O Webchat é uma das ferramentas de coleta da EJ e permite integrar o bot de opinião em uma página web.
+Essa página pode ser desde um post em um blog até uma plataforma de e-commerce. 
 
-O que é o WebChat?
-------------------
+Como posso utilizar a ferramenta?
+----------------------------------
 
-O WebChat é um chat em uma página web, em formato de chatbot. Com ele, você pode realizar a coleta de opiniões integrando as suas conversas que estão cadastradas na EJ. 
-Esta ferramenta cria um chat web na página html em que ele for incluído, permitindo que usuários que cheguem à pagina participem de uma coleta.
+Exitem duas formas de utilizar o Webchat.
 
-Quando usar o WebChat? 
-----------------------
+1. Utilizando um link que a própria EJ disponibiliza. Esse link pode ser compartilhado com o seu público,
+   que irá conseguir participar de uma coleta sem que você tenha que fazer qualquer outro procedimento.
+   Basta ir na área da ferramenta, clicar no botão **Compartilhar Bot** e o link para a coleta será 
+   copiado para a área de transferência.
+   Ao clicar nesse link, o usuário é redirecionado para uma página da EJ com o WebChat integrado. 
+   A partir dai, basta ele participar da coleta. 
+   O botão **Iniciar Coleta** é um atalho para que o criador da conversa possa testar a integração com o Webchat.
 
-O WebChat é recomendado se você deseja que as coletas de opinião sejam realizadas com seu público alvo sem que eles precisem sair da sua página web. 
-Ou seja, você precisa possuir um site ou plataforma disponível. Desta forma, todo o processo de coleta com o público estará centralizado no seu domínio.
+.. figure:: ../images/ej-webchat-integrado.png
 
-
-Como posso integrar o webchat ao meu site?
--------------------------------------------
-
-Para fazer coletas de opinião via chatbot, o administrador da conversa pode configurar em seu site ou plataforma o WebChat. 
-O seguinte *snippet* pode ser utilizado para integrar o webchat à Duda.
-
+2. Integrando o script do Webchat em uma página html qualquer. Essa opção permite que você integre o Webchat no seu site, o que facilita a jornada do usuário, já que ele não será redirecionado para uma página da EJ. O script de integração permite que o Webchat, mesmo rodando fora da EJ, apresente a conversa que você criou.
+Caso opte por integrar o Webchat no seu site, o seguinte script pode ser utilizado como ponto de partida da integração. Note que você estará sujeito aos limites de uso do plano gratutito, caso seja o seu caso.
 
 .. code-block:: html
 
-  <html>
-    <head></head>
-    <body></body>
-    <script>!(function () {
-      localStorage.removeItem("chat_session");
+   <html>
+      <head></head>
+      <body></body>
+      <script>!(function () {
+         localStorage.removeItem("chat_session");
       let e = document.createElement("script"),
-        t = document.head || document.getElementsByTagName("head")[0];
-      socketEnviroment = document.getElementById("socket-url").value;
+         t = document.head || document.getElementsByTagName("head")[0];
       (e.src =
-        "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
-        (e.async = !0),
-        (e.onload = () => {
-          window.WebChat.default(
-            {
-              initPayload: window.location.href,
-              title: "Duda",
-              socketUrl: "https://rasadefault.pencillabs.com.br?token=thisismysecret",
-              profileAvatar: "path-from-your-chosen-avatar>",
-              embedded: true
-            },
+            "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+            (e.async = !0),
+            (e.onload = () => {
+            window.WebChat.default(
+               {
+                  initPayload: window.location.href,
+                  title: "Duda",
+                  socketUrl: https://rasadefault.pencillabs.com.br?token=thisismysecret,
+                  profileAvatar: "/static/img/icons/duda.png",
+                  embedded: true
+               },
             null
-          );
-        }),
-        t.insertBefore(e, t.firstChild);
+      );
+      }),
+      t.insertBefore(e, t.firstChild);
       })();
-    </script>
-    <style>
-    #rasaWebchatPro {
-      height: 100vh;
-    }
+      </script>
+      <style>
+   #rasaWebchatPro {
+   height: 100vh;
+   width: 80vw;
+   margin: auto;
+   }
 
-    .rw-avatar {
+   .rw-avatar {
       width: 3rem !important;
       height: 3rem !important;
       border-radius: 100%;
       margin-right: 6px;
       position: relative;
       bottom: 5px;
-    }
+   }
 
-    #main-content {
-      display: none;
-    }
-    </style>
-  </html>
+   #main-content {
+   display: none;
+   }
+
+   #instance-error-webchat {
+   margin: 30px;
+   }
+      </style>
+   </html>
 
 
-Uma vez configurado o script na página, o administrador precisa registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante. 
+Uma vez configurado o script na página, será necessário registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante.
 
-Para realizar esse registro, basta acessar a área de **ferramentas** da conversa, clicar em **Bots de Opinião** e selecionar a ferramenta **WebChat**. Cadastre então a URL em que o script foi configurado. Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
+Para realizar esse registro, basta acessar a área de **ferramentas** da conversa, clicar em **Bots de Opinião** e selecionar a ferramenta **WebChat**. Cadastre então a URL em que o script foi configurado.
+Essa URL tem que ser exatamente igual à url em que o script do Webchat será configurado.
+Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
 
 .. figure:: ../images/ej-docs-webchat.png 
+
+
+Quando devo utilizar o WebChat? 
+--------------------------------
+
+Recomendamos utilizar o Webchat para situações em que utilizar o Telegram não é uma opção. 
+O usuário irá participar votando nos comentários e poderá adicionar um novo comentário, que será solicitado pelo bot. 
+Uma das vantagens do Webchat em relação ao Telegram é que ele pode ser integrado ao seu site ou plataforma web.
+
 
 Rocket.chat
 ==========================================
