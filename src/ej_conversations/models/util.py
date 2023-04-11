@@ -82,7 +82,8 @@ def statistics(conversation, cache=True):
             "commenters": (
                 get_user_model()
                 .objects.filter(
-                    comments__conversation_id=conversation.id, comments__status=Comment.STATUS.approved
+                    comments__conversation_id=conversation.id,
+                    comments__status=Comment.STATUS.approved,
                 )
                 .distinct()
                 .count()
@@ -98,15 +99,37 @@ def statistics(conversation, cache=True):
             rocketchat=Count("channel", filter=Q(channel=VoteChannels.ROCKETCHAT)),
         ),
         "channel_participants": conversation.votes.aggregate(
-            webchat=Count("author", filter=Q(channel=VoteChannels.RASA_WEBCHAT), distinct="author"),
-            telegram=Count("author", filter=Q(channel=VoteChannels.TELEGRAM), distinct="author"),
-            whatsapp=Count("author", filter=Q(channel=VoteChannels.WHATSAPP), distinct="author"),
-            opinion_component=Count(
-                "author", filter=Q(channel=VoteChannels.OPINION_COMPONENT), distinct="author"
+            webchat=Count(
+                "author",
+                filter=Q(channel=VoteChannels.RASA_WEBCHAT),
+                distinct="author",
             ),
-            unknown=Count("author", filter=Q(channel=VoteChannels.UNKNOWN), distinct="author"),
+            telegram=Count(
+                "author",
+                filter=Q(channel=VoteChannels.TELEGRAM),
+                distinct="author",
+            ),
+            whatsapp=Count(
+                "author",
+                filter=Q(channel=VoteChannels.WHATSAPP),
+                distinct="author",
+            ),
+            opinion_component=Count(
+                "author",
+                filter=Q(channel=VoteChannels.OPINION_COMPONENT),
+                distinct="author",
+            ),
+            unknown=Count(
+                "author",
+                filter=Q(channel=VoteChannels.UNKNOWN),
+                distinct="author",
+            ),
             ej=Count("author", filter=Q(channel=VoteChannels.EJ), distinct="author"),
-            rocketchat=Count("author", filter=Q(channel=VoteChannels.ROCKETCHAT), distinct="author"),
+            rocketchat=Count(
+                "author",
+                filter=Q(channel=VoteChannels.ROCKETCHAT),
+                distinct="author",
+            ),
         ),
     }
 
@@ -115,7 +138,7 @@ def statistics_for_user(conversation, user):
     """
     Get information about user.
     """
-    max_votes = conversation.comments.filter(status=Comment.STATUS.approved).count()
+    approved_comments_count = conversation.comments.filter(status=Comment.STATUS.approved).count()
     given_votes = (
         0
         if user.id is None
@@ -129,10 +152,10 @@ def statistics_for_user(conversation, user):
     e = 1e-50  # for numerical stability
     return {
         "votes": given_votes,
-        "missing_votes": max_votes - given_votes,
-        "participation_ratio": given_votes / (max_votes + e),
-        "total_comments": max_votes,
-        "comments": given_votes + 1,
+        "missing_votes": approved_comments_count - given_votes,
+        "participation_ratio": given_votes / (approved_comments_count + e),
+        "total_comments": approved_comments_count,
+        "comments": given_votes,
     }
 
 
