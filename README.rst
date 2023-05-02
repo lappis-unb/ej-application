@@ -31,7 +31,7 @@ This will deploy EJ using **docker/docker-compose.yml** file.
 Every change made on the repository will be reflected inside the
 `docker_server` container.
 
-If you are creating a clean EJ instance, you can populate de database
+If you are creating a clean EJ instance, you can populate the database
 with some fake data::
 
     $ inv docker-exec "poetry run inv db-fake"
@@ -63,6 +63,7 @@ poetry run inv i18n -c       Compile .po files
 poetry run inv sass          Compile sass files
 poetry run inv sass --watch  Watch changes on code, and compile .sass files
 poetry run inv db            Prepare database and run migrations
+poetry run inv shell         Executs django shell with ipython
 ===========================  ======================================================
 
 
