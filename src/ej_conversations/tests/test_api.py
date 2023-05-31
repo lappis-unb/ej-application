@@ -31,15 +31,16 @@ def other_user(db):
 
 def authenticate_user_api(user_info):
     api = APIClient()
-    user = api.post(BASE_URL + "/users/", user_info, format="json").data
-    api.credentials(HTTP_AUTHORIZATION="Token " + user["token"])
+    response = api.post(BASE_URL + "/login/", user_info, format="json")
+    user_token = response.json()["token"]
+    api.credentials(HTTP_AUTHORIZATION="Token " + user_token)
     return api
 
 
 class TestGetRoutes:
     def test_conversations_endpoint_author(self, conversation):
         path = BASE_URL + f"/conversations/{conversation.id}/"
-        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
 
         data = api.get(path, format="json").data
         del data["created"]
@@ -47,7 +48,7 @@ class TestGetRoutes:
 
     def test_conversations_endpoint_admin(self, conversation, admin_user):
         path = BASE_URL + f"/conversations/{conversation.id}/"
-        api = authenticate_user_api({"email": admin_user.email, "name": admin_user.name})
+        api = authenticate_user_api({"email": admin_user.email, "password": "pass"})
 
         data = api.get(path, format="json").data
         del data["created"]
@@ -62,7 +63,7 @@ class TestGetRoutes:
 
     def test_conversations_endpoint_other_user(self, conversation, other_user):
         path = BASE_URL + f"/conversations/{conversation.id}/"
-        api = authenticate_user_api({"email": other_user.email, "name": other_user.name})
+        api = authenticate_user_api({"email": other_user.email, "password": "password"})
 
         data = api.get(path, format="json").data
         assert len(data) == 2
@@ -71,7 +72,7 @@ class TestGetRoutes:
 
     def test_comments_endpoint(self, comment):
         path = BASE_URL + f"/comments/{comment.id}/"
-        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
 
         data = api.get(path, format="json").data
         del data["created"]
@@ -79,7 +80,7 @@ class TestGetRoutes:
 
     def test_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"
-        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
 
         data = api.get(path, format="json").data
         del data["created"]
@@ -91,7 +92,7 @@ class TestGetRoutes:
         assert api.response.status_code == 401
 
     def test_conversation_votes_endpoint(self, conversation, vote, api):
-        api = authenticate_user_api({"email": "email@server.com", "name": "admin"})
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         path = BASE_URL + f"/conversations/{conversation.id}/votes/"
         response = api.get(path, format="json")
         data = response.data
@@ -189,7 +190,7 @@ class TestApiRoutes:
 
         # Check if endpoint matches...
         comment = Comment.objects.first()
-        auth_token = api.post(BASE_URL + "/users/", {"email": "email@server.com", "name": "admin"})
+        auth_token = api.post(BASE_URL + "/login/", {"email": "email@server.com", "password": "password"})
         data = api.client.get(
             comments_path + f"{comment.id}/",
             {},

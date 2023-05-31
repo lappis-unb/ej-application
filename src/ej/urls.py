@@ -16,7 +16,7 @@ from ej_profiles.api import ProfileViewSet
 from ej_tools.api import RasaConversationViewSet
 from ej_conversations.api import ConversationViewSet, CommentViewSet, VoteViewSet
 from ej_clusters.api import ClusterizationViewSet
-from ej_users.api import UsersViewSet
+from ej_users.api import UsersViewSet, UserAuthViewSet
 from ej import services
 from ej.fixes import unregister_admin
 
@@ -31,6 +31,7 @@ api_router.register(r"clusterizations", ClusterizationViewSet, basename="v1-clus
 api_router.register(r"profiles", ProfileViewSet, basename="v1-profiles")
 api_router.register(r"boards", BoardViewSet, basename="v1-boards")
 api_router.register(r"users", UsersViewSet, basename="v1-users")
+api_router.register(r"", UserAuthViewSet, basename="v1-auth")
 
 
 #
