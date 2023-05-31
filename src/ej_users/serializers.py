@@ -6,7 +6,12 @@ from .models import User
 class UsersSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=50, min_length=5, required=True)
     email = serializers.EmailField(required=True)
-    password_confirm = serializers.CharField(max_length=50, min_length=5, required=True)
+    password = serializers.CharField(
+        required=True, write_only=True, style={"input_type": "password"}, max_length=128
+    )
+    password_confirm = serializers.CharField(
+        required=True, write_only=True, style={"input_type": "password"}, max_length=128
+    )
 
     class Meta:
         model = User
@@ -17,9 +22,18 @@ class UsersSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(_("Passwords do not match"))
         return data
 
-    def create(self):
-        validated_data = self.validated_data
+    def validate_email(self, data):
+        if User.objects.filter(email=data).exists():
+            raise serializers.ValidationError(_("Email already exists"))
+        return data
+
+    def create(self, validated_data):
         user = User(email=validated_data["email"], name=validated_data["name"])
         user.set_password(validated_data["password"])
         user.save()
         return user
+
+
+class UserAuthSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True, write_only=True, style={"input_type": "password"})
