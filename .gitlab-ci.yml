@@ -69,7 +69,7 @@ build_prod_image:
         - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core
-        - bin/pencilctl build ej -e dev -b prod -c prod --no-cache --push
+        - bin/pencilctl build ej -e prod -b prod -c prod --no-cache --push
     only:
         refs:
             - prod
