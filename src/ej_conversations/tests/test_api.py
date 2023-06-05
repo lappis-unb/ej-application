@@ -78,7 +78,39 @@ class TestGetRoutes:
         del data["created"]
         assert data == COMMENT
 
-    def test_vote_endpoint(self, vote):
+    def test_random_comments_endpoint(self, comment):
+        path = BASE_URL + f"/conversations/{comment.conversation.id}/random-comment/"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        del data["created"]
+        assert data
+
+    def test_random_comment_with_id_endpoint(self, comments):
+        comment = comments[1]
+        path = BASE_URL + f"/conversations/{comment.conversation.id}/random-comment/?id={comment.id}"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert data["content"] == comment.content
+
+    def test_random_voted_comment_with_id_endpoint(self, comments):
+        comment = comments[1]
+        voting_path = BASE_URL + f"/votes/"
+        post_data = {
+            "choice": 1,
+            "comment": comment.id,
+            "channel": "telegram",
+        }
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        api.post(voting_path, post_data)
+
+        comment_path = (
+            BASE_URL + f"/conversations/{comment.conversation.id}/random-comment/?id={comment.id}"
+        )
+        data = api.get(comment_path, format="json").data
+        # random-comment route should never return an voted comment, even if id is present.
+        assert data["content"] != comment.content
+
+    def test_get_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
 

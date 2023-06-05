@@ -35,6 +35,14 @@ def comment(db, conversation, user):
 
 
 @pytest.fixture
+def comments(db, conversation, user):
+    comment_object_1 = conversation.create_comment(user, "content 1", "approved")
+    comment_object_2 = conversation.create_comment(user, "content 2", "approved")
+    yield [comment_object_1, comment_object_2]
+    map(lambda x: x.delete(), [comment_object_1, comment_object_2])
+
+
+@pytest.fixture
 def vote(db, user, comment):
     vote_object = comment.vote(author=user, choice="agree")
     yield vote_object
