@@ -118,7 +118,7 @@ class Conf(
         "https://wordpress.pencillabs.com.br",
         "https://agentesdacidadania.org.br",
         "http://192.168.0.248:3333",
-        "https://enquete.org.br"
+        "https://enquete.org.br",
     ]
 
     ALLOWED_HOSTS = ["*"]
