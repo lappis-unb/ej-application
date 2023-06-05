@@ -47,6 +47,11 @@ class UsersViewSet(viewsets.ModelViewSet):
     def create(self, request, pk=None):
         serializer = self.get_serializer(data=request.data)
 
+        # Temporary solution until the implementation of login in the Opinion Component.
+        if User.objects.filter(email=request.data["email"]).exists():
+            auth_methods = UserAuthViewSet()
+            return auth_methods.login(request)
+
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
 
