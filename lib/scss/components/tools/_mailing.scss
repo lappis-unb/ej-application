@@ -5,9 +5,11 @@
     text-transform: unset;
 }
 
-#preview-template {
-    height: 548px;
-    width: 120%;
+.preview-template {
+    position: relative;
+    overflow: hidden;
+    height: 40vw;
+    width: 100%;
     table tbody tr {
         background: none !important;
     }
@@ -70,7 +72,9 @@
 }
 
 .modal-tools-content.mailing {
-    width: 50rem;
+    position: absolute;
+    height: fit-content;
+    border: none;
     .close-modal {
         color: white;
     }
