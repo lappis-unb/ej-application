@@ -142,5 +142,54 @@ class TestRoutes(UserRecipes, UrlTester):
             },
             content_type="application/json",
         )
-        assert "token" in response.content.decode()
+        assert response.status_code == 400
+
+    def test_get_token_after_user_registration(self, client, db):
+        response = client.post(
+            "/api/v1/users/",
+            data={
+                "name": "tester",
+                "email": "tester@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+            },
+            content_type="application/json",
+        )
+        assert response.json()["token"]
+        assert response.status_code == 200
+
+    def test_missing_credentials_in_login_should_return_error(self, client, db):
+        User.objects.create_user("user@user.com", "password")
+        response = client.post(
+            "/api/v1/login/",
+            data={
+                "email": "user@user.com",
+            },
+            content_type="application/json",
+        )
+        assert response.status_code == 400
+
+        response = client.post(
+            "/api/v1/login/",
+            data={"password": "password"},
+            content_type="application/json",
+        )
+        assert response.status_code == 400
+
+        response = client.post(
+            "/api/v1/login/",
+            data={"email": "user@user.com", "password": ""},
+            content_type="application/json",
+        )
+        assert response.status_code == 400
+
+    def test_get_token_after_user_login(self, client, db):
+        User.objects.create_user("user@user.com", "password")
+        response = client.post(
+            "/api/v1/login/",
+            data={"email": "user@user.com", "password": "password"},
+            content_type="application/json",
+        )
+
+        assert response.json()["token"]
         assert response.status_code == 200

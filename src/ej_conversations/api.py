@@ -124,12 +124,24 @@ class ConversationViewSet(RestAPIBaseViewSet):
 
         return Response(serializer.data)
 
+    """
+    random_comment will returns an unvoted comment, but
+    if the request has an id parameter, it will be used
+    to find a specific unvoted comment.
+
+    This behavior is necessary for the integration between
+    the mail template and the opinion component tool.
+    """
+
     @action(detail=True, url_path="random-comment")
     def random_comment(self, request, pk):
         conversation = self.get_object()
-        comment = conversation.next_comment(request.user)
+        comment_id = request.GET.get("id")
+        if comment_id:
+            comment = conversation.next_comment_with_id(request.user, comment_id)
+        else:
+            comment = conversation.next_comment(request.user)
         serializer = CommentSerializer(comment, context={"request": request})
-
         return Response(serializer.data)
 
 
