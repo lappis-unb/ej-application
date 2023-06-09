@@ -54,7 +54,7 @@ inv docker-exec                         Executes a command on django container
 inv docker-exec "poetry run inv docs"   Compile .rst documentation
 ==================                      =============================================
 
-Some useful commands to manage the application (run this inside django container):
+Some useful commands to manage the application **(run this inside django container)**:
 
 ===========================  ======================================================
 Command                      Description
@@ -63,6 +63,7 @@ poetry run inv i18n          Extracts messages from Jinja templates for translat
 poetry run inv i18n -c       Compile .po files
 poetry run inv sass          Compile sass files
 poetry run inv sass --watch  Watch changes on code, and compile .sass files
+poetry run inv collect       Moves compiled files (css, js) to Django static folder
 poetry run inv db            Prepare database and run migrations
 poetry run inv shell         Executs django shell with ipython
 ===========================  ======================================================
