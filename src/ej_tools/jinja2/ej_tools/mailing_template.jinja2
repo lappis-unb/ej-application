@@ -5,179 +5,175 @@
 </head>
 <style>
 
-body {
-    margin: 0;
-}
-
-body > * {
-    font-family: sans-serif, serif !important;
-    width: 100%;
-}
-
-.base {
-    box-sizing: border-box;
-    font-size: 2.25rem;
-    font-weight: 400 !important;
-    min-width: 74vmin;
-    overflow: hidden;
-    {# padding: 2.813rem 0; #}
-    background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png);
-    background-repeat: round;
-    max-width: 90%;
-    margin: auto;
-}
-
-.card {
-    box-sizing: border-box;
-    width: 100%;
-    background-color: #E7E7E7;
-    color: #000;
-    margin: auto;
-    max-width: 1000px;
-    padding: 1rem;
-}
-
-.card__conversation--statistic {
-    margin-bottom: .875rem;
-    font-weight: 700;
-    font-size: 2vmin;
-    gap: 2.375rem;
-}
-
-.card__conversation--statistic--comments {
-    margin: 0 .438rem 0 0;
-    width: 1.563rem;
-    height: 1.25rem;
-}
-
-.card__conversation--statistic--votes {
-    margin: 0 .438rem 0 2.375rem;
-    width: 23px;
-    height: 20px;
-}
-
-.card__conversation--title, .card__conversation__footer {
-    font-size: .75rem !important;
-    font-weight: 500 !important;
-    box-sizing: border-box;
-    font-family: 'Lexend Exa';
-    font-style: normal;
-    text-transform: uppercase;
-}
-
-.card__conversation__footer {
-    color: #777777;
-    margin: 0;
-    font-size: 1.5vmin !important;
-}
-
-.card__conversation--title {
-    color: #000 !important;
-    font-size: 1.7vmin !important;
-}
-
-.card__conversation--progress {
-    margin-bottom: 1.125rem;
-}
-
-.card__conversation--progress--bar {
-    border-right: .625rem solid transparent;
-}
-
-.card__conversation--progress--bar--content {
-    position: relative;
-    height: 8px;
-    width: 100px;
-    background: white;
-    border-radius: .75rem;
-    border: 1px solid black;
-}
-
-.card__conversation--progress--comments {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.5vmin;
-    text-transform: uppercase;
-}
-
-.card__conversation--comment-title {
-    color: #000;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 3vmin;
-}
-
-.card__buttons-section {
-   margin-top: 4.688rem;
-   font-family: 'Raleway';
-}
-
-.card__buttons-section p.disclaimer {
-    font-style: italic;
-    font-size: .75rem !important;
-    font-weight: 500;
-    color: #777777 !important;
-    margin-top: 4.375rem !important;
-    text-align: center !important;
-}
-
-.card__buttons-section--standard {
-    font-weight: bold;
-    text-transform: lowercase;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.card__buttons-section--standard a.black {
-    color: #000 !important;
-    text-decoration: unset !important;
-}
-
-.card__buttons-section--standard a.white {
-    color: #fff !important;
-    text-decoration: unset !important;
-}
-
-.card__buttons-section--standard--center {
-    width: 33%;
-    text-align: center;
-}
-
-.card__buttons-section--standard--style {
-    border-radius: .5rem;
-    padding: .375rem;
-    font-size: 1.2vmax;
-}
-
-.card__buttons-section--agree {
-    color: #fff;
-    background: rgba(24, 174, 0, 0.8);
-}
-
-.card__buttons-section--skip {
-    color: #000;
-    border: 1px solid #000;
-}
-
-.card__buttons-section--disagree {
-    background: #C70000;
-}
-
-.card__buttons-section--skip--border {
-    max-width: .5rem;
-    min-width: 4.875rem;
-}
-
-.center {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.margin-bottom {
-    margin-bottom: 1rem;
-}
+/* body { */
+/*     margin: 0; */
+/* } */
+/**/
+/* .base { */
+/* 	box-sizing: border-box; */
+/* 	font-size: 2.25rem; */
+/* 	font-weight: 400 !important; */
+/* 	min-width: 74vmin; */
+/* 	overflow: hidden; */
+/* 	background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png); */
+/* 	background-repeat: round; */
+/* 	max-width: 90%; */
+/* 	margin: auto; */
+/* } */
+/**/
+/* .card { */
+/*     box-sizing: border-box; */
+/*     width: 100%; */
+/*     background-color: #E7E7E7; */
+/*     color: #000; */
+/*     margin: auto; */
+/*     max-width: 1000px; */
+/*     padding: 1rem; */
+/* } */
+/**/
+/* .card__conversation--statistic { */
+/*     margin-bottom: .875rem; */
+/*     font-weight: 700; */
+/*     font-size: 2vmin; */
+/*     gap: 2.375rem; */
+/* } */
+/**/
+/**/
+/* .card__conversation--statistic--comments { */
+/*     margin: 0 .438rem 0 0; */
+/*     width: 1.563rem; */
+/*     height: 1.25rem; */
+/* } */
+/**/
+/* .card__conversation--statistic--votes { */
+/*     margin: 0 .438rem 0 2.375rem; */
+/*     width: 23px; */
+/*     height: 20px; */
+/* } */
+/**/
+/* .card__conversation--title, .card__conversation__footer { */
+/*     font-weight: 500 !important; */
+/*     box-sizing: border-box; */
+/*     font-family: 'Lexend Exa'; */
+/*     font-style: normal; */
+/*     text-transform: uppercase; */
+/* } */
+/**/
+/* .card__conversation__footer { */
+/*     color: #777777; */
+/*     margin: 0; */
+/*     font-size: 1.5vmin !important; */
+/* } */
+/**/
+/**/
+/* .card__conversation--title { */
+/*     color: #000 !important; */
+/*     font-size: 1.7vmin !important; */
+/* } */
+/**/
+/* .card__conversation--progress { */
+/*     margin-bottom: 1.125rem; */
+/* } */
+/**/
+/* .card__conversation--progress--bar { */
+/*     border-right: .625rem solid transparent; */
+/* } */
+/**/
+/* .card__conversation--progress--bar--content { */
+/*     position: relative; */
+/*     height: 8px; */
+/*     width: 100px; */
+/*     background: white; */
+/*     border-radius: .75rem; */
+/*     border: 1px solid black; */
+/* } */
+/**/
+/**/
+/* .card__conversation--progress--comments { */
+/*     font-style: normal; */
+/*     font-weight: 700; */
+/*     font-size: 1.5vmin; */
+/*     text-transform: uppercase; */
+/* } */
+/**/
+/* .card__conversation--comment-title { */
+/*     color: #000; */
+/*     font-family: 'Raleway'; */
+/*     font-style: normal; */
+/*     font-weight: 300; */
+/*     font-size: 3vmin; */
+/* } */
+/**/
+/* .card__buttons-section { */
+/*    margin-top: 4.688rem; */
+/*    font-family: 'Raleway'; */
+/* } */
+/**/
+/* .card__buttons-section p.disclaimer { */
+/*     font-style: italic; */
+/*     font-size: .75rem !important; */
+/*     font-weight: 500; */
+/*     color: #777777 !important; */
+/*     margin-top: 4.375rem !important; */
+/*     text-align: center !important; */
+/* } */
+/**/
+/* .card__buttons-section--standard { */
+/*     font-weight: bold; */
+/*     text-transform: lowercase; */
+/*     width: 100%; */
+/*     margin: 0; */
+/*     padding: 0; */
+/* } */
+/**/
+/* .card__buttons-section--standard a.black { */
+/*     color: #000 !important; */
+/*     text-decoration: unset !important; */
+/* } */
+/**/
+/* .card__buttons-section--standard a.white { */
+/*     color: #fff !important; */
+/*     text-decoration: unset !important; */
+/* } */
+/**/
+/* .card__buttons-section--standard--center { */
+/*     width: 33%; */
+/*     text-align: center; */
+/* } */
+/**/
+/* .card__buttons-section--standard--style { */
+/*     border-radius: .5rem; */
+/*     padding: .375rem; */
+/*     font-size: 1.2vmax; */
+/* } */
+/**/
+/* .card__buttons-section--agree { */
+/*     color: #fff; */
+/*     background: rgba(24, 174, 0, 0.8); */
+/* } */
+/**/
+/* .card__buttons-section--skip { */
+/*     color: #000; */
+/*     border: 1px solid #000; */
+/* } */
+/**/
+/* .card__buttons-section--disagree { */
+/*     background: #c70000; */
+/* } */
+/**/
+/* .card__buttons-section--skip--border { */
+/*     max-width: .5rem; */
+/*     min-width: 4.875rem; */
+/* } */
+/**/
+/* .center { */
+/*     margin-left: auto; */
+/*     margin-right: auto; */
+/* } */
+/**/
+/* .margin-bottom { */
+/*     margin-bottom: 1rem; */
+/* } */
 
 .templateContainer {
     margin-left: auto !important;
@@ -186,68 +182,69 @@ body > * {
 
 </style>
 
-<table class="center" cellspacing="0" cellpadding="0" border="0">
+<table class="center" style="font-family: sans-serif, serif !important; width: 100%; margin-left: auto; margin-right: auto;"  cellspacing="0" cellpadding="0" border="0">
     <tbody>
         <tr>
-            <td class="base">
-                <div class="card">
-                    <div class="card__conversation--statistic">
-                        <img class="card__conversation--statistic--comments" src="https://ejplatform.pencillabs.com.br/static/img/icons/comments-solid.png">
+            <td class="base" style="box-sizing: border-box; font-size: 2.25rem; font-weight: 400 !important; min-width: 74vmin; overflow: hidden; background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png); background-repeat: round; max-width: 90%; margin: auto;">
+
+                <div class="card" style="box-sizing: border-box; width: 100%; background-color: #E7E7E7; color: #000; margin: auto; max-width: 1000px; padding: 1rem;">
+                    <div class="card__conversation--statistic" style="margin-bottom: .875rem; font-weight: 700; font-size: 2vmax; gap: 2.375rem;">
+                        <img class="card__conversation--statistic--comments" style="margin: 0 .438rem 0 0; width: 1.563rem; height: 1.25rem;" src="https://ejplatform.pencillabs.com.br/static/img/icons/comments-solid.png">
                         {{conversation_n_comments}}
-                        <img class="card__conversation--statistic--votes" src="https://ejplatform.pencillabs.com.br/static/img/icons/check-to-slot-solid.png">
+                        <img class="card__conversation--statistic--votes" style="margin: 0 .438rem 0 2.375rem; width: 23px; height: 20px;" src="https://ejplatform.pencillabs.com.br/static/img/icons/check-to-slot-solid.png">
                         {{votes_conversation}}
                     </div>
-                    <table class="margin-bottom">
+                    <table class="margin-bottom" style="margin-bottom: 1rem;">
                         <tr>
-                            <td><div><h1 class="card__conversation__footer">Assunto</h1></div></td>
+                            <td><div><h1 class="card__conversation__footer" style="color: #777777; margin: 0; font-size: 1.4vmax !important; font-weight: 500 !important; box-sizing: border-box; font-family: 'Lexend Exa'; font-style: normal; text-transform: uppercase;">Assunto</h1></div></td>
                         </tr>
                         <tr>
-                            <td><div class="card__conversation--title">{{conversation_title}}</div></td>
+                            <td><div class="card__conversation--title" style="color: #000 !important; font-size: 1.6vmax !important; font-weight: 500 !important; box-sizing: border-box; font-family: 'Lexend Exa'; font-style: normal; text-transform: uppercase;">{{conversation_title}}</div></td>
                         </tr>
                     </table>
-                    <table class="card__conversation--progress">
+                    <table class="card__conversation--progress" style="margin-bottom: 1.125rem;">
                         <tr>
-                            <td class="card__conversation--progress--bar">
-                                <div class="card__conversation--progress--bar--content"></div>
+                            <td class="card__conversation--progress--bar" style="border-right: .625rem solid transparent;">
+                                <div style="position: relative; height: 8px; width: 100px; background: white; border-radius: .75rem; border: 1px solid black;"></div>
                             </td>
-                            <td class="card__conversation--progress--comments">1 de {{conversation_n_comments}} comentários</td>
+                            <td class="card__conversation--progress--comments" style="font-style: normal; font-weight: 700; font-size: 1.5vmax; text-transform: uppercase;">1 de {{conversation_n_comments}} comentários</td>
                         </tr>
                     </table>
                     <table>
                         <tr>
                             <td>
-                                <div class="card__conversation__footer">Comentário para votação</div>
+                                <div class="card__conversation__footer" style="color: #777777; margin: 0; font-size: 1.4vmax !important; font-weight: 500 !important; box-sizing: border-box; font-family: 'Lexend Exa'; font-style: normal; text-transform: uppercase;">Comentário para votação</div>
                             </td>
                         </tr>
                         <tr>
-                            <td><div class="card__conversation--comment-title">{{comment_content}}</div></td>
+                            <td><div class="card__conversation--comment-title" style="color: #000 !important; font-size: 2.8vmax !important;">{{comment_content}}</div></td>
                         </tr>
                     </table>
-                    <div class="card__buttons-section">
-                        <table class="card__buttons-section--standard">
+                    <div class="card__buttons-section" style="margin-top: 4.688rem; font-family: 'Raleway';">
+                        <table class="card__buttons-section--standard" style="font-weight: bold; text-transform: lowercase; width: 100%; margin: 0; padding: 0;">
                             <tr>
-                                <td class="card__buttons-section--standard--center">
-                                    <div class="card__buttons-section--agree card__buttons-section--standard--style">
-                                        <a class="white" href="{{vote_url}}&choice=agree"> concordar </a>
+                                <td class="card__buttons-section--standard--center" style="width: 33%; text-align: center;">
+                                    <div class="card__buttons-section--agree card__buttons-section--standard--style" style="color: #fff; background: rgba(24, 174, 0, 0.8); border-radius: .5rem; padding: .375rem; font-size: 1.2vmax;">
+                                        <a class="white" style="color: #fff !important; text-decoration: unset !important;" href="{{vote_url}}&choice=agree"> concordar </a>
                                     </div>
                                 </td>
-                                <td width="2" class="card__buttons-section--standard--center .card__buttons-section--skip--border">
-                                    <div class="card__buttons-section--skip card__buttons-section--standard--style">
-                                        <a class="black" href="{{vote_url}}&choice=agree"> pular </a>
+                                <td width="2" class="card__buttons-section--standard--center .card__buttons-section--skip--border" style="width: 33%; text-align: center; max-width: .5rem; min-width: 4.875rem;">
+                                    <div class="card__buttons-section--skip card__buttons-section--standard--style" style="color: #000; border: 1px solid #000; border-radius: .5rem; padding: .375rem; font-size: 1.2vmax;">
+                                        <a class="black" style="color: #000 !important; text-decoration: unset !important;" href="{{vote_url}}&choice=agree"> pular </a>
                                     </div>
                                 </td>
-                                <td class="card__buttons-section--standard--center">
-                                    <div class="card__buttons-section--disagree card__buttons-section--standard--style">
-                                        <a class="white" href="{{vote_url}}&choice=agree"> discordar </a>
+                                <td class="card__buttons-section--standard--center" style="width: 33%; text-align: center;">
+                                    <div class="card__buttons-section--disagree card__buttons-section--standard--style" style="background: #C70000; border-radius: .5rem; padding: .375rem; font-size: 1.2vmax;">
+                                        <a class="white" style="color: #fff !important; text-decoration: unset !important;" href="{{vote_url}}&choice=agree"> discordar </a>
                                     </div>
                                 </td>
                             </tr>
                         </table>
-                        <p class="disclaimer">Os comentários acima representam a visão dos participantes</p>
+                        <p class="disclaimer" style="font-style: italic; font-size: 1.5vmax !important; font-weight: 500; color: #777777 !important; margin-top: 4.375rem !important; text-align: center !important;">Os comentários acima representam a visão dos participantes</p>
                     </div>
                     <table>
                     </table>
-                    <table class="center">
+                    <table class="center" style="margin-left: auto; margin-right: auto;">
                         <tr>
                             <td>
                                 <div id="logo">
