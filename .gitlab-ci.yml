@@ -14,7 +14,7 @@ install_dependencies:
         name: python:3.7
         pull_policy: if-not-present
     script:
-        - apt update && apt install -y bash git curl
+        - /bin/bash -c 'apt update && apt install -y bash git curl'
     tags:
         - osf
 

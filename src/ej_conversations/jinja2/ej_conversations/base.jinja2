@@ -1,4 +1,8 @@
 {% extends 'base.jinja2' %}
 
 {% set main_class = main_class|default('container pad-x0') %}
-{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+{% if conversation.author.id == request.user.id or request.user.is_staff or request.user.is_superuser %}
+    {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+{% else %}
+    {% set hide_menu = true %}
+{% endif %}
