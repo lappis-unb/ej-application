@@ -319,6 +319,9 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         Returns a comment with id if user didn't vote yet, otherwhise return
         a random comment.
         """
+        if not user or user.is_anonymous:
+            return self.approved_comments.first()
+
         if comment_id:
             try:
                 return self.approved_comments.exclude(votes__author=user).get(id=comment_id)

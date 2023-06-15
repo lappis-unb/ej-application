@@ -131,6 +131,7 @@ def remove_profile(user):
     profile.save()
 
 
+# TODO: Remove this class
 class MetaData(models.Model):
     """
     A model to stores user metadata.

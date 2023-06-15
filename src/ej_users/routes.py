@@ -52,7 +52,7 @@ def login(request, redirect_to="/"):
                 raise User.DoesNotExist
             auth.login(request, user, backend=user.backend)
             log.info(f"user {user} ({email}) successfully authenticated")
-            next_url = user.default_board_url()
+            # next_url = user.default_board_url()
         except User.DoesNotExist:
             form.add_error(None, error_msg)
             log.info(f"invalid login attempt: {email}")

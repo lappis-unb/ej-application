@@ -37,7 +37,10 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
         "agree": ("fa-check", "text-positive", _("Agree")),
     }
 
-    show_actions, message = show_vote_actions_on_card(request)
+    if user and user.is_anonymous:
+        show_actions, message = True, None
+    else:
+        show_actions, message = show_vote_actions_on_card(request)
 
     return {
         "author": comment.author.username,
