@@ -1,22 +1,11 @@
 stages:
-    - prepare
     - check_code_style
     - run_tests
-    - build
-    - deploy
+    - build_docker_images
+    - deploy_environments
 
 variables:
     GITLAB_EJ_TOKEN: "gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct"
-
-install_dependencies:
-    stage: prepare
-    image:
-        name: python:3.7-slim-buster
-        pull_policy: if-not-present
-    script:
-        - /bin/bash -c 'apt update && apt install -y bash git curl'
-    tags:
-        - osf
 
 check_style:
     stage: check_code_style
@@ -35,6 +24,8 @@ run_tests:
     image:
         name: python:3.7-slim-buster
         pull_policy: if-not-present
+    before_script:
+        - apt update && apt install git -y
     script:
         - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://$GITLAB_EJ_TOKEN@gitlab.com/pencillabs/ej/ej-application.git'
         - cd ej-application
@@ -45,12 +36,13 @@ run_tests:
         - osf
 
 build_dev_image:
-    stage: build
+    stage: build_docker_images
     image:
         name: docker
         pull_policy: if-not-present
+    before_script:
+        - apk update && apk add git -y
     script:
-        - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core
         - bin/pencilctl build ej -e dev -b develop -c prod --no-cache --push
@@ -61,12 +53,13 @@ build_dev_image:
         - osf
 
 build_prod_image:
-    stage: build
+    stage: build_docker_images
     image:
         name: docker
         pull_policy: if-not-present
+    before_script:
+        - apk update && apk add git -y
     script:
-        - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core
         - bin/pencilctl build ej -e prod -b prod -c prod --no-cache --push
@@ -77,12 +70,13 @@ build_prod_image:
         - osf
 
 deploy_to_dev:
-    stage: deploy
+    stage: deploy_environments
     image:
         name: docker
         pull_policy: if-not-present
+    before_script:
+        - apk update && apk add git -y
     script:
-        - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core
         - bin/pencilctl deploy ej -e dev -c prod
