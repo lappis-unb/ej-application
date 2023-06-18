@@ -41,7 +41,7 @@ build_dev_image:
         name: docker
         pull_policy: if-not-present
     before_script:
-        - apk update && apk add git -y
+        - apk update && apk add git
     script:
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core
@@ -58,7 +58,7 @@ build_prod_image:
         name: docker
         pull_policy: if-not-present
     before_script:
-        - apk update && apk add git -y
+        - apk update && apk add git
     script:
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core
@@ -75,7 +75,7 @@ deploy_to_dev:
         name: docker
         pull_policy: if-not-present
     before_script:
-        - apk update && apk add git -y
+        - apk update && apk add git
     script:
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
         - cd core

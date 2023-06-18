@@ -1,4 +1,4 @@
-FROM python:3.7.10 as base
+FROM python:3.7.10-slim-buster as base
 RUN apt-get update \
     && apt-get install -y \
     curl \
