@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-07 16:46-0300\n"
+"POT-Creation-Date: 2023-06-22 16:34-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -280,7 +280,7 @@ msgstr ""
 "capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:99 src/ej_dataviz/roles.py:143
+#: src/ej_conversations/roles/comments.py:102 src/ej_dataviz/roles.py:143
 #: src/ej_dataviz/roles.py:144
 msgid "Comment"
 msgstr "Comentar"
@@ -578,7 +578,7 @@ msgid ""
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
 #: src/ej_conversations/models/conversation.py:104
-#: src/ej_conversations/roles/conversations.py:134
+#: src/ej_conversations/roles/conversations.py:129
 msgid "Conversation"
 msgstr "Conversa"
 
@@ -652,17 +652,12 @@ msgstr "comentários não-moderados não podem receber votos"
 msgid "login"
 msgstr "entrar"
 
-#: src/ej_conversations/roles/conversations.py:38
-#, fuzzy
-msgid "Manage!"
-msgstr "Gerenciar!"
-
-#: src/ej_conversations/roles/conversations.py:104
+#: src/ej_conversations/roles/conversations.py:106
 #, python-brace-format
 msgid "{n} awaiting moderation"
 msgstr "{n} aguardando moderação"
 
-#: src/ej_conversations/roles/conversations.py:105
+#: src/ej_conversations/roles/conversations.py:107
 #, python-brace-format
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
@@ -722,11 +717,11 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:46
+#: src/ej_conversations/views.py:45
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/views.py:68 src/ej_conversations/views.py:106
+#: src/ej_conversations/views.py:65 src/ej_conversations/views.py:100
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -1108,28 +1103,28 @@ msgstr "Atividade política"
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
 
-#: src/ej_profiles/models.py:155 src/ej_profiles/tests/test_models.py:41
+#: src/ej_profiles/models.py:156 src/ej_profiles/tests/test_models.py:41
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:159 src/ej_users/forms.py:48
+#: src/ej_profiles/models.py:160 src/ej_users/forms.py:48
 #: src/ej_users/forms.py:57
 msgid "E-mail"
 msgstr "Email"
 
-#: src/ej_profiles/models.py:195
+#: src/ej_profiles/models.py:196
 msgid "Root"
 msgstr "Raiz"
 
-#: src/ej_profiles/models.py:197
+#: src/ej_profiles/models.py:198
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:198 src/ej_profiles/tests/test_models.py:55
+#: src/ej_profiles/models.py:199 src/ej_profiles/tests/test_models.py:55
 msgid "Regular user"
 msgstr "Usuário regular"
 
-#: src/ej_profiles/models.py:201
+#: src/ej_profiles/models.py:202
 msgid "(Not Filled)"
 msgstr "(Não preenchido)"
 
@@ -1460,8 +1455,8 @@ msgstr "O usuário não foi encontrado."
 
 #: src/ej_users/api.py:30
 #, fuzzy
-msgid "The passwords are incorrect"
-msgstr "As senhas estão incorretas"
+msgid "The password is incorrect"
+msgstr "A senha está incorreta"
 
 #: src/ej_users/api.py:34
 #, fuzzy
@@ -1636,6 +1631,11 @@ msgstr "Não pode remover contas de superusuário"
 #: src/ej_users/routes_account.py:50
 msgid "We are sorry to see you go :(<br><br>Good luck in your journey."
 msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
+
+#: src/ej_users/serializers.py:27
+#, fuzzy
+msgid "Email already exists"
+msgstr "Identificador já existe."
 
 #: src/ej_users/socialbuttons.py:50
 msgid "Login using {}"
@@ -2575,11 +2575,10 @@ msgstr "Solicite upgrade."
 msgid "New conversation"
 msgstr "Nova conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:84
-#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:19
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:81
 #, fuzzy
-msgid "Participate!"
-msgstr "Participar!"
+msgid "Manage!"
+msgstr "Gerenciar!"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:8
@@ -2676,6 +2675,11 @@ msgstr "rejeitar"
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:160
 msgid "Approve"
 msgstr "aprovar"
+
+#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:16
+#, fuzzy
+msgid "Participate!"
+msgstr "Participar!"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:20
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:79
@@ -4028,10 +4032,6 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
-
-#, fuzzy
-#~ msgid "Email already exists"
-#~ msgstr "Identificador já existe."
 
 #, fuzzy
 #~ msgid "User does not exist"
