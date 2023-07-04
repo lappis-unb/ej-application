@@ -107,6 +107,7 @@ matplotlib = "^3.0"
 markdown = "^3.0"
 sidekick = "==0.5.2"
 slack-sdk = "^3.15.2"
+django-anymail = {extras = ["mailgun"], version = "^10.0"}
 
 [tool.black]
 line-length = 108  # Strict maximum of 120
