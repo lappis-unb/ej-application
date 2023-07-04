@@ -663,6 +663,26 @@ requests = "*"
 requests-oauthlib = ">=0.3.0"
 
 [[package]]
+name = "django-anymail"
+version = "10.0"
+description = "Django email backends and webhooks for Amazon SES, MailerSend, Mailgun, Mailjet, Mandrill, Postal, Postmark, SendGrid, SendinBlue, and SparkPost"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "django_anymail-10.0-py3-none-any.whl", hash = "sha256:7b7af58175b4284662f0841e90be655cdc0a6b70ec22587d62862a147c76c87f"},
+    {file = "django_anymail-10.0.tar.gz", hash = "sha256:59eb4c91e201cd6465bd5e27f2cc3342e897e8178c1b1a4bc1a10871ae0b6ef3"},
+]
+
+[package.dependencies]
+django = ">=2.0"
+requests = ">=2.4.3"
+urllib3 = ">=1.25.0"
+
+[package.extras]
+amazon-ses = ["boto3"]
+postal = ["cryptography"]
+
+[[package]]
 name = "django-autoslug"
 version = "1.9.9"
 description = "An automated slug field for Django."
@@ -3352,4 +3372,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">= 3.7.10, <4"
-content-hash = "b7a8f9aa20e9c18d1fc160e841f855eeb357ab489e86d5d307209997b43b9b8c"
+content-hash = "52e399126fa94b75915eb8e7f50292b830106b503c1bc4ee9bcc6067b3007e83"
