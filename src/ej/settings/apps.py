@@ -38,7 +38,7 @@ class InstalledAppsConf(Base, EjOptions):
         "django.contrib.sites",
         "constance",
         "constance.backends.database",
-        "anymail"
+        "anymail",
     ]
 
     def get_django_contrib_apps(self):
