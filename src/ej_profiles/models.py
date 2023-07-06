@@ -40,6 +40,7 @@ class Profile(models.Model):
     phone_number = models.CharField(_("Phone number"), blank=True, max_length=11)
     completed_tour = models.BooleanField(default=False, blank=True, null=True)
 
+    # https://sidekick.readthedocs.io/en/latest/lib-properties.html?highlight=delegate_to#properties-and-descriptors
     name = delegate_to("user")
     email = delegate_to("user")
     is_active = delegate_to("user")

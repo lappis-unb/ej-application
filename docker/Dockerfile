@@ -1,4 +1,4 @@
-FROM python:3.7.10 as base
+FROM python:3.7.10-slim-buster as base
 RUN apt-get update \
     && apt-get install -y \
     curl \
@@ -9,7 +9,8 @@ RUN apt-get update \
     libc6-dev \
     libdpkg-perl \
     make \
-    gettext
+    gettext \
+    libpq-dev
 RUN touch /etc/apt/preferences.d/nodejs && \
     echo "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" > /etc/apt/preferences.d/nodejs
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \

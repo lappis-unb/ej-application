@@ -35,7 +35,7 @@ def conversation_balloon(conversation, request=None, actions=None, is_favorite=F
 
 
 @with_template(models.Conversation, role="card")
-def conversation_card(conversation, url=None, request=None, text=None, hidden=None):
+def conversation_card(conversation, url=None, request=None, text=None, hidden=None, button_text=""):
     """
     Render a round card representing a conversation in a list.
     """
@@ -56,6 +56,7 @@ def conversation_card(conversation, url=None, request=None, text=None, hidden=No
         "n_comments": conversation.n_approved_comments,
         "n_votes": conversation.n_final_votes,
         "n_favorites": conversation.n_favorites,
+        "button_text": button_text,
     }
 
 
@@ -93,8 +94,10 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     Render "create comment" button for one conversation.
     """
     conversation.set_request(request)
-    n_comments = conversation.n_user_total_comments
-    n_moderation = conversation.n_pending_comments
+    if request and request.user.is_anonymous:
+        n_comments, n_moderation = [0, 0]
+    else:
+        n_comments, n_moderation = [conversation.n_user_total_comments, conversation.n_pending_comments]
 
     fn = rules.get_value("ej.max_comments_per_conversation")
     user = getattr(request, "user", None)
@@ -103,13 +106,6 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
     comments_count = _("{n} of {m} comments").format(n=n_comments, m=max_comments)
 
-    # FIXME: Reactivate when full UI for the comment form is implemented
-    # return extra_content(
-    #     _("Create comment"),
-    #     Blob(f"{comments_count}" f'<div class="text-7 strong">{moderation_msg}</div>'),
-    #     icon="plus",
-    #     id="create-comment",
-    # )
     return div(
         Blob(f"{comments_count}" f'<div class="text-7 strong">{moderation_msg}</div>'),
         id="create-comment",
@@ -142,7 +138,9 @@ def conversation_user_progress(conversation, request=None, user=None, **kwargs):
     """
 
     user = user or request.user
-    conversation.for_user = user
-    n = conversation.n_user_final_votes
     total = conversation.n_approved_comments
+    n = 0
+    if not user.is_anonymous:
+        conversation.for_user = user
+        n = conversation.n_user_final_votes
     return progress_bar(min(n, total), total, **kwargs)

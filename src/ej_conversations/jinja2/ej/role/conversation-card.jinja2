@@ -16,8 +16,7 @@
     </h2>
     <div class="conversation-card__author" style="order: 1">{{ _('by:') }} <strong> {{ author }}</strong></div>
     {{ progress or '' }}
-    <div class="conversation-card__button" style="order: 1">{{ action_button(_('Manage!'), url, tabindex=-1, aria_hidden="true") }}</div>
-
+    <div class="conversation-card__button" style="order: 1">{{ action_button(_(button_text), href=url, tabindex=-1, aria_hidden="true") }}</div>
 </div>
 
 

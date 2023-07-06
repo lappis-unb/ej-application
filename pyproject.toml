@@ -51,6 +51,7 @@ bleach = "3.3.1"
 jinja2 = "2.11.3"
 django-debug-toolbar = "3.2.0"
 setuptools = "61.2.0"
+django-anymail = {extras = ["mailgun"], version = "^10.0"}
 
 [tool.poetry.dev-dependencies]
 bs4 = "^0.0.1"
@@ -106,6 +107,7 @@ matplotlib = "^3.0"
 markdown = "^3.0"
 sidekick = "==0.5.2"
 slack-sdk = "^3.15.2"
+django-anymail = {extras = ["mailgun"], version = "^10.0"}
 
 [tool.black]
 line-length = 108  # Strict maximum of 120

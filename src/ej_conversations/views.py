@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
-from ej_conversations.models import conversation
 from hyperpython import a
 from django.contrib.auth.decorators import login_required
 from rest_framework import status
@@ -106,7 +105,6 @@ def list_view(
     return render(request, "ej_conversations/conversation-list.jinja2", render_context)
 
 
-@login_required
 def detail(request, conversation_id, slug, board_slug, check=check_promoted):
     conversation = Conversation.objects.get(id=conversation_id)
     check(conversation, request)
@@ -115,7 +113,7 @@ def detail(request, conversation_id, slug, board_slug, check=check_promoted):
     comment_id = request.GET.get("comment_id")
     ctx = {}
 
-    if request.method == "POST":
+    if request.method == "POST" and not request.user.is_anonymous:
         action = request.POST["action"]
 
         if action == "vote":
@@ -127,10 +125,13 @@ def detail(request, conversation_id, slug, board_slug, check=check_promoted):
         else:
             log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
             return HttpResponseServerError("invalid action")
+    elif request.method == "POST":
+        path = conversation.get_absolute_url()
+        return redirect(reverse("auth:login") + f"?next={path}")
 
     context = {
         "conversation": conversation,
-        "comment": conversation.next_comment_with_id(user, comment_id),
+        "comment": conversation.next_comment_with_id(user, None),
         "menu_links": conversation_admin_menu_links(conversation, user),
         "comment_form": form,
         **ctx,

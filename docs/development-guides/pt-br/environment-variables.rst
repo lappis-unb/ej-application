@@ -10,9 +10,11 @@ As variáveis de ambiente podem ser definidas diretamente no ambiente host ou sa
 ambiente (.env) para que possam ser compartilhados entre diferentes ambientes. Esta seção descreve
 as principais variáveis de configuração com seus valores padrão.
 
+Estas variáveis podem ser encontradas no arquivo `docker/variables.env`.
 
-Basic settings
-==============
+
+Configuração básica
+===================
 
 Esse é o conjunto mínimo de variáveis necessárias, entre parentêses encontra-se o seu valor padrão. **Aviso:** Lembre-se
 de ler a seção "Segurança", mais abaixo, antes de concluir sua implantação.
@@ -30,66 +32,72 @@ COUNTRY (Brazil):
     de forma independente (por exemplo, COUNTRY = "Canadá", LANGUAGE_CODE = "fr-ca")
 
 DJANGO_DEBUG (False):
-    Setting DEBUG=True, display a traceback when Django encounters an error. This
-    configuration is useful in a staging environment, but should never be enabled
-    in the final production build.
+    A variável DEBUG=True, apresenta o rastreamento quando o Django encontra um erro.
+    É bastante útil para ambientes de desenvolvimento, mas deve ser desabilitado em produção.
 
-DJANGO_DB_URL (psql://<user>:<password>@postgres:5432/<dbname>):
-    Describes the connection with the Postgres database. The default unsafe values
-    are ``user = password = dbname = "ej"``. You can change to other database types
-    or configurations (e.g., sqlite:///path-to-db-file). **Warning:** The way
-    Django parses this string puts some limitations on valid passwords. Stay
-    safe and use only letters and numbers in the password.
+DB_HOST:
+    Nome do container de banco de dados que será utilizado pela aplicação. A EJ utilizada Docker
+    para configurar ambientes de desenvolvimento e produção.
 
+
+SMTP
+=====
+
+Para fazer disparos de email, a EJ utiliza a biblioteca `django-anymail <https://github.com/anymail/django-anymail>`_. Ela permite integrar a aplicação com serviços de SMTP, como Mailgun.
+
+MAILGUN_API_KEY:
+    Chave de API da conta do Mailgun, que será utilizada para os disparos.
+
+MAILGUN_SENDER_DOMAIN:
+    Domínio que será utilizado para enviar os emails.
 
 Segurança
 =========
 
-**DJANGO_SECRET_KEY** (random value):
-    A random string of text that should be out of public sight. This string is
-    used to negotiate sessions and for encryption in some parts of Django. This
-    can be a random sequence of characters that is treated as a secret since in
-    theory an attacker that knows the secret key could use this value to forge
-    sessions and impersonate other users.
+
+DJANGO_ALLOWED_HOSTS:
+    Define a lista de domínios externos que poderão requisitar recursos da EJ.
+    Essa variável garante que apenas domínios conhecidos possam interagir com os recursos 2023-07-03aplicação.
+
+DJANGO_SECRET_KEY:
+    Uma string randômica utilizada pelo Django para assinaturas criptografadas.
+    Essa chave não deve ficar pública, já que é utilizada pelo Django para manter
+    recursos como seguros, como o fluxo de recuperação de senha.
 
 
 Personalização
 ===============
 
-Those variables customize the behavior of the EJ platform in different ways.
+Essas variáveis customizam o comportamento da EJ de diferentes formas.
 
 Override strings
 -----------------
 
 EJ_PAGE_TITLE (Empurrando Juntos):
-    Default title of the home page.
+    Altera o título padrão da página inicial.
 
-EJ_REGISTER_TEXT (Not part of EJ yet?):
-    Text displayed requesting user registration.
+EJ_REGISTER_TEXT (Não faz parte da EJ ainda?):
+    Texto requisitando o cadastro do usuário.
 
 EJ_LOGIN_TITLE_TEXT (Login in EJ):
-    Asks user login.
-
+    Solicita que o usuário se autentique.
 
 Override paths
 --------------
 
 EJ_USER_HOME_PATH (/conversations/):
-    Redirect logged users to this path.
+    Redireciona o usuário logado para essa URL.
 
 
 Regras e Limites
 ----------------
 
 EJ_ENABLE_BOARDS (true):
-    The default behavior is that each user can own a single board of
-    conversations independent of the main board under /conversations/.
-    Set to "false" in order to disable those personal boards.
+    Habilita a criação de murais no ambiente.
 
 EJ_MAX_COMMENTS_PER_CONVERSATION (2):
-    Default number of comments that each user has in each conversation.
+    Máximo de comentários válidos por conversa.
 
 EJ_PROFILE_EXCLUDE_FIELDS:
-    Optional list of fields that should be excluded from user profile
-    visualization.
+    Lista de campos que não serão mostrados no perfil do usuário.
 
