@@ -36,6 +36,11 @@ with some fake data::
 
     $ inv docker-exec "poetry run inv db-fake"
 
+Otherwise, if you want to clean your database and repopulate it using the 
+script, it is necessary to remove `docker_backups` volume.  After that, 
+run `inv docker-up` command and then 
+`inv docker-exec "poetry run inv db-fake"`, as mentioned above.
+
 You can access the running instance accessing `http://localhost:8000`.
 
 To rebuild the server image, you can run `inv docker-build --no-cache`.
