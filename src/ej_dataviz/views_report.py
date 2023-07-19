@@ -211,4 +211,5 @@ def get_translation_map():
         "name": _("name"),
         "participation": _("participation"),
         "skipped": _("skipped"),
+        "channel": _("channel"),
     }

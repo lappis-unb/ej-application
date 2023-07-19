@@ -459,28 +459,28 @@ msgstr "Conversas promovidas aparecem no mural principal."
 msgid "Mark to make the conversation invisible."
 msgstr "Selecione para fazer conversa invisível."
 
-#: src/ej_conversations/mixins.py:161
+#: src/ej_conversations/mixins.py:163
 #, fuzzy
 msgid "No phone number"
 msgstr "Sem número de telefone"
 
-#: src/ej_conversations/mixins.py:173
+#: src/ej_conversations/mixins.py:175
 #, fuzzy
 msgid "No group"
 msgstr "Novo grupo"
 
-#: src/ej_conversations/mixins.py:174
+#: src/ej_conversations/mixins.py:176
 #, fuzzy
 msgid "Group"
 msgstr "Grupo"
 
-#: src/ej_conversations/mixins.py:175 src/ej_dataviz/roles.py:66
+#: src/ej_conversations/mixins.py:177 src/ej_dataviz/roles.py:66
 #: src/ej_dataviz/roles.py:69 src/ej_profiles/models.py:40
 #: src/ej_profiles/tests/test_models.py:49
 msgid "Phone number"
 msgstr "Número de telefone"
 
-#: src/ej_conversations/mixins.py:176
+#: src/ej_conversations/mixins.py:178
 #, fuzzy
 msgid "Date joined"
 msgstr "data de ingresso"
@@ -820,20 +820,20 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/utils.py:365
+#: src/ej_dataviz/utils.py:368
 msgid "{} persona"
 msgstr "{} persona"
 
-#: src/ej_dataviz/utils.py:377
+#: src/ej_dataviz/utils.py:380
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/utils.py:404
+#: src/ej_dataviz/utils.py:407
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/utils.py:409 src/ej_dataviz/utils.py:410
-#: src/ej_dataviz/utils.py:411 src/ej_dataviz/utils.py:413
+#: src/ej_dataviz/utils.py:412 src/ej_dataviz/utils.py:413
+#: src/ej_dataviz/utils.py:414 src/ej_dataviz/utils.py:416
 msgid "You!"
 msgstr "Você!"
 
@@ -845,67 +845,72 @@ msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/views_report.py:199
+#: src/ej_dataviz/views_report.py:202
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/views_report.py:200
+#: src/ej_dataviz/views_report.py:203
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/views_report.py:201
+#: src/ej_dataviz/views_report.py:204
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/views_report.py:202
+#: src/ej_dataviz/views_report.py:205
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/views_report.py:203
+#: src/ej_dataviz/views_report.py:206
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/views_report.py:204
+#: src/ej_dataviz/views_report.py:207
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupo_id"
 
-#: src/ej_dataviz/views_report.py:205
+#: src/ej_dataviz/views_report.py:208
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/views_report.py:206
+#: src/ej_dataviz/views_report.py:209
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/views_report.py:207
+#: src/ej_dataviz/views_report.py:210
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/views_report.py:208
+#: src/ej_dataviz/views_report.py:211
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/views_report.py:209 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/views_report.py:212 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/views_report.py:210
+#: src/ej_dataviz/views_report.py:213
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/views_report.py:211 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/views_report.py:214 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/views_report.py:212
+#: src/ej_dataviz/views_report.py:215
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/views_report.py:213
+#: src/ej_dataviz/views_report.py:216
 msgid "skipped"
 msgstr "pulados"
+
+#: src/ej_dataviz/views_report.py:217
+#, fuzzy
+msgid "channel"
+msgstr "canal"
 
 #: src/ej_profiles/admin.py:13
 msgid "Basic information"
@@ -2908,12 +2913,12 @@ msgid "group"
 msgstr "grupo"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:19
-#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:22
 #, fuzzy
 msgid "skip"
 msgstr "pulados"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:23
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:24
 #, fuzzy
 msgid "creation date"
 msgstr "data de criação"
@@ -4105,10 +4110,6 @@ msgstr "Autenticação"
 #~ "O plano de uso construído pela nossa equipe especificamente para as suas "
 #~ "necessidades. Pensaremos juntos quais recursos e estratégias poderemos "
 #~ "aplicar para potencializar sua comunicação digital. "
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Chats"
 
 #~ msgid "Upgrade"
 #~ msgstr "Fazer upgrade"

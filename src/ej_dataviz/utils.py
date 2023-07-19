@@ -209,6 +209,7 @@ def get_user_data(conversation):
             "email",
             "id",
             "name",
+            _("channel"),
             *EXPOSED_PROFILE_FIELDS,
             "agree",
             "disagree",

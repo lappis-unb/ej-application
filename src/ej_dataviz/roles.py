@@ -124,7 +124,7 @@ def render_dataframe(df, index=False, *, col_display=None, **kwargs):
 
     if col_display:
         columns = [col_display.get(x, x) for x in columns]
-    return html_table(data, columns=columns, style="width: 100%", **kwargs)
+    return html_table(data, columns=columns, style="width: 100%; table-layout: fixed;", **kwargs)
 
 
 #

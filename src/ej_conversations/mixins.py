@@ -11,6 +11,7 @@ from sidekick import import_later
 
 from ej_profiles.enums import Gender, Race
 from ej_profiles.utils import years_from
+from ej_conversations.models.vote import VoteChannels
 from .math import user_statistics
 
 db = db.ej_conversations
@@ -139,7 +140,7 @@ class UserMixin(ConversationMixin):
 
         # Save extended dataframe
         extend_fields = list(extend_fields)
-        stats = self.extend_dataframe(stats, "name", "email", *extend_full_fields)
+        stats = self.extend_dataframe(stats, "name", "email", "votes__channel", *extend_full_fields)
         if extend_fields:
             columns = list(stats.columns[: -len(extend_fields)])
             columns.extend(extend_fields)
@@ -147,6 +148,7 @@ class UserMixin(ConversationMixin):
         cols = [
             "name",
             "email",
+            "votes__channel",
             *extend_fields,
             "agree",
             "disagree",
@@ -177,6 +179,10 @@ class UserMixin(ConversationMixin):
         # Use better values for extended columns
         for field, transform in transforms.items():
             stats[field] = stats[field].apply(transform)
+
+        channel_choices = dict((x, y) for x, y in VoteChannels.choices())
+        stats["votes__channel"] = stats["votes__channel"].map(channel_choices)
+        stats = stats.rename(columns={"votes__channel": _("channel")})
 
         return stats
 
