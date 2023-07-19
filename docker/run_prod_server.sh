@@ -11,7 +11,7 @@ poetry=/root/.local/bin/poetry
 $poetry run inv db
 
 # install js dependencies
-(cd lib && npm i)
+(cd src/$EJ_THEME/static/$EJ_THEME/ && npm i)
 
 # prepare all assets (js, css)
 $poetry run inv build-assets
@@ -26,5 +26,5 @@ $poetry run inv docs
 # runs django collectstatic command
 $poetry run inv collect
 
-# runs production server
+# runs develop server
 $poetry run inv gunicorn

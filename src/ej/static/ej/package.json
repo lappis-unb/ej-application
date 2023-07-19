@@ -1,0 +1,33 @@
+{
+    "name": "ej",
+    "main": "build/js/index.js",
+    "license": "GPL-3.0-or-later",
+    "dependencies": {
+        "@types/jquery": "^3.3.29",
+        "@types/js-cookie": "^2.2.2",
+        "@types/paper": "^0.11.14",
+        "jquery": "^3.3.1",
+        "js-cookie": "^2.2.0",
+        "mendeleev.css": "0.2.0",
+        "paper": "^0.12.3",
+        "unpoly": "^0.60.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.13.8",
+        "@babel/core": "7.13.8",
+        "@babel/preset-env": "7.13.8",
+        "minify": "^4.1.3",
+        "parcel": "1.12.4",
+        "parcel-bundler": "1.12.4",
+        "typescript": "^3.4.5",
+        "uglify-js": "^3.6.0"
+    },
+    "scripts": {
+        "watch": "parcel watch ts/*.ts -d js/ --no-source-maps",
+        "build": "parcel build ts/*.ts -d js/ --no-source-maps",
+        "clusterviz": "parcel serve js/clusterviz.html --no-source-maps"
+    },
+    "resolutions": {
+        "@babel/preset-env": "7.13.8"
+    }
+}
