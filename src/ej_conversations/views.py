@@ -1,14 +1,19 @@
 from logging import getLogger
+from typing import Any, Dict
 
 from django.db import transaction
 from django.db.models import F
-from django.http import HttpResponse, HttpResponseServerError, JsonResponse
+from django.db.models.query import QuerySet
+from django.http import HttpRequest, HttpResponse, HttpResponseServerError, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView
 from hyperpython import a
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
 from rest_framework import status
 import json
 
@@ -36,107 +41,128 @@ from ej.decorators import (
 
 log = getLogger("ej")
 
-#
-# Display conversations
-#
-def public_list_view(
-    request,
-    queryset=Conversation.objects.filter(is_promoted=True),
-    title=_("Public conversations"),
-    help_title="",
-):
-    user = request.user
-    user_boards = []
-    if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
-        queryset = queryset.filter(is_hidden=False)
 
-    annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
-    queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
-    if user.is_authenticated:
-        user_signature = SignatureFactory.get_user_signature(request.user)
+class ConversationView(ListView):
+    def get_queryset(self) -> QuerySet[Any]:
+        user = self.request.user
+        board_slug = self.kwargs.get("board_slug", None)
+        annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
+
+        if board_slug:
+            board = Board.objects.get(slug=board_slug)
+            queryset = board.conversations.annotate_attr(board=board)
+        else:
+            queryset = Conversation.objects.filter(is_promoted=True)
+
+        if not user.has_perm("ej.can_access_all_conversations"):
+            queryset = queryset.filter(is_hidden=False)
+
+        return queryset.cache_annotations(*annotations, user=user).order_by("-created")
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        return super().get_context_data(**kwargs)
+
+
+class PublicConversationView(ConversationView):
+    template_name = template_name = "ej_conversations/list.jinja2"
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        user = self.request.user
+        user_boards = []
+        if user.is_authenticated:
+            user_signature = SignatureFactory.get_user_signature(user)
+            max_conversation_per_user = user_signature.get_conversation_limit()
+            user_boards = Board.objects.filter(owner=user)
+        else:
+            max_conversation_per_user = 0
+
+        context = {
+            "conversations": self.get_queryset(),
+            "user_boards": user_boards,
+            "conversations_limit": max_conversation_per_user,
+        }
+
+        return context
+
+
+@method_decorator([login_required, can_acess_list_view], name="dispatch")
+class PrivateConversationView(ConversationView):
+    template_name = "ej_conversations/conversation-list.jinja2"
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        user = request.user
+        board_slug = self.kwargs.get("board_slug", None)
+        board = Board.objects.get(slug=board_slug)
+
+        if not user.get_profile().completed_tour:
+            return redirect(f"{board.get_absolute_url()}tour")
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        user = self.request.user
+        board_slug = self.kwargs.get("board_slug", None)
+        board = Board.objects.get(slug=board_slug)
+        user_signature = SignatureFactory.get_user_signature(user)
         max_conversation_per_user = user_signature.get_conversation_limit()
         user_boards = Board.objects.filter(owner=user)
-    else:
-        max_conversation_per_user = 0
 
-    render_context = {
-        "conversations": queryset,
-        "title": _(title),
-        "subtitle": _("Participate voting and creating comments!"),
-        "board": None,
-        "help_title": help_title,
-        "conversations_limit": max_conversation_per_user,
-        "user_boards": user_boards,
-    }
-    return render(request, "ej_conversations/list.jinja2", render_context)
+        context = {
+            "conversations": self.get_queryset(),
+            "title": _(board.title),
+            "subtitle": _("Participate voting and creating comments!"),
+            "conversations_limit": max_conversation_per_user,
+            "board": board,
+            "user_boards": user_boards,
+        }
+
+        return context
 
 
-@login_required
-@can_acess_list_view
-def list_view(
-    request,
-    board_slug,
-):
-    user = request.user
-    user_boards = Board.objects.filter(owner=user)
-    board = Board.objects.get(slug=board_slug)
-    queryset = board.conversations.annotate_attr(board=board)
-
-    if not user.get_profile().completed_tour:
-        return redirect(f"{board.get_absolute_url()}tour")
-
-    if not (user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")):
-        queryset = queryset.filter(is_hidden=False)
-
-    annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
-    queryset = queryset.cache_annotations(*annotations, user=user).order_by("-created")
-
-    user_signature = SignatureFactory.get_user_signature(user)
-    max_conversation_per_user = user_signature.get_conversation_limit()
-
-    render_context = {
-        "conversations": queryset,
-        "title": _(board.title),
-        "subtitle": _("Participate voting and creating comments!"),
-        "conversations_limit": max_conversation_per_user,
-        "board": board,
-        "user_boards": user_boards,
-    }
-    return render(request, "ej_conversations/conversation-list.jinja2", render_context)
-
-
-def detail(request, conversation_id, slug, board_slug, check=check_promoted):
-    conversation = Conversation.objects.get(id=conversation_id)
-    check(conversation, request)
-    user = request.user
-    form = forms.CommentForm(conversation=conversation)
-    comment_id = request.GET.get("comment_id")
+class ConversationDetailView(ListView):
+    form_class = forms.CommentForm
+    template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
 
-    if request.method == "POST" and not request.user.is_anonymous:
-        action = request.POST["action"]
+    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+        user = request.user
+        conversation = self.get_queryset()
 
+        if user.is_anonymous:
+            path = conversation.get_absolute_url()
+            return redirect(reverse("auth:login") + f"?next={path}")
+
+        action = request.POST["action"]
         if action == "vote":
-            ctx = handle_detail_vote(request)
+            self.ctx = handle_detail_vote(request)
         elif action == "comment":
-            ctx = handle_detail_comment(request, conversation)
+            self.ctx = handle_detail_comment(request, conversation)
         elif action == "favorite":
-            ctx = handle_detail_favorite(request, conversation)
+            self.ctx = handle_detail_favorite(request, conversation)
         else:
             log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
             return HttpResponseServerError("invalid action")
-    elif request.method == "POST":
-        path = conversation.get_absolute_url()
-        return redirect(reverse("auth:login") + f"?next={path}")
 
-    context = {
-        "conversation": conversation,
-        "comment": conversation.next_comment_with_id(user, None),
-        "menu_links": conversation_admin_menu_links(conversation, user),
-        "comment_form": form,
-        **ctx,
-    }
-    return render(request, "ej_conversations/conversation-detail.jinja2", context)
+        return render(request, self.template_name, self.get_context_data())
+
+    def get_queryset(self):
+        conversation_id = self.kwargs["conversation_id"]
+        conversation = Conversation.objects.get(id=conversation_id)
+        check_promoted(conversation, self.request)
+        return conversation
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        conversation = self.get_queryset()
+
+        context = {
+            "conversation": conversation,
+            "comment": conversation.next_comment_with_id(user, None),
+            "menu_links": conversation_admin_menu_links(conversation, user),
+            "comment_form": self.form_class(conversation=conversation),
+            **self.ctx,
+        }
+
+        return context
 
 
 # @can_edit_board TODO: criar um can_edit_board
