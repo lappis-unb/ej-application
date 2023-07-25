@@ -1,78 +1,194 @@
 from django.test import Client
-from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponseServerError, Http404
 from pytest import raises
 import pytest
+import json
 from ej_boards.models import Board
 
 from ej_conversations import create_conversation, views
+from ej_conversations.views import ConversationView
 from ej_conversations.models import Comment, FavoriteConversation
-from ej_conversations.models.conversation import Conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
-from ej_profiles.tests.test_routes import logged_client
 from ej_users.models import User
+from ..enums import Choice
 
 
-class TestConversationBase:
-    @pytest.mark.skip(reason="No revised test")
-    def test_vote_in_comment(self, rf, conversation, comment, db):
-        user = User.objects.create_user("user@server.com", "password")
-        conversation.comment = comment
+class TestConversationDetail:
+    @pytest.fixture
+    def admin_user(self, db):
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
+        admin_user.save()
+        return admin_user
+
+    @pytest.fixture
+    def logged_admin(self, admin_user):
+        client = Client()
+        client.force_login(admin_user)
+        return client
+
+    @pytest.fixture
+    def first_conversation(self, admin_user):
+        board = Board.objects.create(slug="board", owner=admin_user, description="board")
+        conversation = create_conversation("foo", "conv1", admin_user, board=board)
+        conversation.create_comment(admin_user, "ad", status="approved", check_limits=False)
+        conversation.create_comment(admin_user, "ad2", status="approved", check_limits=False)
+        conversation.is_promoted = True
+        conversation.is_hidden = False
         conversation.save()
-        request = rf.post("", {"action": "vote", "vote": "agree", "comment_id": comment.id})
-        request.user = user
-        views.detail(request, conversation)
+        return conversation
+
+    def test_vote_agree_in_comment(self, first_conversation):
+        User.objects.create_user("user@server.com", "password")
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        comment = first_conversation.comments.first()
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+        )
+
+        assert response.context["conversation"] == first_conversation
         assert votes_counter(comment) == 1
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_invalid_vote_in_comment(self, rf, conversation, comment):
-        request = rf.post("", {"action": "vote", "vote": "INVALID", "comment_id": comment.id})
-        user = User.objects.create_user("user@server.com", "password")
-        conversation = comment
-        conversation.save()
-        request.user = user
-        with raises(Exception):
-            views.detail(request, conversation)
+        vote = comment.votes.first()
+        assert vote.choice == Choice.AGREE
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_invalid_action_conversation_detail(self, rf, conversation, comment):
-        request = rf.post("", {"action": "invalid"})
-        user = User.objects.create_user("user@server.com", "password")
-        conversation.save()
-        request.user = user
-        response = views.detail(request, conversation)
+    def test_vote_disagree_in_comment(self, first_conversation):
+        User.objects.create_user("user@server.com", "password")
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        comment = first_conversation.comments.first()
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "vote", "vote": "disagree", "comment_id": comment.id},
+        )
+        assert response.context["conversation"] == first_conversation
+        assert votes_counter(comment) == 1
+
+        vote = comment.votes.first()
+        assert vote.choice == Choice.DISAGREE
+
+    def test_vote_skip_in_comment(self, first_conversation):
+        User.objects.create_user("user@server.com", "password")
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        comment = first_conversation.comments.first()
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "vote", "vote": "skip", "comment_id": comment.id},
+        )
+        assert response.context["conversation"] == first_conversation
+        assert votes_counter(comment) == 1
+
+        vote = comment.votes.first()
+        assert vote.choice == Choice.SKIP
+
+    def test_invalid_vote_in_comment(self, first_conversation):
+        User.objects.create_user("user@server.com", "password")
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        comment = first_conversation.comments.first()
+        with raises(Exception):
+            client.post(
+                f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+                {"action": "vote", "vote": "INVALID", "comment_id": comment.id},
+            )
+
+    def test_invalid_action_conversation_detail(self, first_conversation):
+        User.objects.create_user("user@server.com", "password")
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        comment = first_conversation.comments.first()
+
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "invalid", "vote": "INVALID", "comment_id": comment.id},
+        )
         assert isinstance(response, HttpResponseServerError)
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_user_can_comment(self, rf, conversation):
-        request = rf.post("", {"action": "comment", "content": "test comment"})
+    def test_user_can_comment(self, first_conversation):
         user = User.objects.create_user("user@server.com", "password")
-        request.user = user
-        views.detail(request, conversation)
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "comment", "content": "test comment"},
+        )
+
         assert Comment.objects.filter(author=user)[0].content == "test comment"
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_user_post_invalid_comment(self, rf, conversation):
-        request = rf.post("", {"action": "comment", "content": ""})
+    def test_user_post_invalid_comment(self, first_conversation):
         user = User.objects.create_user("user@server.com", "password")
-        request.user = user
-        response = views.detail(request, conversation)
-        assert response["conversation"]
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_anonymous_user_cannot_comment(self, rf, conversation):
-        request = rf.post("", {"action": "comment", "content": "test comment"})
-        request.user = AnonymousUser()
-        with raises(PermissionError):
-            views.detail(request, conversation)
+        client = Client()
+        client.login(email="user@server.com", password="password")
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_user_can_add_conversation_as_favorite(self, rf, user, conversation):
-        request = rf.post("", {"action": "favorite"})
-        request.user = user
-        views.detail(request, conversation)
-        assert FavoriteConversation.objects.filter(user=user, conversation=conversation).exists()
+        client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "comment", "content": ""},
+        )
+
+        assert not Comment.objects.filter(author=user).exists()
+
+    def test_anonymous_user_cannot_participate(self, first_conversation):
+        client = Client()
+        comment = first_conversation.comments.first()
+
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+        )
+        assert response.status_code == 302
+        assert (
+            response.url
+            == f"/login/?next=/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        )
+
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "comment", "content": "test comment"},
+        )
+        assert response.status_code == 302
+        assert (
+            response.url
+            == f"/login/?next=/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        )
+
+        response = client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "favorite"},
+        )
+        assert response.status_code == 302
+        assert (
+            response.url
+            == f"/login/?next=/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        )
+
+    def test_user_can_add_conversation_as_favorite(self, first_conversation):
+        user = User.objects.create_user("user@server.com", "password")
+
+        client = Client()
+        client.login(email="user@server.com", password="password")
+
+        client.post(
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            {"action": "favorite"},
+        )
+
+        assert FavoriteConversation.objects.filter(user=user, conversation=first_conversation).exists()
 
 
 class TestConversationComments:
@@ -270,3 +386,210 @@ class TestAdminViews(ConversationRecipes):
         response = client.post(url, {"comment_content": "new and different comment to check"})
 
         assert response.status_code == 204
+
+
+class TestPrivateConversations(ConversationRecipes):
+    @pytest.fixture
+    def admin_user(self, db):
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
+        profile = admin_user.get_profile()
+        profile.completed_tour = True
+        profile.save()
+        admin_user.save()
+        return admin_user
+
+    @pytest.fixture
+    def logged_admin(self, admin_user):
+        client = Client()
+        client.force_login(admin_user)
+        return client
+
+    @pytest.fixture
+    def base_user(self, db):
+        user = User.objects.create_user("tester@email.br", "password")
+        profile = user.get_profile()
+        profile.completed_tour = True
+        profile.save()
+        return user
+
+    @pytest.fixture
+    def base_board(self, base_user):
+        board = Board.objects.create(slug="userboard", owner=base_user, description="board")
+        return board
+
+    @pytest.fixture
+    def hiden_conversation(self, admin_user):
+        board = Board.objects.create(slug="adminboard", owner=admin_user, description="board")
+        conversation = create_conversation("foo", "conv", admin_user, board=board)
+        conversation.is_hidden = True
+        conversation.save()
+        return conversation
+
+    @pytest.fixture
+    def first_conversation(self, base_board, base_user):
+        conversation = create_conversation("bar", "conv1", base_user, board=base_board)
+        conversation.is_hidden = False
+        conversation.save()
+        return conversation
+
+    @pytest.fixture
+    def second_conversation(self, base_board, base_user):
+        conversation = create_conversation("forbar", "conv2", base_user, board=base_board)
+        conversation.is_hidden = False
+        conversation.save()
+        return conversation
+
+    @pytest.fixture
+    def third_conversation(self, base_board, base_user):
+        conversation = create_conversation("forbarbar", "conv3", base_user, board=base_board)
+        conversation.is_hidden = True
+        conversation.save()
+        return conversation
+
+    def test_redirect_if_tour_is_imcoplete(
+        self, logged_admin, base_board, hiden_conversation, first_conversation, second_conversation
+    ):
+        user = User.objects.create_user("test_user@email.br", "password")
+        Board.objects.create(slug="secondboard", owner=user, description="board")
+
+        url = "/secondboard/conversations/"
+        client = Client()
+        client.force_login(user)
+
+        response = client.get(url)
+
+        assert response.status_code == 302
+        assert response.url == "/secondboard/conversations/tour"
+
+    def test_user_can_access_their_board_conversations(
+        self,
+        logged_admin,
+        base_board,
+        hiden_conversation,
+        first_conversation,
+        second_conversation,
+        third_conversation,
+    ):
+        user_url = f"/userboard/conversations/"
+
+        client = Client()
+        client.login(email="tester@email.br", password="password")
+        response = client.get(user_url)
+
+        assert len(response.context["conversations"]) == 2
+        assert first_conversation in response.context["conversations"]
+        assert second_conversation in response.context["conversations"]
+        assert len(response.context["user_boards"]) == 2
+        assert base_board in response.context["user_boards"]
+
+        admin_url = "/adminboard/conversations/"
+        response = logged_admin.get(admin_url)
+
+        assert len(response.context["conversations"]) == 1
+        assert hiden_conversation in response.context["conversations"]
+
+    def test_anonymous_user_should_not_access_board_conversations(
+        self, admin_user, base_user, hiden_conversation, first_conversation, second_conversation
+    ):
+        admin_url = f"/adminboard/conversations/"
+        anonymous_user = Client()
+        response = anonymous_user.get(admin_url)
+        assert response.status_code == 302
+        assert response.url == "/login/?next=/adminboard/conversations/"
+
+    def test_only_admin_user_can_access_others_conversations(
+        self, logged_admin, base_user, hiden_conversation, first_conversation, second_conversation
+    ):
+        user_url = f"/userboard/conversations/"
+        response = logged_admin.get(user_url)
+
+        assert len(response.context["conversations"]) == 2
+        assert first_conversation in response.context["conversations"]
+        assert second_conversation in response.context["conversations"]
+
+        admin_url = f"/adminboard/conversations/"
+        client = Client()
+        client.login(email="tester@email.br", password="password")
+        response = client.get(admin_url)
+        assert response.status_code == 302
+        assert response.url == "/login/"
+
+
+class TestPublicConversations(ConversationRecipes):
+    @pytest.fixture
+    def admin_user(self, db):
+        admin_user = User.objects.create_superuser("admin@test.com", "pass")
+        admin_user.save()
+        return admin_user
+
+    @pytest.fixture
+    def logged_admin(self, admin_user):
+        client = Client()
+        client.force_login(admin_user)
+        return client
+
+    @pytest.fixture
+    def promoted_conversation(self, admin_user):
+        board = Board.objects.create(slug="board1", owner=admin_user, description="board")
+        conversation = create_conversation("foo", "conv1", admin_user, board=board)
+        conversation.is_promoted = True
+        conversation.is_hidden = False
+        conversation.save()
+        return conversation
+
+    @pytest.fixture
+    def not_promoted_conversation(self, admin_user):
+        board = Board.objects.create(slug="board2", owner=admin_user, description="board2")
+        conversation = create_conversation("bar", "conv2", admin_user, board=board)
+        conversation.is_promoted = False
+        conversation.is_hidden = False
+        conversation.save()
+        return conversation
+
+    @pytest.fixture
+    def hiden_conversation(self, admin_user):
+        board = Board.objects.create(slug="board3", owner=admin_user, description="board3")
+        conversation = create_conversation("foobar", "conv3", admin_user, board=board)
+        conversation.is_promoted = True
+        conversation.is_hidden = True
+        conversation.save()
+        return conversation
+
+    def test_authenticated_user_can_access_public_conversations(
+        self, logged_admin, promoted_conversation, not_promoted_conversation, hiden_conversation
+    ):
+        url = f"/conversations/"
+        response = logged_admin.get(url)
+
+        board1 = Board.objects.get(slug="admintestcom")
+        board2 = Board.objects.get(slug="board1")
+        board3 = Board.objects.get(slug="board2")
+        board4 = Board.objects.get(slug="board3")
+
+        assert response.status_code == 200
+
+        assert board1 in response.context["user_boards"]
+        assert board2 in response.context["user_boards"]
+        assert board3 in response.context["user_boards"]
+        assert board4 in response.context["user_boards"]
+        assert len(response.context["user_boards"]) == 4
+
+        assert response.context["conversations_limit"] == 20
+
+        assert promoted_conversation in response.context["conversations"]
+        assert not_promoted_conversation not in response.context["conversations"]
+        assert hiden_conversation in response.context["conversations"]
+
+    def test_anonymous_user_can_access_public_conversations(
+        self, logged_admin, promoted_conversation, not_promoted_conversation, hiden_conversation
+    ):
+        url = f"/conversations/"
+        client = Client()
+        response = client.get(url)
+
+        assert response.status_code == 200
+        assert response.context["user_boards"] == []
+        assert response.context["conversations_limit"] == 0
+        assert promoted_conversation in response.context["conversations"]
+        assert not_promoted_conversation not in response.context["conversations"]
+        assert hiden_conversation not in response.context["conversations"]
