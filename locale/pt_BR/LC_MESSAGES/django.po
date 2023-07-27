@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-03 21:32-0300\n"
+"POT-Creation-Date: 2023-07-27 12:22-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -474,9 +474,8 @@ msgstr "Novo grupo"
 msgid "Group"
 msgstr "Grupo"
 
-#: src/ej_conversations/mixins.py:177 src/ej_dataviz/roles.py:66
-#: src/ej_dataviz/roles.py:69 src/ej_profiles/models.py:40
-#: src/ej_profiles/tests/test_models.py:49
+#: src/ej_conversations/mixins.py:177 src/ej_dataviz/roles.py:69
+#: src/ej_profiles/models.py:40 src/ej_profiles/tests/test_models.py:49
 msgid "Phone number"
 msgstr "Número de telefone"
 
@@ -484,6 +483,12 @@ msgstr "Número de telefone"
 #, fuzzy
 msgid "Date joined"
 msgstr "data de ingresso"
+
+#: src/ej_conversations/mixins.py:185 src/ej_dataviz/utils.py:212
+#: src/ej_dataviz/views_report.py:214
+#, fuzzy
+msgid "channel"
+msgstr "Canal"
 
 #: src/ej_conversations/models/comment.py:25
 msgid "awaiting moderation"
@@ -717,11 +722,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:45
-msgid "Public conversations"
-msgstr "Conversas públicas"
-
-#: src/ej_conversations/views.py:65 src/ej_conversations/views.py:100
+#: src/ej_conversations/views.py:112
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -747,8 +748,8 @@ msgstr "Estado"
 
 #: src/ej_dataviz/roles.py:65
 #, fuzzy
-msgid "PARTICIPANT"
-msgstr "PARTICIPANTES"
+msgid "participant"
+msgstr "Participante"
 
 #: src/ej_dataviz/roles.py:140
 msgid "Author"
@@ -820,20 +821,20 @@ msgstr ""
 "0%: votos estão igualmente distribuidos\n"
 "100%: todos tem a mesma opinião"
 
-#: src/ej_dataviz/utils.py:368
+#: src/ej_dataviz/utils.py:366
 msgid "{} persona"
 msgstr "{} persona"
 
-#: src/ej_dataviz/utils.py:380
+#: src/ej_dataviz/utils.py:378
 msgid "*Unknown*"
 msgstr "*Desconhecido*"
 
-#: src/ej_dataviz/utils.py:407
+#: src/ej_dataviz/utils.py:405
 msgid "PCA data"
 msgstr "Dados do PCA"
 
-#: src/ej_dataviz/utils.py:412 src/ej_dataviz/utils.py:413
-#: src/ej_dataviz/utils.py:414 src/ej_dataviz/utils.py:416
+#: src/ej_dataviz/utils.py:410 src/ej_dataviz/utils.py:411
+#: src/ej_dataviz/utils.py:412 src/ej_dataviz/utils.py:414
 msgid "You!"
 msgstr "Você!"
 
@@ -845,72 +846,67 @@ msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/views_report.py:202
+#: src/ej_dataviz/views_report.py:199
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/views_report.py:203
+#: src/ej_dataviz/views_report.py:200
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/views_report.py:204
+#: src/ej_dataviz/views_report.py:201
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/views_report.py:205
+#: src/ej_dataviz/views_report.py:202
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/views_report.py:206
+#: src/ej_dataviz/views_report.py:203
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/views_report.py:207
+#: src/ej_dataviz/views_report.py:204
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupo_id"
 
-#: src/ej_dataviz/views_report.py:208
+#: src/ej_dataviz/views_report.py:205
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/views_report.py:209
+#: src/ej_dataviz/views_report.py:206
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/views_report.py:210
+#: src/ej_dataviz/views_report.py:207
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/views_report.py:211
+#: src/ej_dataviz/views_report.py:208
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/views_report.py:212 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/views_report.py:209 src/ej_profiles/enums.py:70
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/views_report.py:213
+#: src/ej_dataviz/views_report.py:210
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/views_report.py:214 src/ej_profiles/enums.py:69
+#: src/ej_dataviz/views_report.py:211 src/ej_profiles/enums.py:69
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/views_report.py:215
+#: src/ej_dataviz/views_report.py:212
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/views_report.py:216
+#: src/ej_dataviz/views_report.py:213
 msgid "skipped"
 msgstr "pulados"
-
-#: src/ej_dataviz/views_report.py:217
-#, fuzzy
-msgid "channel"
-msgstr "canal"
 
 #: src/ej_profiles/admin.py:13
 msgid "Basic information"
@@ -2681,6 +2677,10 @@ msgstr "rejeitar"
 msgid "Approve"
 msgstr "aprovar"
 
+#: src/ej_conversations/jinja2/ej_conversations/list.jinja2:12
+msgid "Public conversations"
+msgstr "Conversas públicas"
+
 #: src/ej_conversations/jinja2/ej_conversations/list.jinja2:16
 #, fuzzy
 msgid "Participate!"
@@ -3117,7 +3117,7 @@ msgstr "discorda"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:36
 #, fuzzy
 msgid "groups"
-msgstr "Grupo"
+msgstr "grupos"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:47
 #, fuzzy
@@ -4037,6 +4037,14 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid "Participant"
+#~ msgstr "Participante"
+
+#, fuzzy
+#~ msgid "PARTICIPANT"
+#~ msgstr "PARTICIPANTE"
 
 #, fuzzy
 #~ msgid "User does not exist"

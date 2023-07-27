@@ -108,19 +108,12 @@
     thead {
         display: none;
     }
-    tr {
-        white-space: pre;
-    }
-    td:first-child::first-line {
-        font-weight: 700;
-    }
     td {
         font-weight: 500;
         font-size: 1rem;
         font-weight: 500;
         font-size: 1rem;
-        text-wrap: wrap;
-        word-break: break-word;
+        overflow-wrap: break-word;
     }
 
     td:first-child {

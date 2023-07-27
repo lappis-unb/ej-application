@@ -62,11 +62,11 @@ def participants_table(conversation, **kwargs):
     )
     data.insert(
         0,
-        _("PARTICIPANT"),
-        data[["name", "email", _("Phone number")]].agg("\n".join, axis=1),
+        _("participant"),
+        data[["email"]].agg("\n".join, axis=1),
         True,
     )
-    data.drop(["name", "email", _("Phone number")], inplace=True, axis=1)
+    data.drop(["email", "name", _("Phone number")], inplace=True, axis=1)
     data = data.sort_values("agree", ascending=False)
     return prepare_dataframe(data, id="participants-table-report", pc=True)
 
