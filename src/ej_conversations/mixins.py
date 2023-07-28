@@ -180,8 +180,8 @@ class UserMixin(ConversationMixin):
         for field, transform in transforms.items():
             stats[field] = stats[field].apply(transform)
 
-        channel_choices = dict((x, y) for x, y in VoteChannels.choices())
-        stats["votes__channel"] = stats["votes__channel"].map(channel_choices)
+        channel_choices = {"opinion_component": "componente de opinião", "unknown": "desconhecido"}
+        stats["votes__channel"] = stats["votes__channel"].replace(channel_choices)
         stats = stats.rename(columns={"votes__channel": _("channel")})
 
         return stats
