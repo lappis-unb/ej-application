@@ -6,16 +6,19 @@ from ej_clusters.models.stereotype import Stereotype
 from ej_clusters.models.stereotype_vote import StereotypeVote
 import pytest
 
+
 @pytest.fixture
 def stereotype(db, comment, user):
     stereotype = Stereotype.objects.create(name="stereotype", owner=user)
     stereotype_vote = StereotypeVote.objects.create(author=stereotype, comment=comment, choice=Choice.AGREE)
     return stereotype
 
+
 @pytest.fixture
 def clusterization(db, conversation):
     clusterization = Clusterization.objects.create(conversation=conversation)
     return clusterization
+
 
 @pytest.fixture
 def cluster(db, clusterization, stereotype):
@@ -23,5 +26,3 @@ def cluster(db, clusterization, stereotype):
     cluster.stereotypes.add(stereotype)
     cluster.save()
     return cluster
-
-

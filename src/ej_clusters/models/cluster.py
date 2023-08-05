@@ -114,7 +114,7 @@ class Cluster(TimeStampedModel):
 
         return agree, disagree
 
-    def concat_statistics_to_dataframe(self, df:pd.DataFrame=pd.DataFrame()):
+    def concat_statistics_to_dataframe(self, df: pd.DataFrame = pd.DataFrame()):
         """
         concat_results_to_dataframe adds cluster voting results to df argument.
         Useful for exporting comments raw data.
