@@ -180,7 +180,7 @@ def get_clusters(conversation):
     return clusters
 
 
-def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
+def export_data(data: pd.DataFrame, fmt: str, filename: str, translate=True):
     """
     Prepare data response for file from dataframe.
     """
@@ -222,27 +222,31 @@ def get_user_data(conversation):
     return df
 
 
-def comments_data_common(comments, votes, filename, fmt):
+def comments_data_common(comments, votes, filename, fmt, clusters=None):
     df = comments.statistics_summary_dataframe(votes=votes)
     df = comments.extend_dataframe(df, "id", "author__email", "author__id", "created")
+    if clusters:
+        for cluster in clusters:
+            df = cluster.concat_statistics_to_dataframe(df)
+
     # Adjust column names
     columns = [
         "content",
         "id",
         "author__email",
-        "author__id",
         "agree",
         "disagree",
         "skipped",
         "convergence",
         "participation",
+        "group",
         "created",
     ]
     df = df[columns]
-    df.columns = ["comment", "comment_id", "author", "author_id", *columns[4:]]
+    df.columns = ["comment", "comment_id", "author", *columns[3:]]
     if not fmt:
         return df
-    return data_response(df, fmt, filename)
+    return export_data(df, fmt, filename)
 
 
 def vote_data_common(votes, filename, fmt):
@@ -250,7 +254,7 @@ def vote_data_common(votes, filename, fmt):
     Common implementation for votes_data and votes_data_cluster
     """
     df = votes_as_dataframe(votes)
-    return data_response(df, fmt, filename)
+    return export_data(df, fmt, filename)
 
 
 def votes_as_dataframe(votes):
