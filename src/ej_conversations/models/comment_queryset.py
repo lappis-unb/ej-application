@@ -54,7 +54,7 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
     def statistics(self):
         return [x.statistics() for x in self]
 
-    def statistics_summary_dataframe(self, normalization=1.0, votes=None, extend_fields=(), clusters=None):
+    def statistics_summary_dataframe(self, normalization=1.0, votes=None, extend_fields=()):
         """
         Return a dataframe with basic voting statistics.
 
