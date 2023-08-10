@@ -52,7 +52,7 @@ def get_urlpatterns():
         path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
         #
         #  Profile URLS
-        *with_app("ej_profiles", "profile/", namespace="profile"),
+        path("profile/", include("ej_profiles.urls", namespace="profile")),
         #
         #  Data visualization
         path("conversations/", include("ej_dataviz.urls", namespace="dataviz")),
