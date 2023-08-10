@@ -29,6 +29,6 @@ há outras possibilidades de análise e relatório de dados.
    translations
    urls
    social-login
-   themes
    dev-style
    smtp
+   themes
