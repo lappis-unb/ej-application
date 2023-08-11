@@ -6,15 +6,14 @@ import json
 from ej_boards.models import Board
 
 from ej_conversations import create_conversation, views
-from ej_conversations.views import ConversationView
-from ej_conversations.models import Comment, FavoriteConversation
+from ej_conversations.models import Comment, FavoriteConversation, Conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
 from ej_users.models import User
 from ..enums import Choice
 
 
-class TestConversationDetail:
+class ConversationSetup:
     @pytest.fixture
     def admin_user(self, db):
         admin_user = User.objects.create_superuser("admin@test.com", "pass")
@@ -28,6 +27,21 @@ class TestConversationDetail:
         return client
 
     @pytest.fixture
+    def base_user(self, db):
+        user = User.objects.create_user("tester@email.br", "password")
+        profile = user.get_profile()
+        profile.completed_tour = True
+        profile.save()
+        return user
+
+    @pytest.fixture
+    def base_board(self, base_user):
+        board = Board.objects.create(slug="userboard", owner=base_user, description="board")
+        return board
+
+
+class TestConversationDetail(ConversationSetup):
+    @pytest.fixture
     def first_conversation(self, admin_user):
         board = Board.objects.create(slug="board", owner=admin_user, description="board")
         conversation = create_conversation("foo", "conv1", admin_user, board=board)
@@ -39,10 +53,10 @@ class TestConversationDetail:
         return conversation
 
     def test_vote_agree_in_comment(self, first_conversation):
-        User.objects.create_user("user@server.com", "password")
+        user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         comment = first_conversation.comments.first()
         response = client.post(
@@ -57,10 +71,10 @@ class TestConversationDetail:
         assert vote.choice == Choice.AGREE
 
     def test_vote_disagree_in_comment(self, first_conversation):
-        User.objects.create_user("user@server.com", "password")
+        user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         comment = first_conversation.comments.first()
         response = client.post(
@@ -74,10 +88,10 @@ class TestConversationDetail:
         assert vote.choice == Choice.DISAGREE
 
     def test_vote_skip_in_comment(self, first_conversation):
-        User.objects.create_user("user@server.com", "password")
+        user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         comment = first_conversation.comments.first()
         response = client.post(
@@ -91,10 +105,10 @@ class TestConversationDetail:
         assert vote.choice == Choice.SKIP
 
     def test_invalid_vote_in_comment(self, first_conversation):
-        User.objects.create_user("user@server.com", "password")
+        user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         comment = first_conversation.comments.first()
         with raises(Exception):
@@ -104,10 +118,10 @@ class TestConversationDetail:
             )
 
     def test_invalid_action_conversation_detail(self, first_conversation):
-        User.objects.create_user("user@server.com", "password")
+        user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         comment = first_conversation.comments.first()
 
@@ -121,7 +135,7 @@ class TestConversationDetail:
         user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         client.post(
             f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
@@ -134,7 +148,7 @@ class TestConversationDetail:
         user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         client.post(
             f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
@@ -181,7 +195,7 @@ class TestConversationDetail:
         user = User.objects.create_user("user@server.com", "password")
 
         client = Client()
-        client.login(email="user@server.com", password="password")
+        client.force_login(user)
 
         client.post(
             f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
@@ -191,126 +205,75 @@ class TestConversationDetail:
         assert FavoriteConversation.objects.filter(user=user, conversation=first_conversation).exists()
 
 
-class TestConversationComments:
-    @pytest.mark.skip(reason="No revised test")
-    def test_user_can_get_all_his_comments(self, request_with_user, conversation, user, comment):
-        ctx = views.comment_list(request_with_user, conversation)
-        assert len(ctx["approved"]) == 1
-        assert len(ctx["rejected"]) == 0
-        assert len(ctx["pending"]) == 0
-        assert ctx["can_edit"]
-        assert ctx["can_comment"]
-
-    @pytest.mark.skip(reason="No revised test")
-    def test_user_can_get_detail_of_a_comment(self, conversation, comment):
-        ctx = views.comment_detail(conversation, comment)
-        assert ctx["comment"] is comment
-
-    @pytest.mark.skip(reason="No revised test")
-    def test_comment_list_not_promoted_convesation(self, request_with_user, conversation, user):
-        conversation.is_promoted = False
-        with raises(Http404):
-            views.comment_list(request_with_user, conversation)
-
-    @pytest.mark.skip(reason="No revised test")
-    def test_udetail_of_a_comment_not_promoted(self, conversation, comment):
-        conversation.is_promoted = False
-        with raises(Http404):
-            views.comment_detail(conversation, comment)
-
-
-class TestAdminViews(ConversationRecipes):
-    @pytest.fixture
-    def admin_user(self, db):
-        admin_user = User.objects.create_superuser("admin@test.com", "pass")
-        admin_user.save()
-        return admin_user
-
-    @pytest.fixture
-    def logged_admin(self, admin_user):
+class TestConversationCreate(ConversationSetup):
+    def test_board_owner_can_create_conversation(self, base_board, base_user):
+        url = "/userboard/conversations/add/"
         client = Client()
-        client.force_login(admin_user)
-        return client
+        client.force_login(base_user)
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_create_conversation(self, rf, user):
-        request = rf.post(
-            "", {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
+        response = client.post(
+            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
-        request.user = user
-        response = views.create(request)
         assert response.status_code == 302
-        assert response.url == "/conversations/whatever/stereotypes/"
+        assert response.url == "/userboard/conversations/1/whatever/dashboard/"
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_create_invalid_conversation(self, rf, user):
-        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
-        request.user = user
-        response = views.create(request)
-        assert not response["form"].is_valid()
+        conversation = Conversation.objects.first()
+        assert conversation.is_promoted
+        assert conversation.board == base_board
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_edit_conversation(self, rf, conversation):
-        request = rf.post(
-            "", {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
-        )
-        request.user = conversation.author
-        response = views.edit(request, conversation)
-        assert response.status_code == 302
-        assert response.url == "/conversations/title/moderate/"
+    def test_user_should_not_create_conversation_on_another_users_board(self, base_board, base_user):
+        url = "/userboard/conversations/add/"
 
-    @pytest.mark.skip(reason="No revised test")
-    def test_edit_invalid_conversation(self, rf, conversation):
-        request = rf.post("", {"title": "", "tags": "tag", "text": "description", "comments_count": 0})
-        request.user = conversation.author
-        response = views.edit(request, conversation)
-        assert not response["form"].is_valid()
-
-    @pytest.mark.skip(reason="No revised test")
-    def test_edit_not_promoted_conversation(self, rf, conversation):
-        request = rf.post("", {})
-        request.user = conversation.author
-        conversation.is_promoted = False
-        with raises(Http404):
-            views.edit(request, conversation)
-
-    @pytest.mark.skip(reason="No revised test")
-    def test_get_edit_conversation(self, rf, conversation):
-        user = conversation.author
-        comment = conversation.create_comment(user, "comment", "pending")
-        conversation.create_comment(user, "comment1")
-        comment.status = comment.STATUS.pending
-        comment.save()
-        request = rf.get("", {})
-        request.user = user
-        conversation.refresh_from_db()
-        response = views.edit(request, conversation)
-        assert response["comments"][0] == comment
-        assert response["conversation"] == conversation
-
-    def test_admin_can_moderate_comments(self, logged_admin):
-        user = User.objects.create_user("user1@email.br", "password")
-        board = Board.objects.create(slug="board1", owner=user, description="board")
+        user = User.objects.create_user("user2@email.br", "password")
         client = Client()
-        client.login(email="user1@email.br", password="password")
-        conversation = create_conversation("foo", "conv1", user, board=board)
-        comment_to_approve = conversation.create_comment(
-            author=user, content="comment to approve", status="pending"
-        )
-        comment_to_reject = conversation.create_comment(
-            author=user, content="comment to reject", status="pending"
-        )
-        url = f"/{board.slug}/conversations/{conversation.id}/{conversation.slug}/moderate/"
-        client.post(url, {"approved": comment_to_approve.id, "rejected": comment_to_reject.id})
+        client.force_login(user)
 
-        assert (
-            conversation.comments.get(id=comment_to_approve.id).status == comment_to_approve.STATUS.approved
+        response = client.post(
+            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
-        assert (
-            conversation.comments.get(id=comment_to_reject.id).status == comment_to_reject.STATUS.rejected
+        assert response.status_code == 302
+        assert response.url == "/login/"
+
+    def test_anonymous_user_should_not_create_conversation(self):
+        url = "/userboard/conversations/add/"
+        client = Client()
+
+        response = client.post(
+            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
         )
 
-    def test_admin_can_create_comments(self, logged_admin):
+        assert response.status_code == 302
+        assert response.url == "/login/?next=/userboard/conversations/add/"
+
+    def test_should_not_create_invalid_conversation(self, base_board, base_user):
+        url = "/userboard/conversations/add/"
+        client = Client()
+        client.force_login(base_user)
+
+        response = client.post(
+            url, {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+
+        assert not response.context["form"].is_valid()
+        assert not Conversation.objects.filter(author=base_user).exists()
+
+    def test_admin_can_create_conversations_on_another_users_board(
+        self, admin_user, logged_admin, base_board
+    ):
+        url = "/userboard/conversations/add/"
+        response = logged_admin.post(
+            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+        conversation = Conversation.objects.first()
+
+        assert response.status_code == 302
+        assert response.url == "/userboard/conversations/1/whatever/dashboard/"
+        assert conversation.board == base_board
+        assert conversation.author == admin_user
+
+
+class TestConversationComments(ConversationSetup):
+    def test_user_can_create_comments(self, logged_admin):
         user = User.objects.create_user("user1@email.br", "password")
         board = Board.objects.create(slug="board1", owner=user, description="board")
         client = Client()
@@ -386,6 +349,222 @@ class TestAdminViews(ConversationRecipes):
         response = client.post(url, {"comment_content": "new and different comment to check"})
 
         assert response.status_code == 204
+
+
+class TestConversationEdit(ConversationSetup):
+    @pytest.fixture
+    def another_logged_user(self, db):
+        user = User.objects.create_user("user1@email.br", "password")
+        profile = user.get_profile()
+        profile.completed_tour = True
+        profile.save()
+        client = Client()
+        client.force_login(user)
+        return client
+
+    @pytest.fixture
+    def new_conversation(self, base_user, base_board):
+        conversation = create_conversation(title="bar", text="conv", author=base_user, board=base_board)
+        conversation.is_promoted = True
+        conversation.save()
+        return conversation
+
+    def test_edit_conversation(self, base_user, new_conversation):
+        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+
+        client = Client()
+        client.force_login(base_user)
+
+        response = client.post(
+            url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+
+        new_conversation.refresh_from_db()
+
+        assert response.status_code == 302
+        assert response.url == "/userboard/conversations/1/bar/"
+        assert new_conversation.title == "bar updated"
+        assert new_conversation.text == "description"
+
+    def test_edit_invalid_conversation(self, base_user, new_conversation):
+        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+
+        client = Client()
+        client.force_login(base_user)
+
+        response = client.post(
+            url, {"title": "", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+
+        assert not response.context["form"].is_valid()
+
+    def test_edit_not_promoted_conversation(self, base_user, new_conversation):
+        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+        new_conversation.is_promoted = False
+        new_conversation.save()
+
+        client = Client()
+        client.force_login(base_user)
+
+        with raises(Exception):
+            client.post(
+                url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+            )
+
+    def test_get_edit_conversation(self, base_user, new_conversation):
+        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+        comment = new_conversation.create_comment(base_user, "comment", "pending")
+        new_conversation.create_comment(base_user, "comment1")
+        comment.status = comment.STATUS.pending
+        comment.save()
+
+        client = Client()
+        client.force_login(base_user)
+
+        response = client.get(url)
+        new_conversation.refresh_from_db()
+
+        assert response.context["conversation"] == new_conversation
+
+    def test_admin_can_edit_conversation(self, new_conversation, logged_admin):
+        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+
+        response = logged_admin.post(
+            url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+
+        new_conversation.refresh_from_db()
+
+        assert response.status_code == 302
+        assert response.url == "/userboard/conversations/1/bar/"
+        assert new_conversation.title == "bar updated"
+        assert new_conversation.text == "description"
+
+    def test_user_cannot_edit_anothers_one_conversation(self, new_conversation, another_logged_user):
+        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+        client = Client()
+
+        response = client.post(
+            url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+        assert response.status_code == 302
+        assert response.url == f"/login/?next={url}"
+
+        new_conversation.refresh_from_db()
+        assert new_conversation.title == "bar"
+        assert new_conversation.text == "conv"
+
+        response = another_logged_user.post(
+            url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+        )
+        assert response.status_code == 302
+        assert response.url == "/login/"
+
+        new_conversation.refresh_from_db()
+        assert new_conversation.title == "bar"
+        assert new_conversation.text == "conv"
+
+
+class TestConversationModerate(ConversationSetup):
+    def test_user_can_moderate_comments(self, logged_admin):
+        user = User.objects.create_user("user1@email.br", "password")
+        board = Board.objects.create(slug="board1", owner=user, description="board")
+        client = Client()
+        client.login(email="user1@email.br", password="password")
+        conversation = create_conversation("foo", "conv1", user, board=board)
+        comment_to_approve = conversation.create_comment(
+            author=user, content="comment to approve", status="pending"
+        )
+        comment_to_reject = conversation.create_comment(
+            author=user, content="comment to reject", status="pending"
+        )
+        url = f"/{board.slug}/conversations/{conversation.id}/{conversation.slug}/moderate/"
+        client.post(url, {"approved": comment_to_approve.id, "rejected": comment_to_reject.id})
+
+        assert (
+            conversation.comments.get(id=comment_to_approve.id).status == comment_to_approve.STATUS.approved
+        )
+        assert (
+            conversation.comments.get(id=comment_to_reject.id).status == comment_to_reject.STATUS.rejected
+        )
+
+    def test_comment_status_is_correct(self, base_user, base_board):
+        conversation = create_conversation("foo", "conv1", base_user, board=base_board)
+        comment_to_approve_1 = conversation.create_comment(
+            author=base_user, content="comment to approve 1", status="pending"
+        )
+        comment_to_approve_2 = conversation.create_comment(
+            author=base_user, content="comment to approve 2", status="pending"
+        )
+        comment_to_reject = conversation.create_comment(
+            author=base_user, content="comment to reject", status="pending"
+        )
+        pending_comment = conversation.create_comment(
+            author=base_user, content="pending comment", status="pending"
+        )
+
+        client = Client()
+        client.force_login(base_user)
+
+        url = f"/{base_board.slug}/conversations/{conversation.id}/{conversation.slug}/moderate/"
+        client.post(
+            url,
+            {
+                "approved": [comment_to_approve_1.id, comment_to_approve_2.id],
+                "rejected": comment_to_reject.id,
+                "pending": pending_comment.id,
+            },
+        )
+
+        assert (
+            conversation.comments.get(id=comment_to_approve_1.id).status
+            == comment_to_approve_1.STATUS.approved
+        )
+        assert (
+            conversation.comments.get(id=comment_to_approve_2.id).status
+            == comment_to_approve_2.STATUS.approved
+        )
+        assert (
+            conversation.comments.get(id=comment_to_reject.id).status == comment_to_reject.STATUS.rejected
+        )
+        assert conversation.comments.get(id=pending_comment.id).status == pending_comment.STATUS.pending
+
+    def test_get_moderate_comments(self, base_user, base_board):
+        conversation = create_conversation("foo", "conv1", base_user, board=base_board)
+        comment_to_approve_1 = conversation.create_comment(
+            author=base_user, content="comment approved 1", status="pending"
+        )
+        comment_to_approve_2 = conversation.create_comment(
+            author=base_user, content="comment approved 2", status="pending"
+        )
+        comment_to_reject = conversation.create_comment(
+            author=base_user, content="comment to reject", status="pending"
+        )
+        pending_comment = conversation.create_comment(
+            author=base_user, content="pending comment", status="pending"
+        )
+
+        client = Client()
+        client.force_login(base_user)
+
+        url = f"/{base_board.slug}/conversations/{conversation.id}/{conversation.slug}/moderate/"
+        client.post(
+            url,
+            {
+                "approved": [comment_to_approve_1.id, comment_to_approve_2.id],
+                "rejected": comment_to_reject.id,
+                "pending": pending_comment.id,
+            },
+        )
+        response = client.get(url)
+
+        assert len(response.context["approved"]) == 2
+        assert comment_to_approve_1 in response.context["approved"]
+        assert comment_to_approve_2 in response.context["approved"]
+        assert len(response.context["rejected"]) == 1
+        assert comment_to_reject in response.context["rejected"]
+        assert len(response.context["pending"]) == 1
+        assert pending_comment in response.context["pending"]
 
 
 class TestPrivateConversations(ConversationRecipes):

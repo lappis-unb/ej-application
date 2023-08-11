@@ -16,11 +16,14 @@ TEST_DOMAIN = "https://domain.com.br"
 class TestRoutes(UrlTester, ConversationRecipes):
     public_urls = ["/conversations/"]
     user_urls = [
-        "/board-slug/conversations/1/slug/",
+        "/board-slug/conversations/1/conversation/",
         # '/comments/<id>-<hash>/'
     ]
     admin_urls = ["/board-slug/conversations/add/"]
-    owner_urls = ["/board-slug/conversations/1/slug/edit/", "/board-slug/conversations/1/slug/moderate/"]
+    owner_urls = [
+        "/board-slug/conversations/1/conversation/edit/",
+        "/board-slug/conversations/1/conversation/moderate/",
+    ]
 
     def get_data(self, request):
         conversation = request.getfixturevalue("conversation")

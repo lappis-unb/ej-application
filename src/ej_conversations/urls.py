@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     path(
         f"{conversation_url}/comments/new/",
-        views.new_comment,
+        views.NewCommentView.as_view(),
         name="new_comment",
     ),
     path(
@@ -27,12 +27,12 @@ urlpatterns = [
     ),
     path(
         f"{conversation_url}/moderate/",
-        views.moderate,
+        views.ConversationModerateView.as_view(),
         name="moderate",
     ),
     path(
         f"{conversation_url}/edit/",
-        views.edit,
+        views.ConversationEditView.as_view(),
         name="edit",
     ),
     path(
@@ -42,7 +42,7 @@ urlpatterns = [
     ),
     path(
         "add/",
-        views.create,
+        views.ConversationCreateView.as_view(),
         name="create",
     ),
     path(
