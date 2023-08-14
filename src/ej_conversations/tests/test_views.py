@@ -625,21 +625,6 @@ class TestPrivateConversations(ConversationRecipes):
         conversation.save()
         return conversation
 
-    def test_redirect_if_tour_is_imcoplete(
-        self, logged_admin, base_board, hiden_conversation, first_conversation, second_conversation
-    ):
-        user = User.objects.create_user("test_user@email.br", "password")
-        Board.objects.create(slug="secondboard", owner=user, description="board")
-
-        url = "/secondboard/conversations/"
-        client = Client()
-        client.force_login(user)
-
-        response = client.get(url)
-
-        assert response.status_code == 302
-        assert response.url == "/secondboard/conversations/tour"
-
     def test_user_can_access_their_board_conversations(
         self,
         logged_admin,

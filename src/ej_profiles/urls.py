@@ -24,4 +24,9 @@ urlpatterns = [
         views.HomeView.as_view(),
         name="home",
     ),
+    path(
+        "tour/",
+        views.TourView.as_view(),
+        name="tour",
+    ),
 ]

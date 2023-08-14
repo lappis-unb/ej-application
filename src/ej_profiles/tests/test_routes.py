@@ -14,6 +14,7 @@ from io import BytesIO
 from ej.testing import UrlTester
 from ej_profiles import enums
 from ej_users.models import User
+from ej_boards.models import Board
 
 
 class TestRoutes(UrlTester):
@@ -97,3 +98,29 @@ class TestEditProfile:
         for attr in inf_fields:
             if attr not in blacklist:
                 assert getattr(user.profile, attr) == form_data[attr], attr
+
+
+class TestTour:
+    def test_redirect_if_tour_is_incomplete(self, db):
+        user = User.objects.create_user("test_user@email.br", "password")
+
+        url = "/profile/home/"
+        client = Client()
+        client.force_login(user)
+
+        response = client.get(url)
+
+        assert response.status_code == 302
+        assert response.url == "/profile/tour/"
+
+    def test_redirect_after_tour_completion(self, db):
+        user = User.objects.create_user("test_user@email.br", "password")
+
+        url = "/profile/tour/"
+        client = Client()
+        client.force_login(user)
+
+        response = client.post(url)
+
+        assert response.status_code == 302
+        assert response.url == "/profile/home/"
