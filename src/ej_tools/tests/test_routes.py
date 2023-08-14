@@ -1,10 +1,11 @@
+import pytest
+from django.core.exceptions import PermissionDenied
+from django.test import Client
+
 from ej_conversations.models import conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_tools.views import *
 from ej_tools.tools import BotsWebchatTool, BotsWhatsappTool, MauticTool
-from django.core.exceptions import PermissionDenied
-from django.test import Client
-import pytest
 
 
 class TestRoutes(ConversationRecipes):

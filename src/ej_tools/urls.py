@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     path(
         f"{base_path}/opinion-component",
-        views.opinion_component,
+        views.OpinionComponentView.as_view(),
         name="opinion-component",
     ),
     path(

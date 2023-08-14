@@ -185,8 +185,11 @@
 <table class="center" style="font-family: sans-serif, serif !important; width: 100%; margin-left: auto; margin-right: auto;"  cellspacing="0" cellpadding="0" border="0">
     <tbody>
         <tr>
-            <td class="base" style="box-sizing: border-box; font-size: 2.25rem; font-weight: 400 !important; min-width: 74vmin; overflow: hidden; background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png); background-repeat: round; max-width: 90%; margin: auto;">
-
+            {% if background_image_url %}
+                <td class="base" style="box-sizing: border-box; font-size: 2.25rem; font-weight: 400 !important; min-width: 74vmin; overflow: hidden; background-image: url({{background_image_url}}); background-repeat: round; max-width: 90%; margin: auto;">
+            {% else %}
+                <td class="base" style="box-sizing: border-box; font-size: 2.25rem; font-weight: 400 !important; min-width: 74vmin; overflow: hidden; background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png); background-repeat: round; max-width: 90%; margin: auto;">
+            {% endif %}
                 <div class="card" style="box-sizing: border-box; width: 100%; background-color: #E7E7E7; color: #000; margin: auto; max-width: 1000px; padding: 1rem;">
                     <div class="card__conversation--statistic" style="margin-bottom: .875rem; font-weight: 700; font-size: 1vmax; gap: 2.375rem;">
                         <img class="card__conversation--statistic--comments" style="margin: 0 .438rem 0 0; width: 1.563rem; height: 1.25rem;" src="https://ejplatform.pencillabs.com.br/static/img/icons/comments-solid.png">
@@ -253,7 +256,11 @@
                             </td>
                             <td>
                                 <div id="logo">
+                                {% if logo_image_url %}
+                                    <img src="{{logo_image_url}}" style="max-height: 120px;" alt="Outra logo">
+                                {% else %}
                                     <img src="https://unpkg.com/ej-conversations@2.4.5/dist/conversations/assets/logo_cgi.png" alt="logo da CGI">
+                                {% endif %}
                                 </div>
                             </td>
                         </tr>

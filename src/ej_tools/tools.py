@@ -166,6 +166,13 @@ class MailingTool(AbstractTool):
         "mautic": _("Uses a mautic campaign "),
     }
 
+    THEME_CHOICES = (
+        ("osf", _("OSF")),
+        ("votorantim", _("Votorantim")),
+        ("icd", _("ICD")),
+        ("bocadelobo", _("Boca de Lobo")),
+    )
+
     def __init__(self, conversation, is_active=True):
         AbstractTool.__init__(self)
         self.name: str = _("Mailing campaign")

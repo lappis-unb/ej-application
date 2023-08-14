@@ -1,10 +1,10 @@
 import requests
 import json
-from django.utils.translation import gettext_lazy as _
+from ckeditor.fields import RichTextField
 
-# from boogie import models
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import redirect
 from requests import Request
 
@@ -46,46 +46,34 @@ class RasaConversation(models.Model):
             raise ValidationError(_("a conversation can have a maximum of five domains"))
 
 
-class ConversationComponent:
+class OpinionComponent(models.Model):
     """
-    ConversationComponent controls the steps to generate the script and css to
-    configure the EJ opinion web component;
+    OpinionComponent controls the steps to generate the script and css to
+    configure the EJ opinion web component
     """
 
-    AUTH_TYPE_CHOICES = (("register", _("Register using name/email")),)
+    def validate_file_size(value):
+        """
+        Validates image size in form to be less than 5MB.
+        This method is above the class attributes as it was
+        not possible to access the validator if it is below.
+        """
 
-    AUTH_TOOLTIP_TEXTS = {
-        "register": _("User will use EJ platform interface, creating an account using personal data"),
-    }
+        filesize = value.size
 
-    THEME_CHOICES = (
-        ("osf", _("OSF")),
-        ("votorantim", _("Votorantim")),
-        ("icd", _("ICD")),
-        ("bocadelobo", _("Boca de Lobo")),
+        if filesize > OpinionComponent.FIVE_MB:
+            raise ValidationError(_("The maximum file size must be 5MB"))
+        else:
+            return value
+
+    FIVE_MB = 5242880
+
+    background_image = models.ImageField(
+        upload_to="opinion_component/background/", validators=[validate_file_size]
     )
-
-    THEME_PALETTES = {
-        "osf": ["#1D1088", "#F8127E"],
-        "votorantim": ["#04082D", "#F14236"],
-        "icd": ["#005BAA", "#F5821F"],
-        "bocadelobo": ["#83E760", "#161616"],
-    }
-
-    def __init__(self, form):
-        self.form = form
-
-    def _form_is_invalid(self):
-        return not self.form.is_valid() or (not self.form.cleaned_data["theme"])
-
-    def get_props(self):
-        if self._form_is_invalid():
-            return "theme= authenticate-with=register"
-
-        result = ""
-        if self.form.cleaned_data["theme"]:
-            result = result + f"theme={self.form.cleaned_data['theme']}"
-        return result
+    logo_image = models.ImageField(upload_to="opinion_component/logo/", validators=[validate_file_size])
+    conversation = models.OneToOneField("ej_conversations.Conversation", on_delete=models.CASCADE)
+    final_voting_message = RichTextField()
 
 
 class ConversationMautic(models.Model):

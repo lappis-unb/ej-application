@@ -6,14 +6,13 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 
 from ej_boards.forms import PaletteWidget
-from ej_conversations.models import Comment
+from ej_conversations.models import Comment, Conversation
 from ej.forms import EjModelForm
 from ej_tools.models import (
     RasaConversation,
-    ConversationComponent,
     ConversationMautic,
+    OpinionComponent,
 )
-
 from ej_tools.tools import MailingTool
 
 
@@ -35,10 +34,27 @@ class CustomTemplateChoiceWidget(forms.RadioSelect):
         return self.renderer.render(context)
 
 
-class ConversationComponentForm(forms.Form):
-    theme = forms.ChoiceField(
-        label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
+class CustomImageInputWidget(forms.FileInput):
+    template_name = "ej_tools/includes/image-input.jinja2"
+    renderer = get_template(template_name)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        context = self.get_context(name, value, attrs)
+        return self.renderer.render(context)
+
+
+class OpinionComponentForm(forms.ModelForm):
+    background_image = forms.ImageField(
+        widget=CustomImageInputWidget(attrs={"id": "background_input", "title": _("Background")})
     )
+    logo_image = forms.ImageField(
+        widget=CustomImageInputWidget(attrs={"id": "logo_input", "title": _("Logo")})
+    )
+    conversation = forms.ModelChoiceField(widget=forms.HiddenInput(), queryset=Conversation.objects.all())
+
+    class Meta:
+        model = OpinionComponent
+        fields = "__all__"
 
 
 class MailingToolForm(forms.Form):
@@ -49,7 +65,7 @@ class MailingToolForm(forms.Form):
         widget=CustomTemplateChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS),
     )
     theme = forms.ChoiceField(
-        label=_("Theme"), choices=ConversationComponent.THEME_CHOICES, required=False, widget=PaletteWidget
+        label=_("Theme"), choices=MailingTool.THEME_CHOICES, required=False, widget=PaletteWidget
     )
     is_custom_domain = forms.BooleanField(
         required=False, label=_("Redirect user to a custom domain (optional)")
