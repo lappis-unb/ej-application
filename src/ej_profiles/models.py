@@ -1,16 +1,19 @@
 import hashlib
-
+import toolz
 from boogie.fields import EnumField
+from rest_framework.authtoken.models import Token
+from sidekick import delegate_to, import_later
+
 from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db import models
+from django.db.models import Q, Count
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _, gettext as __
-from rest_framework.authtoken.models import Token
-from sidekick import delegate_to, import_later
 
+from ej_conversations.models import Conversation, Comment, ConversationTag
 from .enums import Race, Gender, STATE_CHOICES_MAP
 from .utils import years_from
 
@@ -39,6 +42,7 @@ class Profile(models.Model):
     profile_photo = models.ImageField(_("Profile Photo"), blank=True, null=True, upload_to="profile_images")
     phone_number = models.CharField(_("Phone number"), blank=True, max_length=11)
     completed_tour = models.BooleanField(default=False, blank=True, null=True)
+    filtered_home_tag = models.BooleanField(default=False, blank=True, null=True)
 
     # https://sidekick.readthedocs.io/en/latest/lib-properties.html?highlight=delegate_to#properties-and-descriptors
     name = delegate_to("user")
@@ -200,6 +204,77 @@ class Profile(models.Model):
 
     def get_state_display(self):
         return STATE_CHOICES_MAP.get(self.state, self.state) or _("(Not Filled)")
+
+    def default_url(self):
+        return reverse(("profile:home"))
+
+    def participated_conversations(self):
+        """
+        Return conversations that an user has commented or voted
+        """
+        user = self.user
+        return Conversation.objects.filter(
+            Q(comments__author=user) | Q(comments__votes__author=user)
+        ).distinct()
+
+    def participated_tags(self):
+        """
+        Return tags of conversations that an user has commented or voted
+        """
+        return ConversationTag.objects.filter(
+            content_object__in=self.participated_conversations()
+        ).distinct("tag")
+
+    def get_contributions_data(self):
+
+        # Fetch all conversations the user created
+        created = self.user.conversations.cache_annotations(
+            "first_tag", "n_user_votes", "n_comments", user=self.user
+        )
+
+        # Fetch voted conversations
+        # This code merges in python 2 querysets. The first is annotated with
+        # tag and the number of user votes. The second is annotated with the total
+        # number of comments in each conversation
+        voted = self.user.conversations_with_votes.exclude(id__in=[x.id for x in created])
+        voted = voted.cache_annotations("first_tag", "n_user_votes", user=self.user)
+        voted_extra = (
+            Conversation.objects.filter(id__in=[x.id for x in voted])
+            .cache_annotations("n_comments")
+            .values("id", "n_comments")
+        )
+        total_votes = {}
+        for item in voted_extra:
+            total_votes[item["id"]] = item["n_comments"]
+        for conversation in voted:
+            conversation.annotation_total_votes = total_votes[conversation.id]
+
+        # Now we get the favorite conversations from user
+        favorites = Conversation.objects.filter(favorites__user=self.user).cache_annotations(
+            "first_tag", "n_user_votes", "n_comments", user=self.user
+        )
+
+        # Comments
+        comments = self.user.comments.select_related("conversation").annotate(
+            skip_count=Count("votes", filter=Q(votes__choice=0)),
+            agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
+            disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
+        )
+        groups = toolz.groupby(lambda x: x.status, comments)
+        approved = groups.get(Comment.STATUS.approved, ())
+        rejected = groups.get(Comment.STATUS.rejected, ())
+        pending = groups.get(Comment.STATUS.pending, ())
+
+        return {
+            "profile": self,
+            "user": self.user,
+            "created_conversations": created,
+            "favorite_conversations": favorites,
+            "voted_conversations": voted,
+            "approved_comments": approved,
+            "rejected_comments": rejected,
+            "pending_comments": pending,
+        }
 
 
 def prepare_fields(triples, blacklist, overrides):

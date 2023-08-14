@@ -110,6 +110,20 @@ class TestGetRoutes:
         # random-comment route should never return an voted comment, even if id is present.
         assert data["content"] != comment.content
 
+    def test_get_promoted_conversations(self, conversation):
+        path = BASE_URL + f"/conversations/promoted/"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert data
+
+    def test_get_conversation_by_tags(self, conversation):
+        tag = "tag"
+        conversation.tags.set(tag)
+        path = BASE_URL + f"/conversations/filter/?tags={tag}"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert data
+
     def test_get_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})

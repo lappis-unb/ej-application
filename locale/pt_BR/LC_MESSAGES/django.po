@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-27 12:22-0300\n"
+"POT-Creation-Date: 2023-07-27 17:25-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
+#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -61,16 +62,16 @@ msgstr "Lista de papéis"
 msgid "hello"
 msgstr "olá"
 
-#: src/ej/roles/tags.py:113
+#: src/ej/roles/tags.py:108
 msgid "Go!"
 msgstr "Quero ir!"
 
-#: src/ej/roles/tags.py:201
+#: src/ej/roles/tags.py:196
 #, python-brace-format
 msgid "Your progress: {pc} percent"
 msgstr "Seu progresso: {pc} por cento"
 
-#: src/ej/roles/tags.py:206
+#: src/ej/roles/tags.py:201
 #, python-brace-format
 msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
@@ -474,8 +475,9 @@ msgstr "Novo grupo"
 msgid "Group"
 msgstr "Grupo"
 
-#: src/ej_conversations/mixins.py:177 src/ej_dataviz/roles.py:69
-#: src/ej_profiles/models.py:40 src/ej_profiles/tests/test_models.py:49
+#: src/ej_conversations/mixins.py:177 src/ej_dataviz/roles.py:66
+#: src/ej_dataviz/roles.py:69 src/ej_profiles/models.py:42
+#: src/ej_profiles/tests/test_models.py:62
 msgid "Phone number"
 msgstr "Número de telefone"
 
@@ -488,7 +490,7 @@ msgstr "data de ingresso"
 #: src/ej_dataviz/views_report.py:214
 #, fuzzy
 msgid "channel"
-msgstr "Canal"
+msgstr "canal"
 
 #: src/ej_conversations/models/comment.py:25
 msgid "awaiting moderation"
@@ -680,7 +682,11 @@ msgstr ""
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
 
-#: src/ej_conversations/tests/test_api.py:142
+#: src/ej_conversations/serializers.py:100
+msgid "Participate"
+msgstr "Participar"
+
+#: src/ej_conversations/tests/test_api.py:162
 msgid "Authentication credentials were not provided."
 msgstr ""
 
@@ -736,13 +742,13 @@ msgid "Gender"
 msgstr "Gênero"
 
 #: src/ej_dataviz/constants.py:187 src/ej_dataviz/views_dataviz.py:59
-#: src/ej_dataviz/views_dataviz.py:93 src/ej_profiles/models.py:27
-#: src/ej_profiles/tests/test_models.py:46
+#: src/ej_dataviz/views_dataviz.py:93 src/ej_profiles/models.py:29
+#: src/ej_profiles/tests/test_models.py:59
 msgid "Race"
 msgstr "Raça"
 
-#: src/ej_dataviz/constants.py:197 src/ej_profiles/models.py:34
-#: src/ej_profiles/tests/test_models.py:39
+#: src/ej_dataviz/constants.py:197 src/ej_profiles/models.py:36
+#: src/ej_profiles/tests/test_models.py:52
 msgid "State"
 msgstr "Estado"
 
@@ -940,7 +946,7 @@ msgstr "Branco"
 msgid "Yellow"
 msgstr "Amarelo"
 
-#: src/ej_profiles/enums.py:23 src/ej_profiles/tests/test_models.py:46
+#: src/ej_profiles/enums.py:23 src/ej_profiles/tests/test_models.py:59
 msgid "Indigenous"
 msgstr "Indígena"
 
@@ -948,7 +954,7 @@ msgstr "Indígena"
 msgid "Other"
 msgstr "Outro"
 
-#: src/ej_profiles/enums.py:34 src/ej_profiles/tests/test_models.py:45
+#: src/ej_profiles/enums.py:34 src/ej_profiles/tests/test_models.py:58
 msgid "Female"
 msgstr "Feminino"
 
@@ -964,7 +970,7 @@ msgstr "usuário"
 msgid "race"
 msgstr "raça"
 
-#: src/ej_profiles/enums.py:53 src/ej_profiles/tests/test_models.py:44
+#: src/ej_profiles/enums.py:53 src/ej_profiles/tests/test_models.py:57
 msgid "ethnicity"
 msgstr "etnia"
 
@@ -992,27 +998,27 @@ msgstr "data_de_nascimento"
 msgid "birth date"
 msgstr "data de Nascimento"
 
-#: src/ej_profiles/enums.py:60 src/ej_profiles/tests/test_models.py:40
+#: src/ej_profiles/enums.py:60 src/ej_profiles/tests/test_models.py:53
 msgid "country"
 msgstr "país"
 
-#: src/ej_profiles/enums.py:61 src/ej_profiles/tests/test_models.py:39
+#: src/ej_profiles/enums.py:61 src/ej_profiles/tests/test_models.py:52
 msgid "state"
 msgstr "estado"
 
-#: src/ej_profiles/enums.py:62 src/ej_profiles/tests/test_models.py:38
+#: src/ej_profiles/enums.py:62 src/ej_profiles/tests/test_models.py:51
 msgid "city"
 msgstr "cidade"
 
-#: src/ej_profiles/enums.py:63 src/ej_profiles/tests/test_models.py:48
+#: src/ej_profiles/enums.py:63 src/ej_profiles/tests/test_models.py:61
 msgid "biography"
 msgstr "biografia"
 
-#: src/ej_profiles/enums.py:64 src/ej_profiles/tests/test_models.py:42
+#: src/ej_profiles/enums.py:64 src/ej_profiles/tests/test_models.py:55
 msgid "occupation"
 msgstr "ocupação"
 
-#: src/ej_profiles/enums.py:65 src/ej_profiles/tests/test_models.py:47
+#: src/ej_profiles/enums.py:65 src/ej_profiles/tests/test_models.py:60
 msgid "political_activity"
 msgstr "atividade_política"
 
@@ -1060,84 +1066,84 @@ msgstr "limita_conversas_do_board"
 msgid "limit board conversations"
 msgstr "limita conversas do board"
 
-#: src/ej_profiles/models.py:28 src/ej_profiles/tests/test_models.py:44
+#: src/ej_profiles/models.py:30 src/ej_profiles/tests/test_models.py:57
 msgid "Ethnicity"
 msgstr "Etnia"
 
-#: src/ej_profiles/models.py:29 src/ej_profiles/tests/test_models.py:43
+#: src/ej_profiles/models.py:31 src/ej_profiles/tests/test_models.py:56
 msgid "Education"
 msgstr "Escolaridade"
 
-#: src/ej_profiles/models.py:30 src/ej_profiles/tests/test_models.py:45
+#: src/ej_profiles/models.py:32 src/ej_profiles/tests/test_models.py:58
 msgid "Gender identity"
 msgstr "Identidade de gênero"
 
-#: src/ej_profiles/models.py:31
+#: src/ej_profiles/models.py:33
 msgid "User provided gender"
 msgstr "Gênero fornecido pelo usuário"
 
-#: src/ej_profiles/models.py:32
+#: src/ej_profiles/models.py:34
 msgid "Birth Date"
 msgstr "Data de Nascimento"
 
-#: src/ej_profiles/models.py:33 src/ej_profiles/tests/test_models.py:40
+#: src/ej_profiles/models.py:35 src/ej_profiles/tests/test_models.py:53
 msgid "Country"
 msgstr "País"
 
-#: src/ej_profiles/models.py:35 src/ej_profiles/tests/test_models.py:38
+#: src/ej_profiles/models.py:37 src/ej_profiles/tests/test_models.py:51
 msgid "City"
 msgstr "Cidade"
 
-#: src/ej_profiles/models.py:36 src/ej_profiles/tests/test_models.py:48
+#: src/ej_profiles/models.py:38 src/ej_profiles/tests/test_models.py:61
 msgid "Biography"
 msgstr "Biografia"
 
-#: src/ej_profiles/models.py:37 src/ej_profiles/tests/test_models.py:42
+#: src/ej_profiles/models.py:39 src/ej_profiles/tests/test_models.py:55
 msgid "Occupation"
 msgstr "Ocupação"
 
-#: src/ej_profiles/models.py:38 src/ej_profiles/tests/test_models.py:47
+#: src/ej_profiles/models.py:40 src/ej_profiles/tests/test_models.py:60
 msgid "Political activity"
 msgstr "Atividade política"
 
-#: src/ej_profiles/models.py:39
+#: src/ej_profiles/models.py:41
 msgid "Profile Photo"
 msgstr "Foto de Perfil"
 
-#: src/ej_profiles/models.py:156 src/ej_profiles/tests/test_models.py:41
+#: src/ej_profiles/models.py:158 src/ej_profiles/tests/test_models.py:54
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:160 src/ej_users/forms.py:48
+#: src/ej_profiles/models.py:162 src/ej_users/forms.py:48
 #: src/ej_users/forms.py:57
 msgid "E-mail"
 msgstr "Email"
 
-#: src/ej_profiles/models.py:196
+#: src/ej_profiles/models.py:198
 msgid "Root"
 msgstr "Raiz"
 
-#: src/ej_profiles/models.py:198
+#: src/ej_profiles/models.py:200
 msgid "Administrative user"
 msgstr "Usuário administrativo"
 
-#: src/ej_profiles/models.py:199 src/ej_profiles/tests/test_models.py:55
+#: src/ej_profiles/models.py:201 src/ej_profiles/tests/test_models.py:68
 msgid "Regular user"
 msgstr "Usuário regular"
 
-#: src/ej_profiles/models.py:202
+#: src/ej_profiles/models.py:204
 msgid "(Not Filled)"
 msgstr "(Não preenchido)"
 
-#: src/ej_profiles/tests/test_models.py:43
+#: src/ej_profiles/tests/test_models.py:56
 msgid "undergraduate"
 msgstr "sem nível"
 
-#: src/ej_profiles/tests/test_models.py:49
+#: src/ej_profiles/tests/test_models.py:62
 msgid "phone_number"
 msgstr "número de telefone"
 
-#: src/ej_profiles/tests/test_models.py:51
+#: src/ej_profiles/tests/test_models.py:64
 msgid "name's profile"
 msgstr "perfil"
 
@@ -1609,11 +1615,11 @@ msgstr "Anônimo"
 msgid "Invalid email or password"
 msgstr "Senha inválida"
 
-#: src/ej_users/routes.py:60
+#: src/ej_users/routes.py:61
 msgid "Welcome to EJ!"
 msgstr "Bem vindo ao EJ!"
 
-#: src/ej_users/routes.py:174
+#: src/ej_users/routes.py:177
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
@@ -2587,6 +2593,7 @@ msgstr "Gerenciar!"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:25
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:15
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
 msgid "Comments"
@@ -3135,18 +3142,22 @@ msgid "Favorites"
 msgstr "Favoritos"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:12
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:36
 msgid "List of conversations you participated at least once."
 msgstr "Lista de conversas que você participou pelo menos uma vez."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:19
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:41
 msgid "Keep track of your comments here."
 msgstr "Acompanhe os seus comentários aqui."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:20
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:42
 msgid "Approved comments"
 msgstr "Comentários aprovados"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:22
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:44
 msgid "Pending moderation"
 msgstr "Aguardando moderação"
 
@@ -3165,10 +3176,6 @@ msgstr "Você ainda não criou nenhuma conversa!"
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:45
 msgid "List of conversations created by you."
 msgstr "Ver todas as conversas criadas por você."
-
-#: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:60
-msgid "Participate"
-msgstr "Participe"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:71
 msgid "Empty."
@@ -3195,6 +3202,33 @@ msgstr "Editar perfil"
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:38
 msgid "Manage accounts"
 msgstr "Gerenciar conta"
+
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:12
+#, fuzzy
+msgid "Public Conversations"
+msgstr "Conversas públicas"
+
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:13
+#, fuzzy
+msgid "My conversations"
+msgstr "Minhas Conversas"
+
+#: src/ej_profiles/jinja2/ej_profiles/participant-home.jinja2:30
+msgid "Gerenciar!"
+msgstr ""
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:2
+#, fuzzy
+msgid "Find a theme"
+msgstr "Encontre um tema"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:14
+msgid "All"
+msgstr "Todas"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:24
+msgid "Select to view conversations within that topic."
+msgstr "Selecione para ver as conversas dentro deste tema."
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:11
 #, fuzzy
@@ -4453,10 +4487,6 @@ msgstr "Autenticação"
 #~ msgstr "Autenticação"
 
 #, fuzzy
-#~ msgid "My conversations"
-#~ msgstr "Minhas Conversas"
-
-#, fuzzy
 #~ msgid ""
 #~ "Generate scripts by clicking on the icon to integrate the component into "
 #~ "your html page."
@@ -4793,9 +4823,6 @@ msgstr "Autenticação"
 
 #~ msgid "Perfectionist"
 #~ msgstr "Perfeccionista"
-
-#~ msgid "All"
-#~ msgstr "Todos"
 
 #~ msgid "{n} comments removed!"
 #~ msgstr "{n} comentários removidos!"

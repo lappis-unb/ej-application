@@ -1,6 +1,8 @@
 import random as rd
 import string as s
 from datetime import datetime
+from ej.testing.fixture_class import EjRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
 
 import pytest
 from PIL import Image

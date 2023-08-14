@@ -1,16 +1,29 @@
 import datetime
 from datetime import date
-
 import pytest
+
+from django.urls import reverse
 from django.conf import settings
 from django.utils.translation import gettext as _
 
+from ej_conversations import create_conversation
+from ej_conversations.enums import Choice
+from ej_conversations.models.comment import Comment
+from ej_conversations.models.vote import Vote
 from ej_profiles.enums import Gender, Race
 from ej_profiles.models import Profile
 from ej_users.models import User
+from ej_conversations.mommy_recipes import ConversationRecipes
 
 
-class TestProfile:
+@pytest.fixture
+def other_user(db):
+    user = User.objects.create_user("email2@server.com", "password")
+    user.save()
+    return user
+
+
+class TestProfile(ConversationRecipes):
     @pytest.fixture
     def profile(self):
         return Profile(
@@ -81,3 +94,47 @@ class TestProfile:
         assert profile.occupation == ""
         assert profile.political_activity == ""
         assert profile.phone_number == ""
+
+    def test_default_url_home(self, profile):
+        profile_url = profile.default_url()
+        assert profile_url == reverse("profile:home")
+
+    def test_participated_conversation_vote(self, db, user, other_user):
+        user.save()
+        other_user.save()
+        conversation = create_conversation("this is the text", "this is the title", user)
+        comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
+        Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
+
+        profile = other_user.get_profile()
+        retrieved_conversation = profile.participated_conversations().first()
+
+        assert retrieved_conversation == conversation
+
+    def test_participated_conversation_comment(self, db, user, other_user):
+        user.save()
+        other_user.save()
+        conversation = create_conversation("this is the text", "this is the title", user)
+        Comment.objects.create(author=other_user, content="just a comment", conversation=conversation)
+
+        profile = other_user.get_profile()
+        retrieved_conversation = profile.participated_conversations().first()
+
+        assert retrieved_conversation == conversation
+
+    def test_participated_conversation_comment_vote(self, db, user, other_user):
+        user.save()
+        other_user.save()
+        conversation = create_conversation("this is the text", "this is the title", user)
+        comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
+        Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
+
+        other_conversation = create_conversation("this is another text", "this is another title", user)
+        Comment.objects.create(
+            author=other_user, content="just another comment", conversation=other_conversation
+        )
+        profile = other_user.get_profile()
+        retrieved_conversations = profile.participated_conversations()
+
+        assert conversation in retrieved_conversations
+        assert other_conversation in retrieved_conversations
