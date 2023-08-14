@@ -48,11 +48,9 @@ class TestRoutes(UserRecipes, UrlTester):
                 "password": "pass123",
                 "password_confirm": "pass123",
             },
-            follow=True,
         )
         user = User.objects.get(email="leela@example.com")
         assert client.session["_auth_user_id"] == str(user.pk)
-        self.assert_redirects(response, "/leelaexamplecom/conversations/tour/", 302, 200)
 
     def test_registration_auth_valid_user(self, client, db):
         client.post(

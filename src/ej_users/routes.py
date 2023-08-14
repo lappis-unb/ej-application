@@ -38,8 +38,8 @@ log = logging.getLogger("ej")
 def login(request, redirect_to="/"):
     form = forms.LoginForm(request=request)
     error_msg = _("Invalid email or password")
-    next_url = request.GET.get("next", redirect_to)
     fast = request.GET.get("fast", "false") == "true" or "fast" in request.GET
+    next_url = None
 
     if form.is_valid_post():
         data = form.cleaned_data
@@ -51,8 +51,8 @@ def login(request, redirect_to="/"):
             if user is None:
                 raise User.DoesNotExist
             auth.login(request, user, backend=user.backend)
+            next_url = request.GET.get("next", user.profile.default_url())
             log.info(f"user {user} ({email}) successfully authenticated")
-            # next_url = user.default_board_url()
         except User.DoesNotExist:
             form.add_error(None, error_msg)
             log.info(f"invalid login attempt: {email}")
@@ -60,7 +60,8 @@ def login(request, redirect_to="/"):
             toast(request, _("Welcome to EJ!"))
             return redirect(next_url)
 
-    elif fast and request.user.is_authenticated and next_url:
+    elif fast and request.user.is_authenticated:
+        next_url = request.GET.get("next", request.user.profile.default_url())
         return redirect(next_url)
 
     return {
@@ -75,7 +76,7 @@ def login(request, redirect_to="/"):
 @urlpatterns.route("register/")
 def register(request):
     form = forms.RegistrationForm(request=request)
-    next_url = request.GET.get("next", "/")
+    next_url = None
 
     if form.is_valid_post():
         data = form.cleaned_data
@@ -83,6 +84,7 @@ def register(request):
 
         try:
             user = User.objects.create_user(email, password, name=name)
+            next_url = request.GET.get("next", user.profile.default_url())
             log.info(f"user {user} ({email}) successfully created")
         except IntegrityError as ex:
             form.add_error(None, str(ex))

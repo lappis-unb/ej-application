@@ -1,17 +1,17 @@
 from typing import Any
-from django.db.models.query import QuerySet
 import toolz
 from django.db.models import Q, Count
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView
 
-
-from ej_conversations.models import Conversation, Comment
-from . import forms
+from ej_boards.models import Board
+from ej_conversations.models import Conversation, Comment, ConversationTag
 from .models import Profile
+from . import forms
+from ej_tools.utils import get_host_with_schema
 
 
 @method_decorator([login_required], name="dispatch")
@@ -66,50 +66,29 @@ class ContributionsView(DetailView):
 
     def get_context_data(self, **kwargs):
         profile = self.request.user.get_profile()
-        created = profile.conversations.cache_annotations(
-            "first_tag", "n_user_votes", "n_comments", user=profile.user
-        )
+        return profile.get_contributions_data()
 
-        # Fetch voted conversations
-        # This code merges in python 2 querysets. The first is annotated with
-        # tag and the number of user votes. The second is annotated with the total
-        # number of comments in each conversation
-        voted = profile.conversations_with_votes.exclude(id__in=[x.id for x in created])
-        voted = voted.cache_annotations("first_tag", "n_user_votes", user=profile.user)
-        voted_extra = (
-            Conversation.objects.filter(id__in=[x.id for x in voted])
-            .cache_annotations("n_comments")
-            .values("id", "n_comments")
-        )
-        total_votes = {}
-        for item in voted_extra:
-            total_votes[item["id"]] = item["n_comments"]
-        for conversation in voted:
-            conversation.annotation_total_votes = total_votes[conversation.id]
 
-        # Now we get the favorite conversations from user
-        favorites = Conversation.objects.filter(favorites__user=profile.user).cache_annotations(
-            "first_tag", "n_user_votes", "n_comments", user=profile.user
-        )
+@method_decorator([login_required], name="dispatch")
+class HomeView(ListView):
+    template_name = "ej_profiles/home.jinja2"
+    queryset = Conversation.objects.filter(is_promoted=True)
 
-        # Comments
-        comments = profile.user.comments.select_related("conversation").annotate(
-            skip_count=Count("votes", filter=Q(votes__choice=0)),
-            agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
-            disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
-        )
-        groups = toolz.groupby(lambda x: x.status, comments)
-        approved = groups.get(Comment.STATUS.approved, ())
-        rejected = groups.get(Comment.STATUS.rejected, ())
-        pending = groups.get(Comment.STATUS.pending, ())
+    def get_context_data(self, **kwargs):
+        public_conversations = self.get_queryset()
+        user_participated_tags = self.request.user.profile.participated_tags()
+        public_tags = ConversationTag.objects.filter(content_object__is_promoted=True).distinct("tag")
+        contributions_data = self.request.user.profile.get_contributions_data()
+
+        public_tags_str = [tag.tag.name for tag in public_tags]
+        participated_tag_str = [tag.tag.name for tag in user_participated_tags]
 
         return {
-            "profile": profile,
-            "user": profile.user,
-            "created_conversations": created,
-            "favorite_conversations": favorites,
-            "voted_conversations": voted,
-            "approved_comments": approved,
-            "rejected_comments": rejected,
-            "pending_comments": pending,
+            "user_boards": Board.objects.filter(owner=self.request.user),
+            "public_conversations": public_conversations,
+            "participated_tags": participated_tag_str,
+            "all_tags": public_tags_str,
+            "host": get_host_with_schema(self.request),
+            "has_filtered_tag": self.request.user.profile.filtered_home_tag,
+            **contributions_data,
         }

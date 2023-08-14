@@ -252,5 +252,4 @@ class TestConversationComponentForm(ConversationRecipes):
             },
             conversation_id=conversation_db.id,
         )
-        print(form.errors)
         assert form.is_valid()

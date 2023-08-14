@@ -1,0 +1,50 @@
+{% extends 'base.jinja2' %}
+{% set main_class = "board-container" %}
+{% from "ej_profiles/contributions.jinja2" import render_conversations, render_comments with context %}
+
+{% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<h2 class="text-accent">{{ _('Conversations') }}</h2>
+{{ tabs({
+    _('Public Conversations'): '#public-conversations',
+    _('My conversations'): '#my-conversations',
+    _('Votes'): '#contribution-votes',
+    _('Comments'): '#contribution-comments'}, class_='width-full') }}
+        
+<div id="public-conversations"> 
+    {% include 'ej_profiles/includes/search-filter.jinja2' %}
+
+    <div class="alternate-cards" id="current-cards">
+        {% for conversation in public_conversations %}
+            <div class="margin-y3">{{ conversation|role('card', button_text=_("Participate")) }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="my-conversations">
+    <div class="alternate-cards" id="current-cards">
+        {% for conversation in created_conversations %}
+            <div class="margin-y3">{{ conversation|role('card', button_text=_("Gerenciar!"), url=url('boards:dataviz-dashboard',  **conversation.get_url_kwargs())) }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="contribution-votes" class="pad-x3p pad-y4 width-full">
+    <p class="center">{% trans %}List of conversations you participated at least once.{% endtrans %}</p>
+    {{ render_conversations(voted_conversations) }}
+</div>
+
+<div id="contribution-comments" class="pad-x3p pad-y4 width-full">
+    <p class="center">{% trans %}Keep track of your comments here.{% endtrans %}</p>
+    <h1 class="h3 center text-accent">{% trans %}Approved comments{% endtrans %}</h1>
+    {{ render_comments(approved_comments) }}
+    <h1 class="h3 center text-accent">{% trans %}Pending moderation{% endtrans %}</h1>
+    {{ render_comments(pending_comments) }}
+    <h1 class="h3 center text-accent">{% trans %}Rejected{% endtrans %}</h1>
+    {{ render_comments(rejected_comments) }}
+</div>
+
+{% endblock %}

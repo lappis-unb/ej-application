@@ -19,4 +19,9 @@ urlpatterns = [
         views.ContributionsView.as_view(),
         name="contributions",
     ),
+    path(
+        "home/",
+        views.HomeView.as_view(),
+        name="home",
+    ),
 ]
