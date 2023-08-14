@@ -741,6 +741,20 @@ files = [
 Django = ">=1.8"
 
 [[package]]
+name = "django-ckeditor"
+version = "6.3.2"
+description = "Django admin CKEditor integration."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-ckeditor-6.3.2.tar.gz", hash = "sha256:ce0c806e40172dbea35330a207632701a6d418314ae8c8fa140fd277d9322c96"},
+    {file = "django_ckeditor-6.3.2-py2.py3-none-any.whl", hash = "sha256:e1580105c9ff6fcaca6345acda1dc01416733027c61c6387e02dd5960b8ade3c"},
+]
+
+[package.dependencies]
+django-js-asset = ">=1.2.2"
+
+[[package]]
 name = "django-constance"
 version = "2.9.1"
 description = "Django live settings with pluggable backends, including Redis."
@@ -822,6 +836,23 @@ files = [
     {file = "django-filter-1.1.0.tar.gz", hash = "sha256:ec0ef1ba23ef95b1620f5d481334413700fb33f45cd76d56a63f4b0b1d76976a"},
     {file = "django_filter-1.1.0-py2.py3-none-any.whl", hash = "sha256:ea204242ea83790e1512c9d0d8255002a652a6f4986e93cee664f28955ba0c22"},
 ]
+
+[[package]]
+name = "django-js-asset"
+version = "2.0.0"
+description = "script tag with additional attributes for django.forms.Media"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "django_js_asset-2.0.0-py3-none-any.whl", hash = "sha256:86f9f300d682537ddaf0487dc2ab356581b8f50c069bdba91d334a46e449f923"},
+    {file = "django_js_asset-2.0.0.tar.gz", hash = "sha256:adc1ee1efa853fad42054b540c02205344bb406c9bddf87c9e5377a41b7db90f"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+
+[package.extras]
+tests = ["coverage"]
 
 [[package]]
 name = "django-jsonfield"
@@ -3372,4 +3403,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">= 3.7.10, <4"
-content-hash = "52e399126fa94b75915eb8e7f50292b830106b503c1bc4ee9bcc6067b3007e83"
+content-hash = "bd56a6cc3f331c3c8e03949acaf53e8234b68576ef4e60e08e4a980f0354f117"

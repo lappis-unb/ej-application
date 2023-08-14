@@ -23,3 +23,242 @@
     width: 22rem;
     padding: 0 1rem;
 }
+
+.h3 {
+    &--space {
+    margin: 0 0 .625rem 0 !important;	
+    }
+}
+
+.tabs-space {
+    margin-top: 1.25rem;
+}
+
+.tools-divider.opinion-divider {
+    margin-top: 2.688rem;
+}
+
+.opinion-col-1 {
+    display: flex; 
+    gap: 3.188rem;
+    &__info {
+        width: 36%;
+    }
+    .tools-card-body-img img{
+        height: 3.313rem;
+    }
+    .helptext.opinion-helptext {
+        color: $color-light-gray; 
+        font-size: .875rem; 
+        font-style: normal; 
+        font-weight: 400; 
+        line-height: normal;
+        margin-top: 1.25rem;
+    }
+}
+
+.opinion-col-2 {
+    &__subtitle {
+        color: $color-light-gray; 
+        font-size: 1rem; 
+        font-style: normal; 
+        font-weight: 400; 
+        line-height: normal;
+    }
+    &__hint {
+        color: $color-pink-light; 
+        font-weight: bold;
+    }
+
+    &__hint-generate {
+        color: rgba(0, 0, 0, 0.80);
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .form-component {
+        &__drop_box {
+            margin-top: 1.688rem;
+            padding: 1.875rem 3.125rem;
+            border-radius: 5px;
+            border: 2px dashed $color-gray-200;
+            background: $color-gray-50;
+            text-align: center;
+        }	
+          
+        &__drop_box:nth-child(4) {
+        margin-top: .813rem;
+        }
+
+        &__image {
+            color: $color-theme-report-light-blue;
+            font-weight: bold;
+            display: block;
+        }
+
+        &__image-name {
+            color: $color-gray-500;
+        }
+
+        &__message {
+            margin-top: 1.813rem;
+
+            &__label {
+                margin-bottom: .75rem; 
+                color: $color-theme-dark-blue; 
+                font-size: 1rem; 
+                font-style: normal; 
+                font-weight: 700; 
+                line-height: 1.5rem; 
+                text-transform: initial;
+            }
+        }
+
+        .tools-card-footer.opinion-component {
+            margin: .75rem 0 0 0 !important;
+            display: block !important; 
+            float: right;
+
+            .tools-icon-share {
+                &__collection-button {
+                    border-radius: 5px; 
+                    background-color:$color-pink-light; 
+                    border-color: $color-pink-light;
+    
+                    img {
+                        width: 16px; 
+                        height: 16px;
+                    }
+                    a {
+                        font-size: .75rem; 
+                        font-style: normal; 
+                        font-weight: 700; 
+                        line-height: normal; 
+                        text-transform: initial; 
+                        color: $color-white;
+                    }
+                }
+            }
+        }
+    }
+
+    #copy-snippet {
+        display: flex;
+        width: 100%;
+        height: 7.688rem;
+        padding: .813rem 1.25rem;
+        align-items: flex-start;
+        border-radius: 0px 0px 8px 8px; 
+        border-color: $color-gray-300; 
+        max-width: none; 
+        margin: 2.063rem 0 1.188rem; 
+        color: $color-gray-500;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+    }
+
+    &__copy-button {
+        display: inline-flex;
+        height: 2.625rem;
+        padding: .5rem 1rem;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background:$color-theme-report-light-blue; 
+        gap: .375rem;
+    }
+
+    &__tooltip {
+        color: white;
+        font-size: 1rem;
+        display: inline-flex;
+        place-items: center;
+        padding: .75rem;
+        padding-left: 0;
+        border-radius: 5px;
+        background: $color-pink-light; 
+        max-width: 16.563rem;
+        height: 2.75rem; 
+        position: relative; 
+        top: 5px;
+
+        &__arrow {
+            color: $color-pink-light;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent; 
+            border-right:10px solid $color-pink-light; 
+            border-left: 0;
+            position: relative;
+            right: .563rem;
+        }
+    }
+
+    #copy-snippet-message {
+        display: none;
+    }
+}
+
+.cke_top {
+    padding: 0 !important;
+}
+
+// Upload card
+
+.dropzone {
+    input {
+        display: none;
+    }
+
+    .upload {
+        display: flex;
+        padding: .5rem .75rem;
+        justify-content: center;
+        align-items: center;
+        gap: .5rem; 
+        border-radius: 5px;
+        background: $color-theme-report-light-blue; 
+        margin: auto;
+    }
+
+    label {
+        text-align: center; 
+        margin-bottom: 1rem; 
+        text-transform: initial;
+
+        .size-text {
+            color: $color-gray-500; 
+            text-align: center; 
+            font-size: .75rem; 
+            font-style: normal; 
+            font-weight: 700; 
+            line-height: normal;
+        }
+    }
+
+    &__upload-card-content {
+        text-align: center;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.5rem;
+        color:$color-gray-500;
+
+        &--text {
+            color:$color-gray-500;
+            text-align: center;
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1.5rem;
+        }
+
+        &--hint {
+           font-weight: 400; 
+        }
+    }
+
+}

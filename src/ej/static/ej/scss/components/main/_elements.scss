@@ -34,7 +34,7 @@ i.fa, i.fas, i.fab, i.far {
 //------------------------------------------------------------------------------
 // Tabs and categories
 .tabs, .categories {
-    @extend .row, .wrap;    
+    @extend .row;    
 
     > * {
         border-bottom: 0.25rem solid transparent;

@@ -1,22 +1,18 @@
 import json
+from typing import Any, Dict
 from django.utils.translation import gettext_lazy as _
-from django.shortcuts import render
-from django.shortcuts import redirect
-from .utils import (
-    npm_version,
-    user_can_add_new_domain,
-    prepare_host_with_https,
-    get_host_with_schema,
-)
+from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
+from django.views.generic import UpdateView
 from django.http import HttpResponse
 from .forms import (
     RasaConversationForm,
-    ConversationComponentForm,
-    ConversationComponent,
     MailingToolForm,
     MauticConversationForm,
+    OpinionComponentForm,
 )
 from .models import (
+    OpinionComponent,
     RasaConversation,
     ConversationMautic,
     MauticOauth2Service,
@@ -26,6 +22,12 @@ from .models import (
 from ej_conversations.models import Conversation
 from ej_signatures.models import SignatureFactory
 from ej.decorators import can_access_tool_page, can_edit_conversation
+from .utils import (
+    npm_version,
+    user_can_add_new_domain,
+    prepare_host_with_https,
+    get_host_with_schema,
+)
 
 
 @can_edit_conversation
@@ -67,40 +69,75 @@ def mailing(request, board_slug, conversation_id, slug):
     return render(request, "ej_tools/mailing.jinja2", context)
 
 
-@can_access_tool_page
-def opinion_component(request, board_slug, conversation_id, slug):
-    conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion component"), conversation)
-    tool.raise_error_if_not_active()
+@method_decorator(can_access_tool_page, name="dispatch")
+class OpinionComponentView(UpdateView):
+    template_name = "ej_tools/opinion-component.jinja2"
+    model = OpinionComponent
 
-    form = ConversationComponentForm(request.POST)
-    conversation_component = ConversationComponent(form)
-    if "preview" in request.POST:
-        form.is_valid()
-        theme = form.cleaned_data["theme"]
-        if theme:
-            theme = f"?theme={theme}"
-        return redirect(conversation.patch_url("conversation-tools:opinion-component-preview") + theme)
-    context = {
-        "ej_domain": get_host_with_schema(request),
-        "tool": tool,
-        "npm_version": npm_version(),
-        "conversation": conversation,
-        "form": form,
-        "conversation_component": conversation_component,
-    }
-    return render(request, "ej_tools/opinion-component.jinja2", context)
+    def get_object(self, queryset=None):
+        try:
+            opinion_component = OpinionComponent.objects.get(conversation=self.conversation)
+        except OpinionComponent.DoesNotExist:
+            opinion_component = None
+        return opinion_component
+
+    def get(self, request, *args, **kwargs):
+        conversation_id = self.kwargs.get("conversation_id", None)
+        self.conversation = Conversation.objects.get(id=conversation_id)
+
+        opinion_component = self.get_object()
+        self.opinion_component_form = OpinionComponentForm(
+            initial={"conversation": self.conversation}, instance=opinion_component
+        )
+        return render(request, self.template_name, self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):
+        conversation_id = self.kwargs.get("conversation_id", None)
+        self.conversation = Conversation.objects.get(id=conversation_id)
+        if "custom" in request.POST:
+            opinion_component = self.get_object()
+            self.opinion_component_form = OpinionComponentForm(
+                request.POST, request.FILES, instance=opinion_component
+            )
+            if self.opinion_component_form.is_valid():
+                self.opinion_component_form.save()
+            else:
+                return render(request, self.template_name, self.get_context_data(**kwargs))
+
+        return redirect(self.conversation.patch_url("conversation-tools:opinion-component-preview"))
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        user_signature = SignatureFactory.get_user_signature(self.conversation.author)
+        tool = user_signature.get_tool(_("Opinion component"), self.conversation)
+        tool.raise_error_if_not_active()
+        opinion_component = self.get_object()
+
+        if opinion_component:
+            background_url = opinion_component.background_image.name
+            logo_url = opinion_component.logo_image.name
+        else:
+            background_url = None
+            logo_url = None
+
+        return {
+            "ej_domain": get_host_with_schema(self.request),
+            "tool": tool,
+            "npm_version": npm_version(),
+            "conversation": self.conversation,
+            "opinion_component_form": self.opinion_component_form,
+            "background_url": background_url,
+            "logo_url": logo_url,
+        }
 
 
 def opinion_component_preview(request, board_slug, conversation_id, slug):
+    host = get_host_with_schema(request)
 
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tool = user_signature.get_tool(_("Opinion component"), conversation)
     preview_token = tool.get_preview_token(request, conversation)
     tool.raise_error_if_not_active()
-    host = get_host_with_schema(request)
     theme = request.GET.get("theme", "icd")
     context = {
         "conversation": conversation,
