@@ -10,18 +10,23 @@ Seu objetivo integrar a jornada de participação em sites e plataformas de terc
 3. Visitante acessa o site ou blog, vota e comenta na conversa criada anteriormente.
 4. Votos e comentários dados no componente são enviados para a EJ via API.
 
-O Componente permite um fluxo de participação mais fluido, já que o usuário não precisa ser redirecionado
-para a EJ, a participação acontece no site que ele já tem o costume de acessar.
-Isso é possível porque o projeto é desenvolvido utilizando o
-framework `Stencil <https://stenciljs.com/>`_.
-Este framework permite criar componentes web reusáveis, que uma vez
-carregados em páginas HTML, adicionam novos comportamentos e funcionalidades ao site.
-Ao utilizar o componente de opinião, o administrador da conversa é capaz reaproveitar acessos
-ao seu site ou plataforma para realizar uma pesquisa de opinião, sem exigir que este visitante tenha que ser redirecionado para a página de cadastro da EJ.
-
-
 .. figure:: ../images/opinion-component-preview.png
+   :align: center
 
+   Exemplo de uso do Componente de Opinião.
+
+
+O Componente permite um fluxo de participação mais fluido, já que o usuário não precisa ser redirecionado
+para a EJ. Ao utilizar o componente de opinião, o administrador da conversa é capaz
+reaproveitar acessos ao seu site ou plataforma para realizar uma pesquisa de opinião,
+sem exigir que o visitante tenha que ser redirecionado para a EJ para participar.
+
+.. note::
+
+    O componente de opinião é desenvolvido utilizando o
+    framework `Stencil <https://stenciljs.com/>`_.
+    Ele permite criar componentes web reusáveis, que uma vez
+    carregados em páginas HTML, adicionam novos comportamentos e funcionalidades ao site.
 
 
 Quando devo utilizar o Componente de Opinião?
@@ -29,16 +34,6 @@ Quando devo utilizar o Componente de Opinião?
 
 O Componente de Opinião é especialmente útil para usuários que possuem sites, blogs ou plataformas
 web e querem que seu público participe de coletas nestes ambientes.
-Assim como o Componente de Opinião, a ferramenta :ref:`Webchat` também pode ser integrada em páginas html.
-
-Autenticação
--------------
-
-Para participar da conversa, o visitante precisa estar autenticado na API da EJ. Isso é feito por
-meio de um formulário de cadastro que, uma vez preenchido, cadastrará um novo usuário
-via API, permitindo que o mesmo vote e adicione comentários.
-
-.. figure:: ../images/opinion-component-register.png
 
 Como posso utilizar a ferramenta?
 ----------------------------------
@@ -47,12 +42,20 @@ Exitem duas formas de utilizar o Componente de Opinião.
 
 1. Utilizando a página integrada da EJ. Com ela, você não precisa ter um site ou sistema web para
    realizar coletas com o Componente de Opinião. Basta acessar **Ferramentas > Componente de Opinião**
-   e clicar no botão **Iniciar Coleta**. A vantagem dessa opção é que você pode copiar a URL da EJ e utilizá-la
-   em publicações para redes sociais ou mensagens diretas para os usuários. Quem clicar no link, irá
+   e clicar no botão **Iniciar Coleta**. A vantagem dessa opção é que você pode enviar a URL dessa página
+   para seus contatos e redes. Quem clicar no link, irá
    ser redirecionado para a página da EJ e conseguirá particiar da coleta. Essa forma democratiza
-   o acesso à ferramenta, já que mesmo que você não tenha um site ainda assim conseguirá fazer a coleta.
+   o acesso à ferramenta, já que mesmo que você não tenha um site, ainda assim conseguirá fazer a coleta.
 
-.. figure:: ../images/ej-opinion-component-start.png
+.. figure:: ../images/register-opinion-component.png
+   :align: center
+
+   Etapa de cadastro do Componente de Opinião.
+
+.. warning::
+
+    Para participar pela página integrada, você precisa estar deslogado da sua conta na plataforma.
+
 
 2. A segunda forma é integrando o componente ao seu site ou plataforma web. Apresenteremos o passo a passo a seguir.
 
@@ -62,54 +65,49 @@ Exitem duas formas de utilizar o Componente de Opinião.
 Configurando o componente no seu site ou página html
 -----------------------------------------------------
 
-Para integrar o componente de opinião em uma página HTML, copie e cole o *snippet* a seguir para a página desejada.
+Para integrar o componente de opinião em uma página HTML, acesse a aba "Gerar código", na página da Ferramenta.
 
-.. code-block:: html
-   :caption: *snippet* html para integração
+.. figure:: ../images/opinion-component-snippet.png
+   :align: center
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/ej-conversations/dist/conversations/conversations.esm.js" type="module" ></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/v4-font-face.min.css" integrity="sha512-p0AmrzKP8l63xoFw9XB99oaYa40RUgDuMpdkrzFhi4HPHzO3bzyN2qP6bepe43OP3yj9+eGQEJGIGPcno1JdPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://unpkg.com/ej-conversations/dist/conversations/conversations.css">
-    <ej-conversation conversation-author-token="" host=HOST cid=CONVERSATION_ID background-image=""></ej-conversation>
+   Código de integração para páginas HTML.
 
-Com o *snippet* copiado para a página, substitua no código copiado as variáveis :code:`HOST` e :code:`CONVERSATION_ID` pelos valores desejados:
+Copie o código gerado pela EJ e inclua no HTML da página que deseja fazer a integração. O browser irá
+carregar o Componente de Opinião e apresentá-lo ao usuário. Desse ponto em diante, toda a comunicação com a EJ
+será feita via API.
 
-* **CONVERSATION_ID**: Identificador da conversa na EJ, por exemplo, "`56`".
-* **HOST**: URL para a plataforma EJ, por exemplo, "`https://ejplatform.org <https://ejplatform.org>`_".
+Configurando a aparência do componente de opinião
+-----------------------------------------------------
 
-O **CONVERSATION_ID** pode ser encontrado na url da conversa criada na EJ. No exemplo da imagem, o ID é o número que aparece depois de `conversations/` e antes de `/servicos-publicos/`.
+Na página da ferramenta, é possível customizar três aspectos do Componente de Opinião:
 
-.. fgure:: ../images/ej-opinion-component-link.png
-.. figure:: ../images/ej-opinion-component-link1.png
+1. A imagem de fundo que aparece junto com o card de participação.
+2. A logomarca que irá aparecer ao lado da logo da EJ.
+3. A mensagem de encerramento da coleta, apresentada depois que o participante vota em todos os comentários.
 
-É possível customizar a imagem de fundo padrão utilizada pelo componente. Esta customização é feita pela variável `background-image`, que
-deve receber a URL pública para a imagem que será utilizada como background. Por exemplo:
+Para customizar a imagem de fundo e a logomarca, basta fazer upload dos arquivos nos respectivos campos da página
+de configuração.
 
+.. figure:: ../images/uploads-opinion-component.png
+   :align: center
 
-.. code-block:: html
-   :caption: *snippet* html para integração com background customizado
+   Campos de upload de imagem para customização.
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/ej-conversations/dist/conversations/conversations.esm.js" type="module" ></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/v4-font-face.min.css" integrity="sha512-p0AmrzKP8l63xoFw9XB99oaYa40RUgDuMpdkrzFhi4HPHzO3bzyN2qP6bepe43OP3yj9+eGQEJGIGPcno1JdPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://unpkg.com/ej-conversations/dist/conversations/conversations.css">
-    <ej-conversation
-      conversation-author-token=""
-      host="https://ejplatform.pencillabs.com.br"
-      cid="81"
-      background-image="https://gitlab.com/pencillabs/ej/ej-application/uploads/696e35bf872219f58196f94c0b7bd22c/tela-enquete.png"
-    ></ej-conversation>
+Para customizar a mensagem de encerramento da coleta, basta escrever o texto desejado no editor disponível na
+página de configuração.
 
-Este snippet irá carregar o componente com a imagem de fundo customizada.
+.. figure:: ../images/editor-opinion-component.png
+   :align: center
 
-.. figure:: ../images/opinion-component-custom-background.png
+   Editor de texto para customização da mensagem de encerramento.
+
+Uma vez feita as configurações, o Componente irá carregar para o participante utilizando a imagens de fundo,
+logomarca e mensagem de encerramento configuradas na página da ferramenta.
+
+.. note::
+
+    Caso não seja feita nenhuma customização, o componente irá carregar com uma imagem de fundo,
+    logomarca da EJ e mensagem de encerramento padrão.
 
 
 Configuração de CORS

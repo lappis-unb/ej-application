@@ -1,5 +1,6 @@
 import json
 import pytest
+import mock
 
 from django.test.client import Client
 from django.contrib.auth.models import AnonymousUser
@@ -67,6 +68,14 @@ def request_(rf):
 def request_with_user(rf, user):
     request = rf.get("/testboard/")
     request.user = user
+    return request
+
+
+@pytest.fixture
+def custom_request():
+    REQUEST_META = {"HTTP_X_FORWARDED_PROTO": "", "HTTP_HOST": "localhost:8000"}
+    request = mock.Mock()
+    request.META = REQUEST_META
     return request
 
 
