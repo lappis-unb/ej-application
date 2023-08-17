@@ -4,8 +4,27 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from ej_conversations.models import Conversation
-from ej_tools.serializers import RasaConversationSerializer
-from .models import RasaConversation
+from ej_tools.serializers import RasaConversationSerializer, OpinionComponentSerializer
+from .models import RasaConversation, OpinionComponent
+
+
+class OpinionComponentViewSet(viewsets.ViewSet):
+    """
+    OpinionComponentViewSet exposes OpinionComponent configuration on API.
+    This View is consumed mainly by OpinionComponent tool.
+    """
+
+    permission_classes = []
+    serializer_class = OpinionComponentSerializer
+
+    def retrieve(self, request, pk):
+        try:
+            conversation = Conversation.objects.get(id=pk)
+            opinion_component = OpinionComponent.objects.get(conversation=conversation)
+            serializer = OpinionComponentSerializer(opinion_component, context={"request": request})
+            return Response(serializer.data)
+        except Exception:
+            return Response(OpinionComponentSerializer.get_empty_data(request))
 
 
 class RasaConversationViewSet(viewsets.ModelViewSet):

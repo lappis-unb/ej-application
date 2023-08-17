@@ -7,7 +7,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import redirect
 from requests import Request
+from django.conf import settings
 
+from src.ej_tools.utils import get_host_with_schema
 from .constants import MAX_CONVERSATION_DOMAINS
 from .utils import prepare_host_with_https
 
@@ -19,7 +21,9 @@ class RasaConversation(models.Model):
     """
 
     conversation = models.ForeignKey(
-        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="rasa_conversations"
+        "ej_conversations.Conversation",
+        on_delete=models.CASCADE,
+        related_name="rasa_conversations",
     )
 
     domain = models.URLField(
@@ -75,6 +79,25 @@ class OpinionComponent(models.Model):
     conversation = models.OneToOneField("ej_conversations.Conversation", on_delete=models.CASCADE)
     final_voting_message = RichTextField()
 
+    def get_upload_url(self, request, filename: str) -> str:
+        """
+        get_upload_url returns the absolute path to filename.
+        :filename: any OpinionComponent field that is an Image.
+        """
+        upload = getattr(self, filename)
+        if upload and upload.name:
+            host = get_host_with_schema(request)
+            return f"{host}{settings.MEDIA_URL}{upload.name}"
+        return ""
+
+    def default_bg_img_url(request):
+        """
+        default_background_image_url returns the absolute path to default bg image.
+        """
+        host = get_host_with_schema(request)
+        default_bg = "img/tools/opinion-component-default-background.jpg"
+        return f"{host}{settings.STATIC_URL}{default_bg}"
+
 
 class ConversationMautic(models.Model):
     """
@@ -87,7 +110,9 @@ class ConversationMautic(models.Model):
     refresh_token = models.CharField(_("Refresh Token"), max_length=200, blank=True)
     url = models.URLField(_("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic."))
     conversation = models.ForeignKey(
-        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="mautic_integration"
+        "ej_conversations.Conversation",
+        on_delete=models.CASCADE,
+        related_name="mautic_integration",
     )
 
     class Meta:
@@ -204,7 +229,6 @@ class MauticOauth2Service:
 
 
 class MauticClient:
-
     CONTACT_SEARCH_COMMAND = "?where%5B0%5D%5Bcol%5D=phone&where%5B0%5D%5Bexpr%5D=eq&where%5B0%5D%5Bval%5D="
     API_CONTACT_ENDPOINT = "/api/contacts"
 
@@ -329,4 +353,5 @@ class WebchatHelper:
 
     @staticmethod
     def get_rasa_domain(host):
+        return WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host)
         return WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host)
