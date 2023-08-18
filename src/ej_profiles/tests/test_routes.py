@@ -1,20 +1,19 @@
+import pytest
 import random as rd
 import string as s
-from datetime import datetime
-from ej.testing.fixture_class import EjRecipes
-from ej_conversations.mommy_recipes import ConversationRecipes
-
-import pytest
 from PIL import Image
+from io import BytesIO
+from datetime import datetime
+
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
-from io import BytesIO
 
+from ej.testing.fixture_class import EjRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej.testing import UrlTester
 from ej_profiles import enums
 from ej_users.models import User
-from ej_boards.models import Board
 
 
 class TestRoutes(UrlTester):
