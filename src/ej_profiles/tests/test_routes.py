@@ -1,16 +1,16 @@
+import pytest
 import random as rd
 import string as s
-from datetime import datetime
-from ej.testing.fixture_class import EjRecipes
-from ej_conversations.mommy_recipes import ConversationRecipes
-
-import pytest
 from PIL import Image
+from io import BytesIO
+from datetime import datetime
+
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
-from io import BytesIO
 
+from ej.testing.fixture_class import EjRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
 from ej.testing import UrlTester
 from ej_profiles import enums
 from ej_users.models import User
@@ -97,3 +97,29 @@ class TestEditProfile:
         for attr in inf_fields:
             if attr not in blacklist:
                 assert getattr(user.profile, attr) == form_data[attr], attr
+
+
+class TestTour:
+    def test_redirect_if_tour_is_incomplete(self, db):
+        user = User.objects.create_user("test_user@email.br", "password")
+
+        url = "/profile/home/"
+        client = Client()
+        client.force_login(user)
+
+        response = client.get(url)
+
+        assert response.status_code == 302
+        assert response.url == "/profile/tour/"
+
+    def test_redirect_after_tour_completion(self, db):
+        user = User.objects.create_user("test_user@email.br", "password")
+
+        url = "/profile/tour/"
+        client = Client()
+        client.force_login(user)
+
+        response = client.post(url)
+
+        assert response.status_code == 302
+        assert response.url == "/profile/home/"

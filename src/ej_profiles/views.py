@@ -1,10 +1,11 @@
 from typing import Any
 import toolz
 from django.db.models import Q, Count
+from django.urls import reverse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 from django.views.generic.edit import UpdateView
 
 from ej_boards.models import Board
@@ -74,6 +75,13 @@ class HomeView(ListView):
     template_name = "ej_profiles/home.jinja2"
     queryset = Conversation.objects.filter(is_promoted=True)
 
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        tour_url = reverse("profile:tour")
+        if user.get_profile().completed_tour:
+            return super().get(request, *args, **kwargs)
+        return redirect(tour_url)
+
     def get_context_data(self, **kwargs):
         public_conversations = self.get_queryset()
         user_participated_tags = self.request.user.profile.participated_tags()
@@ -92,3 +100,22 @@ class HomeView(ListView):
             "has_filtered_tag": self.request.user.profile.filtered_home_tag,
             **contributions_data,
         }
+
+
+@method_decorator([login_required], name="dispatch")
+class TourView(HomeView):
+    template_name = "ej_profiles/tour.jinja2"
+
+    def get(self, *args, **kwargs):
+        user = self.request.user
+        home_url = reverse("profile:home")
+        if user.get_profile().completed_tour:
+            return redirect(home_url)
+        return render(self.request, self.template_name, self.get_context_data())
+
+    def post(self, *args, **kwargs):
+        user = self.request.user
+        home_url = reverse("profile:home")
+        user.get_profile().completed_tour = True
+        user.get_profile().save()
+        return redirect(home_url)
