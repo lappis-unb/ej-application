@@ -84,15 +84,6 @@ class PublicConversationView(ConversationView):
 class PrivateConversationView(ConversationView):
     template_name = "ej_conversations/conversation-list.jinja2"
 
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        user = request.user
-        board_slug = self.kwargs.get("board_slug", None)
-        board = Board.objects.get(slug=board_slug)
-
-        if not user.get_profile().completed_tour:
-            return redirect(f"{board.get_absolute_url()}tour")
-        return super().get(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         user = self.request.user
         board_slug = self.kwargs.get("board_slug", None)

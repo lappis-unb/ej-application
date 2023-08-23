@@ -30,7 +30,6 @@ class ConversationSetup:
     def base_user(self, db):
         user = User.objects.create_user("tester@email.br", "password")
         profile = user.get_profile()
-        profile.completed_tour = True
         profile.save()
         return user
 
@@ -356,7 +355,6 @@ class TestConversationEdit(ConversationSetup):
     def another_logged_user(self, db):
         user = User.objects.create_user("user1@email.br", "password")
         profile = user.get_profile()
-        profile.completed_tour = True
         profile.save()
         client = Client()
         client.force_login(user)
@@ -572,7 +570,6 @@ class TestPrivateConversations(ConversationRecipes):
     def admin_user(self, db):
         admin_user = User.objects.create_superuser("admin@test.com", "pass")
         profile = admin_user.get_profile()
-        profile.completed_tour = True
         profile.save()
         admin_user.save()
         return admin_user
@@ -587,7 +584,6 @@ class TestPrivateConversations(ConversationRecipes):
     def base_user(self, db):
         user = User.objects.create_user("tester@email.br", "password")
         profile = user.get_profile()
-        profile.completed_tour = True
         profile.save()
         return user
 
