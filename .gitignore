@@ -121,3 +121,4 @@ cc-test-reporter
 
 src/*/static/*/css/*.css
 src/*/static/*/js/*.js
+src/*/static/*/.parcel-cache
