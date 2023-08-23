@@ -101,7 +101,7 @@ def js(ctx, theme=env("EJ_THEME"), watch=False, minify=False):
     app_root = f"{directory}/src/{app_name}"
     app_static_root = f"{app_root}/static/{theme}"
     try:
-        ctx.run(f"rm -rf {app_static_root}/js && mkdir {app_static_root}/js")
+        ctx.run(f"rm -rf {app_static_root}/js")
         os.chdir(f"{app_static_root}/ts")
         ctx.run(build_cmd)
         if minify:

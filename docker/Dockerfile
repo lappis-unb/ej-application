@@ -13,7 +13,7 @@ RUN apt-get update \
     libpq-dev
 RUN touch /etc/apt/preferences.d/nodejs && \
     echo "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" > /etc/apt/preferences.d/nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt install nodejs -y
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt install nodejs -y
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 COPY ./ /ej-application

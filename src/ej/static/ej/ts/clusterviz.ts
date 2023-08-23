@@ -1,23 +1,19 @@
-import {Raster, setup, view} from "paper"
-import {ForceLayout} from "./clusterviz/force";
-import {initSvg} from "./clusterviz/shape";
-
+import paper from "paper";
+import { ForceLayout } from "./clusterviz/force";
+import { initSvg } from "./clusterviz/shape";
 
 //
 // INITIALIZATION
 //
 export function initializeForceLayout(elem = "#canvas", data = null) {
-    // Setup canvas
-    const canvas: HTMLCanvasElement = document.querySelector(elem) as HTMLCanvasElement;
-    setup(canvas);
+  // Setup canvas
+  let canvas: HTMLCanvasElement = document.querySelector(elem);
+  paper.setup(canvas);
+  // Svg symbol
+  initSvg(new paper.Raster());
 
-    // Svg symbol
-    initSvg(new Raster());
-
-    // Init simulation
-    let layout = ForceLayout.fromJSON(data);
-    view.onFrame = (ev) => layout.update(Math.min(ev.delta, 0.032));
+  // Init simulation
+  let layout = ForceLayout.fromJSON(data);
+  paper.view.onFrame = (ev) => layout.update(Math.min(ev.delta, 0.032));
 }
-
-
-window['initializeForceLayout'] = initializeForceLayout;
+window["initializeForceLayout"] = initializeForceLayout;
