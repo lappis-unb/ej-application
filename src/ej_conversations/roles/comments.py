@@ -1,17 +1,14 @@
-from django.apps import apps
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from hyperpython import a, html
+from hyperpython import a
 from hyperpython.django import csrf_input
 
 from ej.roles import with_template
 from .. import models
 from ..enums import RejectionReason
 from ..models import Comment
-from ..routes_comments import comment_url
 from ..utils import show_vote_actions_on_card
-from ej_users.models import SignatureFactory
 
 
 @with_template(Comment, role="card")
@@ -100,7 +97,7 @@ def comment_summary(comment: Comment, **kwargs):
     return {
         "created": comment.created,
         "tag": _("Comment"),
-        "tag_link": comment_url(comment),
+        "tag_link": comment.comment_url(),
         "text": comment.content,
         "agree": comment.agree_count,
         "skip": comment.skip_count,
