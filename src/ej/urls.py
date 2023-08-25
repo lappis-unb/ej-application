@@ -49,8 +49,11 @@ def get_urlpatterns():
         *with_app("ej_users", "account/", "routes_account", namespace="account"),
         #
         #  Conversations and other EJ-specific routes
-        path("conversations/", include("ej_conversations.public_urls", namespace="conversation")),
-        path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
+        path(
+            "conversations/",
+            include("ej_conversations.urls.public_conversations", namespace="conversation"),
+        ),
+        path("comments/", include("ej_conversations.urls.comments", namespace="comments")),
         #
         #  Profile URLS
         path("profile/", include("ej_profiles.urls", namespace="profile")),

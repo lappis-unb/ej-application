@@ -1,13 +1,10 @@
 from django.urls import reverse
 import json
 import pytest
-from django.test import Client
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej.testing import UrlTester
 from ej_users.models import User
 from ej_boards.models import Board
-
-from ej_conversations.routes_comments import comment_url
 
 
 TEST_DOMAIN = "https://domain.com.br"
@@ -39,7 +36,7 @@ class TestRoutes(UrlTester, ConversationRecipes):
             pass
 
     def test_can_view_user_url(self, user_client, comment_db):
-        url = comment_url(comment_db)
+        url = comment_db.comment_url()
         response = user_client.get(url)
         assert response.status_code == 200
 

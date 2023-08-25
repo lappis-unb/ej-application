@@ -1,9 +1,11 @@
 from boogie import models
+from hashlib import blake2b
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 from model_utils.choices import Choices
 from model_utils.models import TimeStampedModel, StatusModel
 from sidekick import lazy
@@ -176,3 +178,14 @@ class Comment(StatusModel, TimeStampedModel):
                 missing_ratio=self.missing_votes / (self.missing_votes + self.n_votes + e),
             )
         return stats
+
+    def comment_url(self):
+        return reverse(
+            "comments:detail", kwargs={"comment_id": self.id, "hex_hash": self.comment_url_hash()}
+        )
+
+    def comment_url_hash(self):
+        """
+        Compute the URL hash for the given comment.
+        """
+        return blake2b(self.content.encode("utf8"), digest_size=4).hexdigest()
