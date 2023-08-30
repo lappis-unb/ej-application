@@ -45,8 +45,8 @@ def get_urlpatterns():
         #
         # Basic authentication and authorization
         path("", include("ej.routes")),
-        *with_app("ej_users", "", namespace="auth"),
-        *with_app("ej_users", "account/", "routes_account", namespace="account"),
+        path("", include("ej_users.urls.user", namespace="auth")),
+        path("", include("ej_users.urls.account", namespace="account")),
         #
         #  Conversations and other EJ-specific routes
         path(
