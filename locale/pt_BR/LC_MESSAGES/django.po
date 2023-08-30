@@ -1599,32 +1599,32 @@ msgstr "Token do usuário"
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: src/ej_users/routes.py:40
+#: src/ej_users/routes.py:40 src/ej_users/views/user.py:55
 #, fuzzy
 msgid "Invalid email or password"
 msgstr "Senha inválida"
 
-#: src/ej_users/routes.py:60
+#: src/ej_users/routes.py:60 src/ej_users/views/user.py:58
 msgid "Welcome to EJ!"
 msgstr "Bem vindo ao EJ!"
 
-#: src/ej_users/routes.py:176
+#: src/ej_users/routes.py:176 src/ej_users/views/user.py:147
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej_users/routes_account.py:43
+#: src/ej_users/routes_account.py:43 src/ej_users/views/account.py:57
 msgid "You must confirm that you want to remove your account."
 msgstr "Você deve confirmar que deseja remover sua conta."
 
-#: src/ej_users/routes_account.py:45
+#: src/ej_users/routes_account.py:45 src/ej_users/views/account.py:59
 msgid "Wrong e-mail address"
 msgstr "Endereço de e-mail incorreto"
 
-#: src/ej_users/routes_account.py:47
+#: src/ej_users/routes_account.py:47 src/ej_users/views/account.py:61
 msgid "Cannot remove superuser accounts"
 msgstr "Não pode remover contas de superusuário"
 
-#: src/ej_users/routes_account.py:50
+#: src/ej_users/routes_account.py:50 src/ej_users/views/account.py:64
 msgid "We are sorry to see you go :(<br><br>Good luck in your journey."
 msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
 
@@ -3961,9 +3961,9 @@ msgstr "Entre com um usuário diferente"
 
 #: src/ej_users/jinja2/account/index.jinja2:18
 #: src/ej_users/jinja2/account/remove-account.jinja2:2
-#: src/ej_users/jinja2/account/remove-account.jinja2:26
+#: src/ej_users/jinja2/account/remove-account.jinja2:25
 msgid "Remove account"
-msgstr "Remover comentário"
+msgstr "Remover conta"
 
 #: src/ej_users/jinja2/account/logout.jinja2:10
 msgid "We hope we'll see you soon ;)"
