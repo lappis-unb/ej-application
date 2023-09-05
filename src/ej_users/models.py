@@ -36,6 +36,9 @@ class User(AbstractUser):
         choices=SignatureFactory.plans(),
         default=SignatureFactory.LISTEN_TO_COMMUNITY,
     )
+    agree_with_terms = models.BooleanField(
+        default=False, help_text=_("Agree with terms"), verbose_name=_("Agree with terms")
+    )
     objects = UserManager()
 
     class Meta:

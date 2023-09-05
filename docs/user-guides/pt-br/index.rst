@@ -13,3 +13,4 @@ Guia de usuário
    user-vote
    tools
    user-environment
+   terms-of-use

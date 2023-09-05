@@ -2,11 +2,28 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.template.loader import get_template
 
 
 from ej.forms import EjForm, EjModelForm
 
 User = get_user_model()
+
+
+class TermsWidget(forms.CheckboxInput):
+    template_name = "ej_users/includes/terms.jinja2"
+    renderer = get_template(template_name)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        from django.contrib.flatpages.models import FlatPage
+
+        try:
+            terms = FlatPage.objects.get(url="/usage/").content
+        except Exception as e:
+            terms = ""
+        context = self.get_context(name, value, attrs)
+        context["widget"]["terms"] = terms
+        return self.renderer.render(context)
 
 
 class PasswordForm(EjForm):
@@ -33,8 +50,9 @@ class RegistrationForm(PasswordForm, EjModelForm):
 
     class Meta:
         model = User
-        fields = ["name", "email"]
+        fields = ["name", "email", "password", "password_confirm", "agree_with_terms"]
         help_texts = {k: None for k in fields}
+        widgets = {"agree_with_terms": TermsWidget}
 
 
 class LoginForm(EjForm):

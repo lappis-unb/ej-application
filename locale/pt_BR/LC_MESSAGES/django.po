@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-21 15:17-0300\n"
+"POT-Creation-Date: 2023-09-01 17:02-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -162,7 +162,7 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:73
+#: src/ej_boards/routes.py:68
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
@@ -703,7 +703,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:107
+#: src/ej_conversations/views.py:98
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -1102,8 +1102,8 @@ msgstr "Foto de Perfil"
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:164 src/ej_users/forms.py:48
-#: src/ej_users/forms.py:57
+#: src/ej_profiles/models.py:164 src/ej_users/forms.py:65
+#: src/ej_users/forms.py:74
 msgid "E-mail"
 msgstr "Email"
 
@@ -1463,19 +1463,19 @@ msgstr "Não foi possível gerar os tokens."
 msgid "Users"
 msgstr "Usuários"
 
-#: src/ej_users/forms.py:17 src/ej_users/forms.py:49
+#: src/ej_users/forms.py:34 src/ej_users/forms.py:66
 msgid "Password"
 msgstr "Senha"
 
-#: src/ej_users/forms.py:19
+#: src/ej_users/forms.py:36
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
 
-#: src/ej_users/forms.py:26 src/ej_users/serializers.py:22
+#: src/ej_users/forms.py:43 src/ej_users/serializers.py:22
 msgid "Passwords do not match"
 msgstr "Senhas não são iguais"
 
-#: src/ej_users/forms.py:65
+#: src/ej_users/forms.py:82
 msgid "Yes, I understand the consequences."
 msgstr "Sim, entendo as conseqüências."
 
@@ -1591,42 +1591,18 @@ msgstr "Registrar"
 msgid "User signature"
 msgstr "Pontuação do usuário"
 
-#: src/ej_users/models.py:70
+#: src/ej_users/models.py:40
+#, fuzzy
+msgid "Agree with terms"
+msgstr "Termos de uso"
+
+#: src/ej_users/models.py:73
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:116
+#: src/ej_users/models.py:119
 msgid "Anonymous"
 msgstr "Anônimo"
-
-#: src/ej_users/routes.py:40 src/ej_users/views/user.py:55
-#, fuzzy
-msgid "Invalid email or password"
-msgstr "Senha inválida"
-
-#: src/ej_users/routes.py:60 src/ej_users/views/user.py:58
-msgid "Welcome to EJ!"
-msgstr "Bem vindo ao EJ!"
-
-#: src/ej_users/routes.py:176 src/ej_users/views/user.py:147
-msgid "Please reset your password"
-msgstr "Por favor reset sua senha"
-
-#: src/ej_users/routes_account.py:43 src/ej_users/views/account.py:57
-msgid "You must confirm that you want to remove your account."
-msgstr "Você deve confirmar que deseja remover sua conta."
-
-#: src/ej_users/routes_account.py:45 src/ej_users/views/account.py:59
-msgid "Wrong e-mail address"
-msgstr "Endereço de e-mail incorreto"
-
-#: src/ej_users/routes_account.py:47 src/ej_users/views/account.py:61
-msgid "Cannot remove superuser accounts"
-msgstr "Não pode remover contas de superusuário"
-
-#: src/ej_users/routes_account.py:50 src/ej_users/views/account.py:64
-msgid "We are sorry to see you go :(<br><br>Good luck in your journey."
-msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
 
 #: src/ej_users/serializers.py:27
 #, fuzzy
@@ -1636,6 +1612,39 @@ msgstr "Identificador já existe."
 #: src/ej_users/socialbuttons.py:50
 msgid "Login using {}"
 msgstr "Logue usando {}"
+
+#: src/ej_users/views/account.py:57
+msgid "You must confirm that you want to remove your account."
+msgstr "Você deve confirmar que deseja remover sua conta."
+
+#: src/ej_users/views/account.py:59
+msgid "Wrong e-mail address"
+msgstr "Endereço de e-mail incorreto"
+
+#: src/ej_users/views/account.py:61
+msgid "Cannot remove superuser accounts"
+msgstr "Não pode remover contas de superusuário"
+
+#: src/ej_users/views/account.py:64
+msgid "We are sorry to see you go :(<br><br>Good luck in your journey."
+msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
+
+#: src/ej_users/views/user.py:56
+#, fuzzy
+msgid "Invalid email or password"
+msgstr "Senha inválida"
+
+#: src/ej_users/views/user.py:59
+msgid "Welcome to EJ!"
+msgstr "Bem vindo ao EJ!"
+
+#: src/ej_users/views/user.py:95
+msgid "You must agree with EJ terms before register"
+msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
+
+#: src/ej_users/views/user.py:158
+msgid "Please reset your password"
+msgstr "Por favor reset sua senha"
 
 #: src/ej/templates/jinja2/base.jinja2:26
 msgid "Jump to main content"
@@ -4116,6 +4125,10 @@ msgstr "Mudar a senha"
 msgid "Authentication"
 msgstr "Autenticação"
 
+#: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
+msgid "By clicking, you agree with our user terms."
+msgstr "Ao clicar, você concorda com nossos termos de uso."
+
 #, fuzzy
 #~ msgid "See some recommendations"
 #~ msgstr "Veja algumas recomendações"
@@ -4943,9 +4956,6 @@ msgstr "Autenticação"
 
 #~ msgid "Passed On"
 #~ msgstr "Passou"
-
-#~ msgid "Disagreed With"
-#~ msgstr "Discordou com"
 
 #~ msgid "Created Conversation"
 #~ msgstr "Criar conversa"

@@ -46,3 +46,19 @@ ul.errorlist {
     margin: size(0.25);
     text-align: left;
 }
+
+.terms {
+    &__content {
+        height: 20rem;
+        overflow: scroll;
+        font-size: .9rem;
+    }
+    &__checkbox {
+        text-align: center;
+        font-size: .8rem;
+    }
+    label {
+        text-transform: unset;
+    }
+}
+
