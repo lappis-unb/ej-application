@@ -84,10 +84,22 @@ class RegisterView(CreateView):
 
         if form.is_valid():
             data = form.cleaned_data
-            name, email, password = data["name"], data["email"], data["password"]
+            name, email, password, agree_with_terms = (
+                data["name"],
+                data["email"],
+                data["password"],
+                data["agree_with_terms"],
+            )
+
+            if not agree_with_terms:
+                form.add_error(None, _("You must agree with EJ terms before register"))
+                log.info(f"invalid login attempt: {email}")
+                return render(request, self.template_name, self.get_context_data(form=form))
 
             try:
-                user = User.objects.create_user(email, password, name=name)
+                user = User.objects.create_user(
+                    email, password, name=name, agree_with_terms=agree_with_terms
+                )
                 self.next_url = request.GET.get("next", user.profile.default_url())
 
                 log.info(f"user {user} ({email}) successfully created")

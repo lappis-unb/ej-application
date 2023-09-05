@@ -21,6 +21,20 @@ class TestUserView(UserRecipes):
         user_client.post("/account/logout/")
         assert "_auth_user_id" not in user_client.session
 
+    def test_register_invalid_user(self, client, db):
+        response = client.post(
+            "/register/",
+            data={
+                "name": "Turanga Leela",
+                "email": "leela@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+                "agree_with_terms": False,
+            },
+            follow=True,
+        )
+        assert response.context["form"].errors
+
     def test_register_valid_user(self, client, db):
         response = client.post(
             "/register/",
@@ -29,6 +43,7 @@ class TestUserView(UserRecipes):
                 "email": "leela@example.com",
                 "password": "pass123",
                 "password_confirm": "pass123",
+                "agree_with_terms": True,
             },
         )
         user = User.objects.get(email="leela@example.com")
