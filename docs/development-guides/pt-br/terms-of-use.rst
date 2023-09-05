@@ -1,13 +1,19 @@
 .. _dev-guide:
 
 ========================
-Termos de uso
+Termos de uso e Política de privacidade
 ========================
 
-Os termos de uso da EJ ficam disponível na rota **/usage**. Para alterar o texto,
+Os termos de uso da EJ ficam disponível na rota **/usage/**. Para alterar o texto,
 acesse a área administrativa (**/admin**) e, no menu lateral, clique em "Páginas Planas" ou "FlatPages".
 O Django irá retornar a lista de flatpages disponíveis no ambiente. Caso a página com os
 termos não exista, você pode adicionar uma nova, a partir do texto base que disponibilizamos aqui.
+
+Também é possível adicionar o texto para a política de privacidade. A lógica é a mesma para os termos
+de uso, com a diferença que a rota para o texto deve apontar para **/privacy-policy/**.
+
+Tanto o texto dos termos de uso quanto política de privacidade serão apresentados ao usuário no momento
+do registro.
 
 Texto base para LGPD
 ====================
@@ -162,4 +168,4 @@ o título da página específica em que se encontra a violação; o endereço (U
 
 Todos os itens deste Termo de Uso estão regidos pelas leis vigentes na República Federativa do Brasil. Para todos os assuntos referentes à sua interpretação e cumprimento, as partes se submeterão ao Foro da Justiça Federal, Seção Judiciária do Distrito Federal.
 
-Brasil, 01 de novembro de 2018.
+Brasil, 5 de setembro de 2023.

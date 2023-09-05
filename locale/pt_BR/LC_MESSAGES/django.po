@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 17:02-0300\n"
+"POT-Creation-Date: 2023-09-01 19:47-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1102,8 +1102,8 @@ msgstr "Foto de Perfil"
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:164 src/ej_users/forms.py:65
-#: src/ej_users/forms.py:74
+#: src/ej_profiles/models.py:164 src/ej_users/forms.py:82
+#: src/ej_users/forms.py:91
 msgid "E-mail"
 msgstr "Email"
 
@@ -1463,19 +1463,19 @@ msgstr "Não foi possível gerar os tokens."
 msgid "Users"
 msgstr "Usuários"
 
-#: src/ej_users/forms.py:34 src/ej_users/forms.py:66
+#: src/ej_users/forms.py:50 src/ej_users/forms.py:83
 msgid "Password"
 msgstr "Senha"
 
-#: src/ej_users/forms.py:36
+#: src/ej_users/forms.py:52
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
 
-#: src/ej_users/forms.py:43 src/ej_users/serializers.py:22
+#: src/ej_users/forms.py:59 src/ej_users/serializers.py:22
 msgid "Passwords do not match"
 msgstr "Senhas não são iguais"
 
-#: src/ej_users/forms.py:82
+#: src/ej_users/forms.py:99
 msgid "Yes, I understand the consequences."
 msgstr "Sim, entendo as conseqüências."
 
@@ -1596,11 +1596,15 @@ msgstr "Pontuação do usuário"
 msgid "Agree with terms"
 msgstr "Termos de uso"
 
-#: src/ej_users/models.py:73
+#: src/ej_users/models.py:43
+msgid "Agree with privacy policy"
+msgstr "Política de privacidade"
+
+#: src/ej_users/models.py:77
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:119
+#: src/ej_users/models.py:123
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -1638,11 +1642,16 @@ msgstr "Senha inválida"
 msgid "Welcome to EJ!"
 msgstr "Bem vindo ao EJ!"
 
-#: src/ej_users/views/user.py:95
+#: src/ej_users/views/user.py:96
 msgid "You must agree with EJ terms before register"
 msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
 
-#: src/ej_users/views/user.py:158
+#: src/ej_users/views/user.py:101
+#, fuzzy
+msgid "You must agree with EJ privacy policy before register"
+msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
+
+#: src/ej_users/views/user.py:164
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
@@ -4124,6 +4133,11 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#: src/ej_users/jinja2/ej_users/includes/privacy-policy.jinja2:6
+#, fuzzy
+msgid "By clicking, you agree with our privacy policy."
+msgstr "Ao clicar, você concorda com nossa política de privacidade."
 
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."

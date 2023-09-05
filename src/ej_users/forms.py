@@ -26,6 +26,22 @@ class TermsWidget(forms.CheckboxInput):
         return self.renderer.render(context)
 
 
+class PrivacyPolicyWidget(forms.CheckboxInput):
+    template_name = "ej_users/includes/privacy-policy.jinja2"
+    renderer = get_template(template_name)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        from django.contrib.flatpages.models import FlatPage
+
+        try:
+            privacy_policy = FlatPage.objects.get(url="/privacy-policy/").content
+        except Exception as e:
+            privacy_policy = ""
+        context = self.get_context(name, value, attrs)
+        context["widget"]["privacy_policy"] = privacy_policy
+        return self.renderer.render(context)
+
+
 class PasswordForm(EjForm):
     """
     Recover User Password
@@ -50,9 +66,16 @@ class RegistrationForm(PasswordForm, EjModelForm):
 
     class Meta:
         model = User
-        fields = ["name", "email", "password", "password_confirm", "agree_with_terms"]
+        fields = [
+            "name",
+            "email",
+            "password",
+            "password_confirm",
+            "agree_with_terms",
+            "agree_with_privacy_policy",
+        ]
         help_texts = {k: None for k in fields}
-        widgets = {"agree_with_terms": TermsWidget}
+        widgets = {"agree_with_terms": TermsWidget, "agree_with_privacy_policy": PrivacyPolicyWidget}
 
 
 class LoginForm(EjForm):

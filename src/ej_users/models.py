@@ -39,6 +39,10 @@ class User(AbstractUser):
     agree_with_terms = models.BooleanField(
         default=False, help_text=_("Agree with terms"), verbose_name=_("Agree with terms")
     )
+    agree_with_privacy_policy = models.BooleanField(
+        default=False, help_text=_("Agree with privacy policy"), verbose_name=_("Agree with privacy policy")
+    )
+
     objects = UserManager()
 
     class Meta:
