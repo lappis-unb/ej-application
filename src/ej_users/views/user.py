@@ -84,11 +84,12 @@ class RegisterView(CreateView):
 
         if form.is_valid():
             data = form.cleaned_data
-            name, email, password, agree_with_terms = (
+            name, email, password, agree_with_terms, agree_with_privacy_policy = (
                 data["name"],
                 data["email"],
                 data["password"],
                 data["agree_with_terms"],
+                data["agree_with_privacy_policy"],
             )
 
             if not agree_with_terms:
@@ -96,9 +97,18 @@ class RegisterView(CreateView):
                 log.info(f"invalid login attempt: {email}")
                 return render(request, self.template_name, self.get_context_data(form=form))
 
+            if not agree_with_privacy_policy:
+                form.add_error(None, _("You must agree with EJ privacy policy before register"))
+                log.info(f"invalid login attempt: {email}")
+                return render(request, self.template_name, self.get_context_data(form=form))
+
             try:
                 user = User.objects.create_user(
-                    email, password, name=name, agree_with_terms=agree_with_terms
+                    email,
+                    password,
+                    name=name,
+                    agree_with_terms=agree_with_terms,
+                    agree_with_privacy_policy=agree_with_privacy_policy,
                 )
                 self.next_url = request.GET.get("next", user.profile.default_url())
 
