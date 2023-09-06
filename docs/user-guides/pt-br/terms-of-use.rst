@@ -1,6 +1,3 @@
-.. _dev-guide:
-
-========================
 Termos de uso e Política de privacidade
 ========================
 
