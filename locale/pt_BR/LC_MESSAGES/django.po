@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 19:47-0300\n"
+"POT-Creation-Date: 2023-09-05 20:06-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1102,8 +1102,8 @@ msgstr "Foto de Perfil"
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:164 src/ej_users/forms.py:82
-#: src/ej_users/forms.py:91
+#: src/ej_profiles/models.py:164 src/ej_users/forms.py:89
+#: src/ej_users/forms.py:98
 msgid "E-mail"
 msgstr "Email"
 
@@ -1463,7 +1463,7 @@ msgstr "Não foi possível gerar os tokens."
 msgid "Users"
 msgstr "Usuários"
 
-#: src/ej_users/forms.py:50 src/ej_users/forms.py:83
+#: src/ej_users/forms.py:50 src/ej_users/forms.py:90
 msgid "Password"
 msgstr "Senha"
 
@@ -1475,7 +1475,7 @@ msgstr "Confirmação de senha"
 msgid "Passwords do not match"
 msgstr "Senhas não são iguais"
 
-#: src/ej_users/forms.py:99
+#: src/ej_users/forms.py:106
 msgid "Yes, I understand the consequences."
 msgstr "Sim, entendo as conseqüências."
 
@@ -1651,7 +1651,7 @@ msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
 msgid "You must agree with EJ privacy policy before register"
 msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
 
-#: src/ej_users/views/user.py:164
+#: src/ej_users/views/user.py:168
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
@@ -2591,6 +2591,7 @@ msgid "Request upgrade."
 msgstr "Solicite upgrade."
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:19
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -2606,7 +2607,7 @@ msgstr "Gerenciar!"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:25
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:15
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:27
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
 msgid "Comments"
@@ -3155,22 +3156,22 @@ msgid "Favorites"
 msgstr "Favoritos"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:12
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:36
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:49
 msgid "List of conversations you participated at least once."
 msgstr "Lista de conversas que você participou pelo menos uma vez."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:19
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:41
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:54
 msgid "Keep track of your comments here."
 msgstr "Acompanhe os seus comentários aqui."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:20
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:42
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:55
 msgid "Approved comments"
 msgstr "Comentários aprovados"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:22
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:44
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:57
 msgid "Pending moderation"
 msgstr "Aguardando moderação"
 
@@ -3216,17 +3217,22 @@ msgstr "Editar perfil"
 msgid "Manage accounts"
 msgstr "Gerenciar conta"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:12
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:21
+#, fuzzy
+msgid "Create new"
+msgstr "Criar nova"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:24
 #, fuzzy
 msgid "Public Conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:13
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
 #, fuzzy
 msgid "My conversations"
 msgstr "Minhas Conversas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:43
 msgid "Gerenciar!"
 msgstr ""
 
@@ -5362,9 +5368,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgid "List below comments about this stereotype and define votes."
 #~ msgstr ""
 #~ "Liste abaixo os comentários referentes a essa persona e defina os votos."
-
-#~ msgid "Create"
-#~ msgstr "Criar"
 
 #~ msgid ""
 #~ "There were some errors in the information you entered. Please correct the "

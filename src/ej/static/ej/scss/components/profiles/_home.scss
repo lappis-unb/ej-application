@@ -102,6 +102,35 @@
     }
 }
 
+.home-tabs {
+  display: flex;
+  border-bottom: 1px solid #bababa;
+  &__add {
+    display: flex; 
+    align-items: center; 
+    white-space: nowrap; 
+    margin-right: 2.625rem;
+    padding-bottom: 0.688rem;
+
+    i {
+      color: $color-theme-report-light-blue; 
+      margin: 0 0.688rem 0 0;
+    }
+
+    a {
+      color: $color-theme-report-light-blue;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      text-transform: uppercase;
+    }
+  }
+  .tabs {
+    border-bottom: none;
+  }
+}
+
 @media only screen and (max-width: 760px) {
   .tag-header {
     button {
