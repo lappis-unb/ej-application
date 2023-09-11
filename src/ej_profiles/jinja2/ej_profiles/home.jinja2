@@ -8,11 +8,21 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <h2 class="text-accent">{{ _('Conversations') }}</h2>
-{{ tabs({
-    _('Public Conversations'): '#public-conversations',
-    _('My conversations'): '#my-conversations',
-    _('Votes'): '#contribution-votes',
-    _('Comments'): '#contribution-comments'}, class_='width-full') }}
+
+<div class="home-tabs">
+    <div class="home-tabs__add">
+        <i class="fa fa-plus-square fa-lg"></i>
+        <a title="{{_('New conversation')}}"
+            href="{{ url('boards:conversation-create', board_slug=user_boards.first().slug) }}">
+            {{_('Create new')}}
+        </a> 
+    </div>
+    {{ tabs({
+        _('Public Conversations'): '#public-conversations',
+        _('My conversations'): '#my-conversations',
+        _('Votes'): '#contribution-votes',
+        _('Comments'): '#contribution-comments'}, class_='width-full') }}
+</div>  
         
 <div id="public-conversations"> 
     {% include 'ej_profiles/includes/search-filter.jinja2' %}
