@@ -1,0 +1,64 @@
+@import '../node_modules/mendeleev.css/src/elements';
+
+label + input + br,
+label + textarea + br,
+label + select + br {
+    display: none;
+}
+
+input + .helptext,
+textarea + .helptext,
+select + .helptext,
+input + br + .helptext,
+textarea + br + .helptext,
+select + br + .helptext {
+    @extend legend;
+    margin-top: size(0.25) - $mendeleev-label-margin-bottom !important;
+    margin-bottom: size(1);
+    margin-left: size(0.5);
+}
+
+.helptext {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-align: left;
+    &-center{
+    text-align: center;
+    max-width: 50%;
+    margin: auto;
+    }
+}
+
+label + ul.errorlist {
+    margin-top: size(-0.5);
+    margin-bottom: 0;
+
+    & > li:last-child {
+        margin-bottom: 0;
+    }
+}
+
+ul.errorlist {
+    color: color('red');
+    font-size: 0.75rem;
+    font-weight: 600;
+    list-style: none;
+    margin: size(0.25);
+    text-align: left;
+}
+
+.terms {
+    &__content {
+        height: 20rem;
+        overflow: scroll;
+        font-size: .9rem;
+    }
+    &__checkbox {
+        text-align: center;
+        font-size: .8rem;
+    }
+    label {
+        text-transform: unset;
+    }
+}
+

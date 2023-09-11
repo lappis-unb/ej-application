@@ -1,7 +1,12 @@
 import os
 import pathlib
+import environ
 
-from boogie.configurations import PathsConf as Base, env
+from boogie.configurations import PathsConf as Base
+
+env = environ.Env(
+    EJ_THEME=(str, "ej"),
+)
 
 
 class PathsConf(Base):
@@ -11,9 +16,9 @@ class PathsConf(Base):
 
     # Local paths
     LOCAL_DIR = REPO_DIR / "local"
+    STATIC_ROOT = LOCAL_DIR / "static"
     DB_DIR = LOCAL_DIR / "db"
-    MEDIA_ROOT = env(LOCAL_DIR / "media")
-    STATIC_ROOT = env(LOCAL_DIR / "static")
+    MEDIA_ROOT = LOCAL_DIR / "media"
     FRAGMENTS_DIR = LOCAL_DIR / "fragments"
     PAGES_DIR = LOCAL_DIR / "pages"
     LOG_DIR = LOCAL_DIR / "logs"
@@ -21,9 +26,7 @@ class PathsConf(Base):
     ROOT_TEMPLATE_DIR = PROJECT_DIR / "templates"
 
     # Frontend paths
-    LIB_DIR = REPO_DIR / "lib"
-    LIB_BUILD = LIB_DIR / "build"
-    THEMES_DIR = LIB_DIR / "themes"
+    EJ_THEME_PATH, THEMES_DIR = [ROOT_DIR / env("EJ_THEME")] * 2
 
     def finalize(self, settings):
         """
@@ -35,8 +38,6 @@ class PathsConf(Base):
             self.MEDIA_ROOT,
             self.STATIC_ROOT,
             self.LOG_DIR,
-            self.LIB_DIR,
-            self.LIB_BUILD,
         ]:
             if not os.path.exists(path):
                 mkdir_recursive(path)
@@ -44,12 +45,10 @@ class PathsConf(Base):
         return super().finalize(settings)
 
     def get_staticfiles_dirs(self, repo_dir):
-        dirs = [repo_dir / "lib/build", repo_dir / "lib/assets"]
-        if self.EJ_THEME:
-            path = self.EJ_THEME_PATH / "assets"
-            if path.exists():
-                dirs.insert(0, path)
-        return dirs
+        return [
+            repo_dir / "src/ej/static/ej/assets",
+            repo_dir / "src" / env("EJ_THEME") / f"static/{env('EJ_THEME')}",
+        ]
 
     def get_django_templates_dirs(self):
         dirs = [self.ROOT_TEMPLATE_DIR / "django"]

@@ -1,13 +1,10 @@
 from django.urls import reverse
 import json
 import pytest
-from django.test import Client
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej.testing import UrlTester
 from ej_users.models import User
 from ej_boards.models import Board
-
-from ej_conversations.routes_comments import comment_url
 
 
 TEST_DOMAIN = "https://domain.com.br"
@@ -16,11 +13,14 @@ TEST_DOMAIN = "https://domain.com.br"
 class TestRoutes(UrlTester, ConversationRecipes):
     public_urls = ["/conversations/"]
     user_urls = [
-        "/board-slug/conversations/1/slug/",
+        "/board-slug/conversations/1/conversation/",
         # '/comments/<id>-<hash>/'
     ]
     admin_urls = ["/board-slug/conversations/add/"]
-    owner_urls = ["/board-slug/conversations/1/slug/edit/", "/board-slug/conversations/1/slug/moderate/"]
+    owner_urls = [
+        "/board-slug/conversations/1/conversation/edit/",
+        "/board-slug/conversations/1/conversation/moderate/",
+    ]
 
     def get_data(self, request):
         conversation = request.getfixturevalue("conversation")
@@ -36,7 +36,7 @@ class TestRoutes(UrlTester, ConversationRecipes):
             pass
 
     def test_can_view_user_url(self, user_client, comment_db):
-        url = comment_url(comment_db)
+        url = comment_db.comment_url()
         response = user_client.get(url)
         assert response.status_code == 200
 

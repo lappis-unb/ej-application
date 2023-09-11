@@ -1,6 +1,7 @@
 import json
 from urllib import request
 from datetime import datetime
+from ej_conversations.models.conversation import ConversationTag
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -17,6 +18,7 @@ from ej_conversations.serializers import (
     ConversationSerializer,
     CommentSerializer,
     PartialConversationSerializer,
+    ParticipantConversationSerializer,
     VoteSerializer,
 )
 from ej_conversations.models.vote import Vote
@@ -68,11 +70,21 @@ class ConversationViewSet(RestAPIBaseViewSet):
         return Response(response.data)
 
     def list(self, request):
-        if request.user.is_superuser:
-            queryset = Conversation.objects.all()
-        else:
-            queryset = Conversation.objects.filter(is_promoted=True)
+        queryset = Conversation.objects.all()
+        is_promoted_queryset = queryset.filter(is_promoted=True)
+        is_promoted = self.request.query_params.get("is_promoted", None)
+
+        if is_promoted:
+            return Response(self.get_promoted_conversations(request, is_promoted_queryset))
+
+        tags = request.GET.getlist("tags")
+        if tags:
+            return Response(self.filter_conversation_by_tag(request, is_promoted_queryset, tags))
+
+        if not request.user.is_superuser:
+            queryset = is_promoted_queryset
         serializer = self.get_serializer(queryset, many=True)
+
         return Response(serializer.data)
 
     @action(detail=True, url_path="vote-dataset")
@@ -143,6 +155,20 @@ class ConversationViewSet(RestAPIBaseViewSet):
             comment = conversation.next_comment(request.user)
         serializer = CommentSerializer(comment, context={"request": request})
         return Response(serializer.data)
+
+    def filter_conversation_by_tag(self, request, is_promoted_queryset, tags):
+        request.user.profile.filtered_home_tag = True
+        request.user.profile.save()
+
+        queryset = is_promoted_queryset.filter(tags__name__in=tags).distinct()
+        serializer = ParticipantConversationSerializer(queryset, many=True, context={"request": request})
+        return serializer.data
+
+    def get_promoted_conversations(self, request, is_promoted_queryset):
+        serializer = ParticipantConversationSerializer(
+            is_promoted_queryset, many=True, context={"request": request}
+        )
+        return serializer.data
 
 
 def delete_vote(request, vote):

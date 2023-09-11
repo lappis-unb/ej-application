@@ -58,7 +58,7 @@ def docker_test(ctx, dry_run=False, build=False):
     Runs EJ tests;
     """
     do = runner(ctx, dry_run, pty=True)
-    do(f"docker exec --user=root -it  server /bin/bash -c 'source /root/.bashrc && poetry run inv test'")
+    do(f"docker exec --user=root -it  server /bin/bash -c 'inv test'")
 
 
 @task

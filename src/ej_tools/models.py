@@ -1,13 +1,15 @@
 import requests
 import json
-from django.utils.translation import gettext_lazy as _
+from ckeditor.fields import RichTextField
 
-# from boogie import models
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django.shortcuts import redirect
 from requests import Request
+from django.conf import settings
 
+from src.ej_tools.utils import get_host_with_schema
 from .constants import MAX_CONVERSATION_DOMAINS
 from .utils import prepare_host_with_https
 
@@ -19,7 +21,9 @@ class RasaConversation(models.Model):
     """
 
     conversation = models.ForeignKey(
-        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="rasa_conversations"
+        "ej_conversations.Conversation",
+        on_delete=models.CASCADE,
+        related_name="rasa_conversations",
     )
 
     domain = models.URLField(
@@ -46,46 +50,53 @@ class RasaConversation(models.Model):
             raise ValidationError(_("a conversation can have a maximum of five domains"))
 
 
-class ConversationComponent:
+class OpinionComponent(models.Model):
     """
-    ConversationComponent controls the steps to generate the script and css to
-    configure the EJ opinion web component;
+    OpinionComponent controls the steps to generate the script and css to
+    configure the EJ opinion web component
     """
 
-    AUTH_TYPE_CHOICES = (("register", _("Register using name/email")),)
+    def validate_file_size(value):
+        """
+        Validates image size in form to be less than 5MB.
+        This method is above the class attributes as it was
+        not possible to access the validator if it is below.
+        """
 
-    AUTH_TOOLTIP_TEXTS = {
-        "register": _("User will use EJ platform interface, creating an account using personal data"),
-    }
+        filesize = value.size
 
-    THEME_CHOICES = (
-        ("osf", _("OSF")),
-        ("votorantim", _("Votorantim")),
-        ("icd", _("ICD")),
-        ("bocadelobo", _("Boca de Lobo")),
+        if filesize > OpinionComponent.FIVE_MB:
+            raise ValidationError(_("The maximum file size must be 5MB"))
+        else:
+            return value
+
+    FIVE_MB = 5242880
+
+    background_image = models.ImageField(
+        upload_to="opinion_component/background/", validators=[validate_file_size]
     )
+    logo_image = models.ImageField(upload_to="opinion_component/logo/", validators=[validate_file_size])
+    conversation = models.OneToOneField("ej_conversations.Conversation", on_delete=models.CASCADE)
+    final_voting_message = RichTextField()
 
-    THEME_PALETTES = {
-        "osf": ["#1D1088", "#F8127E"],
-        "votorantim": ["#04082D", "#F14236"],
-        "icd": ["#005BAA", "#F5821F"],
-        "bocadelobo": ["#83E760", "#161616"],
-    }
+    def get_upload_url(self, request, filename: str) -> str:
+        """
+        get_upload_url returns the absolute path to filename.
+        :filename: any OpinionComponent field that is an Image.
+        """
+        upload = getattr(self, filename)
+        if upload and upload.name:
+            host = get_host_with_schema(request)
+            return f"{host}{settings.MEDIA_URL}{upload.name}"
+        return ""
 
-    def __init__(self, form):
-        self.form = form
-
-    def _form_is_invalid(self):
-        return not self.form.is_valid() or (not self.form.cleaned_data["theme"])
-
-    def get_props(self):
-        if self._form_is_invalid():
-            return "theme= authenticate-with=register"
-
-        result = ""
-        if self.form.cleaned_data["theme"]:
-            result = result + f"theme={self.form.cleaned_data['theme']}"
-        return result
+    def default_bg_img_url(request):
+        """
+        default_background_image_url returns the absolute path to default bg image.
+        """
+        host = get_host_with_schema(request)
+        default_bg = "img/tools/opinion-component-default-background.jpg"
+        return f"{host}{settings.STATIC_URL}{default_bg}"
 
 
 class ConversationMautic(models.Model):
@@ -99,7 +110,9 @@ class ConversationMautic(models.Model):
     refresh_token = models.CharField(_("Refresh Token"), max_length=200, blank=True)
     url = models.URLField(_("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic."))
     conversation = models.ForeignKey(
-        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="mautic_integration"
+        "ej_conversations.Conversation",
+        on_delete=models.CASCADE,
+        related_name="mautic_integration",
     )
 
     class Meta:
@@ -216,7 +229,6 @@ class MauticOauth2Service:
 
 
 class MauticClient:
-
     CONTACT_SEARCH_COMMAND = "?where%5B0%5D%5Bcol%5D=phone&where%5B0%5D%5Bexpr%5D=eq&where%5B0%5D%5Bval%5D="
     API_CONTACT_ENDPOINT = "/api/contacts"
 
@@ -341,4 +353,5 @@ class WebchatHelper:
 
     @staticmethod
     def get_rasa_domain(host):
+        return WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host)
         return WebchatHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host)

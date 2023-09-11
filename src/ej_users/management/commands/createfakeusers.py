@@ -124,5 +124,5 @@ def set_profile(user):
             kwargs["gender"] = choice(list(Gender))
         if random() < 0.5:
             kwargs["race"] = choice(list(Race))
-
-        Profile.objects.create(user=user, **kwargs)
+        user.get_profile()
+        Profile.objects.filter(user=user).update(**kwargs)

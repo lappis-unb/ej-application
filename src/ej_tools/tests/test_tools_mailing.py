@@ -221,7 +221,7 @@ class TestTemplateGenerator(ConversationRecipes):
         assert generator.conversation.text == new_title
 
 
-class TestConversationComponentForm(ConversationRecipes):
+class TestMailingToolForm(ConversationRecipes):
     def test_conversation_component_valid_mautic_form(self, conversation_db, mk_user):
         user = mk_user(email="test@domain.com")
         conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
@@ -252,5 +252,4 @@ class TestConversationComponentForm(ConversationRecipes):
             },
             conversation_id=conversation_db.id,
         )
-        print(form.errors)
         assert form.is_valid()

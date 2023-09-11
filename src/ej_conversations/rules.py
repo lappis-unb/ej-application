@@ -223,3 +223,8 @@ def can_access_tools_page(user, conversation):
     * OR user is the conversation author
     """
     return user.is_staff or user.is_superuser or conversation.author.id == user.id
+
+
+@rules.register_perm("ej.can_access_all_conversations")
+def can_access_all_conversations(user):
+    return user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")

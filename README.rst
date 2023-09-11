@@ -2,7 +2,6 @@
 EJ Platform
 ===========
 
-
 You can visit EJ website at https://www.ejplatform.org.
 For detailed information on developing and using our system, you can access our documentation on:
 https://www.ejplatform.org/docs/.
@@ -34,7 +33,12 @@ Every change made on the repository will be reflected inside the
 If you are creating a clean EJ instance, you can populate the database
 with some fake data::
 
-    $ inv docker-exec "poetry run inv db-fake"
+    $ inv docker-exec "inv db-fake"
+
+Otherwise, if you want to clean your database and repopulate it using the
+script, it is necessary to remove `docker_backups` volume.  After that,
+run `inv docker-up` command and then
+`inv docker-exec "inv db-fake"`, as mentioned above.
 
 You can access the running instance accessing `http://localhost:8000`.
 
@@ -51,22 +55,22 @@ inv docker-stop                         Stops EJ containers
 inv docker-rm                           Removes EJ containers
 inv docker-attach                       Connects to django container
 inv docker-exec                         Executes a command on django container
-inv docker-exec "poetry run inv docs"   Compile .rst documentation to generates .html files
+inv docker-exec "inv docs"   Compile .rst documentation to generates .html files
 ==================                      ===================================================
 
 Some useful commands to manage the application **(run this inside django container)**:
 
-===========================  ======================================================
-Command                      Description
-===========================  ======================================================
-poetry run inv i18n          Extracts messages from Jinja templates for translation
-poetry run inv i18n -c       Compile .po files
-poetry run inv sass          Compile sass files
-poetry run inv sass --watch  Watch changes on code, and compile .sass files
-poetry run inv collect       Moves compiled files (css, js) to Django static folder
-poetry run inv db            Prepare database and run migrations
-poetry run inv shell         Executs django shell with ipython
-===========================  ======================================================
+=================  ======================================================
+Command            Description
+=================  ======================================================
+inv i18n           Extracts messages from Jinja templates for translation
+inv i18n -c        Compile .po files
+inv sass           Compile sass files
+inv sass --watch   Watch changes on code, and compile .sass files
+inv collect        Moves compiled files (css, js) to Django static folder
+inv db             Prepare database and run migrations
+inv shell          Executs django shell with ipython
+=================  ======================================================
 
 
 Tests
@@ -94,6 +98,6 @@ Documentation
 
 After configuring local environment, the next step is reading our documentation. It can be generated with::
 
-    $ inv docker-exec "poetry run inv docs"
+    $ inv docker-exec "inv docs"
 
 and will be available at the `http://localhost:8000/docs <http://localhost:8000/docs>`_ url.

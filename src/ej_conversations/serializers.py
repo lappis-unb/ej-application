@@ -1,6 +1,8 @@
-from ej_conversations.decorators import conversation_can_receive_channel_vote
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from django.utils.translation import gettext_lazy as _
+from ej_conversations.roles.conversations import conversation_card
+from ej_conversations.decorators import conversation_can_receive_channel_vote
 from ej_tools.models import ConversationMautic, MauticClient
 from ej_users.models import SignatureFactory
 from ej.serializers import BaseApiSerializer
@@ -85,6 +87,17 @@ class PartialConversationSerializer(BaseApiSerializer):
             "text",
             "statistics",
         ]
+
+
+class ParticipantConversationSerializer(BaseApiSerializer):
+    card = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Conversation
+        fields = ["card"]
+
+    def get_card(self, obj):
+        return conversation_card(obj, request=self.context["request"], button_text=_("Participate"))
 
 
 class CommentSerializer(BaseApiSerializer):

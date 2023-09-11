@@ -371,6 +371,7 @@ class TestReportRoutes(ClusterRecipes):
         response = logged_client.get(url)
         comments = list(response.context["comments"])
         paginator = response.context["paginator"]
+        [comment.pop("created") for comment in comments]
         assert comments == [
             {
                 "content": "aa",
@@ -390,6 +391,7 @@ class TestReportRoutes(ClusterRecipes):
         response = logged_client.get(url)
         comments = list(response.context["comments"])
         paginator = response.context["paginator"]
+        [comment.pop("created") for comment in comments]
         assert comments == [
             {
                 "content": "aa",
@@ -421,11 +423,13 @@ class TestReportRoutes(ClusterRecipes):
         base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
         response = logged_client.get(base_url)
         comments = list(response.context["comments"])
+        [comment.pop("created") for comment in comments]
         assert comments == general_comments
 
         url = f"{base_url}?clusterFilters=general"
         response = logged_client.get(url)
         comments = list(response.context["comments"])
+        [comment.pop("created") for comment in comments]
         assert comments == general_comments
 
     def test_get_general_and_cluster_comments(self, conversation_with_comments, logged_client):
@@ -439,6 +443,7 @@ class TestReportRoutes(ClusterRecipes):
         url = f"{base_url}?clusterFilters=general,{cluster.name}&cardsPerPage=12"
         response = logged_client.get(url)
         comments = list(response.context["comments"])
+        [comment.pop("created") for comment in comments]
         assert comments == general_and_cluster_comments
 
     def test_get_cluster_comments(self, conversation_with_comments, logged_client):
@@ -452,6 +457,7 @@ class TestReportRoutes(ClusterRecipes):
         url = f"{base_url}?clusterFilters={cluster.name}"
         response = logged_client.get(url)
         comments = list(response.context["comments"])
+        [comment.pop("created") for comment in comments]
         assert comments == cluster_comments
 
     def test_get_page(self, conversation_with_comments, logged_client):
@@ -461,6 +467,7 @@ class TestReportRoutes(ClusterRecipes):
 
         response = logged_client.get(url)
         comments = list(response.context["comments"])
+        [comment.pop("created") for comment in comments]
         assert comments == [
             {
                 "content": "aa",
@@ -478,6 +485,7 @@ class TestReportRoutes(ClusterRecipes):
         url = f"{base_url}?cardsPerPage=1&page=4"
         response = logged_client.get(url)
         comments = list(response.context["comments"])
+        [comment.pop("created") for comment in comments]
         assert comments == [
             {
                 "content": "test",

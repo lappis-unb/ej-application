@@ -13,7 +13,7 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 
 from ej_profiles.api import ProfileViewSet
-from ej_tools.api import RasaConversationViewSet
+from ej_tools.api import RasaConversationViewSet, OpinionComponentViewSet
 from ej_conversations.api import ConversationViewSet, CommentViewSet, VoteViewSet
 from ej_clusters.api import ClusterizationViewSet
 from ej_users.api import UsersViewSet, UserAuthViewSet
@@ -24,6 +24,7 @@ unregister_admin.unregister_apps()
 
 api_router = DefaultRouter()
 api_router.register(r"rasa-conversations", RasaConversationViewSet, basename="v1-rasa-conversations")
+api_router.register(r"opinion-component", OpinionComponentViewSet, basename="v1-opinion-component")
 api_router.register(r"conversations", ConversationViewSet, basename="v1-conversations")
 api_router.register(r"comments", CommentViewSet, basename="v1-comments")
 api_router.register(r"votes", VoteViewSet, basename="v1-votes")
@@ -44,15 +45,18 @@ def get_urlpatterns():
         #
         # Basic authentication and authorization
         path("", include("ej.routes")),
-        *with_app("ej_users", "", namespace="auth"),
-        *with_app("ej_users", "account/", "routes_account", namespace="account"),
+        path("", include("ej_users.urls.user", namespace="auth")),
+        path("", include("ej_users.urls.account", namespace="account")),
         #
         #  Conversations and other EJ-specific routes
-        path("conversations/", include("ej_conversations.public_urls", namespace="conversation")),
-        path("comments/", include("ej_conversations.routes_comments", namespace="comments")),
+        path(
+            "conversations/",
+            include("ej_conversations.urls.public_conversations", namespace="conversation"),
+        ),
+        path("comments/", include("ej_conversations.urls.comments", namespace="comments")),
         #
         #  Profile URLS
-        *with_app("ej_profiles", "profile/", namespace="profile"),
+        path("profile/", include("ej_profiles.urls", namespace="profile")),
         #
         #  Data visualization
         path("conversations/", include("ej_dataviz.urls", namespace="dataviz")),

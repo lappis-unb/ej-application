@@ -125,3 +125,38 @@ class ConstanceConf(Conf):
         name="{attr}",
     )
     EJ_LANDING_PAGE_DOMAIN = env("/login", name="{attr}")
+
+    CKEDITOR_CONFIGS = {
+        "default": {
+            "toolbar": "Custom",
+            "toolbar_Custom": [
+                [
+                    "Font",
+                    "Bold",
+                    "Italic",
+                    "Underline",
+                    "Strike",
+                    "TextColor",
+                    "BGColor",
+                    "SpecialChar",
+                    "Undo",
+                    "Redo",
+                ],
+                ["Link", "Unlink", "Smiley", "-"],
+                [
+                    "NumberedList",
+                    "BulletedList",
+                    "-",
+                    "JustifyLeft",
+                    "JustifyCenter",
+                    "JustifyRight",
+                ],
+            ],
+            "width": "auto",
+            "allowedContent": False,
+            "extraPlugins": ",".join(["placeholder"]),
+            "editorplaceholder": "Insira sua mensagem aqui",
+            "removePlugins": "exportpdf",
+            "height": 140,
+        },
+    }

@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+import environ
 
 python = sys.executable
 directory = Path(os.path.dirname(__file__)).parent.parent
@@ -12,6 +13,9 @@ HELP_MESSAGES = {
     "background": "Runs on background",
 }
 
+env = environ.Env(
+    EJ_THEME=(str, "ej"),
+)
 
 #
 # Utility functions
@@ -57,21 +61,8 @@ def docker_deploy_variables(path):
 
 
 def set_theme(theme):
-    if theme and "/" in theme:
-        theme = theme.rstrip("/")
-        root = f"{theme}/"
-        theme = os.path.basename(theme)
-    elif theme and theme != "default":
-        root = f"lib/themes/{theme}/"
-    elif "EJ_THEME" in os.environ:
-        theme = os.environ["EJ_THEME"]
-        root = "lib/" if theme == "default" else f"lib/themes/{theme}/"
-    else:
-        theme = "default"
-        root = "lib/"
-
-    os.environ["EJ_THEME"] = theme
-    return theme, root
+    theme = env("EJ_THEME") if not theme else theme
+    return theme, f"{directory}/src/{theme}/static/{theme}"
 
 
 def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):

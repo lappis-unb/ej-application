@@ -9,6 +9,7 @@ from .vote import Vote
 from ..math import comment_statistics
 from ..mixins import ConversationMixin, EXTEND_FIELDS as _EXTEND_FIELDS
 
+
 log = logging.getLogger("ej")
 
 
@@ -60,11 +61,13 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
         The resulting dataframe has the 'content', 'author', 'agree', 'disagree'
         'skipped', 'convergence' and 'participation' columns.
         """
-        votes = (votes or self.votes()).dataframe("comment", "author", "choice")
+        votes = (votes or self.votes()).dataframe("comment", "author", "choice", "created")
         stats = comment_statistics(votes, participation=True, convergence=True, ratios=True)
         stats *= normalization
         stats = self.extend_dataframe(stats, "author__name", *extend_fields, "content")
         stats["author"] = stats.pop("author__name")
+        stats["group"] = "geral"
+        stats["created"] = votes["created"]
         cols = [
             "content",
             "author",
@@ -73,6 +76,8 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
             "skipped",
             "convergence",
             "participation",
+            "group",
+            "created",
             *extend_fields,
         ]
         return stats[cols]

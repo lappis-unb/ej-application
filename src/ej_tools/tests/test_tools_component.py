@@ -1,76 +1,96 @@
+import pytest
+from io import BytesIO
+from PIL import Image
+from django.test import Client
+from django.core.files.base import File
+from django.core.exceptions import ValidationError
+
 from ej_conversations.mommy_recipes import ConversationRecipes
 
-from ej_tools.forms import ConversationComponentForm
-from ej_tools.models import ConversationComponent
-from ej_tools.tests import HTTP_HOST
-from ej_tools.views import opinion_component
-from django.test import Client
+from ej_tools.models import OpinionComponent
 
 ConversationRecipes.update_globals(globals())
 
-
-class TestConversationComponentModel:
-    def test_conversation_component_get_props_with_register_auth(self):
-        form = ConversationComponentForm({"authentication_type": "register", "theme": "icd"})
-        component = ConversationComponent(form)
-        props = component.get_props()
-        assert props == "theme=icd"
-
-    def test_conversation_component_get_props_with_empty_form(self):
-        form = ConversationComponentForm({"authentication_type": "", "theme": ""})
-        component = ConversationComponent(form)
-        props = component.get_props()
-        assert props == "theme= authenticate-with=register"
+FIVE_MB = 5242880
 
 
-class TestConversationComponentForm:
-    def test_conversation_component_valid_form(self):
-        form = ConversationComponentForm({"authentication_type": "register", "theme": "icd"})
-        assert form.is_valid()
+class TestOpinionComponent(ConversationRecipes):
+    @staticmethod
+    def get_image_file(name, ext="png", size=(50, 50), color=(256, 0, 0)):
+        file_obj = BytesIO()
+        image = Image.new("RGBA", size=size, color=color)
+        image.save(file_obj, ext)
+        file_obj.seek(0)
+        return File(file_obj, name=name)
 
-
-class TestComponentConversationRoute(ConversationRecipes):
-    def test_post_component_conversation_valid_form(self, mk_conversation):
-        conversation = mk_conversation()
+    def test_custom_conversation_component_without_mandatory_fields(self, conversation_db):
         client = Client()
-        client.force_login(conversation.author)
+        client.force_login(conversation_db.author)
 
-        response = client.post(
-            conversation.patch_url("conversation-tools:opinion-component"),
-            {"authentication_type": "register", "theme": "icd"},
-            HTTP_HOST=HTTP_HOST,
-        )
+        url = conversation_db.patch_url("conversation-tools:opinion-component")
+        data = {
+            "conversation": conversation_db.id,
+            "final_voting_message": "finished voting!",
+            "custom": "",
+        }
+        response = client.post(url, data)
+        assert response.status_code == 200
+        assert not OpinionComponent.objects.filter(conversation=conversation_db).exists()
 
-        assert response.context["conversation_component"].get_props() == "theme=icd"
-        assert response.context["form"].is_valid()
-        assert response.context["conversation"].id == conversation.id
-
-    def test_post_votorantim_conversation_valid_form(self, mk_conversation):
-        conversation = mk_conversation()
+    def test_custom_conversation_component_valid_form(self, conversation_db):
         client = Client()
-        client.force_login(conversation.author)
+        client.force_login(conversation_db.author)
 
-        response = client.post(
-            conversation.patch_url("conversation-tools:opinion-component"),
-            {"authentication_type": "mautic", "theme": "votorantim"},
-            HTTP_HOST=HTTP_HOST,
-        )
+        url = conversation_db.patch_url("conversation-tools:opinion-component")
+        background_image = TestOpinionComponent.get_image_file("image.png")
+        logo_image = TestOpinionComponent.get_image_file("image2.png")
+        data = {
+            "background_image": background_image,
+            "logo_image": logo_image,
+            "conversation": conversation_db.id,
+            "final_voting_message": "finished voting!",
+            "custom": "",
+        }
+        response = client.post(url, data)
+        assert response.status_code == 302
+        assert OpinionComponent.objects.filter(conversation=conversation_db).exists()
 
-        assert response.context["conversation_component"].get_props() == "theme=votorantim"
-        assert response.context["form"].is_valid()
-        assert response.context["conversation"].id == conversation.id
-
-    def test_post_icd_conversation_valid_form(self, mk_conversation):
-        conversation = mk_conversation()
+    def test_get_conversation_component(self, conversation_db):
         client = Client()
-        client.force_login(conversation.author)
+        client.force_login(conversation_db.author)
 
-        response = client.post(
-            conversation.patch_url("conversation-tools:opinion-component"),
-            {"authentication_type": "analytics", "theme": "icd"},
-            HTTP_HOST=HTTP_HOST,
-        )
+        url = conversation_db.patch_url("conversation-tools:opinion-component")
+        response = client.get(url)
+        assert response.status_code == 200
+        assert b"background_image" in response.content
+        assert b"logo_image" in response.content
 
-        assert response.context["conversation_component"].get_props() == "theme=icd"
-        assert response.context["form"].is_valid()
-        assert response.context["conversation"].id == conversation.id
+    def test_custom_conversation_component_invalid_form(self, conversation_db):
+        client = Client()
+        client.force_login(conversation_db.author)
+
+        url = conversation_db.patch_url("conversation-tools:opinion-component")
+        background_image = TestOpinionComponent.get_image_file("image.png")
+        logo_image = TestOpinionComponent.get_image_file("image2.png")
+        data = {
+            "background_image": background_image,
+            "logo_image": logo_image,
+            "conversation": conversation_db.id,
+            "final_voting_message": "",
+            "custom": "",
+        }
+        response = client.post(url, data)
+
+        error_message = "This field is required"
+        assert response.status_code == 200
+        assert not OpinionComponent.objects.filter(conversation=conversation_db).exists()
+        assert error_message.encode() in response.content
+
+    def test_utils_validator_invalid_file_size(self):
+        test_file = type("FileMock", (object,), {"size": FIVE_MB + 1})()
+        with pytest.raises(ValidationError):
+            OpinionComponent.validate_file_size(test_file)
+
+    def test_utils_validator_valid_file_size(self):
+        test_file = type("FileMock", (object,), {"size": FIVE_MB})()
+        assert OpinionComponent.validate_file_size(test_file) == test_file

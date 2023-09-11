@@ -39,6 +39,7 @@ class InstalledAppsConf(Base, EjOptions):
         "constance",
         "constance.backends.database",
         "anymail",
+        "ckeditor",
     ]
 
     def get_django_contrib_apps(self):

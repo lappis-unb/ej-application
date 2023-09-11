@@ -52,14 +52,14 @@ def collect(ctx, theme=None):
     Runs Django's collectstatic command
     """
     theme, root = set_theme(theme)
-    root_css = directory / "lib/build/css/"
-    root_js = directory / "lib/build/js/"
+    root_css = f"{root}/css"
+    root_js = f"{root}/js"
 
     # Select the correct minified build for CSS assets
     for file in ["main", "hicontrast"]:
-        from_path = root_css / (file + f"-{theme}.min.css")
-        to_path = root_css / (file + ".css")
-        if not from_path.exists():
+        from_path = f'{root_css}/{file + f".min.css"}'
+        to_path = f'{directory}/local/static/css/{file + ".css"}'
+        if not os.path.exists(from_path):
             print('Please run "inv build-assets" first!', file=sys.stderr)
         with open(to_path, "w") as fd:
             fd.write(open(from_path).read())
@@ -74,7 +74,7 @@ def collect(ctx, theme=None):
             with open(to_path, "w") as fd:
                 fd.write(open(from_path).read())
 
-    manage(ctx, "collectstatic --noinput")
+    manage(ctx, "collectstatic --i node_modules -i *.json --noinput")
 
 
 @task

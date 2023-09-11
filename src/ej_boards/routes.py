@@ -1,26 +1,18 @@
 from boogie.router import Router
-from django.apps import apps
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
-from django.shortcuts import render
 
 from ej_boards.models import Board
-from ej_boards.utils import patched_register_app_routes, register_app_routes
+from ej_boards.utils import patched_register_app_routes
 from ej_clusters.models import Stereotype
 from ej_conversations.models import Conversation
-from ej_signatures.models import SignatureFactory
 from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
-from ej_conversations.urls import urlpatterns as conversation_urlpatterns
+from ej_conversations.urls.conversations import urlpatterns as conversation_urlpatterns, conversation_url
 from ej_clusters.urls import urlpatterns as cluster_urlpatterns
 from ej_dataviz.urls import urlpatterns as dataviz_urlpatterns
 from ej_signatures.urls import urlpatterns as signatures_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
-from ej_dataviz import views_dataviz as dataviz
-from ej_dataviz import views_report as report
-from ej_clusters import views as cluster
-
-from ej_conversations.urls import conversation_url
 
 app_name = "ej_boards"
 urlpatterns = Router(
@@ -88,27 +80,6 @@ def board_edit(request, board):
 @urlpatterns.route("<model:board>/")
 def board_base(request, board):
     return redirect(board.get_absolute_url())
-
-
-@urlpatterns.route(board_base_url + "tour/", login=True)  # TODO: passar essa rota para o ej_conversations
-def tour(request, board):
-    user = request.user
-    if user.get_profile().completed_tour:
-        return redirect(f"{board.get_absolute_url()}")
-    if request.method == "POST":
-        user.get_profile().completed_tour = True
-        user.get_profile().save()
-        return redirect(f"{board.get_absolute_url()}")
-    user_signature = SignatureFactory.get_user_signature(user)
-    max_conversation_per_user = user_signature.get_conversation_limit()
-    return {
-        "conversations": board.conversations.annotate_attr(board=board),
-        "help_title": _(
-            "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
-        ),
-        "conversations_limit": max_conversation_per_user,
-        "board": board,
-    }
 
 
 #   When app uses django views, we use patched_register_app_routes

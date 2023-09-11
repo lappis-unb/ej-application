@@ -74,12 +74,7 @@ def _normalize_href(href, url_args, query):
     if isinstance(href, Url):
         href = str(href)
     elif href.startswith("/"):
-        raise ValueError(
-            "Do not use absolute urls in the link function (%s)."
-            "Prefer using view function names such as auth:login instead of "
-            "/login/. You can also wrap the url into a ej.utils.Url instance "
-            "if you want to return a calculated url value." % href
-        )
+        href = href
     elif href == "#" or href is None:
         href = "#"
     elif href.startswith("http"):

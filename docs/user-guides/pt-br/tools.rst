@@ -6,7 +6,7 @@ Uma conversa EJ pode ser integrada à outras ferramentas e plataformas,
 permitindo potencializar o engajamento do seu público durante uma coleta
 de opinião. A lista a seguir, resume cada uma das ferramentas que temos disponíveis
 atualmente, e no link de cada ferramenta é possível ter acesso à documentação
-completa. 
+completa.
 
 **Chatbot**: Permite realizar coletas de opinião por meio de uma interface conversacional,
 como o Telegram ou um cliente web, chamado de Webchat. O Bot se integra na API da EJ, e
@@ -25,6 +25,7 @@ Todas estas ferramentas podem ser acessadas clicando no link *Ferramentas*, dent
 uma conversa na EJ. O link só fica disponível para o criador da conversa.
 
 .. toctree::
+   :maxdepth: 3
 
    tools-chatbot
    tools-ejgroups

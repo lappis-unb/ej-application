@@ -1,4 +1,5 @@
 import os
+from ej_tools.models import OpinionComponent
 from jinja2 import Environment, FileSystemLoader
 
 from ej_boards.models import Board
@@ -35,6 +36,16 @@ class TemplateGenerator:
         self.vote_domain = self._get_vote_domain()
         self.theme = form_data.get("theme")
         self.form_data = form_data
+
+        try:
+            custom_images = OpinionComponent.objects.get(conversation=conversation)
+            host = get_host_with_schema(request)
+            self.background_image_url = f"{host}/media/{custom_images.background_image}"
+            self.logo_image_url = f"{host}/media/{custom_images.logo_image}"
+        except OpinionComponent.DoesNotExist:
+            self.background_image_url = None
+            self.logo_image_url = None
+
         self.set_custom_values()
 
     def set_custom_values(self):
@@ -71,6 +82,8 @@ class TemplateGenerator:
             conversation_n_comments=self.conversation.n_comments,
             votes_conversation=self.conversation.n_votes,
             host=host,
+            logo_image_url=self.logo_image_url,
+            background_image_url=self.background_image_url,
         )
 
     def _get_voting_url(self):

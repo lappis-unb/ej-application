@@ -1,5 +1,6 @@
 from functools import lru_cache
 import datetime
+from pprint import pprint
 
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
@@ -11,6 +12,7 @@ from sidekick import import_later
 from django.core.paginator import Paginator
 
 from ej_conversations.models import Conversation
+from ej_clusters.models.clusterization import Clusterization
 from ej_conversations.utils import check_promoted
 from .utils import (
     add_id_column,
@@ -23,7 +25,7 @@ from .utils import (
     get_cluster_main_comments,
     get_clusters,
     get_cluster_or_404,
-    data_response,
+    export_data,
     get_user_data,
     comments_data_common,
     vote_data_common,
@@ -164,9 +166,10 @@ def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
 def comments_data(request, conversation_id, fmt, **kwargs):
     conversation = Conversation.objects.get(pk=conversation_id)
     comments = conversation.comments
+    clusters = Clusterization.objects.filter(conversation=conversation).last().clusters
     votes = conversation.votes
     filename = conversation.slug + "-comments"
-    return comments_data_common(comments, votes, filename, fmt)
+    return comments_data_common(comments, votes, filename, fmt, clusters)
 
 
 # ==============================================================================
@@ -189,7 +192,7 @@ def users_data(request, conversation_id, fmt, **kwargs):
         extra.index = extra.pop("user")
         df[["cluster", "cluster_id"]] = extra
         df["cluster_id"] = df.cluster_id.fillna(-1).astype(int)
-    return data_response(df, fmt, filename)
+    return export_data(df, fmt, filename)
 
 
 @lru_cache(1)
@@ -211,4 +214,5 @@ def get_translation_map():
         "name": _("name"),
         "participation": _("participation"),
         "skipped": _("skipped"),
+        "channel": _("channel"),
     }

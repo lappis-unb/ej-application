@@ -1,0 +1,94 @@
+{% extends 'ej_profiles/home.jinja2' %}
+{% set main_class = main_class|default('container pad-x0') %}
+
+{% block content %}
+    {{ csrf_input }}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/shepherd.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shepherd.js/8.3.1/js/shepherd.min.js"></script>
+<script defer>
+    const tour = new Shepherd.Tour({
+    useModalOverlay: true
+    });
+
+    const nextButtonAction = [
+            {
+            text: "Próximo",
+            classes: "sheperd-button",
+            action: tour.next
+            }
+        ];
+
+    tour.addStep({
+        title: "<div><img src='/static/img/tour/bubbles.svg'><div> <div>Bem vindo a EJ!</div>",
+        text: "<p class='subtitle'>A EJ é uma plataforma de consultas de opinião multicanal, que tem por objetivo fortalecer a estratégia de comunicação da sua organização. Clique em <b>iniciar</b> para começarmos a demonstração.</p>",
+        buttons: [
+            {
+                text: "Dispensar",
+                classes: "sheperd-decline-button",
+                action() {
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    $(function(){ 
+                        const request = new Request(
+                            window.location.href,
+                            {
+                                method: 'POST',
+                                headers: {'X-CSRFToken': csrftoken},
+                                mode: 'same-origin'
+                            }
+                        );
+                        fetch(request).then((response) => {
+                            window.location.href = response.url;
+                        });
+                    })
+                    this.cancel();
+                    return true;
+                }
+            },
+            {
+                text: "Iniciar",
+                classes: "sheperd-button",
+                action: tour.next
+            }
+        ],
+        id: "creating"
+       
+    });
+    tour.addStep({
+        text: "<h4>TUDO COMEÇA NA CONVERSA!</h4> <p class='description-text'> Na EJ, o nosso ponto de partida é a conversa. Uma conversa é composta por um conjunto de comentários, que são votados pelos participantes da coleta.</p> <img src='/static/img/tour/conversa.png'>",
+        buttons: nextButtonAction
+    });
+    tour.addStep({
+        text: "<h4>LEVE A EJ PARA ONDE QUISER!</h4> <p class='description-text'> Leve uma conversa da EJ para onde quiser. Com nossas ferramentas de coleta, ouça seu público no Whatsapp, Telegram, base de email ou site institucional.</p> <img src='/static/img/tour/ferramentas.png'>",
+        buttons: nextButtonAction
+    });
+    tour.addStep({
+        text: "<h4>DESCUBRA E ENTENDA SEU PÚBLICO!</h4> <p class='description-text'> Extraia pontos de informação das suas conversas por meio dos nossos relatórios e descubra o que o seu público pensa a respeito dos assuntos relevantes para a sua organização.</p> <img src='/static/img/tour/relatorio.png'>",
+        buttons: [
+            {
+                text: "Começar",
+                classes: "sheperd-button",
+                action() {
+                    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    $(function(){ 
+                        const request = new Request(
+                            window.location.href,
+                            {
+                                method: 'POST',
+                                headers: {'X-CSRFToken': csrftoken},
+                                mode: 'same-origin'
+                            }
+                        );
+                        fetch(request).then((response) => {
+                            window.location.href = response.url;
+                        });
+                    })
+                    this.complete();
+                    return true;
+                }
+            }
+        ]
+    });
+    tour.start();
+</script>
+{% endblock %}

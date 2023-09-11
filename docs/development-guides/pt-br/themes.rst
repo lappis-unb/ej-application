@@ -1,39 +1,24 @@
 Temas
 ======
 
-The EJ platform has a theme structure that can be easily tweaked and adapted
-for different instances.
+É possível implementar temas customizados para a plataforma. O tema padrão
+é versionado no app **ej**, no diretório **ej/static/ej/**.
+A EJ irá carregar o tema a partir da variável de ambiente **EJ_THEME**. O
+valor dessa variável precisa ser o nome do app responsável por armazenar
+o tema.
 
+.. note::
 
-Running different themes
-------------------------
+    Uma vez criado o app responsável pelo tema e definida a variável
+    EJ_THEME, os scripts de compilação irão procurar os arquivos estáticos
+    dentro do diretório <theme_app>/static/<theme_app>.
 
-The theme is controlled by a environment variable. A new theme can
-be chosen by setting ``EJ_THEME`` to name or path to the desired theme::
+Por ser um app Django, você será capaz de customizar não só o tema, mas
+também os templates jinja2, models e views. Um exemplo de implementação de
+tema para a EJ seguindo esta estrutura, pode ser encontrado
+`neste repositório <https://gitlab.com/pencillabs/itsrio/ej-application/>`_.
 
-    $ export EJ_THEME=cpa
+.. note::
 
-We've implemented a few default themes at /lib/themes/. Those themes are also
-a good reference of what can be done within the theme structure.
-
-Once this variable is set, the CSS will be built using the desired theme. The
-theme can also override static assets and even Django settings.
-
-
-Creating a new theme for the EJ platform
-----------------------------------------
-
-A theme is organized within the following file structure::
-
-    - <theme-name>
-        |- assets/   (overrides default assets)
-        \- scss/
-            |- _config.scss (set SASS variables and configurations)
-            |- _overrides.scss (ad-hoc overrides of styles)
-            |- main.scss
-            |- hicontrast.scss
-
-Main.scss have standard implementations and can be simply
-copied from one theme to the other. Most of your work will probably concentrate
-in the _settings.scss file: it defines all overrides of scss variables and can
-be used to declare colors, fonts, layouts, spacing, etc.
+    Você pode começar a implementação de um tema customizado, copiando os arquivos do
+    tema padrão para o seu app, mas mantendo a estrutura de diretórios estáticos.
