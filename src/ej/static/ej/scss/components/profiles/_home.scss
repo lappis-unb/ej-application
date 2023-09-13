@@ -1,15 +1,23 @@
-.tag-header {
+.public-tag-header, .my-tag-header, .comments-tag-header {
     display: flex;
     place-items: baseline;
     margin-top: 1.313rem;
     flex-flow: wrap;
   
-    #tag-choice {
+    #public-tag-choice {
       width: auto;
       border-radius: 5px;
       height: 2.25rem;
       min-width: 13rem;
       margin: 0 .438rem 0 0;
+    }
+
+    #my-tag-choice, #my-all-tags, .my-tag-header--add {
+      display: none;
+    }
+
+    .public-tag-header--add--not-allowed {
+      cursor: not-allowed;
     }
       
     &--add {
@@ -20,7 +28,9 @@
       border-radius: 5px;
       width: 2.25rem;
       height: 2.25rem;
-      display: flex; 
+      display: flex;
+      margin: 0 1.5rem 0 0;
+
       i {
         margin: auto 0.6em;
       } 
@@ -53,27 +63,33 @@
       }
     }
   
-    &__all-conversations--unselected {
+    &__all-conversations--unselected, &__all--unselected {
       border: 1px solid $color-pink-light;
       background-color: $color-white;
       color: $color-pink-light;
     }
   
-    &__all-conversations--selected {
+    &__all-conversations--selected,  &__all--selected  {
       border: 1px solid $color-pink-light;
       background-color: $color-pink-light;
       color: $color-white;
       
     }
   
-    &__all-conversations--unselected, &__all-conversations--selected {
+    &__all-conversations--unselected, &__all-conversations--selected,
+    &__all--unselected,  &__all--selected  {
       border-radius: 5px;
       text-transform: lowercase;
       font-size: 1rem;
       font-weight: 700; 
-      margin: 0 0 0 1.5rem;
       padding: 0 .75rem;
       margin-right: 1.25rem;
+    }
+
+
+    .my-tag-header__all-conversations--unselected, 
+    .my-tag-header__all-conversations--selected {
+      margin-left: 0;
     }
   
     &__tooltip {
@@ -102,9 +118,121 @@
     }
 }
 
+.comments-tag-header {
+  margin-top: 1.5rem;
+  height: 2.25rem;
+  margin-bottom: 1.5rem;
+
+  &--no-margin {
+    margin-left: 0;
+  }
+
+  #comments-status-buttons {
+    display: contents;
+  }
+}
+
+.home-header {
+  &--add {
+    color: $color-theme-report-light-blue !important;
+    font-size: 1rem;
+  }
+}
+
+.my_conversations, .contributions_comments, .contribution_votes {
+  margin-bottom: 2.5rem;
+
+  &__message {
+    margin: 1.75rem;
+    color: $color-theme-report-dark-gray;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-left: 0;
+  }
+}
+
+#current-votes {
+  hr {
+    margin-top: 2.281rem;
+  }
+}
+
+#comments-current-cards {
+  display: grid; 
+  grid-template-columns: repeat(2, 50%); 
+  grid-column-gap: 1.625rem; 
+  grid-row-gap: 1.5rem; 
+  color: $color-theme-dark-blue; 
+  font-weight: 500;
+}
+
+.contribution_votes {
+  &__card {
+    display: grid; 
+    grid-template-columns: auto auto; 
+    grid-column-gap: 1.938rem; 
+    grid-row-gap: 2.25rem;
+  }
+}
+
+.conversation-summary {
+  display: flex; 
+  margin-bottom: .938rem;
+
+  &__title {
+    color: $color-theme-dark-blue;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal; 
+}
+
+  .span-icon {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 24px;
+      margin-left: -5px;
+      color: $color-theme-report-light-blue;
+  }
+}
+
+.comment-summary {
+  padding: 1.125rem 1.188rem;
+  border-radius: 5px;
+  background: $color-theme-report-light-gray;
+
+  &__status {
+    color: $color-pink-light;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  &__info {
+    color: $color-theme-report-dark-gray;
+    font-family: Lexend Exa;
+    font-size: .75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    display: inline-block;
+  }
+
+  &__title {
+    margin: 1.25rem 0;
+    display: block;
+  }
+}
+
 .home-tabs {
   display: flex;
   border-bottom: 1px solid #bababa;
+  overflow: scroll hidden;
+
   &__add {
     display: flex; 
     align-items: center; 
@@ -131,15 +259,60 @@
   }
 }
 
-@media only screen and (max-width: 760px) {
-  .tag-header {
+@media only screen and (max-width: 320px) {
+  .public-tag-header, .my-tag-header, .comments-tag-header {
     button {
       margin-top: .75rem;
     }
 
-    .tag-header__all-conversations--unselected, 
-    .tag-header__all-conversations--selected {
+    &__all-conversations--unselected, &__all-conversations--selected,
+    &__all--unselected,  &__all--selected  {
+      margin-left: auto;
+    }
+  }
+
+  .comments-tag-header {
+    margin-bottom: 5.5rem;
+
+    #all-comments-button {
       margin-left: 0;
+    }
+  }
+
+  .contribution_votes {
+    &__card {
+      grid-template-columns: none;
+    }
+  }
+  #comments-current-cards {
+    grid-template-columns: none;
+  }
+}
+
+
+@media (max-width: 875px) and (min-width: 321px) {
+  #comments-current-cards {
+    grid-template-columns: none;
+  }
+
+  .contribution_votes {
+    &__card {
+      grid-template-columns: none;
+    }
+  }
+
+  .public-tag-header, .my-tag-header, .comments-tag-header {
+    button {
+      margin-top: .75rem;
+    }
+
+    .public-tag-header__all-conversations--unselected, 
+    .public-tag-header__all-conversations--selected,
+    .my-tag-header__all-conversations--unselected, 
+    .my-tag-header__all-conversations--selected,
+    .comments-tag-header__all--unselected,
+    .comments-tag-header__all--selected {
+      margin-left: initial;
     }
 
     &__tooltip {
@@ -151,5 +324,15 @@
         left: 1rem;
       }
     }
+  }
+
+  .home-tabs {
+    &__add {
+      padding-bottom: 0;
+    }
+  }
+
+  .comments-tag-header {
+    margin-bottom: 5.5rem;
   }
 }

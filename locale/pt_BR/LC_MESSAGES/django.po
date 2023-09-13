@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-05 20:06-0300\n"
+"POT-Creation-Date: 2023-09-12 16:25-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -57,23 +57,23 @@ msgstr "Este template não define variáveis extras"
 msgid "List of roles"
 msgstr "Lista de papéis"
 
-#: src/ej/roles/tags.py:15
+#: src/ej/roles/tags.py:16
 msgid "hello"
 msgstr "olá"
 
-#: src/ej/roles/tags.py:108
+#: src/ej/roles/tags.py:109
 msgid "Go!"
 msgstr "Quero ir!"
 
-#: src/ej/roles/tags.py:196
+#: src/ej/roles/tags.py:197
 #, python-brace-format
 msgid "Your progress: {pc} percent"
 msgstr "Seu progresso: {pc} por cento"
 
-#: src/ej/roles/tags.py:201
-#, python-brace-format
-msgid "Your progress: {n} of {total}"
-msgstr "Seu progresso: {n} de {total}"
+#: src/ej/roles/tags.py:204
+#, fuzzy, python-brace-format
+msgid "Your progress: {n} of {total} {text}"
+msgstr "Seu progresso: {n} de {total} {text}"
 
 #: src/ej/routes.py:116
 msgid "User Guides"
@@ -269,8 +269,7 @@ msgstr ""
 "Especifique um histórico ou dê dicas sobre o perfil que essa persona deseja "
 "capturar. Esta informação é opcional e não é pública."
 
-#: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:99 src/ej_dataviz/roles.py:143
+#: src/ej_clusters/models/stereotype_vote.py:20 src/ej_dataviz/roles.py:143
 #: src/ej_dataviz/roles.py:144
 msgid "Comment"
 msgstr "Comentar"
@@ -657,11 +656,20 @@ msgstr "{n} aguardando moderação"
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/serializers.py:100
+#: src/ej_conversations/roles/conversations.py:159
+#, fuzzy
+msgid " comments"
+msgstr " comentários"
+
+#: src/ej_conversations/roles/conversations.py:161
+msgid " of "
+msgstr " de "
+
+#: src/ej_conversations/serializers.py:102
 msgid "Participate"
 msgstr "Participar"
 
-#: src/ej_conversations/tests/test_api.py:156
+#: src/ej_conversations/tests/test_api.py:201
 msgid "Authentication credentials were not provided."
 msgstr ""
 
@@ -2378,6 +2386,16 @@ msgstr ""
 msgid "See Conversation"
 msgstr "Ver Conversa"
 
+#: src/ej_conversations/jinja2/ej/role/comment-summary.jinja2:7
+#, fuzzy
+msgid "Created at:"
+msgstr "Criado em"
+
+#: src/ej_conversations/jinja2/ej/role/comment-summary.jinja2:11
+#, fuzzy
+msgid "Conversation:"
+msgstr "Conversa: "
+
 #: src/ej_conversations/jinja2/ej/role/conversation-balloon.jinja2:2
 msgid "Conversation topic"
 msgstr "Tópico de conversa"
@@ -2591,7 +2609,7 @@ msgid "Request upgrade."
 msgstr "Solicite upgrade."
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:19
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:14
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -2607,7 +2625,7 @@ msgstr "Gerenciar!"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:25
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:27
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:23
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
 msgid "Comments"
@@ -3017,6 +3035,7 @@ msgid "rejected comments"
 msgstr "rejeitados"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:17
+#: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
 msgid "pending"
 msgstr "esperando"
 
@@ -3156,22 +3175,18 @@ msgid "Favorites"
 msgstr "Favoritos"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:12
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:49
 msgid "List of conversations you participated at least once."
 msgstr "Lista de conversas que você participou pelo menos uma vez."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:19
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:54
 msgid "Keep track of your comments here."
 msgstr "Acompanhe os seus comentários aqui."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:20
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:55
 msgid "Approved comments"
 msgstr "Comentários aprovados"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:22
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:57
 msgid "Pending moderation"
 msgstr "Aguardando moderação"
 
@@ -3217,35 +3232,68 @@ msgstr "Editar perfil"
 msgid "Manage accounts"
 msgstr "Gerenciar conta"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:21
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
 #, fuzzy
 msgid "Create new"
 msgstr "Criar nova"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:24
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:20
 #, fuzzy
 msgid "Public Conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:21
 #, fuzzy
 msgid "My conversations"
 msgstr "Minhas Conversas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:43
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:40
+#, fuzzy
+msgid "You have not created any conversations."
+msgstr "Você ainda não criou nenhuma conversa."
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:46
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:66
+#, fuzzy
+msgid "You haven't voted in any conversations yet."
+msgstr "Você ainda não votou em nenhuma conversa!"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
+#, fuzzy
+msgid ""
+"List of conversations you participated at least once. To resume voting, "
+"click on the title."
+msgstr ""
+"Lista de conversas que você participou pelo menos uma vez. Para retomar à "
+"votação, clique no título."
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:83
+#, fuzzy
+msgid "You haven't commented in any conversations yet."
+msgstr "Você ainda não comentou em nenhuma conversa!"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:86
+#, fuzzy
+msgid ""
+"Comments you've submitted for approval in third-party conversations, in "
+"descending date order"
+msgstr ""
+"Comentários que você submeteu para aprovação em conversas de terceiros, em "
+"ordem decrescente de data"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:3
 #, fuzzy
 msgid "Find a theme"
 msgstr "Encontre um tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:14
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:19
 msgid "All"
 msgstr "Todas"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:24
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:30
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
@@ -4148,6 +4196,10 @@ msgstr "Ao clicar, você concorda com nossa política de privacidade."
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#, fuzzy
+#~ msgid "You still don't have any favorite boards"
+#~ msgstr "Você não tem nenhuma conversa favorita ainda"
 
 #, fuzzy
 #~ msgid "See some recommendations"

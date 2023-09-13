@@ -128,6 +128,7 @@ def conversation_summary(conversation, request=None):
         "text": conversation.text,
         "tag": conversation.first_tag or _("Conversation"),
         "created": conversation.created,
+        "url": conversation.get_absolute_url(),
     }
 
 
@@ -140,6 +141,24 @@ def conversation_user_progress(conversation, request=None, user=None, **kwargs):
     user = user or request.user
     total = conversation.n_approved_comments
     n = 0
+    if not user.is_anonymous:
+        conversation.for_user = user
+        n = conversation.n_user_final_votes
+    return progress_bar(min(n, total), total, **kwargs)
+
+
+@html.register(models.Conversation, role="user-home-progress")
+def conversation_user_home_progress(conversation, request=None, user=None, **kwargs):
+    """
+    Render comment form for one conversation.
+    """
+
+    user = user or request.user
+    total = conversation.n_approved_comments
+    n = 0
+    kwargs["text"] = str(_(" comments"))
+    kwargs["class_name"] = "progress-bar--simple"
+    kwargs["extended_text"] = _(" of ")
     if not user.is_anonymous:
         conversation.for_user = user
         n = conversation.n_user_final_votes

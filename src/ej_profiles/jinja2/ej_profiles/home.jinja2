@@ -1,7 +1,6 @@
 {% extends 'base.jinja2' %}
 {% set main_class = "board-container" %}
-{% from "ej_profiles/contributions.jinja2" import render_conversations, render_comments with context %}
-
+{% from "ej_profiles/includes/search-filter.jinja2" import search_filter %}
 {% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
 
 {% block content %}
@@ -25,36 +24,73 @@
 </div>  
         
 <div id="public-conversations"> 
-    {% include 'ej_profiles/includes/search-filter.jinja2' %}
+    {{ search_filter(all_tags, participated_tags, "public", has_filtered_tag, host, "is_promoted") }}
 
-    <div class="alternate-cards" id="current-cards">
+    <div class="alternate-cards" id="public-current-cards">
         {% for conversation in public_conversations %}
             <div class="margin-y3">{{ conversation|role('card', button_text=_("Participate")) }}</div>
         {% endfor %}
     </div>
 </div>
 
-<div id="my-conversations">
-    <div class="alternate-cards" id="current-cards">
+<div id="my-conversations" class="my_conversations">
+    {% if created_conversations %}
+        {{ search_filter(my_tags, my_tags, "my", has_filtered_tag, host, "is_author") }}
+    {% else %}
+        <p class="my_conversations__message">{{_("You have not created any conversations.")}}</p>
+    {% endif %}
+    <div class="alternate-cards" id="my-current-cards">
+    
         {% for conversation in created_conversations %}
-            <div class="margin-y3">{{ conversation|role('card', button_text=_("Gerenciar!"), url=url('boards:dataviz-dashboard',  **conversation.get_url_kwargs())) }}</div>
+            <div class="margin-y3">
+                {{ conversation|role('card', button_text=_("Gerenciar!"), url=url('boards:dataviz-dashboard',  **conversation.get_url_kwargs())) }}
+            </div>
         {% endfor %}
     </div>
 </div>
 
-<div id="contribution-votes" class="pad-x3p pad-y4 width-full">
-    <p class="center">{% trans %}List of conversations you participated at least once.{% endtrans %}</p>
-    {{ render_conversations(voted_conversations) }}
+<div id="contribution-votes" class="contribution_votes">
+    {% if voted_conversations %}
+        <p class="contribution_votes__message">
+            {{_("List of conversations you participated at least once. To resume voting, click on the title.")}}
+        </p>
+    {% endif %}
+    <div class="contribution_votes__card">
+        {{ render_conversations(voted_conversations) }}
+    </div>
 </div>
 
-<div id="contribution-comments" class="pad-x3p pad-y4 width-full">
-    <p class="center">{% trans %}Keep track of your comments here.{% endtrans %}</p>
-    <h1 class="h3 center text-accent">{% trans %}Approved comments{% endtrans %}</h1>
-    {{ render_comments(approved_comments) }}
-    <h1 class="h3 center text-accent">{% trans %}Pending moderation{% endtrans %}</h1>
-    {{ render_comments(pending_comments) }}
-    <h1 class="h3 center text-accent">{% trans %}Rejected{% endtrans %}</h1>
-    {{ render_comments(rejected_comments) }}
+<div id="contribution-comments" class="contributions_comments">
+    {{ render_comments(comments) }}
 </div>
 
 {% endblock %}
+
+{% macro render_conversations(conversations) %}
+    {% if not conversations %}
+        <p class="contribution_votes__message">{{_("You haven't voted in any conversations yet.")}}</p>
+    {% endif %}
+    {% for conversation in conversations %}
+        <div id="current-votes">
+            {{ conversation|role('summary') }}
+            {{ conversation|role('user-home-progress', user=user) }}
+            <hr>
+        </div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro render_comments(comments) %}
+    {% if not comments %}
+        <p class="contribution_votes__message">{{_("You haven't commented in any conversations yet.")}}</p>
+    {% else %}
+        <p class="contributions_comments__message">
+            {{_("Comments you've submitted for approval in third-party conversations, in descending date order")}}
+        </p>
+        {% include 'ej_profiles/includes/comments-tags-filter.jinja2' %}
+        <div id="comments-current-cards">
+            {% for comment in comments %}
+                {{ comment|role('summary') }}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}

@@ -1,3 +1,4 @@
+from ej_profiles.views import HomeView
 import pytest
 import random as rd
 import string as s
@@ -7,10 +8,11 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client
-
+from django.test import Client, RequestFactory
+from django.db.utils import NotSupportedError
 from ej.testing.fixture_class import EjRecipes
 from ej_conversations.mommy_recipes import ConversationRecipes
+from ej_conversations.models import Conversation
 from ej.testing import UrlTester
 from ej_profiles import enums
 from ej_users.models import User
@@ -34,6 +36,23 @@ def logged_client(db):
     client = Client()
     client.force_login(user)
     return client
+
+
+@pytest.fixture
+def test_user(db):
+    return User.objects.create_user("test_user@email.br", "password")
+
+
+@pytest.fixture
+def test_user_board(test_user):
+    return User.create_user_default_board(test_user)
+
+
+@pytest.fixture
+def promoted_conversation(test_user, test_user_board):
+    return Conversation.objects.create(
+        title="promoted", author=test_user, is_promoted=True, board=test_user_board
+    )
 
 
 class TestEditProfile:
@@ -100,26 +119,35 @@ class TestEditProfile:
 
 
 class TestTour:
-    def test_redirect_if_tour_is_incomplete(self, db):
-        user = User.objects.create_user("test_user@email.br", "password")
-
+    def test_redirect_if_tour_is_incomplete(self, test_user):
         url = "/profile/home/"
         client = Client()
-        client.force_login(user)
+        client.force_login(test_user)
 
         response = client.get(url)
 
         assert response.status_code == 302
         assert response.url == "/profile/tour/"
 
-    def test_redirect_after_tour_completion(self, db):
-        user = User.objects.create_user("test_user@email.br", "password")
-
+    def test_redirect_after_tour_completion(self, test_user):
         url = "/profile/tour/"
         client = Client()
-        client.force_login(user)
+        client.force_login(test_user)
 
         response = client.post(url)
 
         assert response.status_code == 302
         assert response.url == "/profile/home/"
+
+
+class TestHome:
+    def test_home_not_compatible_with_test_db(self, test_user, promoted_conversation):
+        profile = test_user.get_profile()
+        profile.completed_tour = True
+        profile.save()
+        factory = RequestFactory()
+        request = factory.get("/profile/home")
+        request.user = test_user
+        with pytest.raises(NotSupportedError):
+            # DISTINCT not supported by test db sqlite
+            HomeView.as_view()(request)

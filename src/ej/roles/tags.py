@@ -4,6 +4,7 @@ from typing import Mapping
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
 from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext as _
 from hyperpython import a, h1, p, div, components, strong, dl, dt, dd
 from hyperpython import h, html
 from hyperpython.components import html_table, html_list, html_map, a_or_span
@@ -194,11 +195,13 @@ def progress_bar(*args, **kwargs):
         pc = args[0]
         n = total = None
         aria_msg = _("Your progress: {pc} percent").format(pc=pc)
+        text = ""
     else:
         e = 1e-50
         n, total = args
         pc = round(100 * (n + e) / (total + e))
-        aria_msg = _("Your progress: {n} of {total}").format(n=n, total=total)
+        text = kwargs.pop("text", "")
+        aria_msg = _("Your progress: {n} of {total} {text}").format(n=n, total=total, text=text)
 
     # Build children
     children = [
@@ -212,11 +215,18 @@ def progress_bar(*args, **kwargs):
         ),
     ]
 
+    extended_text = kwargs.pop("extended_text", "/")
     if total is not None:
-        children.append(div([strong(n), "/", total], aria_hidden="true"))
+        children.append(
+            div([strong(n), extended_text, total, text], aria_hidden="true").add_class("progress-bar__text")
+        )
 
     # Return
-    return div(children, aria_label=aria_msg, role="img", **kwargs).add_class("progress-bar", first=True)
+    class_name = kwargs.pop("class_name", "")
+    progress_div = div(children, aria_label=aria_msg, role="img", **kwargs).add_class(
+        "progress-bar", first=True
+    )
+    return progress_div.add_class(class_name)
 
 
 def popup(title, content, action=None, **kwargs):
