@@ -9,6 +9,7 @@ from ej_conversations import create_conversation, views
 from ej_conversations.models import Comment, FavoriteConversation, Conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
+from ej_conversations.roles.comments import comment_summary
 from ej_users.models import User
 from ..enums import Choice
 

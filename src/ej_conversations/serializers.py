@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from django.utils.translation import gettext_lazy as _
+
 from ej_conversations.roles.conversations import conversation_card
+from ej_conversations.roles.comments import comment_summary
 from ej_conversations.decorators import conversation_can_receive_channel_vote
 from ej_tools.models import ConversationMautic, MauticClient
 from ej_users.models import SignatureFactory
@@ -126,6 +128,17 @@ class CommentSerializer(BaseApiSerializer):
             return comment
         except Exception:
             raise PermissionError("could not create comment")
+
+
+class CommentSummarySerializer(BaseApiSerializer):
+    summary = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ["summary"]
+
+    def get_summary(self, obj):
+        return comment_summary(obj)
 
 
 class VoteSerializer(BaseApiSerializer):

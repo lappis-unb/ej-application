@@ -1,0 +1,116 @@
+<div class="comments-tag-header">
+    <button id="all-comments-button" 
+        class="comments-tag-header--no-margin comments-tag-header__all--selected" 
+        onclick="changeStateAllUserComments()" 
+        data-selected="true">
+        Todos
+    </button>
+
+    <div id="comments-status-buttons">
+        <button class="comments-tag-header__tags--unselected" onclick="changeStateCommentTag(this, 'is_approved')" data-selected="false">
+            {{ _('approved') }}
+        </button>
+
+        <button class="comments-tag-header__tags--unselected" onclick="changeStateCommentTag(this, 'is_rejected')" data-selected="false">
+            {{ _('rejected') }}
+        </button>
+
+        <button class="comments-tag-header__tags--unselected" onclick="changeStateCommentTag(this, 'is_pending')" data-selected="false">
+            {{ _('pending') }}
+        </button>
+    </div>
+</div>
+
+<script>
+
+    let selectedTags = [];
+    const allTags = ['is_approved', 'is_pending', 'is_rejected'];
+
+    function changeStateAllUserComments(){
+        allCommentsButton = document.getElementById("all-comments-button");
+        const isSelected = JSON.parse(allCommentsButton.dataset.selected);
+        if (isSelected){
+            replaceClass(allCommentsButton, "comments-tag-header__all--selected", "comments-tag-header__all--unselected");
+            getAllUserComments();
+        } 
+        else {
+            tags = document.getElementById("comments-status-buttons");
+            const tagButtons = tags.getElementsByTagName("button");
+            for(let tagButton of tagButtons){
+                replaceClass(tagButton, "comments-tag-header__tags--selected", "comments-tag-header__tags--unselected");
+                tagButton.dataset.selected = false;
+            }
+
+            selectedTags = [];
+            getAllUserComments();
+
+            replaceClass(allCommentsButton, "comments-tag-header__all--unselected", "comments-tag-header__all--selected");
+        }
+
+        allCommentsButton.dataset.selected = !isSelected;
+
+    }
+
+    function changeStateCommentTag(currentTag, tagName){
+        const isSelected = JSON.parse(currentTag.dataset.selected);
+
+        if (isSelected){
+            selectedTags = selectedTags.filter((value)=>{
+                return value != tagName;
+            });
+            replaceClass(currentTag, "comments-tag-header__tags--selected", "comments-tag-header__tags--unselected");
+        }
+        else {
+            allConversationsButton = document.getElementById("all-comments-button");
+            const isAllSelected = JSON.parse(allConversationsButton.dataset.selected);
+            if(isAllSelected){
+                replaceClass(allConversationsButton, "comments-tag-header__all--selected", "comments-tag-header__all--unselected");
+                allConversationsButton.dataset.selected = false;
+            }
+            selectedTags.push(tagName);
+            replaceClass(currentTag, "comments-tag-header__tags--unselected", "comments-tag-header__tags--selected");
+        }
+        currentTag.dataset.selected = !isSelected;
+        getCommentsByStatus();
+    }
+
+    function getCommentsByStatus(){
+        data = {is_author: true}
+        for (index in selectedTags) {
+            data[selectedTags[index]] = true
+        }
+
+        $.ajax({
+            url: "{{ host }}/api/v1/comments",
+            data: data,
+            success: (retrievedComments) => {
+                updateComments(retrievedComments)
+            }
+        });
+    }
+
+    function getAllUserComments(){
+        $.ajax({
+            url: "{{ host }}/api/v1/comments",
+            data: { is_author: true },
+            success: (retrievedComments) => {
+                updateComments(retrievedComments)
+            }
+        });
+    }
+
+    function updateComments(comments){
+        let fullHtml = ""
+        for (index in comments) {
+            fullHtml += "<div>" + comments[index].summary + "</div>"
+        }
+        const parsedHtml = new DOMParser().parseFromString(fullHtml, "text/html");
+        document.getElementById("comments-current-cards").innerHTML = fullHtml;
+    }
+
+    function replaceClass(element, oldClass, newClass){
+        element.classList.remove(oldClass);
+        element.classList.add(newClass);
+    }
+
+</script>

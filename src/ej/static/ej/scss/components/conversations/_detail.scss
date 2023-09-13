@@ -227,4 +227,28 @@ $component-border-radius: size(config('ej.style.border-radius'));
         height: 0.5rem;
         width: 100%;
     }
+
+    &--simple {
+        margin: 0;
+        text-transform: uppercase;
+        color: $color-pink-light;
+        font-size: .75rem;
+        font-family: Lexend Exa;
+        font-weight: 500;
+        line-height: 20px;
+        max-width: fit-content;
+
+        strong {font-weight:normal;}
+
+        .progress-bar__progress {
+            border: 1px solid $color-pink-light;
+            border-radius: 12px;
+            width: 6.188rem;
+            margin-left: 0;
+            margin-right: .75rem;
+            :first-child{
+                background-color: $color-pink-light !important;
+            }
+        }
+    }
 }

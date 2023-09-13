@@ -1,4 +1,14 @@
 <div class="comment-summary">
-    {% include 'ej/role/conversation-summary.jinja2' %}
-    {% include 'ej/role/voting-stats.jinja2' %}
+    <div class="summary">
+        <div class="comment-summary__status">
+            {{ span_icon(status, status_icon) }}
+        </div>
+        <a class="comment-summary__title" href="{{ comment_url }}">{{ text }}</a>
+        <span class="comment-summary__info">{{_("Created at:")}} 
+            {{ created|role('simple') }}
+        </span><br>
+        <span class="comment-summary__info">
+            {{_("Conversation:" )}} {{ conversation }}
+        </span>
+    </div>
 </div>

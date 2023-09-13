@@ -20,6 +20,7 @@ from ej_conversations.serializers import (
     PartialConversationSerializer,
     ParticipantConversationSerializer,
     VoteSerializer,
+    CommentSummarySerializer,
 )
 from ej_conversations.models.vote import Vote
 from ej_dataviz.utils import votes_as_dataframe
@@ -31,12 +32,35 @@ class CommentViewSet(RestAPIBaseViewSet):
     permission_classes = [IsAuthenticated]
 
     def list(self, request):
-        if request.user.is_superuser:
+        is_author = self.request.query_params.get("is_author", None)
+        if request.user.is_superuser and not is_author:
             queryset = Comment.objects.all()
         else:
             queryset = Comment.objects.filter(author=request.user)
-        serializer = self.get_serializer(queryset, many=True)
+
+        if not is_author:
+            serializer = self.get_serializer(queryset, many=True)
+        else:
+            serializer = self.filter_comment_by_status(queryset)
         return Response(serializer.data)
+
+    def filter_comment_by_status(self, queryset):
+        is_approved = self.request.query_params.get("is_approved", None)
+        is_rejected = self.request.query_params.get("is_rejected", None)
+        is_pending = self.request.query_params.get("is_pending", None)
+        status = []
+
+        if is_approved:
+            status.append(Comment.STATUS.approved)
+        if is_rejected:
+            status.append(Comment.STATUS.rejected)
+        if is_pending:
+            status.append("pending")
+
+        if status:
+            queryset = queryset.filter(status__in=status)
+        serializer = CommentSummarySerializer(queryset, many=True, context={"request": request})
+        return serializer
 
 
 class VoteViewSet(RestAPIBaseViewSet):
@@ -73,13 +97,17 @@ class ConversationViewSet(RestAPIBaseViewSet):
         queryset = Conversation.objects.all()
         is_promoted_queryset = queryset.filter(is_promoted=True)
         is_promoted = self.request.query_params.get("is_promoted", None)
+        is_author = self.request.query_params.get("is_author", None)
+        tags = request.GET.getlist("tags")
+
+        if is_author:
+            return Response(self.filter_conversation_by_current_user(request, queryset, tags))
+
+        if tags:
+            return Response(self.filter_conversation_by_tag(request, is_promoted_queryset, tags))
 
         if is_promoted:
             return Response(self.get_promoted_conversations(request, is_promoted_queryset))
-
-        tags = request.GET.getlist("tags")
-        if tags:
-            return Response(self.filter_conversation_by_tag(request, is_promoted_queryset, tags))
 
         if not request.user.is_superuser:
             queryset = is_promoted_queryset
@@ -168,6 +196,14 @@ class ConversationViewSet(RestAPIBaseViewSet):
         serializer = ParticipantConversationSerializer(
             is_promoted_queryset, many=True, context={"request": request}
         )
+        return serializer.data
+
+    def filter_conversation_by_current_user(self, request, queryset, tags):
+        queryset = queryset.filter(author=request.user)
+        if tags:
+            queryset = queryset.filter(tags__name__in=tags).distinct()
+
+        serializer = ParticipantConversationSerializer(queryset, many=True, context={"request": request})
         return serializer.data
 
 
