@@ -1,5 +1,7 @@
 import pytest
 from django.utils.translation import gettext_lazy as _
+from django.test import Client
+from django.urls import reverse
 from boogie.testing.pytest import UrlTester
 from ej_clusters.enums import ClusterStatus
 from ej_clusters.models.cluster import Cluster
@@ -10,11 +12,8 @@ from ej_clusters.models.clusterization import Clusterization
 from ej_conversations.enums import Choice
 from ej_conversations.models.comment import Comment
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_clusters.views import (
-    stereotype_votes,
-    stereotype_votes_create,
-)
-from ej_clusters.stereotypes_utils import extract_choice_id, order_stereotype_votes_by
+
+from ej_clusters.stereotypes_utils import order_stereotype_votes_by
 
 
 class TestRoutes(ConversationRecipes, UrlTester):
@@ -41,18 +40,42 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         return conversation
 
     def test_get_stereotype_vote_page_without_stereotypes(self, conversation_with_board, user_db, rf):
-        request = rf.get("", {})
-        request.user = user_db
         Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
 
-        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
+        client = Client()
+        client.force_login(user_db)
+
+        path = reverse(
+            "boards:cluster-stereotype_votes",
+            kwargs={
+                "board_slug": conversation_with_board.board.slug,
+                "conversation_id": conversation_with_board.id,
+                "slug": conversation_with_board.slug,
+            },
+        )
+        response = client.get(path)
+
+        assert response.status_code == 200
+
+    def test_get_stereotypes_of_conversation_without_clusters(self, conversation_with_board, user_db, rf):
+        client = Client()
+        client.force_login(user_db)
+
+        path = reverse(
+            "boards:cluster-stereotype_votes",
+            kwargs={
+                "board_slug": conversation_with_board.board.slug,
+                "conversation_id": conversation_with_board.id,
+                "slug": conversation_with_board.slug,
+            },
+        )
+        response = client.get(path)
+
         assert response.status_code == 200
 
     def test_get_stereotype_vote_page_with_one_stereotype(self, conversation_with_board, user_db, rf):
-        request = rf.get("", {})
-        request.user = user_db
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
@@ -60,7 +83,19 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=user_db)
         cluster.stereotypes.add(stereotype)
 
-        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
+        client = Client()
+        client.force_login(user_db)
+
+        path = reverse(
+            "boards:cluster-stereotype_votes",
+            kwargs={
+                "board_slug": conversation_with_board.board.slug,
+                "conversation_id": conversation_with_board.id,
+                "slug": conversation_with_board.slug,
+            },
+        )
+        response = client.get(path)
+
         assert response.status_code == 200
 
     def test_get_stereotype_vote_page_with_stereotypes_selected(self, conversation_with_board, user_db, rf):
@@ -73,10 +108,20 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         second_stereotype, _ = Stereotype.objects.get_or_create(name="second stereotype", owner=user_db)
         cluster.stereotypes.add(stereotype)
         cluster.stereotypes.add(second_stereotype)
-        request = rf.get("", {"stereotype-select": second_stereotype.id})
-        request.user = user_db
 
-        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
+        client = Client()
+        client.force_login(user_db)
+
+        path = reverse(
+            "boards:cluster-stereotype_votes",
+            kwargs={
+                "board_slug": conversation_with_board.board.slug,
+                "conversation_id": conversation_with_board.id,
+                "slug": conversation_with_board.slug,
+            },
+        )
+        response = client.get(path, {"stereotype-select": second_stereotype.id})
+
         assert response.status_code == 200
 
     def test_post_update_stereotype_vote_page_with_stereotypes(
@@ -96,14 +141,22 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         )
         assert stereotype_vote.choice == Choice.AGREE
 
-        request = rf.post(
-            f"{conversation_with_board.get_absolute_url()}stereotypes/",
+        client = Client()
+        client.force_login(user_db)
+
+        path = reverse(
+            "boards:cluster-stereotype_votes",
+            kwargs={
+                "board_slug": conversation_with_board.board.slug,
+                "conversation_id": conversation_with_board.id,
+                "slug": conversation_with_board.slug,
+            },
+        )
+        response = client.post(
+            path,
             {"update": f"skip-{stereotype_vote.id}", "stereotype": stereotype.id},
         )
-        request.user = user_db
-        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
-        stereotype_vote.refresh_from_db()
-        content = response.content.decode("utf-8")
+
         assert response.status_code == 200
 
     def test_post_delete_stereotype_vote_page_with_stereotypes(self, conversation_with_board, user_db, rf):
@@ -120,20 +173,29 @@ class TestStereotypeVoteRoute(ClusterRecipes):
             choice=Choice.AGREE, comment=comment, author_id=stereotype.id
         )
 
-        request = rf.post(
-            f"{conversation_with_board.get_absolute_url()}stereotypes/",
+        client = Client()
+        client.force_login(user_db)
+
+        path = reverse(
+            "boards:cluster-stereotype_votes",
+            kwargs={
+                "board_slug": conversation_with_board.board.slug,
+                "conversation_id": conversation_with_board.id,
+                "slug": conversation_with_board.slug,
+            },
+        )
+        response = client.post(
+            path,
             {"update": f"delete-{stereotype_vote.id}", "stereotype": stereotype.id},
         )
-        request.user = user_db
-        response = stereotype_votes(request, conversation_id=conversation_with_board.id)
 
         assert not StereotypeVote.objects.filter(id=stereotype_vote.id).exists()
         assert response.status_code == 200
 
-    def test_auxiliar_extract_choice_id(self):
-        response = extract_choice_id("delete-id")
-        assert response["id"] == "id"
-        assert response["choice"] == "delete"
+    def test_auxiliar_parse_choice_from_action(self):
+        response_id, response_choice = StereotypeVote.parse_choice_from_action("delete-id")
+        assert response_id == "id"
+        assert response_choice == "delete"
 
     def test_auxiliar_order_by_stereotype_vote_choice(self, conversation_with_board, user_db):
         clusterization = Clusterization.objects.create(
@@ -185,12 +247,16 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=user_db)
         cluster.stereotypes.add(stereotype)
 
-        request = rf.post(
-            f"{conversation_with_board.get_absolute_url()}stereotypes/stereotype-votes/create",
+        path = f"{conversation_with_board.get_absolute_url()}stereotypes/stereotype-votes/create"
+
+        client = Client()
+        client.force_login(user_db)
+
+        response = client.post(
+            path,
             {"comment": comment.id, "author": stereotype.id, "choice": "1"},
         )
-        request.user = user_db
-        response = stereotype_votes_create(request, conversation_id=conversation_with_board.id)
+
         assert response.content.decode() == str(
             clusterization.stereotype_votes.filter(author=stereotype).first().id
         )

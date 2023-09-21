@@ -15,7 +15,7 @@
     <div class="measure width-full">
         {% if stereotypes %}
             {% for stereotype in stereotypes %}
-                <h3 class="h4"><a href="{{ url('stereotypes:edit', kwargs={'stereotype': stereotype}) }}">
+                <h3 class="h4"><a href="{{ url('stereotypes:edit', pk=stereotype.id) }}">
                     {{ stereotype.name }} <i class="far fa-edit"></i>
                 </a></h3>
                 <dl class="description margin-x2">

@@ -1,5 +1,8 @@
+import json
 from logging import getLogger
 from django.urls import reverse
+from django.db.models import Count, F
+from django.utils.translation import gettext as __, gettext_lazy as _
 
 from boogie import models, rules
 from boogie.fields import EnumField
@@ -10,7 +13,7 @@ from .querysets import ClusterizationManager
 from .stereotype import Stereotype
 from .stereotype_vote import StereotypeVote
 from ..enums import ClusterStatus
-from ..utils import use_transaction
+from ..utils import use_transaction, cluster_shapes
 
 NOT_GIVEN = object()
 log = getLogger("ej")
@@ -87,3 +90,35 @@ class Clusterization(TimeStampedModel):
                 if self.cluster_status == ClusterStatus.PENDING_DATA:
                     self.cluster_status = ClusterStatus.ACTIVE
                 self.save()
+
+    def get_stereotypes(self):
+        return {stereotype.name: str(stereotype.id) for stereotype in self.stereotypes.all()} or None
+
+    @staticmethod
+    def get_default_shape_data():
+        return {"json_data": None, "user_group": None, "clusters": ()}
+
+    def get_shape_data(self, user) -> dict:
+        """
+        Returns a dict containing all the clusters shapes of a specific conversation,
+        the user group and the clusters of the conversation.
+        """
+        user_group = None
+
+        try:
+            clusters = (
+                self.clusters.annotate(size=Count(F("users")))
+                .annotate_attr(separated_comments=lambda c: c.separate_comments())
+                .prefetch_related("stereotypes")
+            )
+            shapes = cluster_shapes(self, clusters, user)
+            shapes_json = json.dumps({"shapes": list(shapes.values())})
+        except Exception as exc:
+            exc_name = exc.__class__.__name__
+            log.error(f"Error found during clusterization: {exc} ({exc_name})")
+            clusters = ()
+            shapes_json = {"shapes": [{"name": _("Error"), "size": 0, "intersections": [[0.0]]}]}
+        else:
+            user_group = self.clusters.filter(users=user).values_list("name", flat=True).first()
+
+        return {"json_data": shapes_json, "user_group": user_group, "clusters": clusters}

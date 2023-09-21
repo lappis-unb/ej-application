@@ -3,7 +3,8 @@
     <div class="form-cluster-description">
         <form method="post" class="width-full" id="cluster-{{ edit_cluster.id }}" name="editForm">
             {{ csrf_input }}
-            <input type="hidden" name="action" value="{{ edit_cluster.id }}">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="cluster_id" value="{{ edit_cluster.id }}">
 
             <label>{{edit_cluster.form.name.label}}</label>
             <input type="text" name="name" value="{{ edit_cluster.name }}" maxlength="64" required="" id="cluster-name">
@@ -43,7 +44,8 @@
 
 <form method="post" id="form-confirmation-modal" class="close-modal-btn" onsubmit="closeModal();">
     {{ csrf_input }}
-    <input type="hidden" name="action" value="{{ edit_cluster.id }}">
+    <input type="hidden" name="action" value="delete">
+    <input type="hidden" name="cluster_id" value="{{ edit_cluster.id }}">
     <div class="modal__overlay" id="modal-confirm-delete">
         <div class="modal__container">
             <div class="modal__title">{{_("Are you sure of this action?")}}</div>
