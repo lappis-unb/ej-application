@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-12 16:25-0300\n"
+"POT-Creation-Date: 2023-09-15 14:52-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -257,6 +257,10 @@ msgstr ""
 "{name} (conversa \"{conversation}\", {n} usuários\n"
 ")"
 
+#: src/ej_clusters/models/clusterization.py:120
+msgid "Error"
+msgstr "Erro"
+
 #: src/ej_clusters/models/stereotype.py:20
 msgid "Public identification of persona."
 msgstr "Nome público da persona."
@@ -297,13 +301,9 @@ msgstr "Grupos de opinião"
 msgid "This field is required."
 msgstr "Este campo é obrigatório."
 
-#: src/ej_clusters/views.py:47
+#: src/ej_clusters/views/clusters.py:55
 msgid "here"
 msgstr "aqui"
-
-#: src/ej_clusters/views.py:269
-msgid "Error"
-msgstr "Erro"
 
 #: src/ej_conversations/admin.py:36
 msgid "Moderation"
@@ -1993,7 +1993,7 @@ msgstr "Mostrando"
 
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "to"
 msgstr "a"
@@ -2204,18 +2204,18 @@ msgstr "para esta conversa."
 msgid "Edit group"
 msgstr "Editar grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:12
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:13
 #: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:17
 #, fuzzy
 msgid "Description of the group"
 msgstr "Descrição do grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:18
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:19
 #: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:23
 msgid "The list below only matters to personas on this wall"
 msgstr "A lista abaixo importa apenas às personas deste mural"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:23
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:24
 #: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:28
 #, fuzzy
 msgid ""
@@ -2226,13 +2226,13 @@ msgstr ""
 "usuários usados como referência que você controla e definem o perfil de "
 "opinião dos grupos."
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:28
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:29
 #: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:33
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:5
 msgid "New persona"
 msgstr "Nova persona"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:29
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:30
 #: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:34
 #, fuzzy
 msgid ""
@@ -2241,27 +2241,27 @@ msgstr ""
 "Crie uma nova persona com o nome do grupo, se nenhuma outra persona for "
 "selecionada."
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:33
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:34
 #, fuzzy
 msgid "Delete group"
 msgstr "Excluir grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:35
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:36
 #, fuzzy
 msgid "Save edits"
 msgstr "Salvar edições"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:49
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:51
 #, fuzzy
 msgid "Are you sure of this action?"
 msgstr "Você tem certeza dessa ação?"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:52
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:54
 #, fuzzy
 msgid "Yes, I want to delete the group"
 msgstr "Sim, quero excluir o grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:55
+#: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:57
 msgid "No, I want to go back"
 msgstr "Não, quero voltar"
 
@@ -2313,8 +2313,8 @@ msgid "Account"
 msgstr "Conta"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:10
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:37
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
 #, fuzzy
@@ -2326,14 +2326,14 @@ msgstr " comentários"
 msgid "neutral"
 msgstr "neutro"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:37
 #, fuzzy
 msgid "showing"
 msgstr "Mostrando"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:38
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:37
 msgid "from"
 msgstr "de"
 
@@ -3256,12 +3256,7 @@ msgstr "Você ainda não criou nenhuma conversa."
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:66
-#, fuzzy
-msgid "You haven't voted in any conversations yet."
-msgstr "Você ainda não votou em nenhuma conversa!"
-
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:55
 #, fuzzy
 msgid ""
 "List of conversations you participated at least once. To resume voting, "
@@ -3270,12 +3265,17 @@ msgstr ""
 "Lista de conversas que você participou pelo menos uma vez. Para retomar à "
 "votação, clique no título."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:83
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:71
+#, fuzzy
+msgid "You haven't voted in any conversations yet."
+msgstr "Você ainda não votou em nenhuma conversa!"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:84
 #, fuzzy
 msgid "You haven't commented in any conversations yet."
 msgstr "Você ainda não comentou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:86
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:87
 #, fuzzy
 msgid ""
 "Comments you've submitted for approval in third-party conversations, in "
