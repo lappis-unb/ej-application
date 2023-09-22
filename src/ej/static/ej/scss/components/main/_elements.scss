@@ -56,9 +56,8 @@ i.fa, i.fas, i.fab, i.far {
     justify-content: flex-start;
 
     a {
-        @extend .pad-y2;
         margin-right: 2.625rem;
-        padding-bottom: 1.125rem;
+        padding-bottom: 1.5rem;
     }
 }
 
@@ -203,8 +202,7 @@ $toast-opacity: 0.75;
 
     .tabs {
         display: block;
-        a { padding-bottom: 0;}
-
+        margin-bottom: 24px;
     }
 }
 
