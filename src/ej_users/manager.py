@@ -39,3 +39,13 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(email, password, **extra_fields)
+
+    def create_user_from_session(self, session_key, email, password, **extra_fields):
+        anonymous_user = self.get(email=f"anonymoususer-{session_key}@mail.com")
+        anonymous_votes = anonymous_user.votes.all()
+        user = self.create_user(email, password, **extra_fields)
+        for vote in anonymous_votes:
+            vote.author = user
+            vote.save()
+        anonymous_user.delete()
+        return user
