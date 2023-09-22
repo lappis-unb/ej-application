@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-15 14:52-0300\n"
+"POT-Creation-Date: 2023-09-22 12:06-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -678,7 +678,7 @@ msgstr " de "
 msgid "Participate"
 msgstr "Participar"
 
-#: src/ej_conversations/tests/test_api.py:201
+#: src/ej_conversations/tests/test_api.py:213
 msgid "Authentication credentials were not provided."
 msgstr ""
 
@@ -3299,16 +3299,21 @@ msgstr ""
 "Comentários que você submeteu para aprovação em conversas de terceiros, em "
 "ordem decrescente de data"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:3
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:4
+#, fuzzy
+msgid "Search"
+msgstr "Busca"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:10
 #, fuzzy
 msgid "Find a theme"
 msgstr "Encontre um tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:19
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:26
 msgid "All"
 msgstr "Todas"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:37
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
@@ -4211,6 +4216,10 @@ msgstr "Ao clicar, você concorda com nossa política de privacidade."
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#, fuzzy
+#~ msgid "Search for a conversation"
+#~ msgstr "Procure por uma conversa"
 
 #, fuzzy
 #~ msgid "You still don't have any favorite boards"

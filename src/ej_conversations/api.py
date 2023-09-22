@@ -1,7 +1,6 @@
 import json
 from urllib import request
 from datetime import datetime
-from ej_conversations.models.conversation import ConversationTag
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
@@ -98,16 +97,21 @@ class ConversationViewSet(RestAPIBaseViewSet):
         is_promoted_queryset = queryset.filter(is_promoted=True)
         is_promoted = self.request.query_params.get("is_promoted", None)
         is_author = self.request.query_params.get("is_author", None)
+        text_contains = self.request.query_params.get("text_contains", None)
         tags = request.GET.getlist("tags")
 
         if is_author:
-            return Response(self.filter_conversation_by_current_user(request, queryset, tags))
+            return Response(
+                self.filter_conversation_by_current_user(request, queryset, tags, text_contains)
+            )
 
         if tags:
-            return Response(self.filter_conversation_by_tag(request, is_promoted_queryset, tags))
+            return Response(
+                self.filter_conversation_by_tag(request, is_promoted_queryset, tags, text_contains)
+            )
 
         if is_promoted:
-            return Response(self.get_promoted_conversations(request, is_promoted_queryset))
+            return Response(self.get_promoted_conversations(request, is_promoted_queryset, text_contains))
 
         if not request.user.is_superuser:
             queryset = is_promoted_queryset
@@ -184,25 +188,31 @@ class ConversationViewSet(RestAPIBaseViewSet):
         serializer = CommentSerializer(comment, context={"request": request})
         return Response(serializer.data)
 
-    def filter_conversation_by_tag(self, request, is_promoted_queryset, tags):
+    def filter_conversation_by_tag(self, request, is_promoted_queryset, tags, text_contains):
         request.user.profile.filtered_home_tag = True
         request.user.profile.save()
-
         queryset = is_promoted_queryset.filter(tags__name__in=tags).distinct()
+
+        if text_contains:
+            queryset = queryset.filter(text__icontains=text_contains)
         serializer = ParticipantConversationSerializer(queryset, many=True, context={"request": request})
         return serializer.data
 
-    def get_promoted_conversations(self, request, is_promoted_queryset):
+    def get_promoted_conversations(self, request, is_promoted_queryset, text_contains):
+        if text_contains:
+            is_promoted_queryset = is_promoted_queryset.filter(text__icontains=text_contains)
         serializer = ParticipantConversationSerializer(
             is_promoted_queryset, many=True, context={"request": request}
         )
         return serializer.data
 
-    def filter_conversation_by_current_user(self, request, queryset, tags):
+    def filter_conversation_by_current_user(self, request, queryset, tags, text_contains):
         queryset = queryset.filter(author=request.user)
         if tags:
             queryset = queryset.filter(tags__name__in=tags).distinct()
 
+        if text_contains:
+            queryset = queryset.filter(text__icontains=text_contains)
         serializer = ParticipantConversationSerializer(queryset, many=True, context={"request": request})
         return serializer.data
 

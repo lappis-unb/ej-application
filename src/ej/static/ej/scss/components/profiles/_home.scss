@@ -1,7 +1,7 @@
 .public-tag-header, .my-tag-header, .comments-tag-header {
     display: flex;
     place-items: baseline;
-    margin-top: 1.313rem;
+    margin-top: 1.125rem;
     flex-flow: wrap;
   
     #public-tag-choice {
@@ -286,6 +286,38 @@
   }
   #comments-current-cards {
     grid-template-columns: none;
+  }
+}
+
+.input-container {
+  &__search {
+    border-radius: 5px !important; 
+    border: 1px solid $color-complementary-gray !important; 
+    height: 2.25rem !important;
+    box-sizing: border-box;
+    background-position: 0.5rem 0.563rem !important;
+    background-size: 1.25rem !important;
+    background-repeat: no-repeat !important; 
+    padding: 0.875rem 0px 0.75rem 1.75rem !important;
+    background: url('/static/img/icons/gray-search.svg');
+    width: auto !important;
+    min-width: 14.7rem !important;
+  }
+
+  input[type='search'] {
+    margin-top: 1.5rem;
+  }
+
+  &__warn-message {
+    color: $colot-errolist-red;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 20px;
+    grid-template-columns: none;
+    margin-top: 3.125rem;
+    margin: 3.125rem 0 0 0;
+    width: 70%;
   }
 }
 
