@@ -19,6 +19,7 @@ class TestConversationForm:
                 "text": "description",
                 "comments_count": 1,
                 "comment-1": "comment",
+                "anonymous_votes_limit": 0,
             }
         )
         assert form.is_valid()
@@ -32,6 +33,7 @@ class TestConversationForm:
                 "text": "description",
                 "comments_count": 1,
                 "comment-1": "comment",
+                "anonymous_votes_limit": 0,
             }
         )
         assert form.is_valid()
@@ -55,6 +57,7 @@ class TestConversationForm:
                     "text": "description",
                     "comments_count": 1,
                     "comment-1": "comment",
+                    "anonymous_votes_limit": 0,
                 }
             )
             form.save()

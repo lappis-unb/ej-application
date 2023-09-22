@@ -43,7 +43,7 @@ class ConversationForm(EjModelForm):
 
     class Meta:
         model = Conversation
-        fields = ["title", "text", "is_promoted"]  # "is_hidden"
+        fields = ["title", "text", "is_promoted", "anonymous_votes_limit"]
         help_texts = {
             "is_promoted": _("Place conversation in the main /conversations/ URL."),
             "is_hidden": _("Mark to make the conversation invisible."),

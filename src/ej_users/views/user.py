@@ -103,27 +103,38 @@ class RegisterView(CreateView):
                 return render(request, self.template_name, self.get_context_data(form=form))
 
             try:
-                user = User.objects.create_user(
+                user = self.create_user(
+                    request,
                     email,
                     password,
                     name=name,
                     agree_with_terms=agree_with_terms,
                     agree_with_privacy_policy=agree_with_privacy_policy,
                 )
-                self.next_url = request.GET.get("next", user.profile.default_url())
-
-                log.info(f"user {user} ({email}) successfully created")
-            except IntegrityError as ex:
-                form.add_error(None, str(ex))
-                log.info(f"invalid login attempt: {email}")
-            else:
-                user = auth.authenticate(request, email=user.email, password=password)
-                auth.login(request, user)
+                authenticated_user = auth.authenticate(request, email=user.email, password=password)
+                auth.login(request, authenticated_user)
+                self.next_url = request.GET.get("next", authenticated_user.profile.default_url())
                 response = redirect(self.next_url)
                 response.set_cookie("show_welcome_window", "true")
-
                 return response
+            except IntegrityError as ex:
+                form.add_error(None, str(ex))
+                log.info(f"invalid register attempt: {email}")
+
         return render(request, self.template_name, self.get_context_data(form=form))
+
+    def create_user(self, request, email, password, **extra_fields):
+        session_key = request.GET.get("sessionKey")
+        try:
+            if session_key:
+                user = User.objects.create_user_from_session(session_key, email, password, **extra_fields)
+            else:
+                user = User.objects.create_user(email, password, **extra_fields)
+
+            log.info(f"user {user} ({email}) successfully created")
+        except Exception as e:
+            raise IntegrityError(f"{e}: não foi possível cadastrar o usuário!")
+        return user
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         return {
