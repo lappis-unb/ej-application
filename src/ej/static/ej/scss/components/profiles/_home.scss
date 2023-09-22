@@ -225,6 +225,8 @@
   &__title {
     margin: 1.25rem 0;
     display: block;
+    font-weight: 500;
+    line-height: normal;
   }
 }
 
@@ -238,7 +240,7 @@
     align-items: center; 
     white-space: nowrap; 
     margin-right: 2.625rem;
-    padding-bottom: 0.688rem;
+    padding-bottom: 1.75rem;
 
     i {
       color: $color-theme-report-light-blue; 
@@ -265,9 +267,28 @@
       margin-top: .75rem;
     }
 
-    &__all-conversations--unselected, &__all-conversations--selected,
-    &__all--unselected,  &__all--selected  {
-      margin-left: auto;
+    #public-tag-choice {
+      width: 80%;
+      margin: 0 .438rem 0 0;
+    }
+
+    &--add {
+      margin: 0px 0.7rem 0 0;
+    }
+
+    .public-tag-header__tags--selected, 
+    .public-tag-header__tags--unselected, 
+    .my-tag-header__tags--selected, 
+    .my-tag-header__tags--unselected, 
+    .comments-tag-header__tags--selected, 
+    .comments-tag-header__tags--unselected, 
+    .public-tag-header__all-conversations--unselected, 
+    .public-tag-header__all-conversations--selected,
+    .my-tag-header__all-conversations--unselected, 
+    .my-tag-header__all-conversations--selected,
+    .comments-tag-header__all--unselected,
+    .comments-tag-header__all--selected {
+      margin-right: .75rem;
     }
   }
 
@@ -279,33 +300,34 @@
     }
   }
 
+  .comment-summary {
+    font-size: .75rem;
+  }
+
+  #comments-current-cards {
+    grid-template-columns: none;
+  }
+
   .contribution_votes {
     &__card {
       grid-template-columns: none;
     }
   }
-  #comments-current-cards {
-    grid-template-columns: none;
+
+  .home-tabs {
+    &__add {
+      padding-bottom: 1.5rem;
+    }
   }
 }
 
 
 @media (max-width: 875px) and (min-width: 321px) {
-  #comments-current-cards {
-    grid-template-columns: none;
-  }
-
-  .contribution_votes {
-    &__card {
-      grid-template-columns: none;
-    }
-  }
-
   .public-tag-header, .my-tag-header, .comments-tag-header {
     button {
       margin-top: .75rem;
     }
-
+    
     .public-tag-header__all-conversations--unselected, 
     .public-tag-header__all-conversations--selected,
     .my-tag-header__all-conversations--unselected, 
@@ -313,6 +335,16 @@
     .comments-tag-header__all--unselected,
     .comments-tag-header__all--selected {
       margin-left: initial;
+      margin-right: 0.75rem;
+    }
+
+    .public-tag-header__tags--selected, 
+    .public-tag-header__tags--unselected, 
+    .my-tag-header__tags--selected, 
+    .my-tag-header__tags--unselected, 
+    .comments-tag-header__tags--selected, 
+    .comments-tag-header__tags--unselected {
+      margin-right: .75rem;
     }
 
     &__tooltip {
@@ -328,11 +360,25 @@
 
   .home-tabs {
     &__add {
-      padding-bottom: 0;
+      padding-bottom: 1.5rem;
     }
   }
 
   .comments-tag-header {
     margin-bottom: 5.5rem;
+  }
+
+  #comments-current-cards {
+    grid-template-columns: none;
+  }
+
+  .comment-summary {
+    font-size: .75rem;
+  }
+
+  .contribution_votes {
+    &__card {
+      grid-template-columns: none;
+    }
   }
 }
