@@ -156,18 +156,30 @@ class TestGetViews:
         assert data["content"] != comment.content
 
     def test_get_promoted_conversations(self, conversation):
-        path = BASE_URL + f"/conversations/promoted/"
+        path = BASE_URL + f"/conversations/?is_promoted=true"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data
-        assert data
+        assert "card" in data[0]
+
+    def test_search_conversation(self, conversation):
+        path = BASE_URL + f"/conversations/?is_promoted=true&text_contains={conversation.text}"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert "card" in data[0]
+
+    def test_search_inexistent_conversation(self, conversation):
+        path = BASE_URL + f"/conversations/?is_promoted=true&text_contains=asdfghjkl"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert data == []
 
     def test_get_conversation_by_tags(self, conversation):
         tag = "tag"
         conversation.tags.set(tag)
-        path = BASE_URL + f"/conversations/filter/?tags={tag}"
+        path = BASE_URL + f"/conversations/?tags={tag}"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data
-        assert data
+        assert "card" in data[0]
 
     def test_get_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"
