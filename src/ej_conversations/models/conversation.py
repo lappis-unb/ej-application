@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.db.models.functions import Length
 from django.urls import reverse
+from datetime import datetime
 import re
 
 from model_utils.models import TimeStampedModel
@@ -82,10 +83,23 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         help_text=_("Configures how many anonymous votes participants can give."),
         verbose_name=_("Anonymous votes"),
     )
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through="ConversationTag", blank=True)
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+
+    def set_overdue(self):
+        """
+        checks if conversation is a available for participation.
+        """
+        if self.end_date and datetime.today().date() > self.end_date:
+            self.is_hidden, self.is_promoted = [True, False]
+        else:
+            self.is_hidden, self.is_promoted = [False, True]
+
+        self.save()
 
     @property
     def users(self):

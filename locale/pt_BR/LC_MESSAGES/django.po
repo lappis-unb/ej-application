@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 12:06-0300\n"
+"POT-Creation-Date: 2023-09-22 14:06-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -357,7 +357,7 @@ msgid "Created {n} votes"
 msgstr "{n} votos criados"
 
 #: src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:111
+#: src/ej_conversations/models/conversation.py:126
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -420,31 +420,31 @@ msgstr "Concorda"
 msgid "Disagree"
 msgstr "Discorda"
 
-#: src/ej_conversations/forms.py:19
+#: src/ej_conversations/forms.py:21
 msgid "Give your opinion here"
 msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/forms.py:20
+#: src/ej_conversations/forms.py:22
 msgid "Suggest a new comment"
 msgstr "Sugira um novo comentário"
 
-#: src/ej_conversations/forms.py:30 src/ej_conversations/tests/test_forms.py:69
+#: src/ej_conversations/forms.py:32 src/ej_conversations/tests/test_forms.py:69
 msgid "You already submitted this comment."
 msgstr "Você já enviou este comentário."
 
-#: src/ej_conversations/forms.py:42
+#: src/ej_conversations/forms.py:60
 msgid "Tags"
 msgstr "Tags"
 
-#: src/ej_conversations/forms.py:42
+#: src/ej_conversations/forms.py:60
 msgid "Tags, separated by commas."
 msgstr "Tags, separadas por vírgula."
 
-#: src/ej_conversations/forms.py:48
+#: src/ej_conversations/forms.py:66
 msgid "Place conversation in the main /conversations/ URL."
 msgstr "Conversas promovidas aparecem no mural principal."
 
-#: src/ej_conversations/forms.py:49
+#: src/ej_conversations/forms.py:67
 msgid "Mark to make the conversation invisible."
 msgstr "Selecione para fazer conversa invisível."
 
@@ -580,24 +580,24 @@ msgstr "Defina quantos votos anônimos cada participante pode dar."
 msgid "Anonymous votes"
 msgstr "Votos anônimos"
 
-#: src/ej_conversations/models/conversation.py:110
+#: src/ej_conversations/models/conversation.py:125
 #: src/ej_conversations/roles/conversations.py:129
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:113
+#: src/ej_conversations/models/conversation.py:128
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:114
+#: src/ej_conversations/models/conversation.py:129
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:211
+#: src/ej_conversations/models/conversation.py:226
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:295
+#: src/ej_conversations/models/conversation.py:310
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -682,15 +682,15 @@ msgstr "Participar"
 msgid "Authentication credentials were not provided."
 msgstr ""
 
-#: src/ej_conversations/utils.py:48
+#: src/ej_conversations/utils.py:50
 msgid "Edit"
 msgstr "Editar"
 
-#: src/ej_conversations/utils.py:51
+#: src/ej_conversations/utils.py:53
 msgid "Manage Comments"
 msgstr "Gerenciar comentários"
 
-#: src/ej_conversations/utils.py:84
+#: src/ej_conversations/utils.py:86
 #, fuzzy
 msgid ""
 "You've reached vote limit. Contact an administrator and request subscription "
@@ -699,20 +699,20 @@ msgstr ""
 "Você atingiu o limite de votos. Entre em contato com um administrador e "
 "solicite uma mudança de assinatura."
 
-#: src/ej_conversations/utils.py:103
+#: src/ej_conversations/utils.py:105
 msgid "Thanks for voting."
 msgstr "Obrigado por votar."
 
-#: src/ej_conversations/utils.py:122
+#: src/ej_conversations/utils.py:124
 msgid ""
 "Thank you! Your comment was sent to moderation and will be evaluated soon."
 msgstr "Obrigado! Seu comentário foi enviado para moderação."
 
-#: src/ej_conversations/utils.py:134
+#: src/ej_conversations/utils.py:136
 msgid "This conversation is now favorite."
 msgstr "Esta conversa é agora favorita."
 
-#: src/ej_conversations/utils.py:136
+#: src/ej_conversations/utils.py:138
 msgid "Conversation removed from favorites."
 msgstr "Conversa removida dos favoritos."
 
@@ -720,7 +720,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:113
+#: src/ej_conversations/views.py:114
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2466,45 +2466,51 @@ msgstr "Por favor, preencha os detalhes abaixo."
 msgid "Anonymous participation"
 msgstr "Participação anônima"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:27
+#, fuzzy
+msgid "Conversation duration"
+msgstr "Duração da conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:38
 msgid "Initial comments"
 msgstr "Comentários iniciais"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:35
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:40
 msgid "Add as many comments as you like (including none)."
 msgstr "Adicione quantos comentários quiser (incluindo nenhum)."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:36
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:41
 msgid ""
 "Remember to give a minimum context and something for other users to explore."
 msgstr ""
 "Lembre-se de fornecer um contexto mínimo e algo para os outros usuários "
 "explorarem."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:42
 msgid "You can add as many comments as you want later."
 msgstr "Você pode adicionar quantos comentários quiser depois."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:48
 #, python-format
 msgid "Comment %(i)s"
 msgstr "Comentário %(i)s"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:45
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:77
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:50
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:82
 msgid "Type your comment here"
 msgstr "Escreva seu comentário aqui"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:51
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:56
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:9
 msgid "Add more comments"
 msgstr "Adicionar mais comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:55
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:60
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:76
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:81
 #, python-format
 msgid "Comment %i%"
 msgstr "Comentário %i%"
@@ -2548,20 +2554,20 @@ msgstr "Voltar para conversas"
 msgid "Edit conversation"
 msgstr "Editar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:36
 msgid "Save modifications"
 msgstr "Salvar modificações"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:39
 #: src/ej_users/jinja2/ej_users/base.jinja2:17
 msgid "Other options"
 msgstr "Outras opções"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:36
+#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:42
 msgid "Save and manage stereotypes"
 msgstr "Salvar e gerenciar personas"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:45
 msgid "Save and moderate comments"
 msgstr "Salvar e moderar comentários"
 
@@ -2754,6 +2760,16 @@ msgstr "favoritar"
 #, fuzzy
 msgid "remove favorite"
 msgstr "remover favorito"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/form-date.jinja2:3
+#, fuzzy
+msgid "Start Date"
+msgstr "data de inicio"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/form-date.jinja2:7
+#, fuzzy
+msgid "End Date"
+msgstr "data de fim"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:20
 msgid "Back to conversations"
@@ -4829,12 +4845,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "Add Integration"
 #~ msgstr "Adicionar Integração"
-
-#~ msgid "Start date"
-#~ msgstr "data de inicio"
-
-#~ msgid "End date"
-#~ msgstr "data de fim"
 
 #~ msgid "Analytics view id"
 #~ msgstr "view id do analytics"

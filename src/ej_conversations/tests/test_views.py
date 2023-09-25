@@ -483,25 +483,20 @@ class TestConversationEdit(ConversationSetup):
 
         assert not response.context["form"].is_valid()
 
-    def test_edit_not_promoted_conversation(self, base_user, new_conversation):
-        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+    def test_author_can_edit_not_promoted_conversation(self, base_user, new_conversation):
+        url = f"/{new_conversation.board.slug}/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
         new_conversation.is_promoted = False
         new_conversation.save()
 
         client = Client()
         client.force_login(base_user)
 
-        with raises(Exception):
-            client.post(
-                url,
-                {
-                    "title": "bar updated",
-                    "tags": "tag",
-                    "text": "description",
-                    "comments_count": 0,
-                    "anonymous_votes_limit": 0,
-                },
-            )
+        client.post(url, {"title": "bar updated", "text": "description", "anonymous_votes_limit": 1})
+
+        conversation = Conversation.objects.get(id=new_conversation.id)
+        assert conversation.title == "bar updated"
+        assert conversation.text == "description"
+        assert conversation.anonymous_votes_limit == 1
 
     def test_get_edit_conversation(self, base_user, new_conversation):
         url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
@@ -852,5 +847,4 @@ class TestPublicConversations(ConversationRecipes):
         assert response.context["user_boards"] == []
         assert response.context["conversations_limit"] == 0
         assert promoted_conversation in response.context["conversations"]
-        assert not_promoted_conversation not in response.context["conversations"]
-        assert hiden_conversation not in response.context["conversations"]
+        assert response.context["conversations"][0].is_hidden == True

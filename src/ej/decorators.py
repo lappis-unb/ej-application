@@ -126,3 +126,13 @@ def can_view_report_details(view_func):
         return JsonResponse({"error": "You don't have permission to view this data."})
 
     return wrapper_func
+
+
+def check_conversation_overdue(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        conversation_id = kwargs.get("conversation_id")
+        conversation = Conversation.objects.get(id=conversation_id)
+        conversation.set_overdue()
+        return view_func(request, *args, **kwargs)
+
+    return wrapper_func
