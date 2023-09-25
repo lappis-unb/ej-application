@@ -34,6 +34,7 @@ from ej.decorators import (
     can_moderate_conversation,
     can_acess_list_view,
     is_superuser,
+    check_conversation_overdue,
 )
 
 from .decorators import create_session_key, user_can_post_anonymously
@@ -52,9 +53,6 @@ class ConversationView(ListView):
             queryset = board.conversations.annotate_attr(board=board)
         else:
             queryset = Conversation.objects.filter(is_promoted=True)
-
-        if not user.has_perm("ej.can_access_all_conversations"):
-            queryset = queryset.filter(is_hidden=False)
 
         return queryset.cache_annotations(*annotations, user=user).order_by("-created")
 
@@ -117,6 +115,7 @@ class PrivateConversationView(ConversationView):
         }
 
 
+@method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(DetailView):
     form_class = forms.CommentForm
     model = Conversation
@@ -161,12 +160,14 @@ class ConversationDetailView(DetailView):
     @create_session_key
     def get_context_data(self, **kwargs):
         conversation = self.get_object()
+        user = self.request.user
 
         return {
             "conversation": conversation,
             "comment": conversation.next_comment_with_id(self.request.user, None),
             "menu_links": conversation_admin_menu_links(conversation, self.request.user),
             "comment_form": self.form_class(conversation=conversation),
+            "user_is_author": conversation.author == user,
             **self.ctx,
         }
 
@@ -221,6 +222,7 @@ class ConversationEditView(UpdateView):
             # permission. This is possible since the form sees this field
             # for all users and does not check if the user is authorized to
             # change is value.
+
             new = form.save(board=board, **kwargs)
             if new.is_promoted != is_promoted:
                 new.is_promoted = is_promoted
@@ -242,7 +244,7 @@ class ConversationEditView(UpdateView):
         elif conversation.is_promoted:
             return conversation.get_absolute_url()
         else:
-            return conversation.patch_url("conversation:list")
+            return reverse("boards:conversation-list", kwargs={"board_slug": conversation.board.slug})
 
     def get_context_data(self, **kwargs: Any):
         conversation = self.get_object()

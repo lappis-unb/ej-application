@@ -1,7 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.template.loader import get_template
 from sidekick import identity
+from datetime import datetime
 
 from ej.forms import EjModelForm, EjUserForm
 from .models import Conversation, Comment
@@ -33,6 +35,22 @@ class CommentForm(EjModelForm):
         return self.cleaned_data
 
 
+class ConversationDateWidget(forms.DateInput):
+    template_name = "ej_conversations/includes/form-date.jinja2"
+    renderer = get_template(template_name)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        if value is not None:
+            value = value.strftime("%Y-%m-%d")
+
+        if name == "start_date" and value == None:
+            today = datetime.today()
+            value = today.strftime("%Y-%m-%d")
+
+        context = self.get_context(name, value, attrs)
+        return self.renderer.render(context)
+
+
 class ConversationForm(EjModelForm):
     """
     Form used to create and edit conversations.
@@ -43,11 +61,12 @@ class ConversationForm(EjModelForm):
 
     class Meta:
         model = Conversation
-        fields = ["title", "text", "is_promoted", "anonymous_votes_limit"]
+        fields = ["title", "text", "is_promoted", "anonymous_votes_limit", "start_date", "end_date"]
         help_texts = {
             "is_promoted": _("Place conversation in the main /conversations/ URL."),
             "is_hidden": _("Mark to make the conversation invisible."),
         }
+        widgets = {"start_date": ConversationDateWidget, "end_date": ConversationDateWidget}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,6 +89,7 @@ class ConversationForm(EjModelForm):
 
         if commit:
             conversation.save()
+            conversation.set_overdue()
 
             # Save tags on the database
             tags = self.cleaned_data["tags"].split(",")
