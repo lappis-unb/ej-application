@@ -3,14 +3,16 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 from rest_framework.test import force_authenticate
+
 from ej_conversations.models import Conversation, Comment, Vote
-from .examples import COMMENT, CONVERSATION, VOTE, VOTES
+from ej_conversations.roles.comments import comment_summary
 from ej_conversations.models.util import vote_count, statistics_for_user, statistics
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.enums import Choice
 from ej_conversations.models.vote import VoteChannels
 from ej_boards.models import Board
 from ej_users.models import User
+from .examples import COMMENT, CONVERSATION, VOTE, VOTES
 
 BASE_URL = "/api/v1"
 
@@ -37,7 +39,7 @@ def authenticate_user_api(user_info):
     return api
 
 
-class TestGetRoutes:
+class TestGetViews:
     def test_conversations_endpoint_author(self, conversation):
         path = BASE_URL + f"/conversations/{conversation.id}/"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
@@ -78,6 +80,49 @@ class TestGetRoutes:
         del data["created"]
         assert data == COMMENT
 
+    def test_comments_endpoint_user_is_author(self, comment):
+        path = BASE_URL + f"/comments/?is_author=true"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+
+        assert data[0]["summary"] == comment_summary(comment)
+
+    def test_comments_endpoint_is_approved(self, comment):
+        path = BASE_URL + f"/comments/?is_author=true&is_approved=true"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+
+        assert data[0]["summary"] == comment_summary(comment)
+
+    def test_comments_endpoint_is_rejected(self, comment):
+        path = BASE_URL + f"/comments/?is_author=true&is_rejected=true"
+        comment.status = "rejected"
+        comment.save()
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+
+        assert data[0]["summary"] == comment_summary(comment)
+
+    def test_comments_endpoint_is_pending(self, comment):
+        path = BASE_URL + f"/comments/?is_author=true&is_pending=true"
+        comment.status = "pending"
+        comment.save()
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+
+        assert data[0]["summary"] == comment_summary(comment)
+
+    def test_comments_endpoint_is_pending_is_approved_combination(self, comments):
+        path = BASE_URL + f"/comments/?is_author=true&is_pending=true&is_approved=true"
+        pending_comment = comments[0]
+        pending_comment.status = "pending"
+        pending_comment.save()
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+
+        assert data[0]["summary"] == comment_summary(pending_comment)
+        assert data[1]["summary"] == comment_summary(comments[1])
+
     def test_random_comments_endpoint(self, comment):
         path = BASE_URL + f"/conversations/{comment.conversation.id}/random-comment/"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
@@ -111,18 +156,30 @@ class TestGetRoutes:
         assert data["content"] != comment.content
 
     def test_get_promoted_conversations(self, conversation):
-        path = BASE_URL + f"/conversations/promoted/"
+        path = BASE_URL + f"/conversations/?is_promoted=true"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data
-        assert data
+        assert "card" in data[0]
+
+    def test_search_conversation(self, conversation):
+        path = BASE_URL + f"/conversations/?is_promoted=true&text_contains={conversation.text}"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert "card" in data[0]
+
+    def test_search_inexistent_conversation(self, conversation):
+        path = BASE_URL + f"/conversations/?is_promoted=true&text_contains=asdfghjkl"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert data == []
 
     def test_get_conversation_by_tags(self, conversation):
         tag = "tag"
         conversation.tags.set(tag)
-        path = BASE_URL + f"/conversations/filter/?tags={tag}"
+        path = BASE_URL + f"/conversations/?tags={tag}"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data
-        assert data
+        assert "card" in data[0]
 
     def test_get_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"

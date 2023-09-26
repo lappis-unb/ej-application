@@ -86,10 +86,12 @@ class HomeView(ListView):
         public_conversations = self.get_queryset()
         user_participated_tags = self.request.user.profile.participated_tags()
         public_tags = ConversationTag.objects.filter(content_object__is_promoted=True).distinct("tag")
+        my_tags = ConversationTag.objects.filter(content_object__author=self.request.user).distinct("tag")
         contributions_data = self.request.user.profile.get_contributions_data()
 
-        public_tags_str = [tag.tag.name for tag in public_tags]
-        participated_tag_str = [tag.tag.name for tag in user_participated_tags]
+        public_tags_str = [str(tag.tag) for tag in public_tags]
+        my_tags_str = [str(tag.tag) for tag in my_tags]
+        participated_tag_str = [str(tag.tag) for tag in user_participated_tags]
 
         return {
             "user_boards": Board.objects.filter(owner=self.request.user),
@@ -98,6 +100,7 @@ class HomeView(ListView):
             "all_tags": public_tags_str,
             "host": get_host_with_schema(self.request),
             "has_filtered_tag": self.request.user.profile.filtered_home_tag,
+            "my_tags": my_tags_str,
             **contributions_data,
         }
 

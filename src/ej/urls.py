@@ -65,8 +65,8 @@ def get_urlpatterns():
         path("administration/", include("ej_admin.urls", namespace="administration")),
         #
         #  Global stereotype and cluster management
-        path("conversations/", include("ej_clusters.urls", namespace="cluster")),
-        *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
+        path("conversations/", include("ej_clusters.urls.clusters", namespace="cluster")),
+        path("stereotypes/", include("ej_clusters.urls.stereotypes", namespace="stereotypes")),
         #
         #  Allauth
         path("accounts/", include("allauth.urls")),

@@ -94,14 +94,15 @@ def comment_summary(comment: Comment, **kwargs):
     """
     Show comment summary.
     """
+    status_icon = {"approved": "thumbtack", "rejected": "ban", "pending": "clock"}
+
     return {
         "created": comment.created,
-        "tag": _("Comment"),
-        "tag_link": comment.comment_url(),
+        "comment_url": comment.comment_url(),
         "text": comment.content,
-        "agree": comment.agree_count,
-        "skip": comment.skip_count,
-        "disagree": comment.disagree_count,
+        "status": Comment.STATUS[comment.status],
+        "status_icon": status_icon.get(comment.status),
+        "conversation": comment.conversation,
     }
 
 

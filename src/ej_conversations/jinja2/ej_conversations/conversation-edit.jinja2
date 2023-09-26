@@ -18,15 +18,19 @@
         <label>{{ form.title.label }}{{ form.title }}</label>
         <legend>{{ form.title.help_text }}</legend>
 
-{#        {% if can_publish %}#}
-{#            {{ form.is_promoted.errors }}#}
-{#            <label>{{ form.is_promoted }} {{ form.is_promoted.label }}</label>#}
-{#            <legend>{{ form.is_promoted.help_text }}</legend>#}
-{#        {% endif %}#}
+        <h1 class="h2 text-accent center">{{ _('Anonymous participation') }}</h1>
+        <div class="block">
+            <label for="">{{form.anonymous_votes_limit.label}}</label>
+            {{form.anonymous_votes_limit}}
+            <legend>{{form.anonymous_votes_limit.help_text}}</legend>
+        </div>
+        <h1 class="h2 text-accent center">{{ _('Conversation duration') }}</h1>
+        <div>
+            <div>{{form.start_date}}</div>
+            <div>{{form.end_date}}</div>
+        </div>
 
-{#        {{ form.is_hidden.errors }}#}
-{#        <label>{{ form.is_hidden }} {{ form.is_hidden.label }}</label>#}
-{#        <legend>{{ form.is_hidden.help_text }}</legend>#}
+
 
         <div class="margin-xauto margin-y3 center">
             <input class="is-primary" type="submit" value="{{ _('Save modifications') }}">

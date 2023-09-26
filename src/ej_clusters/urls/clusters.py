@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from ..views import clusters
 
 app_name = "ej_clusters"
 conversation_url = f"<int:conversation_id>/<slug:slug>/"
@@ -7,32 +7,32 @@ conversation_url = f"<int:conversation_id>/<slug:slug>/"
 urlpatterns = [
     path(
         conversation_url + "clusters/",
-        views.index,
+        clusters.ClustersIndexView.as_view(),
         name="index",
     ),
     path(
         conversation_url + "clusters/edit/",
-        views.edit,
+        clusters.ClustersEditView.as_view(),
         name="edit",
     ),
     path(
         conversation_url + "stereotypes/",
-        views.stereotype_votes,
+        clusters.StereotypeVotesView.as_view(),
         name="stereotype_votes",
     ),
     path(
         conversation_url + "stereotypes/stereotype-votes-ordenation",
-        views.stereotype_votes_ordenation,
+        clusters.StereotypeVotesOrdenationView.as_view(),
         name="stereotype_votes_ordenation",
     ),
     path(
         conversation_url + "stereotypes/stereotype-votes/create",
-        views.stereotype_votes_create,
+        clusters.StereotypeVotesCreateView.as_view(),
         name="stereotype_votes_create",
     ),
     path(
         conversation_url + "clusters/ctrl/",
-        views.ctrl,
+        clusters.CtrlView.as_view(),
         name="ctrl",
     ),
 ]

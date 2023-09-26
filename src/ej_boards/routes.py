@@ -8,7 +8,7 @@ from ej_clusters.models import Stereotype
 from ej_conversations.models import Conversation
 from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from ej_conversations.urls.conversations import urlpatterns as conversation_urlpatterns, conversation_url
-from ej_clusters.urls import urlpatterns as cluster_urlpatterns
+from ej_clusters.urls.clusters import urlpatterns as cluster_urlpatterns
 from ej_dataviz.urls import urlpatterns as dataviz_urlpatterns
 from ej_signatures.urls import urlpatterns as signatures_urlpatterns
 from .forms import BoardForm

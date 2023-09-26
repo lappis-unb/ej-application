@@ -274,6 +274,7 @@ class Profile(models.Model):
             "approved_comments": approved,
             "rejected_comments": rejected,
             "pending_comments": pending,
+            "comments": comments,
         }
 
 

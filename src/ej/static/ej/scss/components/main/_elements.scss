@@ -56,8 +56,8 @@ i.fa, i.fas, i.fab, i.far {
     justify-content: flex-start;
 
     a {
-        @extend .pad-y2;
-        margin-right: 3.625rem;
+        margin-right: 2.625rem;
+        padding-bottom: 1.5rem;
     }
 }
 
@@ -195,9 +195,14 @@ $toast-opacity: 0.75;
         }
     }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1016px) {
     .toast {
         margin-left: auto;
+    }
+
+    .tabs {
+        display: block;
+        margin-bottom: 24px;
     }
 }
 

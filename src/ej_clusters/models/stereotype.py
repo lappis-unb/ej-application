@@ -31,6 +31,8 @@ class Stereotype(models.Model):
     )
     objects = StereotypeQuerySet.as_manager()
 
+    CHOICE_MAP = {"agree": Choice.AGREE, "disagree": Choice.DISAGREE, "skip": Choice.SKIP}
+
     class Meta:
         unique_together = [("name", "owner")]
 
@@ -77,3 +79,7 @@ class Stereotype(models.Model):
         voted_subquery = voted.filter(comment=OuterRef("id")).values("choice")
         comment_ids = voted.values_list("comment", flat=True)
         return conversation.comments.filter(id__in=comment_ids).annotate(choice=Subquery(voted_subquery))
+
+    @staticmethod
+    def get_choice_value(choice_name: str):
+        return Stereotype.CHOICE_MAP[choice_name]

@@ -1,8 +1,9 @@
-<div class="summary">
-    <div class="row text-brand semi-bold text-7">
-        {{ span_icon(tag, 'tags', href=tag_link|default(None)) }}
-        <span>{{ created|role('simple') }}</span>
-    </div>
+<div class="conversation-summary">
+    <div class="summary">
+        <div class="row">
+            {{ span_icon(tag, 'tags', href=tag_link|default(None)) }}
+        </div>
 
-    <p class="center pad-t2">{{ text }}</p>
+        <a class="pad-t2 conversation-summary__title" href="{{url}}">{{ text }}</a>
+    </div>
 </div>

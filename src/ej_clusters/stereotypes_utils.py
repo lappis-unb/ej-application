@@ -30,11 +30,3 @@ def order_stereotype_votes_by(stereotype_votes, order_option, order_direction):
             When(choice=choices_values[1], then=1),
         )
     ).order_by(f"{order_direction}relevancy")
-
-
-def extract_choice_id(action):
-    choice_id = action.split("-")
-    return {
-        "id": choice_id[1],
-        "choice": choice_id[0],
-    }

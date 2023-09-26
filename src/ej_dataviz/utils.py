@@ -434,12 +434,12 @@ def clusters(request, conversation):
     """
     Returns the cluster data as json format to render groups on frontend.
     """
-    from ej_clusters.views import get_json_shape_user_group_from_clusterization
 
     clusterization = getattr(conversation, "clusterization", None)
-    clusters_data = get_json_shape_user_group_from_clusterization(clusterization, request.user)
-    clusters_shapes = clusters_data.get("json_data")
-    return clusters_shapes
+    if clusterization:
+        clusters_data = clusterization.get_shape_data(request.user)
+        return clusters_data.get("json_data")
+    return None
 
 
 def get_dashboard_biggest_cluster(request, conversation, clusterization):

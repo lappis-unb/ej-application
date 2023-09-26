@@ -9,6 +9,7 @@ from ej_conversations import create_conversation, views
 from ej_conversations.models import Comment, FavoriteConversation, Conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
+from ej_conversations.roles.comments import comment_summary
 from ej_users.models import User
 from ..enums import Choice
 
@@ -160,35 +161,93 @@ class TestConversationDetail(ConversationSetup):
         client = Client()
         comment = first_conversation.comments.first()
 
+        conversation_url = f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        response = client.get(conversation_url)
+        assert response.status_code == 200
+
         response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            conversation_url,
             {"action": "vote", "vote": "agree", "comment_id": comment.id},
         )
         assert response.status_code == 302
-        assert (
-            response.url
-            == f"/login/?next=/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
-        )
+        assert response.url == f"/register/?next={conversation_url}"
 
         response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            conversation_url,
             {"action": "comment", "content": "test comment"},
         )
         assert response.status_code == 302
-        assert (
-            response.url
-            == f"/login/?next=/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
-        )
+        assert response.url == f"/register/?next={conversation_url}"
 
         response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
+            conversation_url,
             {"action": "favorite"},
         )
         assert response.status_code == 302
-        assert (
-            response.url
-            == f"/login/?next=/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        assert response.url == f"/register/?next={conversation_url}"
+
+    def test_anonymous_user_can_participate(self, first_conversation):
+        client = Client()
+        comment = first_conversation.comments.first()
+        conversation_url = f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        response = client.get(conversation_url)
+        assert response.status_code == 200
+        response = client.post(
+            conversation_url,
+            {"action": "vote", "vote": "agree", "comment_id": comment.id},
         )
+        assert response.status_code == 302
+        assert response.url == f"/register/?next={conversation_url}"
+
+        first_conversation.anonymous_votes_limit = 1
+        first_conversation.save()
+
+        response = client.post(
+            conversation_url,
+            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+        )
+        assert response.status_code == 200
+
+    def test_register_user_from_session_after_conversation_anonymous_limit(self, first_conversation):
+        first_conversation.anonymous_votes_limit = 1
+        first_conversation.save()
+
+        client = Client()
+
+        conversation_url = f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        first_comment = first_conversation.comments.first()
+        last_comment = first_conversation.comments.last()
+
+        client.post(
+            conversation_url,
+            {"action": "vote", "vote": "agree", "comment_id": first_comment.id},
+        )
+
+        session_user_email = User.objects.last().email
+
+        response = client.post(
+            conversation_url,
+            {"action": "vote", "vote": "agree", "comment_id": last_comment.id},
+        )
+
+        register_url = response.url
+        response = client.post(
+            register_url,
+            data={
+                "name": "Tester",
+                "email": "tester@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+                "agree_with_terms": True,
+                "agree_with_privacy_policy": True,
+            },
+        )
+        user = User.objects.get(email="tester@example.com")
+
+        assert user.votes.count() == 1
+        assert user.votes.first().comment == first_comment
+        assert user.votes.first().choice == Choice.AGREE
+        assert not User.objects.filter(email=session_user_email).exists()
 
     def test_user_can_add_conversation_as_favorite(self, first_conversation):
         user = User.objects.create_user("user@server.com", "password")
@@ -211,7 +270,14 @@ class TestConversationCreate(ConversationSetup):
         client.force_login(base_user)
 
         response = client.post(
-            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
+            url,
+            {
+                "title": "whatever",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+            },
         )
         assert response.status_code == 302
         assert response.url == "/userboard/conversations/1/whatever/dashboard/"
@@ -228,7 +294,14 @@ class TestConversationCreate(ConversationSetup):
         client.force_login(user)
 
         response = client.post(
-            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
+            url,
+            {
+                "title": "whatever",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+            },
         )
         assert response.status_code == 302
         assert response.url == "/login/"
@@ -261,7 +334,14 @@ class TestConversationCreate(ConversationSetup):
     ):
         url = "/userboard/conversations/add/"
         response = logged_admin.post(
-            url, {"title": "whatever", "tags": "tag", "text": "description", "comments_count": 0}
+            url,
+            {
+                "title": "whatever",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+            },
         )
         conversation = Conversation.objects.first()
 
@@ -374,7 +454,14 @@ class TestConversationEdit(ConversationSetup):
         client.force_login(base_user)
 
         response = client.post(
-            url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+            url,
+            {
+                "title": "bar updated",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+            },
         )
 
         new_conversation.refresh_from_db()
@@ -396,18 +483,20 @@ class TestConversationEdit(ConversationSetup):
 
         assert not response.context["form"].is_valid()
 
-    def test_edit_not_promoted_conversation(self, base_user, new_conversation):
-        url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
+    def test_author_can_edit_not_promoted_conversation(self, base_user, new_conversation):
+        url = f"/{new_conversation.board.slug}/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
         new_conversation.is_promoted = False
         new_conversation.save()
 
         client = Client()
         client.force_login(base_user)
 
-        with raises(Exception):
-            client.post(
-                url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
-            )
+        client.post(url, {"title": "bar updated", "text": "description", "anonymous_votes_limit": 1})
+
+        conversation = Conversation.objects.get(id=new_conversation.id)
+        assert conversation.title == "bar updated"
+        assert conversation.text == "description"
+        assert conversation.anonymous_votes_limit == 1
 
     def test_get_edit_conversation(self, base_user, new_conversation):
         url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
@@ -428,7 +517,14 @@ class TestConversationEdit(ConversationSetup):
         url = f"/userboard/conversations/{new_conversation.id}/{new_conversation.slug}/edit/"
 
         response = logged_admin.post(
-            url, {"title": "bar updated", "tags": "tag", "text": "description", "comments_count": 0}
+            url,
+            {
+                "title": "bar updated",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+            },
         )
 
         new_conversation.refresh_from_db()
@@ -636,7 +732,7 @@ class TestPrivateConversations(ConversationRecipes):
         client.login(email="tester@email.br", password="password")
         response = client.get(user_url)
 
-        assert len(response.context["conversations"]) == 2
+        assert len(response.context["conversations"]) == 3
         assert first_conversation in response.context["conversations"]
         assert second_conversation in response.context["conversations"]
         assert len(response.context["user_boards"]) == 2
@@ -751,5 +847,4 @@ class TestPublicConversations(ConversationRecipes):
         assert response.context["user_boards"] == []
         assert response.context["conversations_limit"] == 0
         assert promoted_conversation in response.context["conversations"]
-        assert not_promoted_conversation not in response.context["conversations"]
-        assert hiden_conversation not in response.context["conversations"]
+        assert response.context["conversations"][0].is_hidden == True

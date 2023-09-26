@@ -7,6 +7,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.db.models.functions import Length
 from django.urls import reverse
+from datetime import datetime
+import re
 
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, property as property, placeholder as this
@@ -76,10 +78,28 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             "Hidden conversations does not appears in boards or in the main /conversations/ " "endpoint."
         ),
     )
+    anonymous_votes_limit = models.IntegerField(
+        default=0,
+        help_text=_("Configures how many anonymous votes participants can give."),
+        verbose_name=_("Anonymous votes"),
+    )
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
 
     objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through="ConversationTag", blank=True)
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+
+    def set_overdue(self):
+        """
+        checks if conversation is a available for participation.
+        """
+        if self.end_date and datetime.today().date() > self.end_date:
+            self.is_hidden, self.is_promoted = [True, False]
+        else:
+            self.is_hidden, self.is_promoted = [False, True]
+
+        self.save()
 
     @property
     def users(self):
@@ -328,6 +348,18 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             except Exception as e:
                 pass
         return self.next_comment(user)
+
+    def reaches_anonymous_particiption_limit(self, user):
+        """
+        reaches_anonymous_particiption_limit checks if anonymous user reaches the
+        limit for anonymous participation.
+        """
+        user_is_anonymous = user.is_anonymous or re.match(r"^anonymoususer-.*", user.email)
+        return (
+            user_is_anonymous
+            and self.anonymous_votes_limit
+            and self.votes.filter(author=user).count() == self.anonymous_votes_limit
+        )
 
 
 #

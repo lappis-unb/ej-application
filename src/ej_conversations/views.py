@@ -34,7 +34,10 @@ from ej.decorators import (
     can_moderate_conversation,
     can_acess_list_view,
     is_superuser,
+    check_conversation_overdue,
 )
+
+from .decorators import create_session_key, user_can_post_anonymously
 
 log = getLogger("ej")
 
@@ -50,9 +53,6 @@ class ConversationView(ListView):
             queryset = board.conversations.annotate_attr(board=board)
         else:
             queryset = Conversation.objects.filter(is_promoted=True)
-
-        if not user.has_perm("ej.can_access_all_conversations"):
-            queryset = queryset.filter(is_hidden=False)
 
         return queryset.cache_annotations(*annotations, user=user).order_by("-created")
 
@@ -84,6 +84,19 @@ class PublicConversationView(ConversationView):
 class PrivateConversationView(ConversationView):
     template_name = "ej_conversations/conversation-list.jinja2"
 
+    def get_queryset(self) -> QuerySet[Any]:
+        user = self.request.user
+        board_slug = self.kwargs.get("board_slug", None)
+        annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
+
+        if board_slug:
+            board = Board.objects.get(slug=board_slug)
+            queryset = board.conversations.annotate_attr(board=board)
+        else:
+            queryset = Conversation.objects.filter(is_promoted=True)
+
+        return queryset.cache_annotations(*annotations, user=user).order_by("-created")
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         user = self.request.user
         board_slug = self.kwargs.get("board_slug", None)
@@ -102,19 +115,17 @@ class PrivateConversationView(ConversationView):
         }
 
 
+@method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(DetailView):
     form_class = forms.CommentForm
     model = Conversation
     template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
 
+    @user_can_post_anonymously
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
-        user = request.user
-        conversation = self.get_conversation()
-
-        if user.is_anonymous:
-            path = conversation.get_absolute_url()
-            return redirect(reverse("auth:login") + f"?next={path}")
+        conversation = self.get_object()
+        request.user = self._get_user()
 
         action = request.POST["action"]
         if action == "vote":
@@ -129,18 +140,34 @@ class ConversationDetailView(DetailView):
 
         return render(request, self.template_name, self.get_context_data())
 
-    def get_conversation(self) -> Conversation:
-        return check_promoted(self.get_object(), self.request)
-
-    def get_context_data(self, **kwargs):
+    @create_session_key
+    def _get_user(self):
         user = self.request.user
-        conversation = self.get_conversation()
+        conversation = self.get_object()
+
+        if user.is_anonymous and conversation.anonymous_votes_limit:
+            session_key = self.request.session.session_key
+            user, _ = User.objects.get_or_create(
+                email=f"anonymoususer-{session_key}@mail.com",
+                defaults={
+                    "password": session_key,
+                    "agree_with_terms": False,
+                },
+            )
+
+        return user
+
+    @create_session_key
+    def get_context_data(self, **kwargs):
+        conversation = self.get_object()
+        user = self.request.user
 
         return {
             "conversation": conversation,
-            "comment": conversation.next_comment_with_id(user, None),
-            "menu_links": conversation_admin_menu_links(conversation, user),
+            "comment": conversation.next_comment_with_id(self.request.user, None),
+            "menu_links": conversation_admin_menu_links(conversation, self.request.user),
             "comment_form": self.form_class(conversation=conversation),
+            "user_is_author": conversation.author == user,
             **self.ctx,
         }
 
@@ -195,6 +222,7 @@ class ConversationEditView(UpdateView):
             # permission. This is possible since the form sees this field
             # for all users and does not check if the user is authorized to
             # change is value.
+
             new = form.save(board=board, **kwargs)
             if new.is_promoted != is_promoted:
                 new.is_promoted = is_promoted
@@ -216,7 +244,7 @@ class ConversationEditView(UpdateView):
         elif conversation.is_promoted:
             return conversation.get_absolute_url()
         else:
-            return conversation.patch_url("conversation:list")
+            return reverse("boards:conversation-list", kwargs={"board_slug": conversation.board.slug})
 
     def get_context_data(self, **kwargs: Any):
         conversation = self.get_object()
