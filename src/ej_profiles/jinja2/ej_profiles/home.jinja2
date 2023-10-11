@@ -24,6 +24,9 @@
 </div>  
         
 <div id="public-conversations"> 
+    <p class="contribution_votes__message">
+        {{_("List of conversations created by EJ community and available for participation.")}}
+    </p>
     {{ search_filter(all_tags, participated_tags, "public", has_filtered_tag, host, "is_promoted") }}
 
     <div class="alternate-cards" id="public-current-cards">
@@ -35,6 +38,7 @@
 
 <div id="my-conversations" class="my_conversations">
     {% if created_conversations %}
+        <p class="contribution_votes__message">{{_("List of conversations created by you.")}}</p>
         {{ search_filter(my_tags, my_tags, "my", has_filtered_tag, host, "is_author") }}
     {% else %}
         <p class="my_conversations__message">{{_("You have not created any conversations.")}}</p>

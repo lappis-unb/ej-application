@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-22 14:06-0300\n"
+"POT-Creation-Date: 2023-10-10 12:08-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -137,7 +137,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:33 src/ej_conversations/models/conversation.py:49
+#: src/ej_boards/models.py:33 src/ej_conversations/models/conversation.py:50
 msgid "Title"
 msgstr "Título"
 
@@ -357,7 +357,7 @@ msgid "Created {n} votes"
 msgstr "{n} votos criados"
 
 #: src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:126
+#: src/ej_conversations/models/conversation.py:125
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -527,77 +527,77 @@ msgstr "Comentário está com moderação pendente"
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:39 src/ej_tools/apps.py:7
+#: src/ej_conversations/models/conversation.py:40 src/ej_tools/apps.py:7
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:52
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:53
+#: src/ej_conversations/models/conversation.py:54
 msgid "Question"
 msgstr "Questão"
 
-#: src/ej_conversations/models/conversation.py:53
+#: src/ej_conversations/models/conversation.py:54
 msgid "What do you want to ask?"
 msgstr "O que você deseja perguntar?"
 
-#: src/ej_conversations/models/conversation.py:58
+#: src/ej_conversations/models/conversation.py:59
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:64
+#: src/ej_conversations/models/conversation.py:65
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:69
+#: src/ej_conversations/models/conversation.py:70
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:71
+#: src/ej_conversations/models/conversation.py:72
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:74
+#: src/ej_conversations/models/conversation.py:75
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:77
+#: src/ej_conversations/models/conversation.py:78
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:82
+#: src/ej_conversations/models/conversation.py:83
 msgid "Configures how many anonymous votes participants can give."
 msgstr "Defina quantos votos anônimos cada participante pode dar."
 
-#: src/ej_conversations/models/conversation.py:83
+#: src/ej_conversations/models/conversation.py:84
 #, fuzzy
 msgid "Anonymous votes"
 msgstr "Votos anônimos"
 
-#: src/ej_conversations/models/conversation.py:125
+#: src/ej_conversations/models/conversation.py:124
 #: src/ej_conversations/roles/conversations.py:129
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:128
+#: src/ej_conversations/models/conversation.py:127
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:129
+#: src/ej_conversations/models/conversation.py:128
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:226
+#: src/ej_conversations/models/conversation.py:225
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
-#: src/ej_conversations/models/conversation.py:310
+#: src/ej_conversations/models/conversation.py:309
 msgid "automatically rejected"
 msgstr "rejeitado automaticamente"
 
@@ -720,7 +720,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:114
+#: src/ej_conversations/views.py:111
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2527,18 +2527,18 @@ msgstr "Atenção!"
 msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:28
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:29
 #, python-format
 msgid " Click %(here)s to edit and make it visible again."
 msgstr " Clique %(here)s para editar e torná-la visível novamente."
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:13
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:41
 msgid "Congratulations!"
 msgstr "Parabéns!"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:14
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:42
 msgid "There are no comments left to vote :)"
 msgstr "Não há comentários para votar :)"
 
@@ -3234,8 +3234,9 @@ msgid "You have not created any conversation yet!"
 msgstr "Você ainda não criou nenhuma conversa!"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:45
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:41
 msgid "List of conversations created by you."
-msgstr "Ver todas as conversas criadas por você."
+msgstr "Lista de conversas criadas por você."
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:71
 msgid "Empty."
@@ -3278,16 +3279,25 @@ msgstr "Conversas públicas"
 msgid "My conversations"
 msgstr "Minhas Conversas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:40
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:28
+#, fuzzy
+msgid ""
+"List of conversations created by EJ community and available for "
+"participation."
+msgstr ""
+"Lista de conversas criadas pela comunidade EJ e disponíveis para "
+"participação."
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:44
 #, fuzzy
 msgid "You have not created any conversations."
 msgstr "Você ainda não criou nenhuma conversa."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:46
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:50
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:55
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:59
 #, fuzzy
 msgid ""
 "List of conversations you participated at least once. To resume voting, "
@@ -3296,17 +3306,17 @@ msgstr ""
 "Lista de conversas que você participou pelo menos uma vez. Para retomar à "
 "votação, clique no título."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:71
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:75
 #, fuzzy
 msgid "You haven't voted in any conversations yet."
 msgstr "Você ainda não votou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:84
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:88
 #, fuzzy
 msgid "You haven't commented in any conversations yet."
 msgstr "Você ainda não comentou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:87
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:91
 #, fuzzy
 msgid ""
 "Comments you've submitted for approval in third-party conversations, in "
@@ -3320,16 +3330,21 @@ msgstr ""
 msgid "Search"
 msgstr "Busca"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:10
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:8
+#, fuzzy
+msgid "Filter by theme"
+msgstr "Filtrar por tema"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:14
 #, fuzzy
 msgid "Find a theme"
 msgstr "Encontre um tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:26
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:30
 msgid "All"
 msgstr "Todas"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:37
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:41
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
