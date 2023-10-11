@@ -4,9 +4,13 @@
             placeholder="{{_('Search')}}"
             onkeyup="{{name}}filterConversationByTagAndName(this);"
         >
+        <a class="input-container__filter-theme" onclick="{{name}}filterByTheme()">
+            {{_("Filter by theme")}}
+            <i id="{{name}}filter-icon" class="fa fa-chevron-left"></i>
+        </a>
     </div>
 
-    <div class="{{name}}-tag-header" id="{{name}}-tag-buttons">
+    <div id="{{name}}-tag-buttons">
         <input list="{{name}}-all-tags" id="{{name}}-tag-choice" name="{{name}}-tag-choice" placeholder="{{ _('Find a theme') }}">  
         <datalist id="{{name}}-all-tags">
             {% for tag in all_tags %}
@@ -194,6 +198,13 @@
                 }
             }
         }); 
+    }
+
+    function {{name}}filterByTheme() {
+        let sectionTags = document.getElementById("{{name}}-tag-buttons");
+        let filterIconTheme = document.getElementById("{{name}}filter-icon");
+        sectionTags.classList.toggle("{{name}}-tag-header");
+        filterIconTheme.classList.toggle("move-icon");
     }
     </script>
 
