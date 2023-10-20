@@ -270,6 +270,48 @@
   }
 }
 
+.input-container {
+  display: flex;
+  align-items: baseline;
+  gap: 1.313rem;
+
+  &__filter-theme, &__filter-theme:hover {
+    color: $color-theme-osf-light; 
+    font-family: Raleway; 
+    font-size: 1rem; 
+    font-style: normal; 
+    font-weight: 700;
+    line-height: 24px; 
+    text-transform: lowercase;
+    display: flex;
+  }
+
+  &__search {
+    border-radius: 5px !important; 
+    border: 1px solid $color-complementary-gray !important; 
+    height: 2.25rem !important;
+    box-sizing: border-box;
+    background-position: 0.5rem 0.563rem !important;
+    background-size: 1.25rem !important;
+    background-repeat: no-repeat !important; 
+    padding: 0.875rem 0px 0.75rem 1.75rem !important;
+    background: url('/static/img/icons/gray-search.svg');
+    width: 14.7rem !important;
+  }
+
+  &__warn-message {
+    color: $colot-errolist-red;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 20px;
+    grid-template-columns: none;
+    margin-top: 3.125rem;
+    margin: 3.125rem 0 0 0;
+    width: 70%;
+  }
+}
+
 @media only screen and (max-width: 320px) {
   .public-tag-header, .my-tag-header, .comments-tag-header {
     button {
@@ -330,51 +372,17 @@
       padding-bottom: 1.5rem;
     }
   }
-}
 
-.input-container {
-  &__filter-theme, &__filter-theme:hover {
-    color: $color-theme-osf-light; 
-    font-family: Raleway; 
-    font-size: 1rem; 
-    font-style: normal; 
-    font-weight: 700;
-    line-height: 24px; 
-    text-transform: lowercase;
-    display: flex;
-  }
+  .input-container {
+    flex-wrap: wrap;
+    gap: 0;
 
-  &__search {
-    border-radius: 5px !important; 
-    border: 1px solid $color-complementary-gray !important; 
-    height: 2.25rem !important;
-    box-sizing: border-box;
-    background-position: 0.5rem 0.563rem !important;
-    background-size: 1.25rem !important;
-    background-repeat: no-repeat !important; 
-    padding: 0.875rem 0px 0.75rem 1.75rem !important;
-    background: url('/static/img/icons/gray-search.svg');
-    width: auto !important;
-    min-width: 14.7rem !important;
-  }
-
-  input[type='search'] {
-    margin-top: 1.5rem;
-  }
-
-  &__warn-message {
-    color: $colot-errolist-red;
-    font-size: 1rem;
-    font-style: italic;
-    font-weight: 500;
-    line-height: 20px;
-    grid-template-columns: none;
-    margin-top: 3.125rem;
-    margin: 3.125rem 0 0 0;
-    width: 70%;
+    &__search {
+      min-width: 100% !important;
+      margin: 0 0 12px 0 !important;
+    }
   }
 }
-
 
 @media (max-width: 875px) and (min-width: 321px) {
   .public-tag-header, .my-tag-header, .comments-tag-header {
@@ -416,6 +424,16 @@
     overflow: scroll hidden;
     &__add {
       padding-bottom: 1.5rem;
+    }
+  }
+
+  .input-container {
+    flex-wrap: wrap;
+    gap: 0;
+
+    &__search {
+      min-width: 100% !important;
+      margin: 0 0 12px 0 !important;
     }
   }
 
