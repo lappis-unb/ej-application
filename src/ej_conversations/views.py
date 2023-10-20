@@ -15,6 +15,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from ej_boards.models import Board
+from ej_conversations.rules import max_comments_per_conversation
 from ej_users.models import SignatureFactory
 
 from . import forms, models
@@ -122,6 +123,13 @@ class ConversationDetailView(DetailView):
     template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
 
+    def get(self, request, *args, **kwargs):
+        if request.GET.get("comment-addition"):
+            return render(request, "ej_conversations/comments/add-comment.jinja2", self.get_context_data())
+        if request.GET.get("comment-addition-cancel"):
+            return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
+        return super().get(request, *args, **kwargs)
+
     @user_can_post_anonymously
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
@@ -130,8 +138,10 @@ class ConversationDetailView(DetailView):
         action = request.POST["action"]
         if action == "vote":
             self.ctx = handle_detail_vote(request)
+            return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
         elif action == "comment":
             self.ctx = handle_detail_comment(request, conversation)
+            return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
         elif action == "favorite":
             self.ctx = handle_detail_favorite(request, conversation)
         else:
@@ -161,13 +171,26 @@ class ConversationDetailView(DetailView):
     def get_context_data(self, **kwargs):
         conversation = self.get_object()
         user = self.request.user
+        max_comments = max_comments_per_conversation(conversation, user)
+        conversation.set_request(self.request)
+
+        if not user.is_anonymous:
+            n_comments = user.comments.filter(conversation=conversation).count()
+            n_user_final_votes = conversation.current_comment_count(user)
+        else:
+            n_comments = 0
+            n_user_final_votes = 0
 
         return {
             "conversation": conversation,
-            "comment": conversation.next_comment_with_id(self.request.user, None),
-            "menu_links": conversation_admin_menu_links(conversation, self.request.user),
+            "comment": conversation.next_comment_with_id(user, None),
+            "menu_links": conversation_admin_menu_links(conversation, user),
             "comment_form": self.form_class(conversation=conversation),
             "user_is_author": conversation.author == user,
+            "user_progress_percentage": conversation.user_progress_percentage(user),
+            "n_comments": n_comments,
+            "max_comments": max_comments,
+            "n_user_final_votes": n_user_final_votes,
             **self.ctx,
         }
 
@@ -186,7 +209,7 @@ class ConversationCreateView(CreateView):
             with transaction.atomic():
                 conversation = form.save_comments(self.request.user, **kwargs)
 
-            return redirect(reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()))
+            return redirect(reverse("boards:conversation-detail", kwargs=conversation.get_url_kwargs()))
 
         return render(request, "ej_conversations/conversation-create.jinja2", self.get_context_data())
 

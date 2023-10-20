@@ -1,0 +1,51 @@
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+<div id="comment-content-container" class="voting-card">
+    <div class="voting-card--left">
+        <div class="voting-card--left__statistics">
+            <i class="fa fa-comments"></i>
+            <span class="voting-card--left__statistics__values">{{ conversation.n_approved_comments }}</span>
+
+            <i class="fa">&#xf772;</i>
+            <span class="voting-card--left__statistics__values">{{ conversation.n_final_votes }}</span>
+        </div>
+
+        <span class="voting-card--left__summary">{% trans %} Conversation {% endtrans %}</span><br>
+        <span class="voting-card--left__summary voting-card--left__summary--black">{{ conversation.text }}</span>
+        <hr>
+        
+        <div class="voting-card--left__progress">
+            <span class="voting-card--left__progress__values">{{ user_progress_percentage }}%</span>
+            <span class="voting-card--left__progress__percentage" role="progressbarr" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ user_progress_percentage }}" aria-labelledby="pblabel">
+                <div class="voting-card--left__progress__percentage__bar" style="width:{{ user_progress_percentage }}%"></div>
+            </span>
+            <span class="voting-card--left__progress__values">{{ n_user_final_votes }} {{_("of")}} {{ conversation.n_approved_comments }} {{_("comments")}}</span>
+            <a class="voting-card--left__summary voting-card--left__summary__add-comment" hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" hx-target="#comment-content-container" hx-params="comment-addition">
+                <i class="fa">&#xf055;</i> {{ _('Add comment') }}
+            </a>
+        </div>
+        {% if comment %}
+            <span class="voting-card--left__summary">{% trans %} Comment {% endtrans %}</span><br>
+            <p class="voting-card--left__comment">{{ comment.content}}</p>
+
+        <div>
+            {% include 'ej_conversations/comments/voting-form.jinja2' %}
+        </div>
+
+        {% else %}
+            <div class="voting-card__message">
+                <p>{{ _("You have already voted on all the comments.") }}</p>
+                <span>{{_("Thank you for your participation!") }}</span>
+            </div>
+            <div class="voting-card__footer">
+                <span class="voting-card__footer__description-text">
+                    {{_("What can EJ do for you today? We want to meet you!")}}
+                </span>
+                <a class="voting-card__footer__link-text">
+                    {{_("Complete your profile, it's quick")}}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -67,6 +67,15 @@ body {
         max-width: 60vw;
     }
 
+    .container-temporary {
+        max-width: 64vw !important;
+        padding: 0;
+        text-align: center;
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+    }
+
     .measure-wide {
         max-width: 60vw;
     }

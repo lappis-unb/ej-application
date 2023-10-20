@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="21" height="21" viewBox="0 0 21 21" xml:space="preserve">
+<desc>Created with Fabric.js 3.6.6</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 10.97 10.97)" id="Ellipse 19"  >
+<circle style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"  cx="0" cy="0" r="10.4741" />
+</g>
+<g transform="matrix(1 0 0 1 10.47 10.94)" id="Vector"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(5,43,71); fill-rule: evenodd; opacity: 1;"  transform=" translate(-8.52, -8.5)" d="M 10.1044 6.116 C 9.89361 6.116 9.69148 6.03228 9.54245 5.88325 C 9.39342 5.73422 9.3097 5.5321 9.3097 5.32134 C 9.3097 5.11058 9.39342 4.90845 9.54245 4.75942 C 9.69148 4.6104 9.89361 4.52667 10.1044 4.52667 H 14.0777 C 14.2884 4.52667 14.4906 4.6104 14.6396 4.75942 C 14.7886 4.90845 14.8724 5.11058 14.8724 5.32134 V 9.29466 C 14.8724 9.50542 14.7886 9.70755 14.6396 9.85657 C 14.4906 10.0056 14.2884 10.0893 14.0777 10.0893 C 13.8669 10.0893 13.6648 10.0056 13.5158 9.85657 C 13.3667 9.70755 13.283 9.50542 13.283 9.29466 V 7.23966 L 9.87153 10.6512 C 9.72251 10.8001 9.52042 10.8838 9.3097 10.8838 C 9.09898 10.8838 8.89689 10.8001 8.74787 10.6512 L 6.9257 8.82899 L 3.51421 12.2405 C 3.36433 12.3852 3.1636 12.4653 2.95524 12.4635 C 2.74688 12.4617 2.54757 12.3781 2.40023 12.2308 C 2.2529 12.0835 2.16932 11.8842 2.16751 11.6758 C 2.1657 11.4674 2.2458 11.2667 2.39055 11.1168 L 6.36388 7.1435 C 6.5129 6.99453 6.71499 6.91084 6.9257 6.91084 C 7.13642 6.91084 7.33851 6.99453 7.48753 7.1435 L 9.3097 8.96567 L 12.1594 6.116 H 10.1044 Z" stroke-linecap="round" />
+</g>
+</svg>
