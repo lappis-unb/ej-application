@@ -1,5 +1,6 @@
 from django.test import Client
-from django.http import HttpResponseServerError, Http404
+from django.http import HttpResponseServerError
+from django.contrib.auth.models import AnonymousUser
 from pytest import raises
 import pytest
 import json
@@ -262,6 +263,38 @@ class TestConversationDetail(ConversationSetup):
 
         assert FavoriteConversation.objects.filter(user=user, conversation=first_conversation).exists()
 
+    def test_user_progress_zero(self, first_conversation):
+        user = User.objects.create_user("user@server.com", "password")
+
+        percentage = first_conversation.user_progress_percentage(user)
+        assert percentage == 0
+
+    def test_user_progress_after_voting(self, first_conversation, admin_user):
+        comment = first_conversation.create_comment(
+            admin_user, "other comment here", status="approved", check_limits=False
+        )
+
+        comment.vote(admin_user, Choice.AGREE)
+        percentage = first_conversation.user_progress_percentage(admin_user)
+        assert percentage > 0
+
+    def test_user_progress_anonymous(self, first_conversation):
+        user = AnonymousUser()
+
+        percentage = first_conversation.user_progress_percentage(user)
+        assert percentage == 0
+
+    def test_user_progress_conversation_with_no_comments(self, admin_user):
+        user = AnonymousUser()
+        board = Board.objects.create(slug="board12", owner=admin_user, description="board12")
+        conversation = create_conversation("foo", "conv1", admin_user, board=board)
+        conversation.is_promoted = True
+        conversation.is_hidden = False
+        conversation.save()
+
+        percentage = conversation.user_progress_percentage(user)
+        assert percentage == 1
+
 
 class TestConversationCreate(ConversationSetup):
     def test_board_owner_can_create_conversation(self, base_board, base_user):
@@ -280,7 +313,7 @@ class TestConversationCreate(ConversationSetup):
             },
         )
         assert response.status_code == 302
-        assert response.url == "/userboard/conversations/1/whatever/dashboard/"
+        assert response.url == "/userboard/conversations/1/whatever/"
 
         conversation = Conversation.objects.first()
         assert conversation.is_promoted
@@ -346,7 +379,7 @@ class TestConversationCreate(ConversationSetup):
         conversation = Conversation.objects.first()
 
         assert response.status_code == 302
-        assert response.url == "/userboard/conversations/1/whatever/dashboard/"
+        assert response.url == "/userboard/conversations/1/whatever/"
         assert conversation.board == base_board
         assert conversation.author == admin_user
 
