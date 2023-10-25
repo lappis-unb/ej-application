@@ -605,35 +605,6 @@ $component-border-radius: size(config('ej.style.border-radius'));
             margin: 0;
         }
     }
-
-    &__footer {
-        background-image: url("/static/img/comment_card/banner-link-perfil.png");
-        height: 8.16rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: relative;
-        background-size: cover;
-        padding: 2.563rem 0 2.563rem 3.063rem;
-        margin-bottom: 2.5rem;
-
-        &__description-text {
-            color: $color-white;
-            font-size: 1rem;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-        }
-
-        &__link-text, &__link-text:hover {
-            color: $color-white;
-            font-size: 1.125rem;
-            font-style: normal;
-            font-weight: 800;
-            line-height: normal;
-            text-transform: uppercase;
-        }
-    }
 }
 
 #add-comment {
@@ -766,10 +737,6 @@ $component-border-radius: size(config('ej.style.border-radius'));
                 }
             }
         }
-
-        &__footer {
-            padding: 2.5rem 0 2.5rem 1rem; 
-        }
     }
 
     .add-container-form {
@@ -864,10 +831,6 @@ $component-border-radius: size(config('ej.style.border-radius'));
                     margin: 0;
                 }
             }
-        }
-
-        &__footer {
-            padding: 2.5rem 0 2.5rem 1rem; 
         }
     }
 
