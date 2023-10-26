@@ -361,6 +361,25 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
             and self.votes.filter(author=user).count() == self.anonymous_votes_limit
         )
 
+    def user_progress_percentage(self, user):
+        total = self.n_approved_comments
+        n = 0
+        if not user.is_anonymous:
+            self.for_user = user
+            n = self.n_user_final_votes
+            n = min(n, total)
+        if total < 1:
+            return 1
+        return round((n / total) * 100)
+
+    def current_comment_count(self, user):
+        self.for_user = user
+        n_user_final_votes = self.n_user_final_votes
+
+        if self.n_approved_comments == n_user_final_votes:
+            return n_user_final_votes
+        return n_user_final_votes + 1
+
 
 #
 #  AUXILIARY MODELS

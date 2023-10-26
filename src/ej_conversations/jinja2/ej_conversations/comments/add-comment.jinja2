@@ -1,0 +1,84 @@
+<form method="post" id="add-comment" 
+    hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" 
+    hx-target="#comment-content-container" 
+    hx-swap="outerHTML"
+>
+    {{ csrf_input }}
+    <input type="hidden" name="action" value="comment">
+    <div class="add-container-form">
+        <div class="voting-card--left">
+            <div class="voting-card--left__statistics">
+                <i class="fa fa-comments"></i>
+                <span class="voting-card--left__statistics__values">{{ conversation.n_approved_comments }}</span>
+
+                <i class="fa">&#xf772;</i>
+                <span class="voting-card--left__statistics__values">{{ conversation.n_final_votes }}</span>
+            </div>
+
+            <span class="voting-card--left__summary">{{_("Conversation: ")}}</span><br>
+            <span class="voting-card--left__summary voting-card--left__summary--black voting-card--left__summary--comment">{{ conversation.text }}</span><br>
+
+            <span class="voting-card--left__summary voting-card--left__summary--black voting-card--left__summary__add-comment--summary">{{_("Add comment")}}</span>
+            <span class="voting-card--left__summary left voting-card--left__summary--info">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
+
+            <textarea name="content" id="id_content" maxlength="256" required></textarea>
+            <p class="voting-card--left__summary left no-margin">
+                (<span id="maxLenght">256</span><span> {{_("Characters remaining)")}}</span> 
+            </p>
+
+        {% if not n_comments >= max_comments or request.user.is_superuser %}
+            <div class="modal__buttons">
+                <button class="modal__buttons--white" type="button" 
+                    hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" 
+                    hx-target="#comment-content-container" 
+                    hx-params="comment-addition-cancel"
+                    hx-swap="outerHTML">
+                    {{ _('Cancel') }}
+                </button>
+                <button class="modal__buttons--blue" type="submit">
+                    {{ _('Send to moderation') }}
+                </button>
+            </div>
+        </div>
+        {% else %}
+            <div class="add-container-form__submit-container">
+                <div id="warn-message" class="add-container-form__limit-tooltip hide">
+                    <div class="add-container-form__limit-tooltip__arrow"></div>
+                    {{_("You have already submitted the maximum number of comments allowed for this conversation")}}
+                </div>
+            
+                <div class="modal__buttons">
+                    <button class="modal__buttons--white" type="button"
+                        hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" 
+                        hx-target="#comment-content-container" 
+                        hx-params="comment-addition-cancel"
+                        hx-swap="outerHTML">
+                        {{ _('Cancel') }}
+                    </button>
+                    <button id="send-button" class="modal__buttons--gray" type="button">
+                        {{ _('Send to moderation') }}
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+
+$('textarea').keyup(function() {
+    let characterCount = 256 - $(this).val().length,
+    maxLenght = $('#maxLenght');
+    maxLenght.text(characterCount);
+});
+
+var sendButton = document.getElementById('send-button');
+if (sendButton) {
+    sendButton.addEventListener("mouseover", function(){
+        const warnMessage = document.getElementById('warn-message');
+        warnMessage.classList.remove('hide')
+        warnMessage.classList.add('show');
+    });
+}
+
+</script>
