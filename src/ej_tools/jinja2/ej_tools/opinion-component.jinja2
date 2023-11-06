@@ -5,7 +5,6 @@
 
     <meta name="description" property="og:title" content="Area de integração da EJ com outras ferramentas.">
     <meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
-	<link href="https://fonts.googleapis.com/css2?family=Inter&family=Lexend+Exa&family=Roboto&display=swap" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 {% endblock metaOG2 %}
@@ -26,7 +25,7 @@
 				{{ tabs({
 					_('Customization'): '#customization',
 					_('Generate code'): '#generate-code',
-					}, class_='width-full') 
+					}, class_='width-full')
 				}}
 			</div>
 			<div class="tools-divider opinion-divider">
@@ -37,7 +36,7 @@
 							<span class="opinion-col-2__subtitle">
 								{{_("You can customize your collection using a background image and/or a logo, as well as a message tailored to your audience.")}}
 							</span><br>
-							
+
 							<form method="POST" enctype="multipart/form-data" id="opinion-component-form" class="form-component">
 								{{ csrf_input }}
 								{{ opinion_component_form.conversation.as_hidden() }}
@@ -46,10 +45,10 @@
 										{{ opinion_component_form.errors["background_image"] }}
 									{% endif %}
 									{% if background_url %}
-										<span class="form-component__image">Imagem atual:</span> 
+										<span class="form-component__image">Imagem atual:</span>
 										<span class="form-component__image-name">{{background_url}}</span>
 									{% else %}
-										<span class="form-component__image hide">Imagem atual:</span> 
+										<span class="form-component__image hide">Imagem atual:</span>
 										<span class="form-component__image-name"></span>
 									{% endif %}
 									{{opinion_component_form.background_image}}
@@ -59,10 +58,10 @@
 										{{ opinion_component_form.errors["logo_image"] }}
 									{% endif %}
 									{% if logo_url %}
-										<span class="form-component__image">Imagem atual:</span> 
+										<span class="form-component__image">Imagem atual:</span>
 										<span class="form-component__image-name">{{logo_url}}</span>
 									{% else %}
-										<span class="form-component__image hide">Imagem atual:</span> 
+										<span class="form-component__image hide">Imagem atual:</span>
 										<span class="form-component__image-name"></span>
 									{% endif %}
 									{{opinion_component_form.logo_image}}
@@ -113,12 +112,12 @@
 				</div>
 			</div>
 		</div>
-			
+
 		<div class="opinion-component-card-list">
 			{{ help_card(_("How to integrate the opinion component to my website?"), "/docs/user-guides/pt-br/tools-opinion-component.html")}}
 		</div>
 	</div>
-				
+
 
 <script charset="utf-8">
 	function submitForm() {

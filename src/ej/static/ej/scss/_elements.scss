@@ -19,9 +19,9 @@ select + br + .helptext {
 }
 
 .helptext {
-    font-size: 0.9rem;
-    opacity: 0.8;
+    font-size: 1rem;
     text-align: left;
+    color: $color-theme-report-dark-gray;
     &-center{
     text-align: center;
     max-width: 50%;
@@ -62,3 +62,34 @@ ul.errorlist {
     }
 }
 
+
+//overwrite mendeleev rules
+legend,
+textarea,
+label,
+input {
+    max-width: unset !important;
+    text-indent: unset !important;
+}
+input:not(.button) {
+    border: 1px solid color('brand') !important;
+    border-radius: 0.3125rem !important;
+}
+legend {
+    margin: unset !important;
+    text-align: unset !important;
+}
+
+.content-grid {
+    grid-template-columns: minmax(6%,auto) minmax(auto, 900px) auto;
+    display: grid;
+}
+.content-grid > * {
+    grid-column: 2;
+}
+
+@media only screen and (max-width: 900px) {
+    .content-grid {
+        grid-template-columns: 2% auto 2%;
+    }
+}

@@ -5,15 +5,16 @@
 
 $component-border-radius: size(config('ej.style.border-radius'));
 
+$color-brand-conversation-form: rgba(48, 191, 215 , .15);
+
 @mixin themed($prop, $value: null) {
     @if $value == light {
-        #{$prop}: color('brand-lighter');
-        #{$prop}: var(--theme-light-color);
+        #{$prop}: $color-brand-conversation-form;
     } @else {
         #{$prop}: color('brand');
-        #{$prop}: var(--theme-color);
     }
 }
+
 
 .conversation-balloon {
     @extend .center;
@@ -23,10 +24,10 @@ $component-border-radius: size(config('ej.style.border-radius'));
         @include utilities('pad-y3 pad-x3');
         @include themed('background', light);
 
-        
+
         text-align: left;
-        border-radius: 0 0 $component-border-radius $component-border-radius;
-        
+        // border-radius: 0 0 $component-border-radius $component-border-radius;
+
         span {
             @include themed('color');
             font-family: 'roboto', sans-serif;
@@ -41,18 +42,6 @@ $component-border-radius: size(config('ej.style.border-radius'));
         @extend .h2;
         font-family: 'roboto', sans-serif;
     }
-    &__arrow {
-        @include create-arrow(down, 4rem, color('brand-lighter'));
-
-        border-left: 4rem solid transparent;
-        border-right: 4rem solid transparent;
-        border-top: 2.75rem solid;
-        margin-left: 2rem;
-
-        bottom: 1px;
-        color: var(--theme-light-color);
-        position: relative;
-    }
     &__social {
         @include utilities('row pad-x4');
 
@@ -66,7 +55,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
     // For forms
     input,
     textarea {
-        background: rgba(255, 255, 255, 0.25);
+        background: $color-white;
         border-radius: 0.375rem;
         height: 2rem;
         line-height: 2rem;
@@ -76,13 +65,41 @@ $component-border-radius: size(config('ej.style.border-radius'));
     textarea {
         height: 4.5rem;
         font-size: 1.5rem;
-        line-height: 2.25rem;
-        text-align: center;
+    }
+    textarea::placeholder {
+        @extend legend;
     }
 }
 
-.side-space {
-    padding: 0 1.5em;
+.conversation-balloon article label,
+.conversation-form div label
+{
+    color: $color-theme-dark-blue;
+    font-family: 'Raleway', sans-serif;
+}
+.conversation-balloon article label:first-letter,
+.conversation-form div label:first-letter {
+    text-transform: capitalize;
+}
+
+.conversation-form {
+    width: 100%;
+    @include utilities('pad-y3 pad-x3');
+
+    &__h3 {
+        font-size: 1.5rem;
+    }
+    &__h4 {
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    &__duration {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
 }
 
 .comment-card, .comment-form {
@@ -369,35 +386,35 @@ $component-border-radius: size(config('ej.style.border-radius'));
 
 .voting-card {
     border-radius: 5px;
-    background: rgba(48, 191, 211, 0.15); 
+    background: rgba(48, 191, 211, 0.15);
     padding: 2.875rem 2.625rem 1.531rem 3rem;
 
     &--left {
         text-align: left;
-        
+
         &__statistics {
-            display: flex; 
-            font-family: Lexend Exa; 
-            color:$color-complementary-gray; 
+            display: flex;
+            font-family: Lexend Exa;
+            color:$color-complementary-gray;
             margin-bottom: 0.813rem;
 
             i {
-                font-size: 1rem; 
-                margin: auto 0.688rem 0 0; 
+                font-size: 1rem;
+                margin: auto 0.688rem 0 0;
             }
 
             &__values {
-                font-size: 0.75rem; 
+                font-size: 0.75rem;
                 margin-right: 2.813rem;
             }
         }
 
         &__summary {
-            color: $color-complementary-gray; 
-            font-family: Lexend Exa; 
-            font-size: 0.75rem; 
-            font-style: normal; 
-            font-weight: 500; 
+            color: $color-complementary-gray;
+            font-family: Lexend Exa;
+            font-size: 0.75rem;
+            font-style: normal;
+            font-weight: 500;
             line-height: 1.25rem;
             text-transform: uppercase;
 
@@ -406,11 +423,11 @@ $component-border-radius: size(config('ej.style.border-radius'));
             }
 
             &__add-comment {
-                display: flex; 
+                display: flex;
                 width: max-content;
 
                 &--summary {
-                    display:inline; 
+                    display:inline;
                     margin-right: 1.938rem;
                 }
             }
@@ -420,28 +437,28 @@ $component-border-radius: size(config('ej.style.border-radius'));
             }
 
             &--comment {
-                display:block; 
+                display:block;
                 margin-bottom: 1.25rem;
             }
         }
 
         hr {
-            border: 1px solid $color-white; 
+            border: 1px solid $color-white;
             margin: 1.5rem 0 1.625rem;
         }
 
         &__progress {
-            display: grid; 
-            grid-template-columns: 2.5rem 7.063rem 13rem auto; 
-            align-items: center; 
+            display: grid;
+            grid-template-columns: 2.5rem 7.063rem 13rem auto;
+            align-items: center;
             margin-bottom: 2.875rem;
 
             &__values {
-                color: $color-black-alternative; 
-                font-family: Lexend Exa; 
-                font-size: 0.75rem; 
-                font-style: normal; 
-                font-weight: 500; 
+                color: $color-black-alternative;
+                font-family: Lexend Exa;
+                font-size: 0.75rem;
+                font-style: normal;
+                font-weight: 500;
                 line-height: 1.25rem;
                 text-transform: uppercase;
                 width: fit-content;
@@ -482,40 +499,40 @@ $component-border-radius: size(config('ej.style.border-radius'));
         }
 
         textarea {
-            border-radius: 0; 
-            border-color: transparent !important; 
-            max-width: none; 
-            padding: 1rem 1.125rem; 
+            border-radius: 0;
+            border-color: transparent !important;
+            max-width: none;
+            padding: 1rem 1.125rem;
             margin: 0.75rem 0 1.063rem;
         }
 
         .modal__buttons {
-            display: flex; 
-            gap: 0.75rem; 
+            display: flex;
+            gap: 0.75rem;
             float: right;
 
             &--white, &--blue, &--gray {
-                display: flex; 
-                padding: 0.875rem 1.5rem; 
-                align-items: center; 
-                justify-content: center; 
+                display: flex;
+                padding: 0.875rem 1.5rem;
+                align-items: center;
+                justify-content: center;
                 border-radius: 25px;
                 border-color: transparent;
             }
 
             &--white {
-                background: $color-white; 
-                color: $color-theme-report-blue; 
+                background: $color-white;
+                color: $color-theme-report-blue;
             }
 
             &--blue {
-                background:$color-theme-report-blue; 
-                color: $color-white; 
+                background:$color-theme-report-blue;
+                color: $color-white;
             }
 
             &--gray {
-                background:$color-button-gray; 
-                color: $color-complementary-gray; 
+                background:$color-button-gray;
+                color: $color-complementary-gray;
             }
         }
 
@@ -534,39 +551,39 @@ $component-border-radius: size(config('ej.style.border-radius'));
             justify-content: center;
 
             &--agree, &--disagree, &--skip {
-                display: flex; 
-                height: 2.375rem; 
+                display: flex;
+                height: 2.375rem;
                 width: 8rem;
-                justify-content: center; 
-                align-items: center; 
-                border-radius: 5px; 
-                font-size: 1rem; 
-                font-style: normal; 
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                font-size: 1rem;
+                font-style: normal;
                 line-height: normal;
                 text-transform: lowercase;
                 padding: 0;
                 letter-spacing: 0px;
-    
+
                 i {
                     color: $color-white;
                 }
             }
-    
+
             &--agree {
-                background-color: $color-theme-report-green; 
+                background-color: $color-theme-report-green;
                 border: 1px solid $color-theme-report-green;
             }
-    
+
             &--disagree {
-                background-color: $color-disagree; 
+                background-color: $color-disagree;
                 border: 1px solid $color-disagree;
             }
-    
+
             &--skip {
-                background-color:transparent; 
+                background-color:transparent;
                 border: 1px solid $color-black-alternative;
                 color: $color-black-alternative;
-    
+
                 i {
                     color: $color-black-alternative;
                     transform: rotate(45deg);
@@ -577,11 +594,11 @@ $component-border-radius: size(config('ej.style.border-radius'));
     }
 
     &__privacy {
-        margin-top: 2.438rem; 
-        color: $color-complementary-gray; 
-        font-family: Raleway; 
-        font-size: 0.75rem; 
-        font-style: italic; 
+        margin-top: 2.438rem;
+        color: $color-complementary-gray;
+        font-family: Raleway;
+        font-size: 0.75rem;
+        font-style: italic;
         font-weight: 500;
         line-height: normal;
 
@@ -593,11 +610,11 @@ $component-border-radius: size(config('ej.style.border-radius'));
     }
 
     &__message {
-        margin: 6.063rem 0 4.688rem; 
-        color: $color-black-alternative; 
-        font-family: Raleway; 
-        font-size: 1.75rem; 
-        font-style: normal; 
+        margin: 6.063rem 0 4.688rem;
+        color: $color-black-alternative;
+        font-family: Raleway;
+        font-size: 1.75rem;
+        font-style: normal;
         font-weight: 300;
         line-height: 125%;
 
@@ -620,15 +637,15 @@ $component-border-radius: size(config('ej.style.border-radius'));
         place-items: center;
         padding: 0 0.75rem;
         border-radius: 5px;
-        background: $color-pink-light; 
+        background: $color-pink-light;
         width: fit-content;
         min-height: 43px;
         margin-bottom: 21px;
-    
+
         &__arrow {
             color: $color-pink-light;
-            width: 0; 
-            height: 0; 
+            width: 0;
+            height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
             border-top: 10px solid $color-pink-light;
@@ -639,7 +656,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
     }
 
     &__submit-container {
-        margin-bottom: 1.3125rem; 
+        margin-bottom: 1.3125rem;
         display: grid;
         justify-items: end;
     }
@@ -649,6 +666,17 @@ $component-border-radius: size(config('ej.style.border-radius'));
     margin: 0;
 }
 
+@media only screen and (max-width: 900px) {
+    input {
+        min-width: unset !important;
+    }
+    textarea::placeholder,
+    input::placeholder
+    {
+        font-size: .7rem !important;
+        line-height: 1.2rem !important;
+    }
+}
 @media only screen and (max-width: 320px) {
     .sharing-card {
         text-align: center;
@@ -657,11 +685,11 @@ $component-border-radius: size(config('ej.style.border-radius'));
             font-size: 1rem;
             width: 62%;
         }
-    
+
         &__description-text {
            font-size: 0.875rem;
         }
-    
+
         &__link {
             justify-content: center;
         }
@@ -671,7 +699,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
         margin-top: 2.438rem;
         flex-wrap: wrap;
     }
-    
+
     .sharing-card-container > * {
         width: 100%;
         align-items: center;
@@ -722,9 +750,9 @@ $component-border-radius: size(config('ej.style.border-radius'));
         &__voting-form {
             &__back {
                 display: block;
-                position: relative; 
-                float: left; 
-                bottom: 30px; 
+                position: relative;
+                float: left;
+                bottom: 30px;
                 color: $color-complementary-gray;
             }
 
@@ -741,12 +769,12 @@ $component-border-radius: size(config('ej.style.border-radius'));
 
     .add-container-form {
         max-height: unset;
-    
+
         &__limit-tooltip {
             margin-bottom: 0;
         }
     }
-    
+
 }
 
 
@@ -755,7 +783,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
         &__link-text {
             font-size: 1rem;
         }
-    
+
         &__description-text {
            font-size: 0.875rem;
         }
@@ -771,7 +799,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
         margin-top: 2.438rem;
         flex-wrap: wrap;
     }
-    
+
     .sharing-card-container > * {
         width: 100%;
         align-items: center;
@@ -817,9 +845,9 @@ $component-border-radius: size(config('ej.style.border-radius'));
 
             &__back {
                 display: block;
-                position: relative; 
-                float: left; 
-                bottom: 30px; 
+                position: relative;
+                float: left;
+                bottom: 30px;
                 color: $color-complementary-gray;
             }
 
@@ -836,7 +864,7 @@ $component-border-radius: size(config('ej.style.border-radius'));
 
     .add-container-form {
         max-height: unset;
-    
+
         &__limit-tooltip {
             margin-bottom: 0;
         }

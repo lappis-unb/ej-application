@@ -1,63 +1,77 @@
 {% extends 'base.jinja2' %}
-{% set main_class = 'container-1 pad-x0' %}
-{% set body_class = 'body theme-' + board.palette %}
+{% set main_class = 'pad-x0' %}
 {% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
 
 
 {% block content %}
     <form method="POST" class="width-full">
         {{ csrf_input }}
-        {% include 'ej_conversations/includes/editable-conversation-balloon.jinja2' %}
+        {% block balloon %}
+            {% with create_mode=true %}
+                {% include 'ej_conversations/includes/editable-conversation-balloon.jinja2' %}
+            {% endwith %}
+        {% endblock %}
 
         {% block form_content %}
-            <div class="measure margin-xauto">
-                {# CONVERSATION FORM #}
-                <h1 class="h2 text-accent center">{{ _('Conversation') }}</h1>
-                <p class="center">{% trans %}Please fill the details bellow.{% endtrans %}</p>
-                <div class="side-space">
-                    {{ form.non_field_errors() }}
-                    {{ form.title.errors }}
-                    <label>{{ form.title.label }}{{ form.title }}</label>
-                </div>
-                <legend>{{ form.title.help_text }}</legend>
-
-                <h1 class="h2 text-accent center">{{ _('Anonymous participation') }}</h1>
-                <div class="block">
-                    <label for="">{{form.anonymous_votes_limit.label}}</label>
-                    {{form.anonymous_votes_limit}}
-                    <legend>{{form.anonymous_votes_limit.help_text}}</legend>
-                </div>
-
-                <h1 class="h2 text-accent center">{{ _('Conversation duration') }}</h1>
+            <div class="conversation-form content-grid">
                 <div>
-                    <div>{{form.start_date}}</div>
-                    <div>{{form.end_date}}</div>
-                </div>
+                    {# CONVERSATION FORM #}
+                    <h3 class="conversation-form__h3">{{ _('Details') }}</h3>
+                    <p class="helptext">
+                    {% trans %}The following fields composes the conversation structure. They will help you to customize the participation process.Some fields are optional and can be edited later.{% endtrans %}</p>
+                    <div>
+                        {{ form.non_field_errors() }}
+                        <h4 class="conversation-form__h4">{{_("Conversation about")}}</h4>
+                        {{ form.title.errors }}
+                        <label>{{ form.title.label }}{{ form.title }}</label>
+                    </div>
+                    <legend>{{ form.title.help_text }}</legend>
 
-                {# ADD COMMENTS #}
-                <h1 class="h2 text-accent center">{{ _('Initial comments') }}</h1>
-                <p class="center">
-                    {{ _('Add as many comments as you like (including none).') }}{{ ' ' }}
-                    {{ _('Remember to give a minimum context and something for other users to explore.') }}{{ ' ' }}
-                    {{ _('You can add as many comments as you want later.') }}
-                </p>
-                <input type="hidden" name="comments_count" value="3">
-                <div id="comment-list" class="side-space">
-                    {% for i in range(1, 4) %}
-                        <label>
-                            {% trans %}Comment {{ i }}{% endtrans %}
-                            <textarea name="comment-{{ i }}"
-                                      placeholder="{{ _('Type your comment here') }} #{{ i }}"></textarea>
-                        </label>
-                    {% endfor %}
-                </div>
+                    <h4 class="conversation-form__h4">{{_("Anonymous participation")}}</h4>
+                    <div class="block">
+                        <div class="flex">
+                            <label for="">{{form.anonymous_votes_limit.label}}</label>
+                            <span class="helptext">&nbsp;({{_("optional")}})</span>
+                        </div>
+                        {{form.anonymous_votes_limit}}
+                        <legend>{{form.anonymous_votes_limit.help_text}}</legend>
+                    </div>
 
-                <a class="block uppercase center semi-bold" id="add-more-comments" tabindex="0">
-                    <i class="fa fa-plus"></i> {{ _('Add more comments') }}
-                </a>
+                    <h4>{{_("Conversation duration")}}</h4>
+                    <div class="conversation-form__duration">
+                        <div>{{form.start_date}}</div>
+                        <div>{{form.end_date}}</div>
+                    </div>
 
-                <div class="margin-xauto margin-y3 center">
-                    <input class="is-primary" type="submit" value="{{ _('Create conversation') }}">
+                    {% block initial_comments %}
+                        {# ADD COMMENTS #}
+                        <h4>{{_("Initial comments")}}</h4>
+                        <p class="helptext">
+                            {{ _('Add as many comments as you like (including none).') }}{{ ' ' }}
+                            {{ _('Remember to give a minimum context and something for other users to explore.') }}{{ ' ' }}
+                            {{ _('You can add as many comments as you want later.') }}
+                        </p>
+                        <input type="hidden" name="comments_count" value="3">
+                        <div id="comment-list">
+                            {% for i in range(1, 4) %}
+                                <label>
+                                    {% trans %}Comment {{ i }}{% endtrans %}
+                                    <textarea name="comment-{{ i }}"
+                                            placeholder="{{ _('Type your comment here') }} #{{ i }}"></textarea>
+                                </label>
+                            {% endfor %}
+                        </div>
+
+                        <a class="uppercase semi-bold" id="add-more-comments" tabindex="0">
+                            <i class="fa fa-plus text-accent"></i> <span class="text-accent">{{ _('Add more comments') }}</span>
+                        </a>
+                    {% endblock %}
+
+                    {% block conversation_form_button %}
+                        <div class="margin-xauto margin-y3">
+                            <input class="is-primary button" type="submit" value="{{ _('Create conversation') }}">
+                        </div>
+                    {% endblock %}
                 </div>
             </div>
         {% endblock %}
@@ -78,7 +92,7 @@
                         index = parseInt($input.val(), 10) + 1,
                         template = (
                             '<label>' +
-                            '{% trans %}Comment %i%{% endtrans %}' +
+                            `{{ gettext(" Comment ") }} ${index}` +
                             '<textarea name="comment-%i%" placeholder="{{ _('Type your comment here') }} #%i%"></textarea>' +
                             '</label>');
                     $input.val(index);
