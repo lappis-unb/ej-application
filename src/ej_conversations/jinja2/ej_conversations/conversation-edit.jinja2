@@ -1,49 +1,19 @@
 {% extends 'ej_conversations/conversation-create.jinja2' %}
-{% set body_class = 'body theme-' + conversation.board.palette %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
 
-{% block form_content %}
-    <p><a href="{{ conversation.get_absolute_url() }}"
-          title="{{ _('Back (skip changes)') }}"
-          class="lowercase bold text-brand">
-        <i class="fa fa-chevron-left"></i>{% trans %}Back to conversation{% endtrans %}
-    </a></p>
+{% block balloon %}
+    {% with create_mode=false %}
+        {% include 'ej_conversations/includes/editable-conversation-balloon.jinja2' %}
+    {% endwith %}
+{% endblock %}
 
-    <div class="measure margin-xauto">
-        <h1 class="h2 text-accent center">{{ _('Edit conversation') }}</h1>
+{% block form_content %}{{super()}}{% endblock %}
 
-        {{ form.non_field_errors() }}
-        {{ form.title.errors }}
-        <label>{{ form.title.label }}{{ form.title }}</label>
-        <legend>{{ form.title.help_text }}</legend>
+{% block initial_comments %}{% endblock %}
 
-        <h1 class="h2 text-accent center">{{ _('Anonymous participation') }}</h1>
-        <div class="block">
-            <label for="">{{form.anonymous_votes_limit.label}}</label>
-            {{form.anonymous_votes_limit}}
-            <legend>{{form.anonymous_votes_limit.help_text}}</legend>
-        </div>
-        <h1 class="h2 text-accent center">{{ _('Conversation duration') }}</h1>
-        <div>
-            <div>{{form.start_date}}</div>
-            <div>{{form.end_date}}</div>
-        </div>
-
-
-
-        <div class="margin-xauto margin-y3 center">
-            <input class="is-primary" type="submit" value="{{ _('Save modifications') }}">
-        </div>
-
-        <h2 class="h3 text-accent center">{{ _('Other options') }}</h2>
-        <ul>
-            <li>
-                <button class="is-clear" name="next" value="stereotypes">{{ _('Save and manage stereotypes') }}</button>
-            </li>
-            <li>
-                <button class="is-clear" name="next" value="moderate">{{ _('Save and moderate comments') }}</button>
-            </li>
-        </ul>
+{% block conversation_form_button %}
+    <div class="margin-xauto margin-y3">
+        <input class="is-primary button" type="submit" value="{{ _('Edit conversation') }}">
     </div>
 {% endblock %}

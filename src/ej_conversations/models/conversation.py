@@ -51,7 +51,12 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         max_length=255,
         help_text=_("Short description used to create URL slugs (e.g. School system)."),
     )
-    text = models.TextField(_("Question"), help_text=_("What do you want to ask?"))
+    text = models.TextField(
+        _("Question"),
+        help_text=_(
+            "What do you want to know about participants? The conversation question will be the starting point for collecting opinions. "
+        ),
+    )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
