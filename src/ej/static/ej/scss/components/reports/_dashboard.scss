@@ -9,6 +9,9 @@
 .flex {
     display: flex;
 }
+.flex--gap-1 {
+    gap: 1rem;
+}
 .wrap {
     flex-wrap: wrap;
     justify-content: space-between !important;

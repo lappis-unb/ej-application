@@ -1,0 +1,58 @@
+{% extends 'ej_conversations/base.jinja2' %}
+{% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/ej_activation/css/main.css" />
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+{% endblock %}
+
+
+{% set main_class = "activation-grid" %}
+{%block content %}
+    <section>
+        <h1 class="text-accent">{{_("Public segmentation")}}</h1>
+        <p class="helptext tool-description">{{_("Creates segments from conversation participants. A segment is a group of users that match filter criterias.")}}</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step__indicator">
+                    <div class="step__circle step__circle--active">
+                        <div class="text-accent step__number">1</div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span class="step__text step__text--accent">{{_("Choose your audience")}}</span>
+                    </div>
+                    <div>
+                        <span class="helptext text-accent">{{_("Fill below")}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step__indicator ">
+                    <div class="step__circle">
+                        <div class="step__number">2</div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span class="step__text">{{_("Review and exports")}}</span>
+                    </div>
+                    <div>
+                        <span class="helptext">{{_("Your details here")}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="post">
+            {{ csrf_input }}
+            {% include 'ej_activation/includes/engagement-frame.jinja2' %}
+            {% include 'ej_activation/includes/clusters-frame.jinja2' %}
+            {% include 'ej_activation/includes/comments-frame.jinja2' %}
+        </form>
+    </section>
+    <section id="results" class="section--full-width section--fixed section--blue-bg">
+        {% include 'ej_activation/includes/results-frame.jinja2' %}
+    </section>
+{% endblock %}

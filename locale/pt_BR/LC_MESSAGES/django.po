@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-06 13:43-0300\n"
+"POT-Creation-Date: 2023-11-10 14:24-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -25,15 +25,15 @@ msgstr ""
 msgid "{date} at {time}"
 msgstr "{date} às {time}"
 
-#: src/ej/components/menu.py:135
+#: src/ej/components/menu.py:157
 msgid "Accessibility"
 msgstr "Acessibilidade"
 
-#: src/ej/components/menu.py:137
+#: src/ej/components/menu.py:159
 msgid "Toggle Font Size"
 msgstr "Tamanho da fonte"
 
-#: src/ej/components/menu.py:138
+#: src/ej/components/menu.py:160
 msgid "Toggle Contrast"
 msgstr "Alto contraste"
 
@@ -90,6 +90,16 @@ msgstr "Não faz parte do EJ ainda?"
 #: src/ej/settings/options.py:33
 msgid "Welcome!"
 msgstr "Boas vindas!"
+
+#: src/ej_activation/apps.py:15
+#, fuzzy
+msgid "Activation"
+msgstr "Ativação"
+
+#: src/ej_activation/apps.py:26
+#, fuzzy
+msgid "Public segmentation"
+msgstr "Segmentação do público"
 
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:51
 msgid "Boards"
@@ -377,42 +387,45 @@ msgstr "Componente de opinião"
 msgid "Rocket.Chat"
 msgstr "Rocket.Chat"
 
-#: src/ej_conversations/enums.py:11
+#: src/ej_conversations/enums.py:12
 msgid "User provided"
 msgstr "Fornecido pelo usuário"
 
-#: src/ej_conversations/enums.py:12
+#: src/ej_conversations/enums.py:13
 msgid "Incomplete or incomprehensible text"
 msgstr "Texto incompleto ou incompreensível"
 
-#: src/ej_conversations/enums.py:13
+#: src/ej_conversations/enums.py:14
 msgid "Off-topic"
 msgstr "Fora do tópico da conversa"
 
-#: src/ej_conversations/enums.py:14
+#: src/ej_conversations/enums.py:15
 msgid "Offensive content or language"
 msgstr "Linguagem ou conteúdo ofensivo"
 
-#: src/ej_conversations/enums.py:15
+#: src/ej_conversations/enums.py:16
 msgid "Duplicated content"
 msgstr "Conteúdo duplicado"
 
-#: src/ej_conversations/enums.py:16
+#: src/ej_conversations/enums.py:17
 msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
-#: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:33
-#: src/ej_dataviz/roles.py:154 src/ej_dataviz/roles.py:171
+#: src/ej_conversations/enums.py:25 src/ej_conversations/enums.py:35
+#: src/ej_conversations/roles/comments.py:33 src/ej_dataviz/roles.py:154
+#: src/ej_dataviz/roles.py:171
 msgid "Skip"
 msgstr "Pular"
 
-#: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:34
-#: src/ej_dataviz/roles.py:139 src/ej_dataviz/roles.py:164
+#: src/ej_conversations/enums.py:26 src/ej_conversations/enums.py:36
+#: src/ej_conversations/roles/comments.py:34 src/ej_dataviz/roles.py:139
+#: src/ej_dataviz/roles.py:164
 msgid "Agree"
 msgstr "Concorda"
 
-#: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:32
-#: src/ej_dataviz/roles.py:146 src/ej_dataviz/roles.py:169
+#: src/ej_conversations/enums.py:27 src/ej_conversations/enums.py:37
+#: src/ej_conversations/roles/comments.py:32 src/ej_dataviz/roles.py:146
+#: src/ej_dataviz/roles.py:169
 msgid "Disagree"
 msgstr "Discorda"
 
@@ -721,7 +734,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:112
+#: src/ej_conversations/views.py:113
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -1674,11 +1687,11 @@ msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej/templates/jinja2/base.jinja2:28
+#: src/ej/templates/jinja2/base.jinja2:34
 msgid "Jump to main content"
 msgstr "Pular para conteúdo principal"
 
-#: src/ej/templates/jinja2/base.jinja2:62
+#: src/ej/templates/jinja2/base.jinja2:68
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -1901,6 +1914,140 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
+#: src/ej_activation/jinja2/ej_activation/detail.jinja2:15
+msgid ""
+"Creates segments from conversation participants. A segment is a group of "
+"users that match filter criterias."
+msgstr ""
+"Crie segmentos a partir dos participantes da conversa. Um segmento é um "
+"grupo de usuários que atendem a determinados critérios."
+
+#: src/ej_activation/jinja2/ej_activation/detail.jinja2:25
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:12
+#, fuzzy
+msgid "Choose your audience"
+msgstr "Escolha seu público"
+
+#: src/ej_activation/jinja2/ej_activation/detail.jinja2:28
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:15
+msgid "Fill below"
+msgstr "Preencha abaixo"
+
+#: src/ej_activation/jinja2/ej_activation/detail.jinja2:40
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:27
+msgid "Review and exports"
+msgstr "Revise e exporte"
+
+#: src/ej_activation/jinja2/ej_activation/detail.jinja2:43
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:30
+#, fuzzy
+msgid "Your details here"
+msgstr "Detalhes do segmento"
+
+#: src/ej_activation/jinja2/ej_activation/index.jinja2:16
+#, fuzzy
+msgid "Segment"
+msgstr "Segmentação"
+
+#: src/ej_activation/jinja2/ej_activation/index.jinja2:21
+#, fuzzy
+msgid "New"
+msgstr "novo"
+
+#: src/ej_activation/jinja2/ej_activation/includes/clusters-frame.jinja2:2
+#, fuzzy
+msgid "Select one or more clusters"
+msgstr "Selecione um ou mais grupos"
+
+#: src/ej_activation/jinja2/ej_activation/includes/clusters-frame.jinja2:3
+msgid "Filter participants clusterized on the selected groups."
+msgstr "Filtre participantes a partir dos grupos em que foram inseridos."
+
+#: src/ej_activation/jinja2/ej_activation/includes/clusters-frame.jinja2:10
+#, fuzzy
+msgid "There are no clusters on this conversation."
+msgstr "Não há grupos para esta conversa."
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:1
+msgid "Select voting"
+msgstr "Selecione como os participantes votaram."
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:2
+msgid "Filter participants based on how they voted."
+msgstr "Filtre participantes a partir de como eles votaram nos comentários."
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:58
+#, fuzzy
+msgid "first"
+msgstr "Primeiro"
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:59
+#, fuzzy
+msgid "previous"
+msgstr "Anterior"
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "Showing"
+msgstr "Mostrando"
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "of"
+msgstr "de"
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+#, fuzzy
+msgid "entries"
+msgstr "entradas"
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:67
+msgid "next"
+msgstr "próximo"
+
+#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:68
+msgid "last"
+msgstr "último"
+
+#: src/ej_activation/jinja2/ej_activation/includes/engagement-frame.jinja2:2
+#, fuzzy
+msgid "Select participation level"
+msgstr "Selecione o nível de participação"
+
+#: src/ej_activation/jinja2/ej_activation/includes/engagement-frame.jinja2:3
+msgid ""
+"Filter participants with participation level equal or superior from the "
+"informed percentage."
+msgstr ""
+"Filtre participantes com nível de participação igual ou superior à "
+"porcentagem informada."
+
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:36
+msgid "Review contacts"
+msgstr "Revisar contatos"
+
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:36
+#: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:16
+#, fuzzy
+msgid "users"
+msgstr "usuários"
+
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:51
+#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:9
+msgid "see all"
+msgstr "ver todos"
+
+#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:60
+#, fuzzy
+msgid "Exports"
+msgstr "Exportar"
+
 #: src/ej_admin/jinja2/ej_admin/environment.jinja2:11
 #, fuzzy
 msgid "Latest boards"
@@ -2002,23 +2149,10 @@ msgstr "conversas"
 
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "Showing"
-msgstr "Mostrando"
-
-#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
-#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "to"
 msgstr "a"
-
-#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
-#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "of"
-msgstr "de"
 
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:6
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:5
@@ -2039,11 +2173,6 @@ msgstr "Próximo"
 #, fuzzy
 msgid "boards"
 msgstr "murais"
-
-#: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:16
-#, fuzzy
-msgid "users"
-msgstr "usuários"
 
 #: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
 msgid "Create board"
@@ -2906,15 +3035,6 @@ msgstr "Relatório de participantes"
 msgid "Scatter plot"
 msgstr "Nuvem de pontos"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:92
-#, fuzzy
-msgid "Segmented Comunication"
-msgstr "Comunicação segmentada"
-
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:93
-msgid "Chats"
-msgstr "Chats"
-
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
 msgstr "Nova conversa"
@@ -3035,10 +3155,6 @@ msgstr ""
 #, fuzzy
 msgid "Comments Report"
 msgstr "Relatório de comentários"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:9
-msgid "see all"
-msgstr "ver todos"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:20
 #, fuzzy
@@ -3295,11 +3411,6 @@ msgstr "grupos"
 #, fuzzy
 msgid "general"
 msgstr "Geral"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-#, fuzzy
-msgid "entries"
-msgstr "entradas"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:29
@@ -4670,9 +4781,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgid "General Report"
 #~ msgstr "Relatório Geral"
 
-#~ msgid "new"
-#~ msgstr "novo"
-
 #, fuzzy
 #~ msgid "Home"
 #~ msgstr "Início"
@@ -4833,10 +4941,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgstr ""
 #~ "Essa ferramenta não está diponível na sua assinatura atual. Clique para "
 #~ "fazer"
-
-#, fuzzy
-#~ msgid "Authentication Type"
-#~ msgstr "Autenticação"
 
 #, fuzzy
 #~ msgid ""

@@ -10,7 +10,7 @@
         <li class="menu-item">
             <a href={{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}><span>{{ conversation.title }}</span></a>
         </li>
-        
+
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
             <li class="menu-item">
                 <a href="{{ conversation.patch_url('conversation:edit') }}">{{ _('Edit') }}</a>
@@ -24,7 +24,7 @@
 
     <ul class="menu-padding nav-categories">
         <h3 id="menu-conversation">{{ _('Collect opinions') }}</h3>
-        
+
         {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
             <li>{{ link }}</li>
         {% endfor %}
@@ -49,7 +49,7 @@
                     </div>
                     <a id="reports" href="" onclick="setChecked('isexpanded3')">{{ _('Reports') }}</a>
                 </div>
-                
+
             <ul id="report-options-list">
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
                     <li>
@@ -81,17 +81,19 @@
                         </div>
                     </li>
                 {% endif %}
-            </ul>    
+            </ul>
         </li>
         {% endif %}
     </ul>
 
     <hr class="nav-divider">
-    
+    {% for section in conversation.custom_apps_menu_links() %}
     <ul class="menu-padding nav-categories">
-        <h3 id="menu-communication">{{ _('Segmented Comunication') }}</h3>
-        <li><a href="{{ url('boards:dataviz-communication',  **conversation.get_url_kwargs()) }}">{{_("Chats")}}</a></li>
-    </ul>
+        <h3>{{section["title"]}}</h3>
+        {% for link in section["links"] %}
+            <li><a href={{ link["a"] }}>{{link["text"]}}</a></li>
+        {% endfor %}
+    {% endfor %}
 
 <script>
     function setChecked(check_id) {
@@ -110,7 +112,7 @@
         let reports = document.getElementById('reports');
         let url = window.location.href.split("/");
         var menuItem = url[url.length-2].split("-")[0];
-        menuItem = document.querySelector("." + menuItem + "-item"); 
+        menuItem = document.querySelector("." + menuItem + "-item");
 
         if (!menuItem) return
         menuItem.classList.add("selected");
