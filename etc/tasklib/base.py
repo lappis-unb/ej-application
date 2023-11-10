@@ -17,6 +17,7 @@ env = environ.Env(
     EJ_THEME=(str, "ej"),
 )
 
+
 #
 # Utility functions
 #
@@ -65,7 +66,7 @@ def set_theme(theme):
     return theme, f"{directory}/src/{theme}/static/{theme}"
 
 
-def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
+def watch_path(app_name, func, poll_time=0.5, name=None, skip_first=False):
     """
     Watch path and execute the given function everytime a file changes.
     """
@@ -98,8 +99,11 @@ def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
             time.sleep(poll_time)
             if last == start:
                 print(f"File modified: {ev.src_path}")
-                func()
+                func(app_name)
 
+    app_root = f"{directory}/src/{app_name}"
+    app_static_root = f"{app_root}/static/{app_name}"
+    path = f"{app_static_root}/scss"
     observer = Observer()
     handler = FileSystemEventHandler()
     handler.dispatch = dispatch
@@ -108,7 +112,7 @@ def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
     name = name or func.__name__
     print(f"Running {name} in watch mode.")
     if not skip_first:
-        func()
+        func(app_name)
     try:
         while True:
             time.sleep(0.5)
@@ -117,24 +121,26 @@ def watch_path(path, func, poll_time=0.5, name=None, skip_first=False):
     observer.join()
 
 
-def exec_watch(path, func, name, watch=False, background=False, poll_time=0.5):
-    path = str(path)
+def exec_watch(app_name, func, name, watch=False, background=False, poll_time=0.5):
+    app_root = f"{directory}/src/{app_name}"
+    app_static_root = f"{app_root}/static/{app_name}"
+    path = f"{app_static_root}/scss"
     if watch and background:
-        go = lambda: watch_path(path, func, name=name, poll_time=poll_time)
-        return exec_watch(path, go, name, background=True)
+        go = lambda app_name: watch_path(app_name, func, name=name, poll_time=poll_time)
+        return exec_watch(app_name, go, name, background=True)
     elif watch:
-        return watch_path(path, func, name=name, poll_time=poll_time)
+        return watch_path(app_name, func, name=name, poll_time=poll_time)
     elif background:
         from threading import Thread
 
         def go():
             print(".", end="", flush=True)
             try:
-                func()
+                func(app_name)
             except KeyboardInterrupt:
                 pass
 
         thread = Thread(target=go, daemon=True)
         thread.start()
     else:
-        func()
+        func(app_name)

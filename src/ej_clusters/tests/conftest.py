@@ -10,7 +10,7 @@ import pytest
 @pytest.fixture
 def stereotype(db, comment, user):
     stereotype = Stereotype.objects.create(name="stereotype", owner=user)
-    stereotype_vote = StereotypeVote.objects.create(author=stereotype, comment=comment, choice=Choice.AGREE)
+    StereotypeVote.objects.create(author=stereotype, comment=comment, choice=Choice.AGREE)
     return stereotype
 
 

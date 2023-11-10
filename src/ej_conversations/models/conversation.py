@@ -27,7 +27,7 @@ from ..enums import Choice
 from ..signals import comment_moderated
 from ..utils import normalize_status
 
-from ej.components.menu import register_menu
+from ej.components.menu import apps_custom_menu_links, register_menu
 from hyperpython import a
 from ej_boards.models import Board
 
@@ -384,6 +384,13 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         if self.n_approved_comments == n_user_final_votes:
             return n_user_final_votes
         return n_user_final_votes + 1
+
+    def custom_apps_menu_links(self):
+        """
+        returns a list of links to include on conversation menu.
+        Other apps can define menu links to be injected on conversation menu.
+        """
+        return apps_custom_menu_links(self)
 
 
 #

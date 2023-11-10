@@ -39,6 +39,7 @@ from ej.decorators import (
 )
 
 from .decorators import create_session_key, user_can_post_anonymously
+from ej.components.menu import apps_custom_menu_links
 
 log = getLogger("ej")
 
@@ -191,6 +192,7 @@ class ConversationDetailView(DetailView):
             "n_comments": n_comments,
             "max_comments": max_comments,
             "n_user_final_votes": n_user_final_votes,
+            "apps_menu_links": apps_custom_menu_links(conversation),
             **self.ctx,
         }
 
@@ -355,6 +357,7 @@ class NewCommentView(UpdateView):
             "rejected": rejected,
             "created": created_comments,
             "menu_links": conversation_admin_menu_links(conversation, self.request.user),
+            "apps_menu_links": apps_custom_menu_links(conversation),
             "comment_saved": True,
         }
 

@@ -1,0 +1,81 @@
+<div class="results results-grid">
+    <div class="results__grid-item">
+        <div class="steps">
+            <div class="step">
+                <div class="step__indicator">
+                    <div class="step__circle">
+                        <div class="step__number">1</div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span class="step__text">{{_("Choose your audience")}}</span>
+                    </div>
+                    <div>
+                        <span class="helptext">{{_("Fill below")}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step__indicator ">
+                    <div class="step__circle step__circle--active">
+                        <div class="text-accent step__number">2</div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <span class="step__text step__text--accent">{{_("Review and exports")}}</span>
+                    </div>
+                    <div>
+                        <span class="helptext text-accent">{{_("Your details here")}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="flex flex--gap-1">
+        <h4>{{_("Review contacts")}} ({{participants.count() if participants else ''}} {{_("users") if participants else ''}})</h4>
+        <span id="spinner" class="loader"></span>
+    </div>
+    <div class="results__preview">
+        <div class="contacts">
+            <div class="contacts__list">
+                {% if participants %}
+                        {% for participant in participants %}
+                            <div class="contact">
+                                <span>{{ participant.username }}</span>
+                            </div>
+                        {% endfor %}
+                {% endif %}
+            </div>
+            <div onclick="toggle(event)">
+                <span id="expand-contacts"><i class="fas fa-angle-double-up"></i>{{_("see all")}}</span>
+            </div>
+        </div>
+        <div class="results__export">
+
+            <a
+             href="{{url('ej_activation:export', **{ "board_slug": segment_filter.conversation.board.slug, "slug": segment_filter.conversation.slug, "conversation_id": segment_filter.conversation.id, "pk": segment_filter.id})}}"
+             class="button is-primary" target="_blank">
+                <i class="fa fa-download"></i>
+                {{_("Exports")}}
+            </a>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    CONTACTS_COLLAPSED = true;
+    function toggle() {
+        if (CONTACTS_COLLAPSED) {
+            $("#expand-contacts i")[0].classList.toggle("fa-angle-double-up");
+            $("#expand-contacts i")[0].classList.toggle("fa-angle-double-down");
+            CONTACTS_EXPANDED = false;
+        }
+        $(".contacts")[0].classList.toggle("contacts--expanded");
+    }
+
+document.body.addEventListener('htmx:configRequest', (event) => {
+  event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+})
+</script>
