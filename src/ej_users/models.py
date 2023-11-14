@@ -68,6 +68,35 @@ class User(AbstractUser):
     def default_board_url(self):
         return "/" + slugify(self.email[:50]) + "/conversations"
 
+    @staticmethod
+    def creates_request_session_key(request):
+        """
+        creates the request session key, if not exists.
+        This is necessary for anonymous participation.
+        """
+        if not request.session.session_key:
+            request.session.create()
+        return request
+
+    @staticmethod
+    def creates_from_request_session(conversation, request):
+        """
+        creates new user from request session if conversation has
+        anonymous_votes_limit bigger then 0 and user is anonymous.
+        """
+        user = request.user
+        request = User.creates_request_session_key(request)
+        if user.is_anonymous and conversation.anonymous_votes_limit:
+            session_key = request.session.session_key
+            user, _ = User.objects.get_or_create(
+                email=f"anonymoususer-{session_key}@mail.com",
+                defaults={
+                    "password": session_key,
+                    "agree_with_terms": False,
+                },
+            )
+        return user
+
 
 class PasswordResetToken(TimeStampedModel):
     """
