@@ -1,0 +1,187 @@
+.tour {
+    &-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: $color-black-alternative;
+        opacity: .8;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
+    &-card {
+        background: $color-brand-lighter;
+        z-index: 1001;
+        height: 43.75rem;
+        position: absolute;
+        top: calc(50% - 43.75rem/2);
+        left: calc(50% - 56.25rem/2);
+        width: 100%;
+        max-width: 56.25rem;
+    }
+    &-footer {
+        display: flex;
+        gap: 8rem;
+        flex-wrap: wrap;
+
+        &__snapshot {
+            z-index: 999;
+        }
+    }
+    &-content {
+        padding: 3rem;
+        .logo {
+            margin-bottom: 4vh;
+            img  {
+                width: 153px;
+            }
+        }
+        .bubbles,
+        .secondary-bubbles {
+            position: absolute;
+        }
+        .bubbles {
+            right: 0;
+            top: 0;
+        }
+        .secondary-bubbles {
+            left: 0;
+            bottom: 0;
+        }
+        .welcome {
+            &--width-100 {
+                width: 100%;
+            }
+            width: 50%;
+            h1,
+            p {
+                color: $color-black-alternative;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+                font-family: 'Raleway';
+                margin-top: unset;
+                margin-bottom: 3vh;
+            }
+            p {
+                font-size: 1.5rem;
+                margin-bottom: 4vh;
+            }
+        }
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            flex-flow: row-reverse;
+            flex-wrap: wrap;
+            align-content: end;
+            margin-bottom: 2rem;
+            z-index: 999;
+
+            a {
+                width: 225px;
+                margin: unset;
+                padding: .5rem 0;
+                box-sizing: content-box;
+            }
+            .button--skip {
+                color: $color-accent;
+                background-color: $color-brand-lighter;
+                border: 3px solid $color-accent;
+            }
+        }
+        .snapshot {
+            position: absolute;
+        }
+    }
+
+    &-progress {
+        height: .25rem;
+        position: sticky;
+        left: 0;
+        top: 0;
+        background-color: $color-gray-200;
+        max-width: 56.25rem;
+        z-index: 998;
+    }
+    &-progress--1 {
+        background-color: $color-accent;
+        width: 5%;
+        z-index: 999;
+        height: .25rem;
+    }
+    &-progress--2 {
+        background-color: $color-accent;
+        width: 50%;
+        z-index: 999;
+        height: .25rem;
+    }
+    &-progress--3 {
+        background-color: $color-accent;
+        width: 100%;
+        z-index: 999;
+        height: .25rem;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .tour-progress {
+        width: 100vw;
+    }
+    .tour-content {
+        padding: 1% 14%;
+    }
+    .tour-content .logo {
+        margin-top: 19vh;
+    }
+    .tour-content .logo.logo--minor-margin-top {
+        margin-top: 5%;
+        margin-bottom: 4%;
+    }
+    .tour-content .welcome {
+        width: 80vw;
+        margin: auto;
+    }
+    .tour-content .buttons {
+        flex-flow: column;
+        margin: auto;
+        width: 80%;
+        max-width: 25rem;
+    }
+    .tour-content .buttons a {
+        width: 100%;
+    }
+    .tour-content .bubbles {
+        max-width: 60%;
+    }
+    .tour-footer__snapshot {
+        width: 80%;
+    }
+    .tour-card {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+    }
+    .tour-footer {
+        gap: 1rem;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    .tour-content {
+        margin-bottom: 1rem;
+    }
+    .tour-card {
+        height: fit-content;
+    }
+
+    @supports (-moz-appearance:none) {
+        .tour-card {
+            height: -moz-max-content;
+        }
+    }
+}

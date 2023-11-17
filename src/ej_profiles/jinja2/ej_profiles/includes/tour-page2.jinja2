@@ -1,0 +1,27 @@
+<div class="tour-progress">
+    <div class="tour-progress--2"></div>
+</div>
+<div class="tour-content">
+    <div class="logo logo--minor-margin-top">
+        <img src={{ static("img/logo/logo-dark.png") }} alt="{{ _('Logo') }}" aria-label="{{ _('Back to initial page') }}">
+    </div>
+    <div class="welcome welcome--width-100">
+        <h1>{{_("Our journey starts on conversation.")}}</h1>
+        <p>
+        {{_("On Pushing Together, the starting point is a conversation. It is formed by a set of comments, that will be voted by the conversation participants.")}}
+        </p>
+    </div>
+    <div class="tour-footer">
+        <div class="tour-footer__snapshot">
+            <img src={{ static("ej_profiles/img/tour/conversa.png") }} alt="{{ _('Conversation') }}">
+        </div>
+        <div class="buttons">
+            <div>
+                <a class="is-primary button square" hx-target="#tour-page" hx-get="/profile/tour/?step=3"><span>{{_("Next")}}</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="secondary-bubbles">
+        <img src={{ static("ej_profiles/img/tour/bubbles2.png") }} alt="{{ _('Bubbles 2') }}">
+    </div>
+</div>

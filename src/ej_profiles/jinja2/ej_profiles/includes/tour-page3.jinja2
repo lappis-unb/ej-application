@@ -1,0 +1,30 @@
+<div class="tour-progress">
+    <div class="tour-progress--3"></div>
+</div>
+<div class="tour-content">
+    <div class="logo logo--minor-margin-top">
+        <img src={{ static("img/logo/logo-dark.png") }} alt="{{ _('Logo') }}" aria-label="{{ _('Back to initial page') }}">
+    </div>
+    <div class="welcome welcome--width-100">
+        <h1>{{_("Discover and understand your audience.")}}</h1>
+        <p>
+        {{_("Collects information from your conversations using our reports and discover what your audience think about relevant topics for your organization.")}}
+        </p>
+    </div>
+    <div class="tour-footer">
+        <div class="tour-footer__snapshot">
+            <img src={{ static("ej_profiles/img/tour/relatorio.png") }} alt="{{ _('Dashboard') }}">
+        </div>
+        <div class="buttons">
+            <div>
+                <form>
+                    {{ csrf_input }}
+                    <a class="is-primary button square" hx-post="/profile/tour/?step=end"><span>{{_("Starts")}}</span></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="secondary-bubbles">
+        <img src={{ static("ej_profiles/img/tour/bubbles2.png") }} alt="{{ _('Bubbles 2') }}">
+    </div>
+</div>
