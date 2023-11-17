@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-10 14:24-0300\n"
+"POT-Creation-Date: 2023-11-13 19:23-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1672,7 +1672,7 @@ msgstr "Senha inválida"
 
 #: src/ej_users/views/user.py:59
 msgid "Welcome to EJ!"
-msgstr "Bem vindo ao EJ!"
+msgstr "Bem vindo à EJ!"
 
 #: src/ej_users/views/user.py:96
 msgid "You must agree with EJ terms before register"
@@ -1712,6 +1712,9 @@ msgid "Toggle navigation menu"
 msgstr "Ligar/desligar menu de navegação"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:12
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:2
 msgid "Back to initial page"
 msgstr "Voltar para a página inicial"
 
@@ -2165,6 +2168,7 @@ msgstr "Anterior"
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:17
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:16
 msgid "Next"
 msgstr "Próximo"
 
@@ -3560,6 +3564,67 @@ msgstr "Todas"
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:5
+msgid "Bubbles"
+msgstr ""
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:8
+#, fuzzy
+msgid "Welcome to EJ"
+msgstr "Bem vindo à EJ!"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:10
+msgid ""
+"EJ it's a opinion research plataform that aims to empowers your organization "
+"comunication strategy."
+msgstr "A EJ é uma plataforma de consultas de opinião multicanal, que tem por objetivo fortalecer a estratégia de comunicação da sua organização."
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:11
+msgid "Click at 'begin' for a quick tour."
+msgstr "Clique em <b>iniciar</b> para começarmos a demonstração."
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:15
+msgid "Initiate"
+msgstr "Iniciar"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:5
+#, fuzzy
+msgid "Our journey starts on conversation."
+msgstr "Tudo começa na conversa."
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:7
+msgid ""
+"On Pushing Together, the starting point is a conversation. It is formed by a "
+"set of comments, that will be voted by the conversation participants."
+msgstr "Na EJ, o nosso ponto de partida é a conversa. Ela é composta por um conjunto de comentários, "
+"que são votados pelos participantes da pesquisa."
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:21
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:21
+msgid "Bubbles 2"
+msgstr ""
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:5
+msgid "Discover and understand your audience."
+msgstr "Descubra e entenda o seu público."
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:7
+msgid ""
+"Collects information from your conversations using our reports and discover "
+"what your audience think about relevant topics for your organization."
+msgstr "Extraia pontos de informação das suas conversas por meio dos nossos relatórios e descubra "
+"o que o seu público pensa a respeito dos assuntos relevantes para a sua organização."
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:12
+#, fuzzy
+msgid "Dashboard"
+msgstr "mural"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:16
+#, fuzzy
+msgid "Starts"
+msgstr "Iniciar"
+
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:11
 #, fuzzy
 msgid "Your plan is"
@@ -4679,10 +4744,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ "Por favor, informe o identificador do analytics para a pagina monitorada, "
 #~ "e clique em iniciar."
 
-#, fuzzy
-#~ msgid "Start"
-#~ msgstr "Iniciar"
-
 #~ msgid "Compute the opinion bridge user for all conversations."
 #~ msgstr "Calcule o usuário da ponte de opinião para todas as conversas."
 
@@ -4787,9 +4848,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid "Dismiss"
 #~ msgstr "Dispensar"
-
-#~ msgid "Creating a Shepherd is easy too! Just create ..."
-#~ msgstr "Criar um pastor também é fácil! Apenas crie ..."
 
 #~ msgid "App header"
 #~ msgstr "Cabeçalho do aplicativo"

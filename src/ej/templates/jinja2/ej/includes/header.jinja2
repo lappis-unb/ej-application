@@ -15,15 +15,15 @@
     {% if request.user.profile|default(None) %}
     <div class="main-header__user">
         <a aria-haspopup="true" href="#" id="img-profile">
-        <img is-element="toggleProfile:click" class="main-header__avatar" src="{{ request.user.profile.image_url }}" 
+        <img is-element="toggleProfile:click" class="main-header__avatar" src="{{ request.user.profile.image_url }}"
             alt="{{ _('Profile picture') }}"></a>
 
-        <div id="show-profile-menu" class="profile-menu hide"> 
+        <div id="show-profile-menu" class="profile-menu hide">
             {% include 'ej/includes/profile-menu.jinja2' %}
         </div>
     </div>
 
-    {# For route without profile #}   
+    {# For route without profile #}
     {% else %}
         {% call link_macro('profile:detail', title=_('Profile')) %}
             <img class="main-header__avatar" src="{{ static('img/icons/navbar_profile.svg') }}" alt="">

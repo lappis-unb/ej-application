@@ -1,21 +1,21 @@
-from ej_profiles.views import HomeView
-import pytest
+from datetime import datetime
+from io import BytesIO
 import random as rd
 import string as s
+
 from PIL import Image
-from io import BytesIO
-from datetime import datetime
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client, RequestFactory
 from django.db.utils import NotSupportedError
-from ej.testing.fixture_class import EjRecipes
-from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_conversations.models import Conversation
+from django.test import Client, RequestFactory
+from django.urls import reverse
 from ej.testing import UrlTester
+from ej_conversations.models import Conversation
 from ej_profiles import enums
+from ej_profiles.views import HomeView
 from ej_users.models import User
+import pytest
 
 
 class TestRoutes(UrlTester):
@@ -129,15 +129,21 @@ class TestTour:
         assert response.status_code == 302
         assert response.url == "/profile/tour/"
 
-    def test_redirect_after_tour_completion(self, test_user):
-        url = "/profile/tour/"
+    def test_redirect_after_skip_tour(self, test_user):
+        url = "/profile/tour/?step=skip"
         client = Client()
         client.force_login(test_user)
-
         response = client.post(url)
-
         assert response.status_code == 302
-        assert response.url == "/profile/home/"
+        assert response["HX-Redirect"] == reverse("profile:home")
+
+    def test_redirect_after_tour_completion(self, test_user):
+        url = "/profile/tour/?step=end"
+        client = Client()
+        client.force_login(test_user)
+        response = client.post(url)
+        assert response.status_code == 302
+        assert response["HX-Redirect"] == reverse("profile:home")
 
 
 class TestHome:

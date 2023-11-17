@@ -29,4 +29,9 @@ urlpatterns = [
         views.TourView.as_view(),
         name="tour",
     ),
+    path(
+        "tour/?step=<step>",
+        views.TourView.as_view(),
+        name="tour",
+    ),
 ]

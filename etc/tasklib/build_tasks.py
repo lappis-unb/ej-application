@@ -198,7 +198,7 @@ def sass(ctx, watch=False, background=False, minify=False, app_name=None):
     else:
         for app_name in get_django_apps():
             app_root = f"{directory}/src/{app_name}"
-            app_static_root = f"{app_root}/static/{app_name}"
+            app_static_root = f"{app_root}/static/{app_name}/scss"
             if os.path.isdir(app_static_root):
                 go = lambda app_name, run, name, watch, background: exec_watch(
                     app_name, run, name=name, watch=watch, background=background
