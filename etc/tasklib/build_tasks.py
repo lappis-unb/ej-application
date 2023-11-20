@@ -167,7 +167,7 @@ def sass(ctx, watch=False, background=False, minify=False, app_name=None):
         app_name (str): some EJ app, like ej or ej_conversations.
         """
         print_green(f"compiling {app_name} sass assets!")
-        for file in ("main", "hicontrast"):
+        for file in (app_name, "main", "hicontrast"):
             app_root = f"{directory}/src/{app_name}"
             app_static_root = f"{app_root}/static/{app_name}"
             scss_root_path = f"{app_static_root}/scss"
@@ -176,19 +176,21 @@ def sass(ctx, watch=False, background=False, minify=False, app_name=None):
             css_path = f"{css_root_path}/{file}.css"
             css_min_path = f"{css_root_path}/{file}.min.css"
             map_path = f"{css_root_path}/{file}.css.map"
-            css, sourcemap = sass.compile(
-                filename=str(f"{scss_root_path}/{file}.scss"),
-                source_map_filename=str(map_path),
-                source_map_root=str(css_root_path),
-                source_map_contents=True,
-                source_map_embed=True,
-            )
-            with open(css_path, "w") as fd:
-                fd.write(css)
-                if minify:
-                    ctx.run(f"{MINIFY_BINARY} {css_path} > {css_min_path}")
-            with open(map_path, "w") as fd:
-                fd.write(sourcemap)
+            scss_file_to_compile = f"{scss_root_path}/{file}.scss"
+            if os.path.exists(scss_file_to_compile):
+                css, sourcemap = sass.compile(
+                    filename=str(f"{scss_root_path}/{file}.scss"),
+                    source_map_filename=str(map_path),
+                    source_map_root=str(css_root_path),
+                    source_map_contents=True,
+                    source_map_embed=True,
+                )
+                with open(css_path, "w") as fd:
+                    fd.write(css)
+                    if minify:
+                        ctx.run(f"{MINIFY_BINARY} {css_path} > {css_min_path}")
+                with open(map_path, "w") as fd:
+                    fd.write(sourcemap)
 
     if app_name:
         try:

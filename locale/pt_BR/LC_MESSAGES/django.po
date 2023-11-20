@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-13 19:23-0300\n"
+"POT-Creation-Date: 2023-11-20 18:19-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1632,11 +1632,11 @@ msgstr "Termos de uso"
 msgid "Agree with privacy policy"
 msgstr "Política de privacidade"
 
-#: src/ej_users/models.py:77
+#: src/ej_users/models.py:106
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:123
+#: src/ej_users/models.py:152
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -1712,9 +1712,9 @@ msgid "Toggle navigation menu"
 msgstr "Ligar/desligar menu de navegação"
 
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:12
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:2
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:2
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:2
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:6
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:6
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:6
 msgid "Back to initial page"
 msgstr "Voltar para a página inicial"
 
@@ -1999,7 +1999,7 @@ msgstr "Mostrando"
 #: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "of"
 msgstr "de"
@@ -2168,7 +2168,7 @@ msgstr "Anterior"
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:17
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:16
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:20
 msgid "Next"
 msgstr "Próximo"
 
@@ -2464,7 +2464,7 @@ msgstr "Conta"
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:10
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:37
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
 #, fuzzy
@@ -2672,7 +2672,7 @@ msgstr "Adicionar mais comentários"
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:29
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:26
 #: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:95
 #, fuzzy
 msgid " Comment "
@@ -2908,7 +2908,7 @@ msgid "Conversation: "
 msgstr "Conversa "
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:21
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:22
 #, fuzzy
 msgid "Add comment"
 msgstr "Adicionar comentário"
@@ -2942,17 +2942,17 @@ msgid ""
 msgstr ""
 "Você já enviou o número máximo permitido de comentários para esta conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:14
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:11
 #, fuzzy
 msgid " Conversation "
 msgstr "Conversa "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:38
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:35
 #, fuzzy
 msgid "You have already voted on all the comments."
 msgstr "Você já votou em todos os comentários."
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:36
 #, fuzzy
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
@@ -3564,63 +3564,68 @@ msgstr "Todas"
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:5
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:9
 msgid "Bubbles"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:8
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:12
 #, fuzzy
 msgid "Welcome to EJ"
 msgstr "Bem vindo à EJ!"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:10
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:14
 msgid ""
 "EJ it's a opinion research plataform that aims to empowers your organization "
 "comunication strategy."
-msgstr "A EJ é uma plataforma de consultas de opinião multicanal, que tem por objetivo fortalecer a estratégia de comunicação da sua organização."
+msgstr ""
+"A EJ é uma plataforma de consultas de opinião multicanal, que tem por "
+"objetivo fortalecer a estratégia de comunicação da sua organização."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:11
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:15
 msgid "Click at 'begin' for a quick tour."
 msgstr "Clique em <b>iniciar</b> para começarmos a demonstração."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:15
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:19
 msgid "Initiate"
 msgstr "Iniciar"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:5
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:9
 #, fuzzy
 msgid "Our journey starts on conversation."
 msgstr "Tudo começa na conversa."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:7
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:11
 msgid ""
 "On Pushing Together, the starting point is a conversation. It is formed by a "
 "set of comments, that will be voted by the conversation participants."
-msgstr "Na EJ, o nosso ponto de partida é a conversa. Ela é composta por um conjunto de comentários, "
-"que são votados pelos participantes da pesquisa."
+msgstr ""
+"Na EJ, o nosso ponto de partida é a conversa. Ela é composta por um conjunto "
+"de comentários, que são votados pelos participantes da pesquisa."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:21
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:21
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page2.jinja2:25
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:28
 msgid "Bubbles 2"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:5
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:9
 msgid "Discover and understand your audience."
 msgstr "Descubra e entenda o seu público."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:7
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:11
 msgid ""
 "Collects information from your conversations using our reports and discover "
 "what your audience think about relevant topics for your organization."
-msgstr "Extraia pontos de informação das suas conversas por meio dos nossos relatórios e descubra "
-"o que o seu público pensa a respeito dos assuntos relevantes para a sua organização."
+msgstr ""
+"Extraia pontos de informação das suas conversas por meio dos nossos "
+"relatórios e descubra o que o seu público pensa a respeito dos assuntos "
+"relevantes para a sua organização."
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:12
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:16
 #, fuzzy
 msgid "Dashboard"
 msgstr "mural"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:16
+#: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:22
 #, fuzzy
 msgid "Starts"
 msgstr "Iniciar"

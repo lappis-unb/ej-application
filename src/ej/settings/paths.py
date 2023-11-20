@@ -51,7 +51,7 @@ class PathsConf(Base):
         apps_absolute_path = glob(f"{str(self.BASE_DIR)}/src/ej*", recursive=True)
         dirs = list(map(lambda app: f"{app}/static/{app.split('/')[-1]}", apps_absolute_path))
         valid_dirs = [dir for dir in dirs if os.path.exists(dir)]
-        return [repo_dir / "src/ej/static/ej/assets", *valid_dirs]
+        return [f'{str(repo_dir) + "/src/ej/static/ej/assets"}', *valid_dirs]
 
     def get_django_templates_dirs(self):
         dirs = [self.ROOT_TEMPLATE_DIR / "django"]
