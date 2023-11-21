@@ -1,10 +1,16 @@
 <div>
     {% if widget.name == "start_date" %}
+    <div class="flex">
         <label for="start_date">{{_("Start Date")}}</label>
+        <span class="helptext">&nbsp;({{_("optional")}})</span>
+    </div>
     <input id="start_date" type="date" name={{widget.name}} value={{widget.value}}>
     {% endif %}
     {% if widget.name == "end_date" %}
-        <label for="end_date">{{_("End Date")}}</label>
+        <div class="flex">
+            <label for="end_date">{{_("End Date")}}</label>
+            <span class="helptext">&nbsp;({{_("optional")}})</span>
+        </div>
         <input id="end_date" type="date" name={{widget.name}} value={{widget.value}}>
     {% endif %}
 </div>

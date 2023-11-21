@@ -1,18 +1,16 @@
-from typing import Any
-import toolz
-from django.db.models import Q, Count
-from django.urls import reverse
-from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView
-
+from django.http import HttpResponse
 from ej_boards.models import Board
-from ej_conversations.models import Conversation, Comment, ConversationTag
-from .models import Profile
-from . import forms
+from ej_conversations.models import Conversation, ConversationTag
 from ej_tools.utils import get_host_with_schema
+
+from . import forms
+from .models import Profile
 
 
 @method_decorator([login_required], name="dispatch")
@@ -78,6 +76,7 @@ class HomeView(ListView):
     def get(self, request, *args, **kwargs):
         user = request.user
         tour_url = reverse("profile:tour")
+        print(user.get_profile().completed_tour)
         if user.get_profile().completed_tour:
             return super().get(request, *args, **kwargs)
         return redirect(tour_url)
@@ -107,18 +106,32 @@ class HomeView(ListView):
 
 @method_decorator([login_required], name="dispatch")
 class TourView(HomeView):
-    template_name = "ej_profiles/tour.jinja2"
+    def _get_tour_step_template(self, step: str):
+        if not step:
+            return "ej_profiles/tour.jinja2"
+        return f"ej_profiles/includes/tour-page{step}.jinja2"
 
     def get(self, *args, **kwargs):
         user = self.request.user
-        home_url = reverse("profile:home")
         if user.get_profile().completed_tour:
-            return redirect(home_url)
-        return render(self.request, self.template_name, self.get_context_data())
+            return redirect(reverse("profile:home"))
+        tour_step = self.request.GET.get("step")
+        template_name = self._get_tour_step_template(tour_step)
+        return render(self.request, template_name, self.get_context_data())
 
     def post(self, *args, **kwargs):
         user = self.request.user
-        home_url = reverse("profile:home")
-        user.get_profile().completed_tour = True
-        user.get_profile().save()
-        return redirect(home_url)
+        response = HttpResponse()
+        if self.request.GET.get("step") in ["skip", "end"]:
+            profile = user.get_profile()
+            profile.completed_tour = True
+            profile.save()
+            """
+            Tour page utilizes HTMX library to make backend AJAX requests.
+            In order to make a redirect with HTMX,
+            we need to include HX-Redirect header in the response.
+            For more information, access https://htmx.org/reference/.
+            """
+            response.status_code = 302
+            response["HX-Redirect"] = reverse("profile:home")
+        return response

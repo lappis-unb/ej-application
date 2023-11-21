@@ -1,6 +1,3 @@
-<head>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-</head>
 <div id="comment-content-container" class="voting-card">
     <div class="voting-card--left">
         <div class="voting-card--left__statistics">
@@ -14,7 +11,7 @@
         <span class="voting-card--left__summary">{% trans %} Conversation {% endtrans %}</span><br>
         <span class="voting-card--left__summary voting-card--left__summary--black">{{ conversation.text }}</span>
         <hr>
-        
+
         <div class="voting-card--left__progress">
             <span class="voting-card--left__progress__values">{{ user_progress_percentage }}%</span>
             <span class="voting-card--left__progress__percentage" role="progressbarr" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ user_progress_percentage }}" aria-labelledby="pblabel">

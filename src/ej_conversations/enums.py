@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+from django.db import models
 
 from boogie.fields import IntEnum
 
@@ -17,6 +18,16 @@ class RejectionReason(IntEnum):
 
 
 class Choice(IntEnum):
+    """
+    Options for a user vote.
+    """
+
+    SKIP = 0, _("Skip")
+    AGREE = 1, _("Agree")
+    DISAGREE = -1, _("Disagree")
+
+
+class NativeChoice(models.IntegerChoices):
     """
     Options for a user vote.
     """

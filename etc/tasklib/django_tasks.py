@@ -58,9 +58,12 @@ def collect(ctx, theme=None):
     # Select the correct minified build for CSS assets
     for file in ["main", "hicontrast"]:
         from_path = f'{root_css}/{file + f".min.css"}'
-        to_path = f'{directory}/local/static/css/{file + ".css"}'
+        static_css_path = f"{directory}/local/static/css"
+        if not os.path.exists(static_css_path):
+            ctx.run(f"mkdir -p {static_css_path}")
         if not os.path.exists(from_path):
             print('Please run "inv build-assets" first!', file=sys.stderr)
+        to_path = f'{static_css_path}/{file + ".css"}'
         with open(to_path, "w") as fd:
             fd.write(open(from_path).read())
 
@@ -74,7 +77,8 @@ def collect(ctx, theme=None):
             with open(to_path, "w") as fd:
                 fd.write(open(from_path).read())
 
-    manage(ctx, "collectstatic --i node_modules -i *.json --noinput")
+    # collectstatic will watch static files from settings/paths.py
+    manage(ctx, "collectstatic --i node_modules -i *.json -i *.scss -i scss -i *.ts -i ts --noinput")
 
 
 @task

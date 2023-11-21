@@ -27,7 +27,7 @@ from ..enums import Choice
 from ..signals import comment_moderated
 from ..utils import normalize_status
 
-from ej.components.menu import register_menu
+from ej.components.menu import apps_custom_menu_links, register_menu
 from hyperpython import a
 from ej_boards.models import Board
 
@@ -51,7 +51,12 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         max_length=255,
         help_text=_("Short description used to create URL slugs (e.g. School system)."),
     )
-    text = models.TextField(_("Question"), help_text=_("What do you want to ask?"))
+    text = models.TextField(
+        _("Question"),
+        help_text=_(
+            "What do you want to know about participants? The conversation question will be the starting point for collecting opinions. "
+        ),
+    )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -379,6 +384,13 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         if self.n_approved_comments == n_user_final_votes:
             return n_user_final_votes
         return n_user_final_votes + 1
+
+    def custom_apps_menu_links(self):
+        """
+        returns a list of links to include on conversation menu.
+        Other apps can define menu links to be injected on conversation menu.
+        """
+        return apps_custom_menu_links(self)
 
 
 #

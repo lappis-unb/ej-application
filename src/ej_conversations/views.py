@@ -39,6 +39,7 @@ from ej.decorators import (
 )
 
 from .decorators import create_session_key, user_can_post_anonymously
+from ej.components.menu import apps_custom_menu_links
 
 log = getLogger("ej")
 
@@ -133,8 +134,7 @@ class ConversationDetailView(DetailView):
     @user_can_post_anonymously
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
-        request.user = self._get_user()
-
+        request.user = User.creates_from_request_session(conversation, request)
         action = request.POST["action"]
         if action == "vote":
             self.ctx = handle_detail_vote(request)
@@ -149,23 +149,6 @@ class ConversationDetailView(DetailView):
             return HttpResponseServerError("invalid action")
 
         return render(request, self.template_name, self.get_context_data())
-
-    @create_session_key
-    def _get_user(self):
-        user = self.request.user
-        conversation = self.get_object()
-
-        if user.is_anonymous and conversation.anonymous_votes_limit:
-            session_key = self.request.session.session_key
-            user, _ = User.objects.get_or_create(
-                email=f"anonymoususer-{session_key}@mail.com",
-                defaults={
-                    "password": session_key,
-                    "agree_with_terms": False,
-                },
-            )
-
-        return user
 
     @create_session_key
     def get_context_data(self, **kwargs):
@@ -191,6 +174,7 @@ class ConversationDetailView(DetailView):
             "n_comments": n_comments,
             "max_comments": max_comments,
             "n_user_final_votes": n_user_final_votes,
+            "apps_menu_links": apps_custom_menu_links(conversation),
             **self.ctx,
         }
 
@@ -355,6 +339,7 @@ class NewCommentView(UpdateView):
             "rejected": rejected,
             "created": created_comments,
             "menu_links": conversation_admin_menu_links(conversation, self.request.user),
+            "apps_menu_links": apps_custom_menu_links(conversation),
             "comment_saved": True,
         }
 

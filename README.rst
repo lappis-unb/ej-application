@@ -46,31 +46,31 @@ To rebuild the server image, you can run `inv docker-build --no-cache`.
 
 Some useful commands to manage docker environment:
 
-==================                      ===================================================
-Command                                 Description
-==================                      ===================================================
-inv docker-up                           Creates EJ containers and run the application
-inv docker-logs                         Shows django logs
-inv docker-stop                         Stops EJ containers
-inv docker-rm                           Removes EJ containers
-inv docker-attach                       Connects to django container
-inv docker-exec                         Executes a command on django container
+==========================   ===================================================
+Command                      Description
+==========================   ===================================================
+inv docker-up                Creates EJ containers and run the application
+inv docker-logs              Shows django logs
+inv docker-stop              Stops EJ containers
+inv docker-rm                Removes EJ containers
+inv docker-attach            Connects to django container
+inv docker-exec              Executes a command on django container
 inv docker-exec "inv docs"   Compile .rst documentation to generates .html files
-==================                      ===================================================
+==========================   ===================================================
 
 Some useful commands to manage the application **(run this inside django container)**:
 
-=================  ======================================================
+=================  ==============================================================
 Command            Description
-=================  ======================================================
+=================  ==============================================================
 inv i18n           Extracts messages from Jinja templates for translation
 inv i18n -c        Compile .po files
-inv sass           Compile sass files
-inv sass --watch   Watch changes on code, and compile .sass files
+inv sass           Compile .sass files for all EJ apps.
+inv sass --watch   Watch changes on code, and compile .sass files for all EJ apps
 inv collect        Moves compiled files (css, js) to Django static folder
 inv db             Prepare database and run migrations
 inv shell          Executs django shell with ipython
-=================  ======================================================
+=================  ==============================================================
 
 
 Tests

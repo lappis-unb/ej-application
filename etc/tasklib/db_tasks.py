@@ -2,7 +2,7 @@ import os
 
 from invoke import task
 
-from .base import manage, set_theme, directory
+from .base import manage, set_theme
 
 __all__ = ["db", "db_fake", "db_reset"]
 

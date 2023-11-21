@@ -1,9 +1,9 @@
 from ej_tools.tools import BotsTool
-from ej_users.models import SignatureFactory
+from ej_users.models import SignatureFactory, User
 from ej_conversations.models.vote import VoteChannels
 from rest_framework.exceptions import PermissionDenied
 from django.utils.translation import gettext_lazy as _
-from django.shortcuts import redirect
+from django.http import HttpResponse
 
 
 TOOLS_CHANNEL = {
@@ -66,11 +66,25 @@ def user_can_post_anonymously(func):
 
     def wrapper(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
-        request.user = self._get_user()
+        request.user = User.creates_from_request_session(conversation, request)
+        redirect_url = ""
         if conversation.reaches_anonymous_particiption_limit(request.user):
-            return redirect(f"/register/?sessionKey={request.session.session_key}&next={request.path}")
+            redirect_url = f"/register/?sessionKey={request.session.session_key}&next={request.path}"
         elif request.user.is_anonymous:
-            return redirect(f"/register/?next={request.path}")
+            redirect_url = f"/register/?next={request.path}"
+
+        if redirect_url:
+            """
+            Participation page utilizes HTMX library to make backend AJAX requests.
+            In order to make a redirect with HTMX,
+            we need to include HX-Redirect header in the response.
+            For more information, access https://htmx.org/reference/.
+            """
+            response = HttpResponse()
+            response["HX-Redirect"] = redirect_url
+            response.status_code = 302
+            return response
+
         return func(self, request, conversation_id, slug, board_slug, *args, **kwargs)
 
     return wrapper
@@ -83,8 +97,7 @@ def create_session_key(func):
     """
 
     def wrapper(self, **kwargs):
-        if not self.request.session.session_key:
-            self.request.session.create()
+        User.creates_request_session_key(self.request)
         return func(self)
 
     return wrapper

@@ -8,15 +8,22 @@
     <title>{{ page_title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter&family=Lexend+Exa&family=Roboto&display=swap" rel="stylesheet">
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <title>{{ page_title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://unpkg.com/htmx.org@1.9.5"></script>
 
-    {% block meta %}{% endblock %}
-    {% block css %}{% include 'ej/includes/head/css.jinja2' %}{% endblock %}
-    {% block javascript %}{% include 'ej/includes/head/javascript.jinja2' %}{% endblock %}
-    {% include ['ej/includes/head/favicons.jinja2',
-                'ej/includes/head/pwa.jinja2',
-                'ej/includes/head/open_graph.jinja2'] %}
-
-</head>
+            {% block meta %}{% endblock %}
+            {% block css %}{% include 'ej/includes/head/css.jinja2' %}{% endblock %}
+            {% block javascript %}{% include 'ej/includes/head/javascript.jinja2' %}{% endblock %}
+            {% include ['ej/includes/head/favicons.jinja2',
+                        'ej/includes/head/pwa.jinja2',
+                        'ej/includes/head/open_graph.jinja2'] %}
+    </head>
+{% endblock %}
 
 
 {%- block body %}

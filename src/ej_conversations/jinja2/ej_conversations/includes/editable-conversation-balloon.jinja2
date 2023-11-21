@@ -1,7 +1,14 @@
 <div class="conversation-balloon">
-    <article>
+    <article class="content-grid">
+        {% if create_mode %}
+            <h2 class="text-accent">{{_("Create Conversation")}}</h2>
+        {% else %}
+            <h2 class="text-accent">{{_("Edit Conversation")}}</h2>
+        {% endif %}
+        <p class="helptext">
+            {{_("This informations will be visible for conversation participants.")}}
+        </p>
+        <label>{{ _('Question') }}{{ form.text }}</label>
         <label>{{ form.tags.label }}{{ form.tags }}</label>
-        <label>{{ _('What do you want to ask?') }}{{ form.text }}</label>
     </article>
-    <div class="conversation-balloon__arrow"></div>
 </div>

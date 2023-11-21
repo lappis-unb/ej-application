@@ -1,0 +1,25 @@
+<div class="tour-progress">
+    <div class="tour-progress--1"></div>
+</div>
+<div class="tour-content">
+    <div class="logo">
+        <img src={{ static("img/logo/logo-dark.png") }} alt="{{ _('Logo') }}" aria-label="{{ _('Back to initial page') }}">
+    </div>
+    <div class="bubbles">
+        <img src={{ static("ej_profiles/img/tour/bubbles.svg") }} alt="{{ _('Bubbles') }}">
+    </div>
+    <div class="welcome">
+        <h1>{{_("Welcome to EJ")}}</h1>
+        <p>
+        {{_("EJ it's a opinion research plataform that aims to empowers your organization comunication strategy.")}}
+        {{_("Click at 'begin' for a quick tour.")}}
+        </p>
+    </div>
+    <div class="buttons">
+        <a class="is-primary button square" hx-target="#tour-page" hx-get="/profile/tour/?step=2"><span>{{_("Initiate")}}</span></a>
+        <form>
+            {{ csrf_input }}
+            <a class="is-primary button square button--skip" hx-post="/profile/tour/?step=skip">{{_("Skip")}}</a>
+        </form>
+    </div>
+</div>

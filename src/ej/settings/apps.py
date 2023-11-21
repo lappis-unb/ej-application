@@ -16,6 +16,7 @@ class InstalledAppsConf(Base, EjOptions):
         "ej_tools",
         "ej_signatures",
         "ej_admin",
+        "ej_activation",
     ]
 
     third_party_apps = [
