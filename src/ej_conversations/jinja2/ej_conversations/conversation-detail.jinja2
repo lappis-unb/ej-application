@@ -1,5 +1,5 @@
 {% extends 'ej_conversations/base.jinja2' %}
-{% set main_class = 'container-temporary pad-x0' %}
+{% set main_class = 'pad-x0' %}
 {% set page_title = _('Conversation: "{}"').format(conversation.text) %}
 {% set aria_flowto = 'comment-card' %}
 {% set body_class = 'body theme-' + conversation.board.palette %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div>
+    <div class="content-grid">
         <script>
             document.addEventListener('load', function () {
                 $('form').on('submit', function () {
@@ -22,17 +22,17 @@
         </script>
 
         {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
-            <div class="sharing-card-container">
-                <div class="sharing-card--small sharing-card--small--blue">
+            <div class="secondary-cards-container">
+                <div class="secondary-card secondary-card--blue">
                     <span>{{_("What have people responded so far?")}}</span>
                     <a href="{{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}" class="sharing-card--small__link">
-                        <span class="sharing-card--small__link--trending-icon"></span>
+                        <span class="secondary-card__trending-icon"></span>
                         <span>{{_("Access the dashboard and follow along")}}</span>
                     </a>
                 </div>
-                <div class="sharing-card--small">
+                <div class="secondary-card secondary-card--accent">
                     <span>{{_("The more people participating, the better!")}}</span>
-                    <a class="sharing-card--small__link" onclick="copyToClipboard('copy-info-admin')">
+                    <a class="secondary-card__link" onclick="copyToClipboard('copy-info-admin')">
                         <i class="fas fa-link sharing-card__icon"></i>
                         <span>{{_("Share the conversation link")}}</span>
                     </a>
@@ -67,7 +67,7 @@
                     {% endif %}
             </div>
         {% else %}
-            <div class="col margin-y3" id="comment-card">
+            <div class="margin-y3">
                 {% include 'ej_conversations/comments/card.jinja2' %}
             </div>
         {% endif %}

@@ -1,36 +1,38 @@
-<form method="post" id="add-comment" 
-    hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" 
-    hx-target="#comment-content-container" 
+<form method="post" id="add-comment"
+    hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
+    hx-target="#voting-card"
     hx-swap="outerHTML"
 >
     {{ csrf_input }}
     <input type="hidden" name="action" value="comment">
-    <div class="add-container-form">
-        <div class="voting-card--left">
-            <div class="voting-card--left__statistics">
+    <div class="comment-card">
+        <div>
+            <div class="voting-card__statistics">
                 <i class="fa fa-comments"></i>
-                <span class="voting-card--left__statistics__values">{{ conversation.n_approved_comments }}</span>
+                <span class="voting-card__statistics__values">{{ conversation.n_approved_comments }}</span>
 
                 <i class="fa">&#xf772;</i>
-                <span class="voting-card--left__statistics__values">{{ conversation.n_final_votes }}</span>
+                <span class="voting-card__statistics__values">{{ conversation.n_final_votes }}</span>
             </div>
 
-            <span class="voting-card--left__summary">{{_("Conversation: ")}}</span><br>
-            <span class="voting-card--left__summary voting-card--left__summary--black voting-card--left__summary--comment">{{ conversation.text }}</span><br>
+            <span class="voting-card__label">{{_("Conversation: ")}}</span><br>
+            <span class="voting-card__title">{{ conversation.text }}</span><br>
 
-            <span class="voting-card--left__summary voting-card--left__summary--black voting-card--left__summary__add-comment--summary">{{_("Add comment")}}</span>
-            <span class="voting-card--left__summary left voting-card--left__summary--info">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
+            <hr>
+
+            <span class="voting-card__title margin-r3">{{_("Add comment")}}</span>
+            <span class="voting-card__label voting-card__summary--info">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
 
             <textarea name="content" id="id_content" maxlength="256" required></textarea>
-            <p class="voting-card--left__summary left no-margin">
-                (<span id="maxLenght">256</span><span> {{_("Characters remaining)")}}</span> 
+            <p class="voting-card__label left no-margin">
+                (<span id="maxLenght">256</span><span> {{_("Characters remaining)")}}</span>
             </p>
 
         {% if not n_comments >= max_comments or request.user.is_superuser %}
             <div class="modal__buttons">
-                <button class="modal__buttons--white" type="button" 
-                    hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" 
-                    hx-target="#comment-content-container" 
+                <button class="modal__buttons--white" type="button"
+                    hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
+                    hx-target="#voting-card"
                     hx-params="comment-addition-cancel"
                     hx-swap="outerHTML">
                     {{ _('Cancel') }}
@@ -41,16 +43,16 @@
             </div>
         </div>
         {% else %}
-            <div class="add-container-form__submit-container">
-                <div id="warn-message" class="add-container-form__limit-tooltip hide">
-                    <div class="add-container-form__limit-tooltip__arrow"></div>
+            <div class="comment-card__submit-container">
+                <div id="warn-message" class="comment-card__limit-tooltip hide">
+                    <div class="comment-card__limit-tooltip__arrow"></div>
                     {{_("You have already submitted the maximum number of comments allowed for this conversation")}}
                 </div>
-            
+
                 <div class="modal__buttons">
                     <button class="modal__buttons--white" type="button"
-                        hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" 
-                        hx-target="#comment-content-container" 
+                        hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
+                        hx-target="#voting-card"
                         hx-params="comment-addition-cancel"
                         hx-swap="outerHTML">
                         {{ _('Cancel') }}

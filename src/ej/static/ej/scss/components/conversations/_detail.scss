@@ -102,86 +102,12 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 }
 
-.comment-card, .comment-form {
+.comment-form {
     @include utilities('pad-3p margin-x2 width-full');
 
     border-radius: $component-border-radius;
 }
 
-.comment-card {
-    @include utilities('bold');
-    @include themed('background');
-
-    color: color('$color-white');
-    display: flex;
-    flex-direction: column;
-
-    &__author-img {
-        @include utilities('margin-r1');
-
-        align-items: center;
-        display: inline-flex;
-        background-color: color('$color-white');
-        border-radius: 50%;
-        border: 2px solid color('$color-white');
-        height: 1.5rem;
-        justify-content: center;
-        vertical-align: middle;
-        width: 1.5rem;
-
-        .fa, .fas, .far {
-            margin: 0 !important;
-        }
-    }
-    > article {
-        @include utilities('margin-y2 text-4');
-
-        font-weight: 600;
-        min-height: 7rem;
-    }
-    > form {
-        max-width: 20rem;
-        margin: 0 auto;
-    }
-    &__button {
-        @include utilities('col items-center');
-
-        button {
-            @include utilities('flex-center');
-            background: transparent;
-            border: none;
-            height: initial;
-            margin: 0;
-            padding: 0;
-
-            &:hover {
-                box-shadow: none;
-            }
-        }
-        i {
-            background: rgba(255, 255, 255, 0.75);
-            border-radius: 50em;
-            border: none;
-            display: block;
-            font-size: 1.5rem;
-            height: 3rem;
-            line-height: 3rem;
-            padding: 0;
-            width: 3rem;
-            &:hover {
-                @include utilities('shadow-2');
-            }
-        }
-        span {
-            @include utilities('uppercase text-7');
-        }
-    }
-    &__message {
-        strong {
-            @include utilities('uppercase color-accent pad-1 rounded-2');
-        }
-    }
-}
 
 .comment-form {
     @include utilities('center text-black');
@@ -314,17 +240,18 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
 }
 
-.sharing-card-container {
+.secondary-cards-container {
     display: flex;
     gap: 1.25rem;
     margin-top: 2.438rem;
 }
 
-.sharing-card-container > * {
+.secondary-cards-container > * {
     width: 50%;
 }
 
-.sharing-card--small {
+
+.secondary-card {
     background-color: $color-pink-light;
     height: 5.25rem;
     border-radius: 0.3125rem;
@@ -344,19 +271,34 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         align-items: center;
         justify-content: center;
 
-        &--trending-icon {
-            background-image: url("/static/img/icons/trend.svg");
-            width: 21px;
-            height: 21px;
+        &:hover {
+            color: $color-white !important;
         }
     }
 
-    &__link:hover {
-        color: $color-white !important;
+    &__trending-icon {
+        background-image: url("/static/img/icons/trend.svg");
+        width: 21px;
+        height: 21px;
+        display: inline-block;
     }
 
     &--blue {
         background-color: $color-theme-dark-blue;
+    }
+    &--pink {
+        background-color: $color-accent;
+    }
+
+    span, a {
+        text-align: center;
+        color: white;
+        vertical-align: middle;
+    }
+    span:nth-child(2) {
+        font-size: 1.125rem;
+        text-transform: uppercase;
+        font-weight: bold;
     }
 }
 
@@ -389,9 +331,6 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     background: rgba(48, 191, 211, 0.15);
     padding: 2.875rem 2.625rem 1.531rem 3rem;
 
-    &--left {
-        text-align: left;
-
         &__statistics {
             display: flex;
             font-family: Lexend Exa;
@@ -409,37 +348,40 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
             }
         }
 
-        &__summary {
+        &__title,
+        &__label {
             color: $color-complementary-gray;
             font-family: Lexend Exa;
             font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        &__title {
+            font-weight: 700;
+            color: $color-black-alternative;
+        }
+        &__label {
             font-style: normal;
             font-weight: 500;
             line-height: 1.25rem;
-            text-transform: uppercase;
 
-            &--black {
-                color: $color-black-alternative;
+        }
+        &__add-comment {
+            display: flex;
+            width: max-content;
+
+            &--summary {
+                display:inline;
+                margin-right: 1.938rem;
             }
+        }
 
-            &__add-comment {
-                display: flex;
-                width: max-content;
+        &__add-comment:hover {
+            color: $color-complementary-gray;
+        }
 
-                &--summary {
-                    display:inline;
-                    margin-right: 1.938rem;
-                }
-            }
-
-            &__add-comment:hover {
-                color: $color-complementary-gray;
-            }
-
-            &--comment {
-                display:block;
-                margin-bottom: 1.25rem;
-            }
+        &--comment {
+            display:block;
+            margin-bottom: 1.25rem;
         }
 
         hr {
@@ -491,7 +433,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         &__comment {
             color: $color-black-alternative;
             font-family: Raleway;
-            font-size: 2.25rem;
+            font-size: 1.75rem;
             font-style: normal;
             font-weight: 300;
             line-height: 125%;
@@ -536,7 +478,6 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
             }
         }
 
-    }
 
     &__voting-form {
         margin-bottom: 0;
@@ -624,11 +565,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 }
 
-#add-comment {
-    margin: 0;
-}
-
-.add-container-form {
+.comment-card {
     max-height: 529px;
 
     &__limit-tooltip {
@@ -767,7 +704,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         }
     }
 
-    .add-container-form {
+    .comment-card {
         max-height: unset;
 
         &__limit-tooltip {
@@ -789,7 +726,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         }
     }
 
-    .sharing-card--small {
+    .sharing-card {
         &__link {
             font-size: 1rem;
         }
@@ -862,7 +799,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         }
     }
 
-    .add-container-form {
+    .comment-card {
         max-height: unset;
 
         &__limit-tooltip {

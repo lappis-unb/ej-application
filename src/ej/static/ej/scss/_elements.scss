@@ -81,7 +81,7 @@ legend {
 }
 
 .content-grid {
-    grid-template-columns: minmax(6%,auto) minmax(auto, 900px) auto;
+    grid-template-columns: minmax(6%, auto) minmax(auto, 1000px) minmax(6%, auto);
     display: grid;
 }
 .content-grid > * {
