@@ -246,14 +246,10 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     margin-top: 2.438rem;
 }
 
-.secondary-cards-container > * {
-    width: 50%;
-}
-
-
 .secondary-card {
     background-color: $color-pink-light;
     height: 5.25rem;
+    width: 100%;
     border-radius: 0.3125rem;
     color: $color-white;
     display: flex;
@@ -390,10 +386,9 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         }
 
         &__progress {
-            display: grid;
-            grid-template-columns: 2.5rem 7.063rem 13rem auto;
-            align-items: center;
-            margin-bottom: 2.875rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
 
             &__values {
                 color: $color-black-alternative;
@@ -489,6 +484,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         &__choices {
             display: flex;
             gap: 2.25rem;
+            flex-wrap: wrap;
             justify-content: center;
 
             &--agree, &--disagree, &--skip {
@@ -603,207 +599,12 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     margin: 0;
 }
 
-@media only screen and (max-width: 900px) {
-    input {
-        min-width: unset !important;
-    }
-    textarea::placeholder,
-    input::placeholder
-    {
-        font-size: .7rem !important;
-        line-height: 1.2rem !important;
-    }
-}
-@media only screen and (max-width: 320px) {
-    .sharing-card {
-        text-align: center;
-
-        &__link-text {
-            font-size: 1rem;
-            width: 62%;
-        }
-
-        &__description-text {
-           font-size: 0.875rem;
-        }
-
-        &__link {
-            justify-content: center;
-        }
-    }
-
-    .sharing-card-container {
-        margin-top: 2.438rem;
+@media (max-width: 875px) {
+    .secondary-cards-container {
         flex-wrap: wrap;
     }
-
-    .sharing-card-container > * {
-        width: 100%;
-        align-items: center;
-    }
-
-    .sharing-card--small {
-        &__link {
-            font-size: 0.9rem;
-        }
-    }
-
     .voting-card {
-        padding: 2.875rem 2.625rem 1.531rem 2rem;
-
-        &--left {
-            hr {display: none !important;}
-
-            &__progress {
-                margin-top: 2.125rem;
-                grid-template-columns: 2.5rem 7.063rem auto;
-                grid-row-gap: 1rem;
-                margin-bottom: 2.188rem;
-            }
-
-            &__comment {
-                font-size: 1.25rem;
-            }
-
-            &__summary {
-                &--info {
-                    display: block;
-                }
-
-                &__add-comment {
-                    i {margin-left: 0;}
-                }
-            }
-
-            .modal__buttons {
-                flex-direction: column-reverse;
-                align-items: center;
-                float: none;
-                margin-top: 1.75rem;
-                justify-self: center;
-            }
-        }
-
-        &__voting-form {
-            &__back {
-                display: block;
-                position: relative;
-                float: left;
-                bottom: 30px;
-                color: $color-complementary-gray;
-            }
-
-            &__choices {
-                gap: 1rem;
-                flex-wrap: wrap;
-
-                &--agree, &--disagree, &--skip {
-                    margin: 0;
-                }
-            }
-        }
-    }
-
-    .comment-card {
-        max-height: unset;
-
-        &__limit-tooltip {
-            margin-bottom: 0;
-        }
-    }
-
-}
-
-
-@media (max-width: 875px) and (min-width: 321px) {
-    .sharing-card {
-        &__link-text {
-            font-size: 1rem;
-        }
-
-        &__description-text {
-           font-size: 0.875rem;
-        }
-    }
-
-    .sharing-card {
-        &__link {
-            font-size: 1rem;
-        }
-    }
-
-    .sharing-card-container {
-        margin-top: 2.438rem;
-        flex-wrap: wrap;
-    }
-
-    .sharing-card-container > * {
-        width: 100%;
-        align-items: center;
-    }
-
-    .voting-card {
-        padding: 2.875rem 2.625rem 1.531rem 2rem;
-
-        &--left {
-            hr {display: none !important;}
-
-            &__progress {
-                margin-top: 2.125rem;
-                grid-template-columns: 2.5rem 7.063rem max-content;
-                grid-row-gap: 1rem;
-                margin-bottom: 2.188rem;
-            }
-
-            &__comment {
-                font-size: 1.25rem;
-            }
-
-            &__summary {
-                &--info {
-                    display: block;
-                }
-
-                &__add-comment {
-                    i {margin-left: 0;}
-                }
-            }
-
-            .modal__buttons {
-                flex-direction: column-reverse;
-                align-items: center;
-                float: none;
-                margin-top: 1.75rem;
-                justify-self: center;
-            }
-        }
-
-        &__voting-form {
-
-            &__back {
-                display: block;
-                position: relative;
-                float: left;
-                bottom: 30px;
-                color: $color-complementary-gray;
-            }
-
-            &__choices {
-                gap: 1rem;
-                flex-wrap: wrap;
-
-                &--agree, &--disagree, &--skip {
-                    margin: 0;
-                }
-            }
-        }
-    }
-
-    .comment-card {
-        max-height: unset;
-
-        &__limit-tooltip {
-            margin-bottom: 0;
-        }
+        padding: 1.875rem 1.625rem 0.531rem 2rem;
+        position: absolute;
     }
 }
