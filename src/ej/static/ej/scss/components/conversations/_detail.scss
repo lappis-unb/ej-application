@@ -577,4 +577,24 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     .modal__buttons {
         margin: 1rem 0 0 0;
     }
+    .voting-card.comment-card {
+        bottom: 0;
+    }
+    .secondary-cards-container {
+        margin-top: 0rem;
+    }
+    .sharing-card {
+        height: unset;
+        padding: 1rem;
+    }
+    .sharing-card__description-text,
+    .secondary-card--blue span:first-child,
+    .secondary-card--accent span:first-child {
+        display: none;
+    }
+    .sharing-card__link-text,
+    .secondary-card--blue span:nth-child(2),
+    .secondary-card--accent span:nth-child(2) {
+        font-size: .9rem;
+    }
 }
