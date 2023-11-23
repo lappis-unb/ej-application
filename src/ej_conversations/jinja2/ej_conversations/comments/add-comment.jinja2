@@ -20,8 +20,10 @@
 
             <hr>
 
-            <span class="voting-card__title margin-r3">{{_("Add comment")}}</span>
-            <span class="voting-card__label voting-card__summary--info">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
+            <div class="voting-card__header">
+                <span class="voting-card__title margin-r3">{{_("Add comment")}}</span>
+                <span class="voting-card__label">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
+            </div>
 
             <textarea name="content" id="id_content" maxlength="256" required></textarea>
             <p class="voting-card__label left no-margin">
