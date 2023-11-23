@@ -11,16 +11,19 @@
     <span class="voting-card__title">{{ conversation.text }}</span>
     <hr>
 
-    <div class="voting-card__progress">
-        <span class="voting-card__progress__values">{{ user_progress_percentage }}%</span>
-        <span class="voting-card__progress__percentage" role="progressbarr" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ user_progress_percentage }}" aria-labelledby="pblabel">
-            <div class="voting-card__progress__percentage__bar" style="width:{{ user_progress_percentage }}%"></div>
-        </span>
-        <span class="voting-card__progress__values">{{ n_user_final_votes }} {{_("of")}} {{ conversation.n_approved_comments }} {{_("comments")}}</span>
-        <a class="voting-card__label voting-card__add-comment" hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" hx-target="#voting-card" hx-params="comment-addition">
-            <i class="fa">&#xf055;</i> {{ _('Add comment') }}
-        </a>
-    </div>
+        <div class="voting-card__header">
+            <div class="voting-card__progress">
+                <span class="voting-card__progress__values">{{ user_progress_percentage }}%</span>
+                <div class="voting-card__progress-bar">
+                    <div class="voting-card__progress-bar__progress"></div>
+                    <div class="voting-card__progress-bar__fg" style="width:{{ user_progress_percentage }}%"></div>
+                </div>
+            </div>
+            <span class="voting-card__progress__values">{{ n_user_final_votes }} {{_("of")}} {{ conversation.n_approved_comments }} {{_("comments")}}</span>
+            <a class="voting-card__label voting-card__add-comment" hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" hx-target="#voting-card" hx-params="comment-addition">
+                <i class="fa">&#xf055;</i> {{ _('Add comment') }}
+            </a>
+        </div>
     {% if comment %}
         <span class="voting-card__label">{% trans %} Comment {% endtrans %}</span><br>
         <p class="voting-card__comment">{{ comment.content}}</p>

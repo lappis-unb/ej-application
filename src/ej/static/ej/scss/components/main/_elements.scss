@@ -34,7 +34,7 @@ i.fa, i.fas, i.fab, i.far {
 //------------------------------------------------------------------------------
 // Tabs and categories
 .tabs, .categories {
-    @extend .row;    
+    @extend .row;
 
     > * {
         border-bottom: 0.25rem solid transparent;
@@ -241,7 +241,7 @@ $toast-opacity: 0.75;
     }
 }
 
-.square { 
+.square {
     border-radius: 5px;
     margin-top: 25px;
 }
@@ -265,7 +265,7 @@ $toast-opacity: 0.75;
         max-width: 50%;
         background-color: $color-theme-accent-light;
         color: $color-black-alternative;
-        
+
         text-transform: none;
         font-family: "Raleway", sans-serif;
         letter-spacing: 0;
@@ -277,9 +277,51 @@ $toast-opacity: 0.75;
         color: $color-navigation-header-text;
         margin-left: .5rem !important;
     }
-    
+
     &:hover .tooltip__content {
         visibility: visible;
         opacity: 1;
+    }
+}
+
+//progress bar element
+.progress-bar {
+    @include utilities('row flex-center items-center margin-y1');
+
+    margin: 0 auto;
+    max-width: 18em;
+
+    &__progress {
+        @include margin-scale((x: 1));
+
+        display: flex;
+        border: 1px solid color('brand');
+        border-radius: 50rem;
+        height: 0.5rem;
+        width: 100%;
+    }
+
+    &--simple {
+        margin: 0;
+        text-transform: uppercase;
+        color: $color-pink-light;
+        font-size: .75rem;
+        font-family: Lexend Exa;
+        font-weight: 500;
+        line-height: 1.25rem;
+        max-width: fit-content;
+
+        strong {font-weight:normal;}
+
+        .progress-bar__progress {
+            border: 1px solid $color-pink-light;
+            border-radius: 0.75rem;
+            width: 6.188rem;
+            margin-left: 0;
+            margin-right: .75rem;
+            :first-child{
+                background-color: $color-pink-light !important;
+            }
+        }
     }
 }
