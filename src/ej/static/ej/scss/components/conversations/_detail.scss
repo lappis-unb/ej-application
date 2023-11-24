@@ -339,7 +339,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
             }
 
             &__values {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
                 margin-right: 2.813rem;
             }
         }
@@ -348,14 +348,15 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         &__label {
             color: $color-complementary-gray;
             font-family: Lexend Exa;
-            font-size: 0.75rem;
             text-transform: uppercase;
         }
         &__title {
+            font-size: 0.8rem;
             font-weight: 700;
             color: $color-black-alternative;
         }
         &__label {
+            font-size: 0.75rem;
             font-style: normal;
             font-weight: 500;
             line-height: 1.25rem;
@@ -387,7 +388,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         &__comment {
             color: $color-black-alternative;
             font-family: Raleway;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-style: normal;
             font-weight: 300;
             line-height: 125%;
@@ -559,16 +560,35 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     margin: 0;
 }
 
+
+@media (max-width: 375px) {
+    .voting-card {
+        bottom: unset !important;
+    }
+}
+
+@media (max-width: 414px) {
+    .voting-card {
+        padding: 1.5rem 1rem 0 1rem;
+        padding: 1.875rem 1.625rem 0.531rem 2rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    .voting-card textarea {
+        height: 30vh;
+    }
+    .voting-card__voting-form__choices {
+        gap: 1rem;
+    }
+}
+
 @media (max-width: 875px) {
     .secondary-cards-container {
         flex-wrap: wrap;
     }
     .comment-card {
         max-height: unset;
-    }
-    .voting-card {
-        padding: 1.875rem 1.625rem 0.531rem 2rem;
-        position: absolute;
     }
     .voting-card hr {
         margin: 1rem 0 0 0 !important;

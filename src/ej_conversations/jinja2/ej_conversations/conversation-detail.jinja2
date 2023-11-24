@@ -12,15 +12,6 @@
 
 {% block content %}
     <div class="content-grid">
-        <script>
-            document.addEventListener('load', function () {
-                $('form').on('submit', function () {
-                    $('h1').attr('aria-hidden', true)
-                });
-                alert('ON')
-            })
-        </script>
-
         {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
             <div class="secondary-cards-container">
                 <div class="secondary-card secondary-card--blue">
