@@ -1,22 +1,40 @@
-<form class="voting-form" hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" hx-target="#voting-card" hx-swap="outerHTML">
+<form class="voting-form" hx-trigger="click delay:2s" hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}" hx-target="#voting-card" hx-swap="outerHTML">
     {{ csrf_input }}
     <input type="hidden" name="action" value="vote">
     <input type="hidden" name="comment_id" value="{{ comment.id }}">
     <div class="voting-card__voting-form__choices">
-        <button type="submit" class="voting-card__voting-form__choices--agree" name="vote" value="agree">
-            <i class="fa fa-thumbs-up"></i>
-            {{_("Agree")}}
+        <button onclick="showSpinner('agree')" type="submit" class="voting-card__voting-form__choices--agree" name="vote" value="agree">
+            <span>
+                <i class="fa fa-thumbs-up"></i>
+                {{_("Agree")}}
+            </span>
+            <span id="agree-spinner" style="display: none" class="loader"></span>
         </button>
-        <button type="submit" class="voting-card__voting-form__choices--disagree" name="vote" value="disagree">
-            <i class="fa fa-thumbs-down"></i>
-            {{_("Disagree")}}
+        <button onclick="showSpinner('disagree')" type="submit" class="voting-card__voting-form__choices--disagree" name="vote" value="disagree">
+            <span>
+                <i class="fa fa-thumbs-down"></i>
+                {{_("Disagree")}}
+            </span>
+            <span id="disagree-spinner" style="display: none" class="loader"></span>
         </button>
-        <button type="submit" name="vote" class="voting-card__voting-form__choices--skip" value="skip">
-            <i class="fa fa-arrow-up"></i>
-            {{_("Skip")}}
+        <button onclick="showSpinner('skip')" type="submit" name="vote" class="voting-card__voting-form__choices--skip" value="skip">
+            <span>
+                <i class="fa fa-arrow-up"></i>
+                {{_("Skip")}}
+            </span>
+            <span id="skip-spinner" style="display: none" class="loader"></span>
         </button>
     </div>
     <a class="voting-card__voting-form__back" href="{{ url('profile:home')}}">
         <i class="fa fa-arrow-left"></i>
     </a>
 </form>
+
+<script>
+function showSpinner (identifier) {
+    let buttonText = $(`.voting-card__voting-form__choices--${identifier}`)
+    buttonText.children()[0].remove();
+    let spinner = $(`#${identifier}-spinner`)[0];
+    spinner.classList.add("show")
+}
+</script>

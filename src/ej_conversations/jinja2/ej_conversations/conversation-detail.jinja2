@@ -63,7 +63,6 @@
             </div>
         {% endif %}
     </div>
-	<script src="/static/js/vote-from-template.js"></script>
     <script>
         function copyToClipboard(id) {
             navigator.clipboard.writeText(window.location.href).then(() => {
@@ -74,8 +73,3 @@
         }
     </script>
 {% endblock %}
-
-
-{% macro edit_link() %}
-    <a href="{{ conversation.patch_url('conversation:edit') }}" class="bold">{{ _('here') }}</a>
-{% endmacro %}
