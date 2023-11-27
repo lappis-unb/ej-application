@@ -24,7 +24,7 @@ The following instructions works properly with compose plugin version `v2.21.0` 
     $ inv docker-up
 
 This will deploy EJ using **docker/docker-compose.yml** file.
-Every code change will be synchronized with `docker_server` container. After `inv docker-up`, you can access EJ on `http://localhost:8000` URL.
+Every code change will be synchronized with `docker_server` container. After `inv docker-up`, you can access EJ on `http://localhost:8000` url.
 
 If you are creating a clean instance, you can populate the database with some fake data:
 
@@ -75,4 +75,4 @@ After configuring local environment, the next step is reading our documentation.
 
     $ inv docker-exec "inv docs"
 
-and will be available at the `http://localhost:8000/docs <http://localhost:8000/docs>`_ url.
+and will be available at the [http://localhost:8000/docs](http://localhost:8000/docs) url.
