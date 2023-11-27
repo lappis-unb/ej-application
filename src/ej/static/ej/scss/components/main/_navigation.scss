@@ -375,7 +375,7 @@ body {
 
     &.hide {
         right: -20rem;
-        display: block;
+        display: block !important;
         visibility: hidden;
     }
 }
