@@ -393,6 +393,11 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
             font-weight: 300;
             line-height: 125%;
             margin: 0.5rem 0 2.125rem 0;
+            transition: opacity 1s;
+
+            &--show {
+                opacity: 1 !important;
+            }
         }
 
         textarea {
