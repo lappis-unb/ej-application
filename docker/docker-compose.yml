@@ -8,6 +8,7 @@ services:
             - POSTGRES_DB=ej
         volumes:
             - "backups:/var/lib/postgresql/data"
+        container_name: docker_db_1
     server:
         container_name: server
         build:

@@ -23,8 +23,8 @@ def docker_up(ctx, dry_run=False, d=False):
     """
     do = runner(ctx, dry_run, pty=True)
     file = "docker/docker-compose.yml"
-
-    compose = f"docker-compose -f {file} up -d" if d else f"docker-compose -f {file} up"
+    compose_binary = "docker compose"
+    compose = f"{compose_binary} -f {file} up -d" if d else f"{compose_binary} -f {file} up"
     do(compose)
 
 
