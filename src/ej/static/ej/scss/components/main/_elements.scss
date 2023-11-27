@@ -195,6 +195,16 @@ $toast-opacity: 0.75;
         }
     }
 }
+.toast--hide {
+    display: none !important;
+}
+.toast--show {
+    display: flex !important;
+}
+dialog.toast--show {
+    border: unset;
+}
+
 @media only screen and (max-width: 1016px) {
     .toast {
         margin-left: auto;

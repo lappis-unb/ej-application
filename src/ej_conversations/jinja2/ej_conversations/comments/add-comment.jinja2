@@ -1,8 +1,13 @@
+<dialog class="toast toast--hide" id="comment-dialog-confirmation">
+    <div class="toast__content">
+        <span>{{_("Thank you! Your comment was sent to moderation and will be evaluated soon.")}}</span>
+    </div>
+</dialog>
+
 <div class="voting-card comment-card">
     <form method="post" id="add-comment"
         hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
-        hx-target="#voting-card"
-        hx-swap="outerHTML"
+        hx-swap="none"
     >
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
@@ -85,4 +90,8 @@ if (sendButton) {
     });
 }
 
+$("#add-comment").on("htmx:afterRequest", () => {
+    $('textarea')[0].value = "";
+    showConfirmationDialogFor("#comment-dialog-confirmation")
+});
 </script>

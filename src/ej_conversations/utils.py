@@ -121,7 +121,6 @@ def handle_detail_comment(request, conversation):
         new_comment = form.cleaned_data["content"]
         user = request.user
         new_comment = conversation.create_comment(user, new_comment)
-        toast(request, _("Thank you! Your comment was sent to moderation and will be evaluated soon."))
         log.info(f"user {user.id} posted comment {new_comment.id} on {conversation.id}")
     return {"form": form}
 
