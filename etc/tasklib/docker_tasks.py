@@ -15,6 +15,8 @@ __all__ = [
     "docker_logs",
 ]
 
+COMPOSE_BINARY = "docker compose"
+
 
 @task
 def docker_up(ctx, dry_run=False, d=False):
@@ -23,8 +25,7 @@ def docker_up(ctx, dry_run=False, d=False):
     """
     do = runner(ctx, dry_run, pty=True)
     file = "docker/docker-compose.yml"
-
-    compose = f"docker-compose -f {file} up -d" if d else f"docker-compose -f {file} up"
+    compose = f"{COMPOSE_BINARY} -f {file} up -d" if d else f"{COMPOSE_BINARY} -f {file} up"
     do(compose)
 
 
@@ -76,7 +77,7 @@ def docker_stop(ctx):
     Stop EJ containers;
     """
     do = runner(ctx, dry_run=False, pty=True)
-    do(f"docker-compose -f docker/docker-compose.yml stop")
+    do(f"{COMPOSE_BINARY} -f docker/docker-compose.yml stop")
 
 
 @task
@@ -85,7 +86,7 @@ def docker_rm(ctx):
     Remove EJ containers;
     """
     do = runner(ctx, dry_run=False, pty=True)
-    do(f"docker-compose -f docker/docker-compose.yml rm")
+    do(f"{COMPOSE_BINARY} -f docker/docker-compose.yml rm")
 
 
 @task

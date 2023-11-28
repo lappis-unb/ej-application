@@ -81,11 +81,46 @@ legend {
 }
 
 .content-grid {
-    grid-template-columns: minmax(6%,auto) minmax(auto, 900px) auto;
+    grid-template-columns: minmax(6%, auto) minmax(auto, 1000px) minmax(6%, auto);
     display: grid;
 }
 .content-grid > * {
     grid-column: 2;
+}
+
+.loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $color-accent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: none;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin-top: 2rem;
+}
+.hide {
+    display: none !important;
+    opacity: 0;
+}
+.show {
+    display: block !important;
+    opacity: 1;
+}
+.htmx-request .loader{
+    display:inline;
+}
+.htmx-request.loader{
+    display:inline;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @media only screen and (max-width: 900px) {
