@@ -8,6 +8,9 @@ class EjActivationConfig(AppConfig):
     name = "ej_activation"
 
     def get_app_urls(self):
+        """
+        includes new URLs on ej/urls.py when called by get_apps_dynamic_urls method.
+        """
         return path("", include("ej_activation.urls", namespace="activation"))
 
     def customize_menu(self, conversation):
