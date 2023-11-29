@@ -1,4 +1,5 @@
 import logging
+
 from boogie.rest import rest_api
 from django.apps import apps
 from django.conf import settings
@@ -9,17 +10,16 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import include, path, re_path
 from django.views import defaults as default_views
 from django.views.static import serve
-from ej_boards.api import BoardViewSet
-from rest_framework.documentation import include_docs_urls
-from rest_framework.routers import DefaultRouter
-
-from ej_profiles.api import ProfileViewSet
-from ej_tools.api import RasaConversationViewSet, OpinionComponentViewSet
-from ej_conversations.api import ConversationViewSet, CommentViewSet, VoteViewSet
-from ej_clusters.api import ClusterizationViewSet
-from ej_users.api import UsersViewSet, UserAuthViewSet
 from ej import services
 from ej.fixes import unregister_admin
+from ej_boards.api import BoardViewSet
+from ej_clusters.api import ClusterizationViewSet
+from ej_conversations.api import CommentViewSet, ConversationViewSet, VoteViewSet
+from ej_profiles.api import ProfileViewSet
+from ej_tools.api import OpinionComponentViewSet, RasaConversationViewSet
+from ej_users.api import UserAuthViewSet, UsersViewSet
+from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
 
 unregister_admin.unregister_apps()
 
