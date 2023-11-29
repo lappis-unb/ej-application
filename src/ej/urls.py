@@ -1,3 +1,4 @@
+import logging
 from boogie.rest import rest_api
 from django.apps import apps
 from django.conf import settings
@@ -34,6 +35,8 @@ api_router.register(r"boards", BoardViewSet, basename="v1-boards")
 api_router.register(r"users", UsersViewSet, basename="v1-users")
 api_router.register(r"", UserAuthViewSet, basename="v1-auth")
 
+log = logging.getLogger("ej")
+
 
 def get_apps_dynamic_urls():
     """
@@ -53,9 +56,9 @@ def get_apps_dynamic_urls():
     apps_urls = []
     for app_config in apps.app_configs:
         try:
-            getattr(apps.app_configs[app_config], "get_app_urls")
-            apps_urls.append(apps.app_configs[app_config].get_app_urls())
-            Logger.info(f"INCLUDING {app_config} URLs")
+            get_app_urls = getattr(apps.app_configs[app_config], "get_app_urls")
+            apps_urls += [get_app_urls()]
+            log.info(f"Including {app_config} URLs using get_apps_dynamic_urls()")
         except Exception:
             pass
     return apps_urls
