@@ -35,9 +35,32 @@ api_router.register(r"users", UsersViewSet, basename="v1-users")
 api_router.register(r"", UserAuthViewSet, basename="v1-auth")
 
 
-#
-# Optional urls
-#
+def get_apps_dynamic_urls():
+    """
+    Allows apps to include new urls without editing ej/urls.py directly.
+    In order to include new urls, the app must implements the get_app_urls method,
+    inside the apps.py file. The method must return a namespaced path, for example:
+
+    def get_app_urls(self):
+        from my_app.views import View
+        from django.urls import path
+
+        urlpatterns = [path("path/", View.as_view(), name="path")]
+        return path("customapp/", include(urlpatterns, namespace="customapp"))
+
+    Checks ej_activation app, for example.
+    """
+    apps_urls = []
+    for app_config in apps.app_configs:
+        try:
+            getattr(apps.app_configs[app_config], "get_app_urls")
+            apps_urls.append(apps.app_configs[app_config].get_app_urls())
+            Logger.info(f"INCLUDING {app_config} URLs")
+        except Exception:
+            pass
+    return apps_urls
+
+
 def get_urlpatterns():
     fixes()
 
@@ -67,7 +90,6 @@ def get_urlpatterns():
         #  Global stereotype and cluster management
         path("conversations/", include("ej_clusters.urls.clusters", namespace="cluster")),
         path("stereotypes/", include("ej_clusters.urls.stereotypes", namespace="stereotypes")),
-        path("", include("ej_activation.urls", namespace="activation")),
         #
         #  Allauth
         path("accounts/", include("allauth.urls")),
@@ -97,6 +119,7 @@ def get_urlpatterns():
         #
         #  Boards
         *with_app("ej_boards", "", namespace="boards"),
+        *get_apps_dynamic_urls(),
     ]
 
     if settings.DEBUG:
