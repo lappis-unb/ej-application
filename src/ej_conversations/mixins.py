@@ -140,7 +140,7 @@ class UserMixin(ConversationMixin):
 
         # Save extended dataframe
         extend_fields = list(extend_fields)
-        stats = self.extend_dataframe(stats, "name", "email", "votes__channel", *extend_full_fields)
+        stats = self.extend_dataframe(stats, "name", "email", *extend_full_fields)
         if extend_fields:
             columns = list(stats.columns[: -len(extend_fields)])
             columns.extend(extend_fields)
@@ -148,7 +148,6 @@ class UserMixin(ConversationMixin):
         cols = [
             "name",
             "email",
-            "votes__channel",
             *extend_fields,
             "agree",
             "disagree",
@@ -179,10 +178,6 @@ class UserMixin(ConversationMixin):
         # Use better values for extended columns
         for field, transform in transforms.items():
             stats[field] = stats[field].apply(transform)
-
-        channel_choices = {"opinion_component": "componente de opinião", "unknown": "desconhecido"}
-        stats["votes__channel"] = stats["votes__channel"].replace(channel_choices)
-        stats = stats.rename(columns={"votes__channel": _("channel")})
 
         return stats
 
