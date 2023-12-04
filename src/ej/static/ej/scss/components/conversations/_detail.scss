@@ -15,6 +15,9 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 }
 
+.content-grid.margin-y3 {
+    position: relative;
+}
 
 .conversation-balloon {
     @extend .center;
@@ -291,7 +294,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         &__header {
             display: flex;
             flex-wrap: wrap;
-            margin: 1rem 0;
+            margin: 1rem 0 2rem 0;
             gap: 1rem;
         }
         &__progress {
@@ -513,7 +516,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 
     &__message {
-        margin: 6.063rem 0 4.688rem;
+        padding: 1rem 0 2rem 0;
         color: $color-black-alternative;
         font-family: Raleway;
         font-size: 1.75rem;
@@ -589,7 +592,6 @@ button[name='vote'] .loader {
         padding: 1.5rem 1rem 0 1rem;
         padding: 1.875rem 1.625rem 0.531rem 2rem;
         position: absolute;
-        bottom: 0;
         left: 0;
     }
     .voting-card textarea {

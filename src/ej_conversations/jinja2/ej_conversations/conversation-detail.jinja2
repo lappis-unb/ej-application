@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content-grid">
+    <div class="content-grid margin-y3">
         {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
             <div class="secondary-cards-container">
                 <div class="secondary-card secondary-card--blue">
