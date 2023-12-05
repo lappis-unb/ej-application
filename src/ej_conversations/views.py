@@ -186,10 +186,9 @@ class ConversationCreateView(CreateView):
 
     def post(self, request, board_slug, *args, **kwargs):
         form = self.form_class(request=request)
-        kwargs.setdefault("is_promoted", True)
         kwargs["board"] = self.get_board()
 
-        if form.is_valid_post():
+        if form.is_valid():
             with transaction.atomic():
                 conversation = form.save_comments(self.request.user, **kwargs)
 
@@ -222,20 +221,9 @@ class ConversationEditView(UpdateView):
         conversation = self.get_object()
         board = Board.objects.get(slug=board_slug)
         form = self.form_class(request=request, instance=conversation)
-        is_promoted = conversation.is_promoted
 
         if form.is_valid_post():
-            # Check if user is not trying to edit the is_promoted status without
-            # permission. This is possible since the form sees this field
-            # for all users and does not check if the user is authorized to
-            # change is value.
-
-            new = form.save(board=board, **kwargs)
-            if new.is_promoted != is_promoted:
-                new.is_promoted = is_promoted
-                new.save()
-
-            # Now we decide the correct redirect page
+            form.save(board=board, **kwargs)
             page = request.POST.get("next")
             url = self.get_redirect_url(conversation, page)
             return redirect(url)
@@ -251,7 +239,7 @@ class ConversationEditView(UpdateView):
         elif conversation.is_promoted:
             return conversation.get_absolute_url()
         else:
-            return reverse("boards:conversation-list", kwargs={"board_slug": conversation.board.slug})
+            return reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
 
     def get_context_data(self, **kwargs: Any):
         conversation = self.get_object()
