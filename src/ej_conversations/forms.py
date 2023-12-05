@@ -69,6 +69,7 @@ class ConversationForm(EjModelForm):
             "end_date",
             "welcome_message",
         ]
+        widgets = {"start_date": ConversationDateWidget, "end_date": ConversationDateWidget}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
