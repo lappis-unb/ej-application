@@ -30,7 +30,7 @@
             </div>
         {% if comment %}
             <span class="voting-card__label">{% trans %} Comment {% endtrans %}</span><br>
-            <p class="voting-card__comment">{{ comment.content}}</p>
+            <div class="voting-card__comment"><p>{{ comment.content}}</p></div>
 
         <div>
             {% include 'ej_conversations/comments/voting-form.jinja2' %}

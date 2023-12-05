@@ -62,7 +62,7 @@
                             {% for i in range(1, 4) %}
                                 <label>
                                     {% trans %}Comment {{ i }}{% endtrans %}
-                                    <textarea name="comment-{{ i }}"
+                                    <textarea maxlength="252" name="comment-{{ i }}"
                                             placeholder="{{ _('Type your comment here') }} #{{ i }}"></textarea>
                                 </label>
                             {% endfor %}
