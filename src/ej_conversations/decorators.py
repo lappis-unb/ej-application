@@ -1,9 +1,10 @@
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.utils.translation import gettext_lazy as _
+from ej_conversations.models.vote import VoteChannels
 from ej_tools.tools import BotsTool
 from ej_users.models import SignatureFactory, User
-from ej_conversations.models.vote import VoteChannels
 from rest_framework.exceptions import PermissionDenied
-from django.utils.translation import gettext_lazy as _
-from django.http import HttpResponse
 
 
 TOOLS_CHANNEL = {
@@ -56,6 +57,25 @@ def conversation_can_receive_channel_vote(func):
         return func(self, request, vote)
 
     return wrapper_func
+
+
+def redirect_to_conversation_detail(view):
+    """
+    Verify if request.user should see the welcome page.
+    If not, redirect  him to conversation detail route.
+    """
+
+    def wrapper(self, request, *args, **kwargs):
+        user = request.user
+        conversation = self.get_object()
+        user_has_votes = conversation.votes.filter(author__id=user.id).exists()
+        user_has_comments = conversation.comments.filter(author__id=user.id).exists()
+        if user_has_votes or user_has_comments or not conversation.welcome_message:
+            return redirect("boards:conversation-detail", **conversation.get_url_kwargs())
+        print("USER", user)
+        return view(self, request, *args, **kwargs)
+
+    return wrapper
 
 
 def user_can_post_anonymously(func):

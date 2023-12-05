@@ -13,6 +13,7 @@
         {% endblock %}
 
         {% block form_content %}
+            {{ form.media }}
             <div class="conversation-form content-grid">
                 <div>
                     {# CONVERSATION FORM #}
@@ -41,6 +42,11 @@
                     <div class="conversation-form__duration">
                         <div>{{form.start_date}}</div>
                         <div>{{form.end_date}}</div>
+                    </div>
+
+                    <h4>{{_("Conversation welcome message")}}</h4>
+                    <div class="conversation-form__duration">
+                        <div>{{form.welcome_message}}</div>
                     </div>
 
                     {% block initial_comments %}

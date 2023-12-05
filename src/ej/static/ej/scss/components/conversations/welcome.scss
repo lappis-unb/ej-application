@@ -1,0 +1,50 @@
+.conversation-welcome {
+    font-family: 'Raleway';
+    display: grid;
+    grid-template-columns: auto minmax(auto, 834px) auto;
+    grid-template-rows: 18vh auto 18vh;
+
+    &__item {
+        grid-column: 2;
+        grid-row: 2;
+    }
+    h1 {
+        font-size: 2.625rem;
+        margin-bottom: 5.5rem;
+    }
+    &__message {
+        font-size: 1.75rem;
+        p {
+            font-weight: 400;
+        }
+    }
+    &__link {
+        @extend .button;
+        background-color: $color-accent;
+        border-radius: .5rem;
+        border: 1px solid $color-accent;
+        max-width: 15rem;
+        width: 100%;
+        padding: .5rem 0;
+        box-sizing: content-box;
+        float: right;
+        a {
+            color: $color-white;
+            font-weight: 700;
+        }
+    }
+}
+
+@media (max-width: 430px) {
+    .conversation-welcome {
+        grid-template-columns: 5% auto 5%;
+        grid-template-rows: 9vh auto 9vh;
+    }
+    .conversation-welcome__link {
+        display: block;
+        max-width: unset;
+        width: 80%;
+        margin: auto;
+        float: unset;
+    }
+}
