@@ -99,7 +99,11 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
     objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through="ConversationTag", blank=True)
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
-    welcome_message = RichTextField(blank=True, null=True)
+    welcome_message = RichTextField(
+        blank=True,
+        null=True,
+        help_text=_("A message to be presented to participants before starting voting."),
+    )
 
     def set_overdue(self):
         """
