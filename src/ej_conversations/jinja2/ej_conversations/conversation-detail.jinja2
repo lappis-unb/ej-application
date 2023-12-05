@@ -62,7 +62,7 @@
     </div>
     <script>
         function copyToClipboard(id) {
-            navigator.clipboard.writeText(window.location.href).then(() => {
+            navigator.clipboard.writeText(`${window.location.href}welcome`).then(() => {
                 let copyInfo = document.getElementById(id);
                 copyInfo.classList.remove("hide");
                 setTimeout(() => {  copyInfo.classList.add("hide"); }, 2000);

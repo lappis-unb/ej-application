@@ -61,8 +61,14 @@ class ConversationForm(EjModelForm):
 
     class Meta:
         model = Conversation
-        fields = ["title", "text", "anonymous_votes_limit", "start_date", "end_date"]
-        widgets = {"start_date": ConversationDateWidget, "end_date": ConversationDateWidget}
+        fields = [
+            "title",
+            "text",
+            "anonymous_votes_limit",
+            "start_date",
+            "end_date",
+            "welcome_message",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

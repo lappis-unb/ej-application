@@ -1,45 +1,41 @@
 from logging import getLogger
 from typing import Any, Dict
 
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import F
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse, HttpResponseServerError, JsonResponse
-from django.urls import reverse
+from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
-
-from ej_boards.models import Board
-from ej_conversations.rules import max_comments_per_conversation
-from ej_users.models import SignatureFactory
-
-from . import forms, models
-from .models import Conversation, Comment
-from ej_users.models import User
-from .utils import (
-    check_promoted,
-    conversation_admin_menu_links,
-    handle_detail_favorite,
-    handle_detail_comment,
-    handle_detail_vote,
-)
-
+from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
+    can_acess_list_view,
     can_add_conversations,
     can_edit_conversation,
     can_moderate_conversation,
-    can_acess_list_view,
-    is_superuser,
     check_conversation_overdue,
+    is_superuser,
 )
+from ej_boards.models import Board
+from ej_conversations.rules import max_comments_per_conversation
+from ej_users.models import SignatureFactory
+from ej_users.models import User
 
-from .decorators import create_session_key, user_can_post_anonymously
-from ej.components.menu import apps_custom_menu_links
+from .forms import CommentForm, ConversationForm
+from .decorators import create_session_key, user_can_post_anonymously, redirect_to_conversation_detail
+from .models import Comment, Conversation
+from .utils import (
+    conversation_admin_menu_links,
+    handle_detail_comment,
+    handle_detail_favorite,
+    handle_detail_vote,
+)
 
 log = getLogger("ej")
 
@@ -117,9 +113,20 @@ class PrivateConversationView(ConversationView):
         }
 
 
+class ConversationWelcomeView(DetailView):
+    queryset = Conversation.objects.all()
+    form_class = CommentForm
+    model = Conversation
+    template_name = "ej_conversations/conversation-welcome.jinja2"
+
+    @redirect_to_conversation_detail
+    def get(self, request, *args, **kwargs):
+        return super().get(request)
+
+
 @method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(DetailView):
-    form_class = forms.CommentForm
+    form_class = CommentForm
     model = Conversation
     template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
@@ -182,7 +189,7 @@ class ConversationDetailView(DetailView):
 @method_decorator([login_required, can_acess_list_view, can_add_conversations], name="dispatch")
 class ConversationCreateView(CreateView):
     template_name = "ej_conversations/conversation-create.jinja2"
-    form_class = forms.ConversationForm
+    form_class = ConversationForm
 
     def post(self, request, board_slug, *args, **kwargs):
         form = self.form_class(request=request)
@@ -215,7 +222,7 @@ class ConversationCreateView(CreateView):
 class ConversationEditView(UpdateView):
     model = Conversation
     template_name = "ej_conversations/conversation-edit.jinja2"
-    form_class = forms.ConversationForm
+    form_class = ConversationForm
 
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
@@ -258,7 +265,7 @@ class ConversationEditView(UpdateView):
 class ConversationModerateView(UpdateView):
     model = Conversation
     template_name = "ej_conversations/conversation-moderate.jinja2"
-    status = models.Comment.STATUS
+    status = Comment.STATUS
 
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         payload = request.POST
@@ -305,14 +312,14 @@ class NewCommentView(UpdateView):
                         content=comment,
                         conversation=self.get_object(),
                         author=request.user,
-                        status=models.Comment.STATUS.approved,
+                        status=Comment.STATUS.approved,
                     )
         return render(request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
         conversation = self.get_object()
 
-        status = models.Comment.STATUS
+        status = Comment.STATUS
         comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
         approved, pending, rejected = [
             comments.filter(status=_status)

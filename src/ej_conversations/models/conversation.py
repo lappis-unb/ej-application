@@ -1,35 +1,40 @@
-from autoslug import AutoSlugField
-from boogie import models
-from boogie import rules
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
-from django.db.models.functions import Length
-from django.urls import reverse
 from datetime import datetime
 import re
 
+from autoslug import AutoSlugField
+from boogie import models
+from boogie import rules
+from ckeditor.fields import RichTextField
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.db.models.functions import Length
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from ej.components.menu import apps_custom_menu_links, register_menu
+from ej.utils.functional import deprecate_lazy
+from ej.utils.url import SafeUrl
+from ej_boards.models import Board
+from hyperpython import a
 from model_utils.models import TimeStampedModel
-from sidekick import lazy, property as property, placeholder as this
+from sidekick import lazy, placeholder as this, property as property
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
 
-from ej.utils.functional import deprecate_lazy
-from ej.utils.url import SafeUrl
-from .comment import Comment
-from .conversation_queryset import log, ConversationQuerySet
-from .favorites import HasFavoriteMixin
-from .util import make_clean
-from .util import vote_count, statistics, statistics_for_user, vote_distribution_over_time
-from .vote import Vote
 from ..enums import Choice
 from ..signals import comment_moderated
 from ..utils import normalize_status
-
-from ej.components.menu import apps_custom_menu_links, register_menu
-from hyperpython import a
-from ej_boards.models import Board
+from .comment import Comment
+from .conversation_queryset import ConversationQuerySet, log
+from .favorites import HasFavoriteMixin
+from .util import make_clean
+from .util import (
+    statistics,
+    statistics_for_user,
+    vote_count,
+    vote_distribution_over_time,
+)
+from .vote import Vote
 
 NOT_GIVEN = object()
 
@@ -94,6 +99,7 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
     objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through="ConversationTag", blank=True)
     votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
+    welcome_message = RichTextField(blank=True, null=True)
 
     def set_overdue(self):
         """
