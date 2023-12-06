@@ -499,19 +499,41 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
     }
 
-    &__privacy {
-        margin-top: 2.438rem;
-        color: $color-complementary-gray;
-        font-family: Raleway;
-        font-size: 0.75rem;
-        font-style: italic;
-        font-weight: 500;
-        line-height: normal;
+    .privacy-policy {
+        &__text {
+            background-color: white;
+            padding: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 1.8rem;
+            white-space: break-spaces;
+            height: 8.8125rem;
+            overflow: scroll;
+        }
 
-        a {
-            font-weight: 700;
-            color: $color-complementary-gray;
-            text-decoration-line: underline;
+        &__close-button,
+        &__title {
+            display: block;
+            text-align: center;
+        }
+
+        &__close-button {
+            color: $color-gray-darker;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        &__close-button:hover {
+            color: $color-gray-darker;
+        }
+
+        &__title {
+            font-size: 0.75rem;
+            color: $color-gray-darker;
+            a {
+                text-decoration: underline;
+                font-weight: bold;
+                color: $color-gray-darker;
+                margin-left: 0.3rem;
+            }
         }
     }
 

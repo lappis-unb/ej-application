@@ -12,7 +12,10 @@ const manageNextCommentTransition = () => {
 
 const calculateCommentHeight = () => {
   let commentHtmlElement = $(".voting-card__comment")[0];
-  let clientHeight = $(".voting-card__comment")[0].clientHeight;
+  if (!commentHtmlElement) {
+    commentHtmlElement = $(".voting-card__message")[0];
+  }
+  let clientHeight = commentHtmlElement.clientHeight;
   let fixedCommentHeight = clientHeight + 16;
   if (fixedCommentHeight < 150) {
     fixedCommentHeight = 150;

@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.flatpages.models import FlatPage
 from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
     can_acess_list_view,
@@ -164,6 +165,11 @@ class ConversationDetailView(DetailView):
         max_comments = max_comments_per_conversation(conversation, user)
         conversation.set_request(self.request)
 
+        try:
+            privacy_policy = FlatPage.objects.get(url="/privacy-policy/").content
+        except FlatPage.DoesNotExist:
+            privacy_policy = ""
+
         if not user.is_anonymous:
             n_comments = user.comments.filter(conversation=conversation).count()
             n_user_final_votes = conversation.current_comment_count(user)
@@ -185,6 +191,7 @@ class ConversationDetailView(DetailView):
             "n_user_final_votes": n_user_final_votes,
             "apps_menu_links": apps_custom_menu_links(conversation),
             "user_boards": user_boards,
+            "privacy_policy": privacy_policy,
             **self.ctx,
         }
 
