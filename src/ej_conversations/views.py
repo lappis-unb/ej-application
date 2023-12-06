@@ -167,9 +167,11 @@ class ConversationDetailView(DetailView):
         if not user.is_anonymous:
             n_comments = user.comments.filter(conversation=conversation).count()
             n_user_final_votes = conversation.current_comment_count(user)
+            user_boards = Board.objects.filter(owner=user)
         else:
             n_comments = 0
             n_user_final_votes = 0
+            user_boards = []
 
         return {
             "conversation": conversation,
@@ -182,6 +184,7 @@ class ConversationDetailView(DetailView):
             "max_comments": max_comments,
             "n_user_final_votes": n_user_final_votes,
             "apps_menu_links": apps_custom_menu_links(conversation),
+            "user_boards": user_boards,
             **self.ctx,
         }
 
