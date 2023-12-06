@@ -2,7 +2,7 @@
 {% set main_class = "board-container" %}
 {% block menu %}
     {% if request.user.is_authenticated %}
-        {% include 'ej_boards/includes/menu-board.jinja2' %}
+        {% include 'ej_conversations/includes/participant-menu.jinja2' %}
     {% else %}
         {% include 'ej_conversations/includes/menu-list.jinja2' %}
     {% endif %}

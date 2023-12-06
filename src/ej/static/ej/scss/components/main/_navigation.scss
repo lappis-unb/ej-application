@@ -308,11 +308,9 @@ body {
         max-height: 15rem;
         li {
             display: flex;
-            justify-content: space-between;
-            height: 1.7rem;´
-            a {
-                margin-left: 0.5rem;
-            }
+            gap: 0.31rem;
+            height: 1.7rem;
+            color: $color-black;
             p {
                 margin-right: 0.5rem;
                 font-weight: 700;
@@ -457,6 +455,36 @@ body {
     a {font-weight: bold}
 }
 
+.participant-menu {
+    display: grid;
+    grid-template-columns: 1.75rem auto 1.75rem;
+
+    
+    &__item {
+        grid-column: 2/3;
+    }
+
+    &__item--margin {
+        margin-top: 2.5rem !important;
+    }
+
+    &__welcome-title {
+        font-size: 1.5rem !important;
+        line-height: 1.8rem !important;
+        color: black;
+        margin-bottom: unset !important;
+    }
+
+    &__home-link {
+        grid-column: 1/4;
+        margin: 2.5rem 0 2.5rem 0;
+        padding: 0.32rem 0 0.32rem 1.75rem;
+
+        &--selected {
+            background-color: $color-navigation-header-with-opacity;
+        }
+    }
+}
 
 @include breakpoint("sm") {
     .page-menu {
@@ -552,14 +580,6 @@ body {
         }
         nav:first-child a {
             font-weight: 700;
-        }
-        nav::after {
-            background: rgba(0, 0, 0, 0.12);
-            display: block;
-            content: " ";
-            height: 1px;
-            margin: size(0.5) auto 0 auto;
-            width: 75%;
         }
         nav:last-child::after {
             content: none;

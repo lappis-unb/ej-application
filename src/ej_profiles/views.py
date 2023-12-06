@@ -24,13 +24,14 @@ class DetailView(DetailView):
         profile = self.get_object()
 
         return {
-            "profile": self.get_object(),
+            "profile": profile,
             "n_conversations": profile.conversations.count(),
             "n_boards": profile.boards.count(),
             "n_favorites": profile.favorite_conversations.count(),
             "n_comments": profile.user.comments.count(),
             "n_votes": profile.votes.count(),
             "achievements_href": None,
+            "user_boards": Board.objects.filter(owner=self.request.user),
         }
 
 
@@ -56,7 +57,11 @@ class EditView(UpdateView):
     def get_context_data(self, **kwargs):
         profile = self.get_object()
 
-        return {"form": self.form_class(instance=profile, request=self.request), "profile": profile}
+        return {
+            "form": self.form_class(instance=profile, request=self.request),
+            "profile": profile,
+            "user_boards": Board.objects.filter(owner=self.request.user),
+        }
 
 
 @method_decorator([login_required], name="dispatch")
@@ -65,7 +70,10 @@ class ContributionsView(DetailView):
 
     def get_context_data(self, **kwargs):
         profile = self.request.user.get_profile()
-        return profile.get_contributions_data()
+        return {
+            **profile.get_contributions_data(),
+            "user_boards": Board.objects.filter(owner=self.request.user),
+        }
 
 
 @method_decorator([login_required], name="dispatch")
@@ -117,8 +125,15 @@ class TourView(HomeView):
 
     def get(self, *args, **kwargs):
         user = self.request.user
-        if user.get_profile().completed_tour:
+        user_profile = user.get_profile()
+
+        if self.request.GET.get("completedTour") == "false":
+            user_profile.completed_tour = False
+            user_profile.save()
+
+        if user_profile.completed_tour:
             return redirect(reverse("profile:home"))
+
         tour_step = self.request.GET.get("step")
         template_name = self._get_tour_step_template(tour_step)
         return render(self.request, template_name, self.get_context_data())

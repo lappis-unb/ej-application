@@ -4,6 +4,18 @@
 {% set aria_flowto = 'comment-card' %}
 {% set body_class = 'body theme-' + conversation.board.palette %}
 
+{% if request.user.is_anonymous %}
+    {% set hide_menu = true %}
+{% else %}
+    {% block menu %}
+        {% if conversation.author.id == request.user.id or request.user.is_staff or request.user.is_superuser %}
+            {% include 'ej_conversations/includes/menu-detail.jinja2' %}
+        {% else %}
+            {% include 'ej_conversations/includes/participant-menu.jinja2' %}
+        {% endif %}
+    {% endblock %}
+{% endif %}
+
 {% block metaOG %}
     <meta name="description" property="og:title" content="{{ conversation.title }}">
     <meta property="og:description" content="{{ conversation.text }}">

@@ -1815,6 +1815,7 @@ msgid "Free and open source"
 msgstr "Código livre e aberta"
 
 #: src/ej/templates/jinja2/pages/home.jinja2:64
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:31
 msgid "Documentation"
 msgstr "Documentação"
 
@@ -2222,24 +2223,14 @@ msgstr "Desculpe, você não pode criar novos murais."
 msgid "Create a new board!"
 msgstr "Criar um novo mural!"
 
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:4
-#: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
-msgid "New board"
-msgstr "Novo mural"
-
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:16
-#, fuzzy
-msgid "Manage"
-msgstr "Gerenciar"
-
-#: src/ej_boards/jinja2/ej_boards/includes/menu-board.jinja2:19
-#, fuzzy
-msgid "EJ Environment"
-msgstr "Ambiente EJ"
-
 #: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:4
 msgid "Manage boards"
 msgstr "Gerenciar murais"
+
+#: src/ej_boards/jinja2/ej_boards/includes/menu.jinja2:6
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:8
+msgid "New board"
+msgstr "Novo mural"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:9
 msgid "Configure opinion groups"
@@ -2776,7 +2767,7 @@ msgid "Request upgrade."
 msgstr "Solicite upgrade."
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:14
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -2792,7 +2783,7 @@ msgstr "Gerenciar!"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:25
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:23
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
 msgid "Comments"
@@ -3050,6 +3041,34 @@ msgstr "Nuvem de pontos"
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
 msgstr "Nova conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:2
+#, fuzzy
+msgid "Welcome, "
+msgstr "Boas vindas, "
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:7
+#, fuzzy
+msgid "My Boards"
+msgstr "Meus Murais"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:21
+#, fuzzy
+msgid "Manage"
+msgstr "Gerenciar"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:24
+#, fuzzy
+msgid "EJ Environment"
+msgstr "Ambiente EJ"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:29
+msgid "Help"
+msgstr "Ajuda"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:30
+msgid "Tour"
+msgstr "Tour"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:13
 msgid ""
@@ -3458,7 +3477,7 @@ msgid "You have not created any conversation yet!"
 msgstr "Você ainda não criou nenhuma conversa!"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:45
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:41
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:43
 msgid "List of conversations created by you."
 msgstr "Lista de conversas criadas por você."
 
@@ -3488,22 +3507,22 @@ msgstr "Editar perfil"
 msgid "Manage accounts"
 msgstr "Gerenciar conta"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:18
 #, fuzzy
 msgid "Create new"
 msgstr "Criar nova"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:20
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:22
 #, fuzzy
 msgid "Public Conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:21
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:23
 #, fuzzy
 msgid "My conversations"
 msgstr "Minhas Conversas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:28
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:30
 #, fuzzy
 msgid ""
 "List of conversations created by EJ community and available for "
@@ -3512,16 +3531,16 @@ msgstr ""
 "Lista de conversas criadas pela comunidade EJ e disponíveis para "
 "participação."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:44
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:46
 #, fuzzy
 msgid "You have not created any conversations."
 msgstr "Você ainda não criou nenhuma conversa."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:50
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:52
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:59
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:61
 #, fuzzy
 msgid ""
 "List of conversations you participated at least once. To resume voting, "
@@ -3530,17 +3549,17 @@ msgstr ""
 "Lista de conversas que você participou pelo menos uma vez. Para retomar à "
 "votação, clique no título."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:75
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:77
 #, fuzzy
 msgid "You haven't voted in any conversations yet."
 msgstr "Você ainda não votou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:88
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:90
 #, fuzzy
 msgid "You haven't commented in any conversations yet."
 msgstr "Você ainda não comentou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:91
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:93
 #, fuzzy
 msgid ""
 "Comments you've submitted for approval in third-party conversations, in "
@@ -4542,6 +4561,9 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid " Click %(here)s to edit and make it visible again."
 #~ msgstr " Clique %(here)s para editar e torná-la visível novamente."
+#, fuzzy
+#~ msgid "Welcome, Participant!"
+#~ msgstr "Bem vindo, Participante!"
 
 #~ msgid "What do you want to ask?"
 #~ msgstr "O que você deseja perguntar?"
@@ -4613,10 +4635,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "Code was copied to your clipboard."
 #~ msgstr "Copiado para a área de transferência!"
-
-#, fuzzy
-#~ msgid "Participant"
-#~ msgstr "Participante"
 
 #, fuzzy
 #~ msgid "PARTICIPANT"
@@ -4781,10 +4799,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid "Create votes"
 #~ msgstr "Criar votos"
-
-#, fuzzy
-#~ msgid "My Boards"
-#~ msgstr "Meus Murais"
 
 #, fuzzy
 #~ msgid "General report"
@@ -5719,9 +5733,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ "votes!"
 #~ msgstr "Participe das conversas e dê sua opinião com comentários e votos!"
 
-#~ msgid "Help"
-#~ msgstr "Ajuda"
-
 #~ msgid "Do not know"
 #~ msgstr "Não sei"
 
@@ -5891,9 +5902,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid "{}/{} comment{}."
 #~ msgstr "{}/{} commentário{}."
-
-#~ msgid "Welcome"
-#~ msgstr "Boas vindas"
 
 #~ msgid ""
 #~ "You started your participation! Start voting in comments: you can agree, "
