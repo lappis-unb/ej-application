@@ -2425,6 +2425,7 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:42
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2955,6 +2956,15 @@ msgstr "Você já votou em todos os comentários."
 #, fuzzy
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
+
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:39
+msgid "Questions about privacy?"
+msgstr "Dúvidas sobre privacidade? "
+
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:39
+#, fuzzy
+msgid "Understand how your data is used"
+msgstr "Entenda como seus dados são utilizados"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:13
 msgid "Congratulations!"
@@ -4599,12 +4609,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "%(n)s comments added (Máx. 2)"
 #~ msgstr "%(n)s Comentários adicionados (Máx. 2)"
-
-#~ msgid "Questions about privacy?"
-#~ msgstr "Dúvidas sobre privacidade? "
-
-#~ msgid "Understand how your data is used"
-#~ msgstr "Entenda como seus dados são usados"
 
 #, fuzzy
 #~ msgid "Search for a conversation"
