@@ -1,9 +1,10 @@
 from django import forms
 from django.conf import settings
 
-from ej.forms import EjModelForm
+from ej.forms import EjModelForm, EjForm
 from . import models
 from .enums import STATE_CHOICES
+
 
 FULL_EDITABLE_FIELDS = [
     "occupation",
@@ -31,6 +32,14 @@ class UsernameForm(EjModelForm):
         help_texts = {"name": ""}
 
 
+class ProfileFormProfilePhoto(forms.ModelForm):
+    class Meta:
+        model = models.Profile
+        fields = [
+            "profile_photo",
+        ]
+
+
 class ProfileForm(EjModelForm):
     """
     User profile form
@@ -45,7 +54,13 @@ class ProfileForm(EjModelForm):
             # they show as blanks
             # "birth_date": DateInput(attrs={"type": "date"}, format="D d M Y"),
             # "profile_photo": ej.forms.FileInput(attrs={"accept": "image/*"})
-            "state": forms.Select(choices=STATE_CHOICES)
+            "state": forms.Select(choices=STATE_CHOICES),
+            "birth_date": forms.DateInput(
+                attrs={
+                    "placeholder": "DD/MM/YYYY",
+                    "pattern": "\d{2}/\d{2}/\d{4}",
+                }
+            ),
         }
 
     def __init__(self, *args, instance, **kwargs):

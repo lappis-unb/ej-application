@@ -1,20 +1,22 @@
 <nav class="participant-menu">
     <h1 class="participant-menu__welcome-title participant-menu__item participant-menu__item--margin">{{_("Welcome, ")}} {{request.user.name}}!</h1>
-    
+
     <a id="home" href="{{ url("profile:home") }}" class="participant-menu__home-link">Home</a>
-    
+
     <h3 class="participant-menu__item">
         {{ _('My Boards') }}
         <a href="{{ url('boards:board-create') }}" class="add-button" title="{{_('New board')}}"><i class="fa fa-plus-square fa-lg"></i></a>
     </h3>
-    <ul class="board-list participant-menu__item">
-        {% for board in user_boards %}
-        <li class="{{ board.slug }}" id="{{ board.slug }}-link">
-            <a href="{{ url('boards:conversation-list', board_slug=board.slug) }}">{{board.title}}</a>
-            <p>({{board.conversations.count()}})</p>
-        </li>
-        {% endfor %}
-    </ul>
+    {% if user_boards is defined %}
+        <ul class="board-list participant-menu__item">
+            {% for board in user_boards %}
+            <li class="{{ board.slug }}" id="{{ board.slug }}-link">
+                <a href="{{ url('boards:conversation-list', board_slug=board.slug) }}">{{board.title}}</a>
+                <p>({{board.conversations.count()}})</p>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     {% if request.user.is_staff or request.user.is_superuser %}
         <h3 class="participant-menu__item participant-menu__item--margin">
@@ -37,16 +39,16 @@
 
 
 <script>
+    window.onload = () => {
+        function menuStarter() {
+            let home = $('#home')[0];
+            let url = window.location.href.split("/");
+            var menuItem = url[url.length-2].split("-")[0];
 
-    function menuStarter() {
-        let home = document.getElementById('home');
-        let url = window.location.href.split("/");
-        var menuItem = url[url.length-2].split("-")[0];
-
-        if (menuItem == "home") {
-            home.classList.add("participant-menu__home-link--selected");
-        }
-    };
-
-    menuStarter();
+            if (menuItem == "home") {
+                home.classList.add("participant-menu__home-link--selected");
+            }
+        };
+        menuStarter();
+    }
 </script>

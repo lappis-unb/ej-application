@@ -1,42 +1,92 @@
 {% extends 'ej_profiles/base.jinja2' %}
 
 {% block page_content %}
-    <div class="measure margin-xauto width-full">
-        {{ tabs({_('Info'): '#profile-info', _('Contributions'): '#profile-contributions'}, class_='width-full') }}
-        <div id="profile-info" class="pad-x3p pad-y4 width-full">
-            <dl class="description text-4">
-                {% for title, info in profile.profile_fields(true) %}
-                    <dt>{{ title }}</dt>
-                    <dd>{{ (info or '-') }}</dd>
-                {% endfor %}
-            </dl>
-        </div>
-        <div id="profile-contributions" class="pad-4 center text-4 uppercase">
-            {% set base_url = url('profile:contributions') %}
-            {% if request.user.has_perm('ej.can_promote_conversations') %}
-                <p><a href="{{ base_url }}#contribution-conversations" class="text-brand semi-bold"><i
-                    class="fa fa-comments"></i> {{ n_conversations }} {{ _('Conversations') }}</a>
-            {% endif %}
-            {% if request.user.has_perm('ej_boards.view_board') %}
-                <p><a href="{{ url('boards:board-list') }}" class="text-brand semi-bold"><i
-                    class="fa fa-clipboard-list"></i> {{ n_boards }} {{ _('Boards') }}</a>
-            {% endif %}
-            <p><a href="{{ base_url }}#contribution-comments" class="text-brand semi-bold"><i
-                class="fa fa-comment"></i> {{ n_comments }} {{ _('Comments') }}</a>
-            <p><a href="{{ base_url }}#contribution-votes" class="text-brand semi-bold"><i
-                class="fa fa-vote-yea"></i> {{ n_votes }} {{ _('Votes') }}</a>
-            <p><a href="{{ base_url }}#contribution-favorites" class="text-brand semi-bold"><i
-                class="fa fa-star"></i> {{ n_favorites }} {{ _('Favorites') }}</a>
-                {% if achievements_href %}
-                    <p><a href="{{ achievements_href }}" class="text-brand semi-bold"><i
-                    class="fa fa-trophy"></i> {{ _('Achievements') }}</a>
+    <div class="content-grid">
+        <div class="profile-header" id="edit-header">
+            <div class="profile-header__photo">
+                {% if profile.has_image %}
+                    <img id="profile-photo" class="size-6 margin-t3 block profile-header__photo--rounded" src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
+                {% else %}
+                    <img id="profile-photo" class="size-6 margin-t3 block relative" src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
                 {% endif %}
+            </div>
+            <div class="profile-header__text">
+                {% block page_title %}<h1 class="h2 text-accents">{{ profile.name }}</h1>{% endblock %}
+                <h4>{{_("joined")}} {{ profile.date_joined.strftime('%d/%m/%Y')  }}</h4>
+            </div>
         </div>
     </div>
-    <div class="center">
-        {{ link(_("Edit profile"), href="profile:edit", button=True, class="block margin-y3") }}
-        {{ link(_("Manage accounts"), href="account:index", class="block margin-y2") }}
-        {{ link(_("Logout"), href="account:logout", class="block margin-y2") }}
+    <div class="form-element ">
+        <div class="content-grid inputs-min-size">
+        {{ tabs({_('Perfil'): '#profile-info',}, class_='width-full tab-color') }}
+            <div class="form-profile form-profile--row-separation" id="profile-info">
+                <div class="form-profile__name">
+                    <label>{{_("name")}}</label>
+                    <span>{{ profile.name }}</span>
+                </div>
+                <div class="form-profile__email">
+                    <label>{{_("email")}}</label>
+                    <span>{{profile.email}}</span>
+                </div>
+                <div class="form-profile__city">
+                    <label>{{_("city")}}</label>
+                    <span>{{ profile.city}}</span>
+                </div>
+
+                <div class="form-profile__state">
+                    <label>{{_("state")}}</label>
+                    <span>{{ profile.state}}</span>
+                </div>
+
+                <div class="form-profile__country">
+                    <label>{{_("country")}}</label>
+                    <span>{{ profile.country}}</span>
+                </div>
+
+                <div class="form-profile__birth-date">
+                    <label>{{_("birth_date")}}</label>
+                    {% if profile.birth_date %}
+                        <span>{{ profile.birth_date.strftime('%d/%m/%Y')}}</span>
+                    {% else %}
+                        <span></span>
+                    {% endif %}
+                </div>
+
+                <div class="form-profile__occupation">
+                    <label>{{_("occupation")}}</label>
+                    <span>{{ profile.occupation}}</span>
+                </div>
+
+                <div class="form-profile__education--detail">
+                    <label>{{_("education")}}</label>
+                    <span>{{ profile.education}}</span>
+                </div>
+
+                <div class="form-profile__ethnicity">
+                    <label>{{_("ethnicity")}}</label>
+                    <span>{{ profile.ethnicity}}</span>
+                </div>
+                <div class="form-profile__gender_other">
+                    <label>{{_("gender")}}</label>
+                    <span>{{ profile.gender}}</span>
+                </div>
+                <div class="form-profile__political_activity--detail">
+                    <label>{{_("political_activity")}}</label>
+                    <span>{{ profile.political_activity}}</span>
+                </div>
+                <div class="form-profile__biography--detail">
+                    <label>{{_("biography")}}</label>
+                    <span>{{ profile.biography}}</span>
+                </div>
+            </div>
+        </div>
+
+    <div class="content-grid">
+        <div id="btn-edit" class="form-profile--buttons">
+            {{ link(_("Edit profile"), href="profile:edit", button=True, class="block margin-y3 form-profile--buttons__action") }}
+        </div>
+    </div>
     </div>
 {% endblock %}
+
 

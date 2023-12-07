@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-05 20:43-0300\n"
+"POT-Creation-Date: 2023-12-06 19:26-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -581,7 +581,9 @@ msgstr "Votos anônimos"
 
 #: src/ej_conversations/models/conversation.py:105
 msgid "A message to be presented to participants before starting voting."
-msgstr "Um texto que poderá ser apresentado antes da tela de votação. A página ficará na rota /welcome da conversa."
+msgstr ""
+"Um texto que poderá ser apresentado antes da tela de votação. A página "
+"ficará na rota /welcome da conversa."
 
 #: src/ej_conversations/models/conversation.py:139
 #: src/ej_conversations/roles/conversations.py:129
@@ -719,7 +721,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:109
+#: src/ej_conversations/views.py:110
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -990,7 +992,7 @@ msgstr "escolaridade"
 
 #: src/ej_profiles/enums.py:55
 msgid "gender"
-msgstr "gênero"
+msgstr "expressão e identidade de gênero"
 
 #: src/ej_profiles/enums.py:56
 msgid "gender_other"
@@ -1002,7 +1004,7 @@ msgstr "gênero (outro)"
 
 #: src/ej_profiles/enums.py:58
 msgid "birth_date"
-msgstr "data_de_nascimento"
+msgstr "data de nascimento"
 
 #: src/ej_profiles/enums.py:59
 msgid "birth date"
@@ -1030,7 +1032,7 @@ msgstr "ocupação"
 
 #: src/ej_profiles/enums.py:65 src/ej_profiles/tests/test_models.py:60
 msgid "political_activity"
-msgstr "atividade_política"
+msgstr "atividade política"
 
 #: src/ej_profiles/enums.py:66
 msgid "political activity"
@@ -1711,8 +1713,10 @@ msgstr "Voltar para a página inicial"
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:19
 #: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:5
 #: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:8
-#: src/ej_profiles/jinja2/ej_profiles/base.jinja2:10
-#: src/ej_profiles/jinja2/ej_profiles/base.jinja2:13
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:8
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:10
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:10
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:12
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
@@ -1732,7 +1736,6 @@ msgid "Profile"
 msgstr "Perfil"
 
 #: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:25
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:39
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:13
 #: src/ej_users/jinja2/account/index.jinja2:17
 #: src/ej_users/jinja2/account/logout.jinja2:2
@@ -2192,7 +2195,7 @@ msgstr "Editar mural"
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:26
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:28
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:30
-#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:10
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:93
 #: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:23
 msgid "Save"
 msgstr "Salvar"
@@ -2425,7 +2428,7 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:48
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2669,39 +2672,39 @@ msgstr "Comentário"
 msgid "Conversation: \"{}\""
 msgstr "Conversa: \"{}\""
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:18
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:30
 msgid "What have people responded so far?"
 msgstr "O que as pessoas responderam até agora?"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:33
 msgid "Access the dashboard and follow along"
 msgstr "Acesse o dashboard e acompanhe"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:37
 msgid "The more people participating, the better!"
 msgstr "Quanto mais gente participando, melhor!"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:28
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:54
 #, fuzzy
 msgid "Share the conversation link"
 msgstr "Compartilhe o link da conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:33
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:47
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:59
 #, fuzzy
 msgid "Link copied to clipboard"
 msgstr "Link copiado para a área de transferência"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:51
 msgid "What does your community think about this topic?"
 msgstr "O que sua comunidade pensa sobre esse assunto?"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:54
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:66
 msgid "Warning!"
 msgstr "Atenção!"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:55
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:67
 msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
@@ -2783,7 +2786,6 @@ msgstr "Gerenciar!"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-card.jinja2:2
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:25
 #: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
@@ -2939,6 +2941,7 @@ msgstr ""
 "Você já enviou o número máximo permitido de comentários para esta conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:65
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:92
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2957,11 +2960,11 @@ msgstr "Você já votou em todos os comentários."
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:45
 msgid "Questions about privacy?"
 msgstr "Dúvidas sobre privacidade? "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:39
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:45
 #, fuzzy
 msgid "Understand how your data is used"
 msgstr "Entenda como seus dados são utilizados"
@@ -3454,7 +3457,6 @@ msgid "general"
 msgstr "Geral"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:29
 msgid "Favorites"
 msgstr "Favoritos"
 
@@ -3495,27 +3497,30 @@ msgstr "Lista de conversas criadas por você."
 msgid "Empty."
 msgstr "Vazio."
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:5
-msgid "Info"
-msgstr "Info"
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:15
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:26
+#, fuzzy
+msgid "joined"
+msgstr "entrou em"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:5
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:6
-msgid "Contributions"
-msgstr "Contribuições"
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:21
+msgid "Perfil"
+msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:32
-msgid "Achievements"
-msgstr "Suas conquistas"
-
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:37
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:86
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:5
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:38
-msgid "Manage accounts"
-msgstr "Gerenciar conta"
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:18
+#, fuzzy
+msgid "edit photo"
+msgstr "alterar foto"
+
+#: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:20
+#, fuzzy
+msgid "exclude"
+msgstr "excluir"
 
 #: src/ej_profiles/jinja2/ej_profiles/home.jinja2:18
 #, fuzzy
@@ -3577,6 +3582,10 @@ msgid ""
 msgstr ""
 "Comentários que você submeteu para aprovação em conversas de terceiros, em "
 "ordem decrescente de data"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:6
+msgid "Contributions"
+msgstr "Contribuições"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:4
 #, fuzzy
@@ -4563,6 +4572,9 @@ msgstr "Ao clicar, você concorda com nossa política de privacidade."
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
 
+#~ msgid "Achievements"
+#~ msgstr "Suas conquistas"
+
 #~ msgid "Place conversation in the main /conversations/ URL."
 #~ msgstr "Conversas promovidas aparecem no mural principal."
 
@@ -4571,9 +4583,20 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid " Click %(here)s to edit and make it visible again."
 #~ msgstr " Clique %(here)s para editar e torná-la visível novamente."
+
 #, fuzzy
 #~ msgid "Welcome, Participant!"
 #~ msgstr "Bem vindo, Participante!"
+
+#~ msgid "Info"
+#~ msgstr "Info"
+
+#, fuzzy
+#~ msgid "entrou em"
+#~ msgstr "entradas"
+
+#~ msgid "Manage accounts"
+#~ msgstr "Gerenciar conta"
 
 #~ msgid "What do you want to ask?"
 #~ msgstr "O que você deseja perguntar?"

@@ -1,0 +1,243 @@
+.visible {
+    visibility: visible !important;
+}
+.tab-color{
+  display: inline-flex;
+  a[is-selected]{
+    border-bottom-color: $color-brand;
+    color: $color-brand;
+  }
+  
+}
+
+.inputs-min-size{
+  input, textarea, select{
+    min-width: unset;
+  }
+}
+
+.profile-photo {
+    display: relative;
+    &__edit {
+        position: absolute;
+        top: 45%;
+        z-index: 3;
+        text-align: center;
+        width: 100%;
+        cursor: pointer;
+
+        span {
+            color: $color-black;
+            font-weight: bold;
+        }
+    }
+    &__form {
+        display: none;
+    }
+    &--unfocused {
+        position: absolute;
+        z-index: 1;
+        background-color: rgba(196, 196, 196, 0.80);
+        width: 12rem;
+        height: 12rem;
+        border-radius: 50%;
+        margin-top: 24px;
+    }
+}
+
+#id_profile_photo {
+    visibility: hidden;
+}
+
+.profile-header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  column-gap: 2rem;
+  padding: 3rem 0px;
+  
+  &__photo {
+      position: relative;
+      &--rounded {
+          border-radius:  50%;
+      }
+    img{
+        object-fit: cover;
+    }
+  }
+
+  h1{
+    font-size: 2.25rem;
+    color: $color-base-pink;
+    font-family: "Patua One";
+    font-weight: 400;
+  }
+  h4{
+    font-size: 1rem;
+    color: $color-gray-darker;
+    font-family: "Raleway";
+    font-weight: 700;
+    margin: 0.62rem 0px;
+  }
+  &--edit{
+    position: relative;
+    img{opacity: 0.3;}
+    &__options {
+      position: absolute;
+      left: 34%;
+      top: 31%;
+      z-index: 1;
+      opacity: 1;
+      input{display: none;}
+      label{
+        color: $color-theme-dark-blue;
+      }
+      form{
+        display: none;
+      }
+    }
+
+  }
+
+}
+
+.form-element {
+  width: 100%;
+  padding: 0px 0px;
+}
+
+.form-profile--row-separation{
+  grid-row-gap: 2.56rem;
+  padding-top: 1.5rem;
+}
+
+.form-profile {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 1.4rem;
+
+  span{
+    font-family: 'Raleway';
+    font-size: 1rem;
+    font-weight: 700;
+    color: $color-gray-darker;
+  }
+  &__name {
+    grid-area: 1 / 1 / 2 / 3;
+
+  }
+  &__email {
+    grid-area: 1 / 3 / 2 / 5;
+  }
+  &__city {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+  &__state {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  &__country {
+    grid-area: 2 / 3 / 3 / 4;
+  }
+
+  &__birth-date {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+
+  &__occupation {
+    // grid-area: 3 / 2 / 4 / 3;
+    grid-area: 3 / 2 / 4 / 4;
+  }
+
+  &__education {
+    grid-area: 3 / 4 / 4 / 5;
+  }
+
+  &__education--detail {
+    grid-area: 3 / 3 / 4 / 5;
+  }
+
+  &__ethnicity {
+    grid-area: 4 / 1 / 5 / 2;
+  }
+
+  &__gender_other {
+    grid-area: 4 / 2 / 5 / 4;
+  }
+
+  &__political_activity {
+    grid-area: 5 / 1 / 7 / 3;
+  }
+  
+  &__political_activity--detail{
+    grid-area: 5 / 1 / 7 / 2;
+  }
+
+  &__biography {
+    grid-area: 5 / 3 / 7 / 5;
+  }
+
+  &__biography--detail {
+    grid-area: 5 / 2 / 7 / 5;
+  }
+
+  select, textarea{
+    border-radius: 0.3125rem !important;
+  }
+
+  &--buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: end;
+    column-gap: 2rem;
+    input, a{
+      border: none !important;
+      border-radius: 1.5625rem !important;
+    }
+    a{
+      background-color: $color-base-pink !important;
+    }
+  }
+
+}
+
+
+@media (max-width:900px){
+
+  .profile-header, .form-element{
+    padding: 0px 1.88rem;
+  }
+
+  .profile-header{
+    padding-bottom: 3.6rem;
+  }
+
+  .form-profile--row-separation {
+      padding-top: 2.5rem;
+  }
+
+  .form-profile{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    &--buttons{
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .profile-header{
+    flex-direction: column;
+    &__text{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1{
+      text-align: center;
+    }
+  }
+}
