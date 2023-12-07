@@ -42,11 +42,20 @@ class EditView(UpdateView):
 
     def post(self, request):
         form = self.form_class(instance=self.get_object(), request=self.request)
+        form_profile_photo = forms.ProfileFormProfilePhoto(
+            request.POST, request.FILES, instance=self.get_object()
+        )
+        has_changed = False
 
         if form.is_valid_post():
-            form.files = request.FILES
             form.save()
+            has_changed = True
 
+        if form_profile_photo.is_valid():
+            form_profile_photo.save()
+            has_changed = True
+
+        if has_changed:
             return redirect("/profile/")
 
         return render(request, self.template_name, self.get_context_data())
@@ -60,7 +69,6 @@ class EditView(UpdateView):
         return {
             "form": self.form_class(instance=profile, request=self.request),
             "profile": profile,
-            "user_boards": Board.objects.filter(owner=self.request.user),
         }
 
 

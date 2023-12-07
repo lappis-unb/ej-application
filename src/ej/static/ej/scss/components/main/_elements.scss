@@ -335,3 +335,15 @@ dialog.toast--show {
         }
     }
 }
+
+.form-profile--buttons{
+    input[type=text]{
+        border-radius: 1.5625rem !important;
+    }
+    &__cancel{
+        background-color: $color-gray-darker !important;
+    }
+    &__save {
+        background-color: $color-theme-dark-blue !important;
+    }
+}
