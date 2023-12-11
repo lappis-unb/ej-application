@@ -2,11 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2023-12-06 19:26-0300\n"
-=======
-"POT-Creation-Date: 2023-12-07 21:11-0300\n"
->>>>>>> 5021583c (Small fixes)
+"POT-Creation-Date: 2023-12-11 18:34-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1822,7 +1818,7 @@ msgid "Free and open source"
 msgstr "Código livre e aberta"
 
 #: src/ej/templates/jinja2/pages/home.jinja2:64
-#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:33
 msgid "Documentation"
 msgstr "Documentação"
 
@@ -2666,7 +2662,7 @@ msgid "Create conversation"
 msgstr "Criar conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:32
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:95
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:102
 #, fuzzy
 msgid " Comment "
 msgstr "Comentário"
@@ -3067,21 +3063,21 @@ msgstr "Boas vindas, "
 msgid "My Boards"
 msgstr "Meus Murais"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:23
 #, fuzzy
 msgid "Manage"
 msgstr "Gerenciar"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:24
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:26
 #, fuzzy
 msgid "EJ Environment"
 msgstr "Ambiente EJ"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:29
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:31
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:32
 msgid "Tour"
 msgstr "Tour"
 
@@ -3290,17 +3286,17 @@ msgstr "total de comentários"
 msgid "comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:6
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:8
 #, fuzzy
 msgid "approved comments"
 msgstr "aprovados"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:10
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:12
 #, fuzzy
 msgid "rejected comments"
 msgstr "rejeitados"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:16
 #, fuzzy
 msgid "pending moderation"
 msgstr "aguardando moderação"
@@ -3570,12 +3566,13 @@ msgstr ""
 "Comentários que você submeteu para aprovação em conversas de terceiros, em "
 "ordem decrescente de data"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:6
-msgid "Contributions"
-msgstr "Contribuições"
 #: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
 msgid "pending"
 msgstr "esperando"
+
+#: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:6
+msgid "Contributions"
+msgstr "Contribuições"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:4
 #, fuzzy
@@ -4576,6 +4573,7 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "Welcome, Participant!"
 #~ msgstr "Bem vindo, Participante!"
+
 #~ msgid ""
 #~ "Your conversation still does not have defined personas. Without personas, "
 #~ "it is not possible to generate opinion groups."
@@ -4610,6 +4608,7 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid "Manage accounts"
 #~ msgstr "Gerenciar conta"
+
 #, fuzzy
 #~ msgid "e-mail"
 #~ msgstr "e-mail"
