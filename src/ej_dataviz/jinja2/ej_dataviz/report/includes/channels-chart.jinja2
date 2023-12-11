@@ -1,16 +1,14 @@
-<div class="votes-by-channel-chart chart">
-    <div class="voting-container">
-        <h3 class="chart__title">{{ _('Channel participation') }}</h3>
-        <div class="filter-participation">
-            <div class="filter-label"><span>{{ _('filter by:') }}</span></div>
-            <button id="id_vote_button" onclick="selectParticipation(event.target)"
-                class="filter-button">{{ _('votes')}}</button>
-            <button id="id_part_button" onclick="selectParticipation(event.target)"
-                class="filter-button">{{ _('participants')}}</button>
-        </div>
-        <div id="pizza-chart-container">
-            <svg id="pizza-chart"></svg>
-        </div>
+<div class="votes-by-channel-chart">
+    <h3 class="charts-section__title">{{ _('channel participation') }}</h3>
+    <div class="participant-filter">
+        <div class="participant-filter__label"><span>{{ _('filter by:') }}</span></div>
+        <button id="id_part_button" onclick="selectParticipation(event.target)"
+            class="participant-filter__button">{{ _('participants')}}</button>
+        <button id="id_vote_button" onclick="selectParticipation(event.target)"
+            class="participant-filter__button">{{ _('votes')}}</button>
+    </div>
+    <div id="pizza-chart-container">
+        <svg id="pizza-chart"></svg>
     </div>
 </div>
 
@@ -109,8 +107,8 @@
             setData({{statistics.channel_participants|safe}});
         }
 
-        selectedButton.classList.add('selected-button');
-        notSelected.classList.remove('selected-button');
+        selectedButton.classList.add('participant-filter__button--selected');
+        notSelected.classList.remove('participant-filter__button--selected');
 
         d3jsPartVisualization(data);
 
