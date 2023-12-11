@@ -6,27 +6,27 @@
 
 
 {% block content %}
-    <div class="dashboard-balloon__container">
+    <div class="dashboard-balloon__container content-grid">
         <h2 class="dashboard-balloon__title center-grid">{{_("Conversation")}}
         <h2 class="dashboard-balloon__title center-grid">{{conversation.text}}</h2>
         <span class="dashboard-balloon__title--underline center-grid"></span>
     </div>
 {% block report %}
-    <section class="conversation-dashboard conversation-dashboard__grid">
+    <section class="conversation-dashboard content-grid">
         {% with voting_statistics = conversation.statistics().get('votes') %}
             {% include 'ej_dataviz/report/includes/voting.jinja2' %}
         {% endwith %}
         {% with participants_statistics = conversation.statistics().get('participants') %}
             {% include 'ej_dataviz/report/includes/participants.jinja2' %}
         {% endwith %}
-        
+
         <div class="charts-section center-grid">
             {% include 'ej_dataviz/report/includes/time-chart.jinja2' %}
             {% include 'ej_dataviz/report/includes/channels-chart.jinja2' %}
         </div>
-        
 
         {% include 'ej_dataviz/report/includes/clusters.jinja2' %}
+
         <div class="scatter-section flex wrap center-grid">
             {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
         </div>

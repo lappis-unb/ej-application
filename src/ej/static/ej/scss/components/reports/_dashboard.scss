@@ -23,8 +23,6 @@
 
 .dashboard-balloon {
     &__container {
-        display: grid;
-        grid-template-columns: 10% auto 10%;
         margin: 2.5rem 0 1rem 0;
     }
 
@@ -37,7 +35,7 @@
         text-transform: uppercase;
         margin-top: 0px;
         margin-bottom: 0px;
-    
+
         &--underline {
             border: 1px solid $color-theme-report-gray;
             margin-top: 1.68rem;
@@ -229,7 +227,7 @@
         gap: 1.25rem;
         flex-wrap: wrap;
     }
-    
+
     &__title {
         font-weight: bold;
         font-size: 1rem;
@@ -260,21 +258,24 @@
     }
 }
 
-
-.report-container .conversation-dashboard .clusters-section {
-    display: grid;
-    grid-template-columns: 10% auto 10%;
-
-    background-color: $color-theme-report-gray-blue;
-    margin-bottom: 3.625rem;
-    grid-column: 1/4;
+.clusters-section {
+    .content-grid > * {
+        grid-column: 2/3;
+    }
 
     &__container {
+        display: flex;
         flex-wrap: wrap;
         padding-top: 3.75rem;
         justify-content: space-between;
     }
-    
+}
+
+.report-container .conversation-dashboard .clusters-section {
+    background-color: $color-theme-report-gray-blue;
+    margin-bottom: 3.625rem;
+    grid-column: 1/4;
+
     &__title {
         div {
             max-width: 6.625rem;
@@ -285,12 +286,12 @@
             }
         }
     }
-    
+
     &__chart {
         width: 45%;
         text-align: center;
     }
-    
+
     &__detail {
         h2, p {
             color: $color-black;
@@ -308,7 +309,7 @@
             text-transform: capitalize;
             font-size: 1rem;
         }
-    
+
         &--filled {
             h2 {
                 font-size: 1.5rem;
@@ -316,7 +317,7 @@
             }
             max-width: 20rem;
         }
-    
+
         &--null {
             font-size: 2.25rem;
         }
@@ -330,7 +331,7 @@
     &__comment-percentage {
         font-size: 2.25rem;
     }
-    
+
     &__main-comment {
         font-size: 1rem;
         margin-bottom: 3rem;
@@ -339,7 +340,6 @@
 
 .report-container .conversation-dashboard .scatter-section {
     gap: 2.5rem;
-    justify-content: start !important;
     margin-bottom: 2.34rem;
 
     &--grow {
@@ -379,7 +379,7 @@
         font-size: 1rem;
         color: $color-theme-report-dark-gray;
     }
-    
+
     button {
         color: $color-white;
         background-color: $color-theme-report-dark-gray;
@@ -399,7 +399,7 @@
         flex-wrap: wrap;
         margin: 1rem 0 0 0;
     }
-    
+
     &__no-group-text {
         background-color: $color-theme-grey;
         width: 13.4375rem;
@@ -438,11 +438,6 @@
 }
 
 .report-container .conversation-dashboard {
-    &__grid {
-        display: grid;
-        grid-template-columns: 10% auto 10%;
-    }
-
     &__button {
         margin-left: auto;
         a {
@@ -504,7 +499,7 @@
         align-items: center;
         justify-content: center;
         height: 3.875rem;
-    
+
         span {
             font-size: 1rem;
         }
@@ -542,24 +537,16 @@
 }
 
 @media (max-width: 559px) {
-    .report-container .conversation-dashboard__grid {
-        grid-template-columns: 8% auto 8%;
-    }
-
-    .dashboard-balloon__container {
-        grid-template-columns: 8% auto 8%;
-    }
-
     .report-container .conversation-dashboard .report-card {
         padding: 1.875rem 0 1.5rem 0;
         grid-column: 2/3;
         border-radius: 0px;
-        
+
         &--external {
             background-color: $color-theme-report-light-blue;
             grid-column: 1/4;
             display: grid;
-            grid-template-columns: 10% auto 10%;
+            grid-template-columns: 3% auto 3%;
         }
     }
 
@@ -584,15 +571,15 @@
         }
     }
 
+
     .report-container .conversation-dashboard .clusters-section {
         margin-bottom: unset;
 
         &__container {
             padding: unset !important;
             max-width: unset !important;
-
         }
-        
+
         &__title {
             margin-top: 1.76rem;
             div {
@@ -605,12 +592,12 @@
                 font-size: 1.5rem;
             }
         }
-    
+
         &__detail--filled {
             margin-bottom: 2rem;
             max-width: 100%;
             width: 100%;
-    
+
             hr {
                 display: none !important;
             }
@@ -621,7 +608,7 @@
                 font-size: 1.25rem;
             }
         }
-        
+
         &__chart {
             margin: .1rem 0 .1rem 0;
             width: 18rem !important;
@@ -654,7 +641,7 @@
                 max-width: unset !important;
                 width: 100% !important;
             }
-            
+
             &__button {
                 font-size: 0.8rem !important;
             }
@@ -692,7 +679,7 @@
         max-width: unset !important;
     }
 
-    
+
     .report-container .conversation-dashboard .charts-section {
         margin-bottom: 0rem;
 
@@ -700,7 +687,7 @@
             color: $color-theme-dark-blue;
             margin: unset;
         }
-        
+
         .time-chart,
         .votes-by-channel-chart {
             border-radius: 0px;
@@ -739,7 +726,7 @@
     .charts-section {
         .votes-by-channel-chart {
             width: 22vw !important;
-        
+
             .participant-filter {
                 &__button {
                     font-size: 1rem;
@@ -755,7 +742,7 @@
         .votes-by-channel-chart {
             width: 100% !important;
         }
-    
+
         .time-chart {
             margin: 0 0 1rem 0;
         }
@@ -763,7 +750,7 @@
             .date-picker {
                 flex-direction: column;
                 gap: 0.85rem;
-                
+
                 &__date-selector {
                     justify-content: flex-start !important;
                 }
