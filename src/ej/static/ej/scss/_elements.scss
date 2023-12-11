@@ -52,14 +52,94 @@ ul.errorlist {
         height: 20rem;
         overflow: scroll;
         font-size: .9rem;
+        border-radius: 0.3125rem;
+        height: 6.725rem;
+        color: $color-theme-report-dark-gray;
     }
     &__checkbox {
         text-align: center;
         font-size: .8rem;
+
+        label {
+            margin-bottom: 4.145rem;
+        }
     }
     label {
         text-transform: unset;
+        font-weight: 700;
+        font-size: 0.875rem;
+        color: $color-theme-dark-blue;
     }
+}
+
+.register-form {
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        grid-column: 2/5;
+        margin-bottom: 2.1875rem;
+        margin-top: 4.5rem;
+        
+        h2 {
+            margin: unset;
+            color: $color-theme-osf-light;
+        }
+    }
+
+    &__image {
+        width: 5.4rem;
+        height: 4.6rem;
+
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 10% 37.5% 5% 37.5% 10%;
+        max-width: unset !important;
+        padding: unset !important;
+
+        &--first-column {
+            grid-column: 2/3;
+        }
+
+        &--second-column {
+            grid-column: 4/5;
+        }
+
+        &--full-width {
+            grid-column: 2/5;
+        }
+        &--align-end {
+            justify-self: end;
+        }
+    }
+
+    &__submit-button {
+        width: fit-content;
+        padding-left: 5.5rem !important;
+        padding-right: 5.5rem !important;
+        height: 3.3rem !important;
+        margin-bottom: 5.9rem !important;
+    }
+
+    &__label {
+        font-size: 1rem;
+        text-transform: initial;
+        font-weight: 500;
+        color: $color-theme-dark-blue;
+    }
+
+    &__label--margin {
+        margin-bottom: 0.75rem;
+    }
+
+    &__input--margin {
+        input {
+            margin-bottom: 4.145rem;
+        }
+    }
+
 }
 
 
@@ -124,6 +204,53 @@ legend {
 }
 
 @media only screen and (max-width: 900px) {
+    .terms {
+        &__content {
+            height: 15.4rem;
+        }
+
+        &__checkbox {
+            label {
+                margin-bottom: 2.625rem;
+            }
+        }
+    }
+    .register-form {
+        &__grid {
+            grid-template-columns: 7% auto 7%;
+
+            &--second-column {
+                grid-column: 2/3;
+            }
+            &--full-width {
+                grid-column: 2/3;
+            }
+            &--align-end {
+                justify-self: center;
+            }
+        }
+        &__title {
+            grid-column: 2/3;
+            flex-direction: column;
+            margin-bottom: 0;
+            margin-top: 0;
+
+            h2 {
+                margin: 1.91094rem 0 0.79219rem 0;
+            }
+        }
+        &__image {
+            width: 11.5625rem;
+            height: 9.75rem;
+            margin-bottom: 1.75rem;
+        }
+
+        &__input--margin {
+            input {
+                margin-bottom: 2.625rem;
+            }
+        }
+    }
     .content-grid {
         grid-template-columns: 2% auto 2%;
     }

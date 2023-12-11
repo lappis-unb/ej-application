@@ -2,7 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2023-12-06 19:26-0300\n"
+=======
+"POT-Creation-Date: 2023-12-07 21:11-0300\n"
+>>>>>>> 5021583c (Small fixes)
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1126,10 +1130,10 @@ msgstr "Foto de Perfil"
 msgid "Age"
 msgstr "Idade"
 
-#: src/ej_profiles/models.py:164 src/ej_users/forms.py:89
-#: src/ej_users/forms.py:98
+#: src/ej_profiles/models.py:164 src/ej_users/forms.py:90
+#: src/ej_users/forms.py:99
 msgid "E-mail"
-msgstr "Email"
+msgstr "E-mail"
 
 #: src/ej_profiles/models.py:200
 msgid "Root"
@@ -1487,7 +1491,7 @@ msgstr "Não foi possível gerar os tokens."
 msgid "Users"
 msgstr "Usuários"
 
-#: src/ej_users/forms.py:50 src/ej_users/forms.py:90
+#: src/ej_users/forms.py:50 src/ej_users/forms.py:91
 msgid "Password"
 msgstr "Senha"
 
@@ -1499,7 +1503,7 @@ msgstr "Confirmação de senha"
 msgid "Passwords do not match"
 msgstr "Senhas não são iguais"
 
-#: src/ej_users/forms.py:106
+#: src/ej_users/forms.py:107
 msgid "Yes, I understand the consequences."
 msgstr "Sim, entendo as conseqüências."
 
@@ -2577,7 +2581,7 @@ msgstr[1] "Você pode postar até %(n)s comentários."
 
 #: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:20
 #: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:29
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:19
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:21
 msgid "Send"
 msgstr "Enviar"
 
@@ -4440,39 +4444,38 @@ msgstr "Esta operação não pode ser desfeita!"
 msgid "You have to type your e-mail to confirm."
 msgstr "Você tem que digitar seu e-mail para confirmar."
 
-#: src/ej_users/jinja2/ej_users/base.jinja2:17
+#: src/ej_users/jinja2/ej_users/base.jinja2:14
 msgid "Other options"
 msgstr "Outras opções"
 
 #: src/ej_users/jinja2/ej_users/base.jinja2:18
-#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:6
-#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:2
-msgid "Recover password"
-msgstr "Recuperar senha"
-
-#: src/ej_users/jinja2/ej_users/base.jinja2:22
 msgid "or sign up through other networks"
 msgstr "ou entre usando outras redes"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:5
+#: src/ej_users/jinja2/ej_users/login.jinja2:7
 msgid "Please enter your login credentials"
 msgstr "Confirme suas credenciais de acesso"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:11
+#: src/ej_users/jinja2/ej_users/login.jinja2:13
 msgid "Login form"
 msgstr "Formulário de login"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:4
-#: src/ej_users/jinja2/ej_users/login.jinja2:15
-#: src/ej_users/jinja2/ej_users/register.jinja2:14
+#: src/ej_users/jinja2/ej_users/login.jinja2:17
 msgid "Login"
 msgstr "Entrar"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:26
+#: src/ej_users/jinja2/ej_users/includes/menu.jinja2:6
+#: src/ej_users/jinja2/ej_users/login.jinja2:20
+#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:6
+msgid "Recover password"
+msgstr "Recuperar senha"
+
+#: src/ej_users/jinja2/ej_users/login.jinja2:29
 msgid "Create your account!"
 msgstr "Criar uma conta!"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:26
+#: src/ej_users/jinja2/ej_users/login.jinja2:29
 msgid "Register now!"
 msgstr "Registrar!"
 
@@ -4489,35 +4492,35 @@ msgstr ""
 "Obrigado,\n"
 "Seus amigos no Empurrando Juntos."
 
-#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:8
+#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:9
 msgid "It looks like you clicked on an invalid password reset link."
 msgstr "Parece que você clicou em um link de senha inválida."
 
-#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:14
+#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:15
 msgid "Update"
 msgstr "Atualizar"
 
-#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:17
+#: src/ej_users/jinja2/ej_users/recover-password-token.jinja2:18
 msgid "Try again"
 msgstr "Tente novamente"
 
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:2
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:4
 msgid "Forgot your password?"
 msgstr "Esqueceu a senha?"
 
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:7
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:9
 msgid "Check your email for a link to reset your password. "
 msgstr "Um link para mudar a senha foi enviado para seu e-mail. "
 
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:8
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:10
 msgid "If it doesn't appear within a few minutes, check your spam folder."
 msgstr "Se não aparecer dentro de alguns minutos, verifique sua pasta de spam."
 
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:10
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:12
 msgid "Return to Login"
 msgstr "Voltar para o Login"
 
-#: src/ej_users/jinja2/ej_users/recover-password.jinja2:13
+#: src/ej_users/jinja2/ej_users/recover-password.jinja2:15
 msgid ""
 "Enter your account email address and we will send you a link to reset your "
 "password"
@@ -4525,12 +4528,12 @@ msgstr ""
 "Insira seu endereço de e-mail abaixo, e nós vamos lhe enviar uma mensagem "
 "com instruções para recriar sua senha"
 
-#: src/ej_users/jinja2/ej_users/register.jinja2:2
+#: src/ej_users/jinja2/ej_users/register.jinja2:8
 msgid "Register new user"
 msgstr "Registre novo usuário"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
-#: src/ej_users/jinja2/ej_users/register.jinja2:10
+#: src/ej_users/jinja2/ej_users/register.jinja2:42
 msgid "Register"
 msgstr "Registrar"
 
@@ -4607,6 +4610,9 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 
 #~ msgid "Manage accounts"
 #~ msgstr "Gerenciar conta"
+#, fuzzy
+#~ msgid "e-mail"
+#~ msgstr "e-mail"
 
 #~ msgid "What do you want to ask?"
 #~ msgstr "O que você deseja perguntar?"

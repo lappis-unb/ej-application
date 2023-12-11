@@ -7,15 +7,11 @@
 
 
 {% block content %}
-    <h{{ title_level|safe }} class="h2 text-accent center"{% if title_level != 1 %}
-                             aria-hidden="true"{% endif %}>{{ title|default(_(settings.EJ_LOGIN_TITLE_TEXT)) }}</h{{ title_level|safe }}>
-    <img class="size-6 pad-t3 block relative margin-xauto" src="{{ static('/img/login/login.svg') }}" style="left: 1rem"
-         alt="">
+    
 
     {% block form_data %}{% endblock %}
 
     <h2 class="screen-reader center">{{ _('Other options') }}</h2>
-    <div class="center"><a href="{{ url('auth:recover-password') }}" class="semi-bold underline">{{ _('Recover password') }}</a></div>
     {# SOCIAL LOGIN #}
     {% if social_buttons|default(false) %}
         {{ social_js }}

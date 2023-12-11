@@ -1,17 +1,46 @@
 {% extends 'ej_users/base.jinja2' %}
-{% set title = _('Register new user') %}
 
 
 {% block form_data %}
-    <form method="post" class="measure-narrow margin-xauto">
+
+    <form method="post" class="register-form__grid">
+        <div class="register-form__title">
+            <h2 aria-hidden="true">{{ _("Register new user") }}</h2>
+            <img class="register-form__image" src="{{ static('/img/login/login.svg') }}" style="left: 1rem" alt="">
+        </div>
         {{ csrf_input }}
-        {{ form }}
-        <div class="margin-y3 margin-xauto">
-            <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary">
+
+        <div class="register-form__grid--first-column register-form__input--margin">
+            <label class="register-form__label">{{ form.name.label }}</label>
+            {{ form.name }}
+        </div>
+        <div class="register-form__grid--second-column register-form__input--margin">
+            <label class="register-form__label">{{ form.email.help_text }}</label>
+            {{ form.email }}
+        </div>
+        <div class="register-form__grid--first-column register-form__input--margin">
+            <label class="register-form__label">{{ form.password.label }}</label>
+            {{ form.password }}
+        </div>
+
+        <div class="register-form__grid--second-column register-form__input--margin">
+            <label class="register-form__label">{{ form.password_confirm.label }}</label>
+            {{ form.password_confirm }}
+        </div>
+
+        <div class="register-form__grid--full-width">
+            <label class="register-form__label register-form__label--margin">{{ form.agree_with_terms.label }}</label>
+            {{ form.agree_with_terms }}
+        </div>
+
+        <div class="register-form__grid--full-width">
+            <label class="register-form__label register-form__label--margin">{{ form.agree_with_privacy_policy.label }}</label>
+            {{ form.agree_with_privacy_policy }}
+        </div>
+
+        <div class="register-form__grid--second-column register-form__grid--align-end">
+            <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary register-form__submit-button">
         </div>
     </form>
-    <div class="center">
-        <a href="{{ url('auth:login') + next }}" class="semi-bold underline">{{ _('Login') }}</a>
-    </div>
 	<script src="/static/js/vote-from-template.js"></script>
 {% endblock %}

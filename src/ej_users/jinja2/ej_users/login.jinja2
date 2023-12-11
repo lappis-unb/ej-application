@@ -2,6 +2,8 @@
 {% set title_level = 2 %}
 
 {% block content %}
+    <h2 class="h2 text-accent center" aria-hidden="true">{{ title|default(_(settings.EJ_LOGIN_TITLE_TEXT)) }}</h2>
+    <img class="size-6 pad-t3 block relative margin-xauto" src="{{ static('/img/login/login.svg') }}" style="left: 1rem" alt="">
     <h1 class="screen-reader">{{ _('Please enter your login credentials') }}</h1>
     {{ super() }}
 {% endblock %}
@@ -15,6 +17,7 @@
             <input type="submit" name="submit" value="{{ _('Login') }}" class="width-full is-primary">
         </div>
     </form>
+<div class="center"><a href="{{ url('auth:recover-password') }}" class="semi-bold underline">{{ _('Recover password') }}</a></div>
 <script src="/static/js/vote-from-template.js"></script>
 {% endblock %}
 
