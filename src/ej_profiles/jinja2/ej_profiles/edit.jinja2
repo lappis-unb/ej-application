@@ -1,13 +1,124 @@
 {% extends 'ej_profiles/base.jinja2' %}
 
 {% block page_content %}
-    <form method="post" enctype="multipart/form-data" class="measure margin-xauto">
-        {{ csrf_input }}
-        {{ form.non_field_errors() }}
-        {{ form }}
+    <form method="post" class="form-element" enctype="multipart/form-data">
+        <div class="content-grid">
+            <div class="profile-header" id="edit-header">
+                <div class="profile-header__photo">
+                    <div class="profile-photo--unfocused"></div>
+                    {% if profile.has_image %}
+                        <img id="profile-photo" alt="" class="size-6 margin-t3 block profile-header__photo--rounded" src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
+                    {% else %}
+                        <img id="profile-photo" alt="" class="size-6 margin-t3 block relative" src="{{ profile.image_url }}" alt="{{ _('Profile picture') }}">
+                    {% endif %}
+                    <div class="profile-photo__edit">
+                        <div id="profile-photo-form" class="profile-photo__form">
+                            {{form.profile_photo}}
+                        </div>
+                        <span onclick="selectImage()">{{_("edit photo")}}</span>
+                        <br>
+                        <span onclick="eraseImage()">{{_("exclude")}}</span>
 
-        <div class="margin-y3 margin-xauto">
-            <input type="submit" name="submit" value="{{ _('Save') }}" class="width-full">
+                    </div>
+                </div>
+                <div class="profile-header__text">
+                    {% block page_title %}<h1 class="h2 text-accents">{{ profile.name }}</h1>{% endblock %}
+                    <h4>{{_("joined")}} {{ profile.date_joined.strftime('%d/%m/%Y')  }}</h4>
+                </div>
+            </div>
+        </div>
+
+        {{ csrf_input }}
+        <div class="content-grid inputs-min-size">
+            <div class="form-profile">
+                <div class="form-profile__name">
+                    <label>{{_("name")}}</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-profile__email">
+                    <label>{{_("email")}}</label>
+                    <input disabled value="{{profile.email}}"/>
+                </div>
+                <div class="form-profile__city">
+                    <label>{{_("city")}}</label>
+                    {{ form.city}}
+                </div>
+
+                <div class="form-profile__state">
+                    <label>{{_("state")}}</label>
+                    {{ form.state}}
+                </div>
+
+                <div class="form-profile__country">
+                    <label>{{_("country")}}</label>
+                    {{ form.country}}
+                </div>
+
+                <div class="form-profile__birth-date">
+                    <label>{{_("birth_date")}}</label>
+                    {{ form.birth_date}}
+                </div>
+
+                <div class="form-profile__occupation">
+                    <label>{{_("occupation")}}</label>
+                    {{ form.occupation}}
+                </div>
+
+                <div class="form-profile__education">
+                    <label>{{_("education")}}</label>
+                    {{ form.education}}
+                </div>
+
+                <div class="form-profile__ethnicity">
+                    <label>{{_("ethnicity")}}</label>
+                    {{ form.ethnicity}}
+                </div>
+                <div class="form-profile__gender_other">
+                    <label>{{_("gender")}}</label>
+                    {{ form.gender}}
+                </div>
+                <div class="form-profile__political_activity">
+                    <label>{{_("political_activity")}}</label>
+                    {{ form.political_activity}}
+                </div>
+                <div class="form-profile__biography">
+                    <label>{{_("biography")}}</label>
+                    {{ form.biography}}
+                </div>
+            </div>
+        </div>
+        <div class="content-grid">
+            <div class="form-profile--buttons">
+                <input class="button form-profile--buttons__cancel" type="button" value="{{_('Cancel')}}" onclick="history.back()"/>
+                <input class="button form-profile--buttons__save" type="submit" name="submit" value="{{ _('Save') }}">
+            </div>
         </div>
     </form>
+
+    <script>
+        function selectImage() {
+            $("#id_profile_photo")[0].click();
+        }
+
+        function eraseImage() {
+            const checkbox = document.getElementById("profile_photo-clear_id")
+            checkbox.checked = !checkbox.checked
+            delImg = "src/ej/static/ej/assets/img/icons/cat.svg"
+            document.getElementById('profile-photo').setAttribute('src', '');
+            
+        }
+
+        document.getElementById("id_profile_photo").onchange = function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                // e.target.result is a base64-encoded url that contains the image data
+                document.getElementById('profile-photo').setAttribute('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        }
+
+    
+    </script>
 {% endblock %}

@@ -1,7 +1,9 @@
 {% extends 'base.jinja2' %}
 {% set main_class = "board-container" %}
 {% from "ej_profiles/includes/search-filter.jinja2" import search_filter %}
-{% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
+{% block menu %}
+    {% include 'ej_conversations/includes/participant-menu.jinja2' %}
+{% endblock %}
 
 {% block content %}
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>

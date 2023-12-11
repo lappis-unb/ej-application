@@ -15,6 +15,9 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 }
 
+.content-grid.margin-y3 {
+    position: relative;
+}
 
 .conversation-balloon {
     @extend .center;
@@ -291,7 +294,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         &__header {
             display: flex;
             flex-wrap: wrap;
-            margin: 1rem 0;
+            margin: 1rem 0 2rem 0;
             gap: 1rem;
         }
         &__progress {
@@ -496,24 +499,46 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
     }
 
-    &__privacy {
-        margin-top: 2.438rem;
-        color: $color-complementary-gray;
-        font-family: Raleway;
-        font-size: 0.75rem;
-        font-style: italic;
-        font-weight: 500;
-        line-height: normal;
+    .privacy-policy {
+        &__text {
+            background-color: white;
+            padding: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 1.8rem;
+            white-space: break-spaces;
+            height: 8.8125rem;
+            overflow: scroll;
+        }
 
-        a {
-            font-weight: 700;
-            color: $color-complementary-gray;
-            text-decoration-line: underline;
+        &__close-button,
+        &__title {
+            display: block;
+            text-align: center;
+        }
+
+        &__close-button {
+            color: $color-gray-darker;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        &__close-button:hover {
+            color: $color-gray-darker;
+        }
+
+        &__title {
+            font-size: 0.75rem;
+            color: $color-gray-darker;
+            a {
+                text-decoration: underline;
+                font-weight: bold;
+                color: $color-gray-darker;
+                margin-left: 0.3rem;
+            }
         }
     }
 
     &__message {
-        margin: 6.063rem 0 4.688rem;
+        padding: 1rem 0 2rem 0;
         color: $color-black-alternative;
         font-family: Raleway;
         font-size: 1.75rem;
@@ -589,7 +614,6 @@ button[name='vote'] .loader {
         padding: 1.5rem 1rem 0 1rem;
         padding: 1.875rem 1.625rem 0.531rem 2rem;
         position: absolute;
-        bottom: 0;
         left: 0;
     }
     .voting-card textarea {
@@ -613,9 +637,6 @@ button[name='vote'] .loader {
     }
     .modal__buttons {
         margin: 1rem 0 0 0;
-    }
-    .voting-card.comment-card {
-        bottom: 0;
     }
     .secondary-cards-container {
         margin-top: 0rem;

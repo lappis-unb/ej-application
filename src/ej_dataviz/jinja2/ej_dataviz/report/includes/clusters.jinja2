@@ -1,17 +1,16 @@
-<div class="conversation-dashboard cluster light-blue-bg">
-    <div class="clusters-section flex wrap">
-    <div class="clusters-section__title flex">
-        <div><span class="text-accent">{{_('Opinion Groups')}}</span></div>
-    </div>
+<div class="clusters-section content-grid">
+    <div class="clusters-section__container {% if not json_data%}clusters-section__detail--padding{%endif%}">
+        <div class="clusters-section__title flex">
+            <div><span class="text-accent">{{_('Opinion Groups')}}</span></div>
+        </div>
         {% if json_data %}
-            <div class="clusters-section__clusters">
+            <div class="clusters-section__chart">
                 <div id="clusters-canvas-container">
                     <canvas id="cluster-canvas"></canvas>
                 </div>
             </div>
             <div class="clusters-section__detail clusters-section__detail--filled">
-                <h2> {{ biggest_cluster_data.get('name') }}</h2>
-                <hr>
+                <h2> {{_("In the group")}} {{ biggest_cluster_data.get('name') }}</h2>
                 <div>
                     <p class="clusters-section__comment-percentage">{{ biggest_cluster_data.get('percentage') }}%
                         {{_("agree with")}} </p>
@@ -26,8 +25,8 @@
             {% else %}
             <div class="clusters-section__detail clusters-section__detail--empty">
                 <div>
-                    <p class="cluster-section__detail--null">{{_("Your conversation does not have personas.")}}</p>
-                    <p class="bold">{{_("Without personas, it's not possible to create opinion groups.")}}</p>
+                    <p class="cluster-section__detail--null clusters-section__detail--no-margin">{{_("Your conversation does not have personas.")}}</p>
+                    <p class="bold clusters-section__detail--no-margin">{{_("Without personas, it's not possible to create opinion groups.")}}</p>
                     <p>{{_("After modeling groups, you can check then here.")}}</p>
                 </div>
                 <div class="conversation-dashboard__button">
@@ -35,7 +34,7 @@
                         href="{{ url('boards:cluster-edit', **conversation.get_url_kwargs()) }}">{{_("Creates groups")}}</a>
                 </div>
             </div>
-            {% endif %}
+        {% endif %}
     </div>
 </div>
 
@@ -45,7 +44,7 @@
         <script>
             window.addEventListener('load', function () {
                 var $canvas = $('#cluster-canvas'),
-                    $canvasContainer = $('.clusters-section__clusters'),
+                    $canvasContainer = $('.clusters-section__chart'),
                     size = $canvasContainer.width();
                     width = size;
 

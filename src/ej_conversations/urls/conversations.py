@@ -11,6 +11,11 @@ urlpatterns = [
         name="list",
     ),
     path(
+        f"{conversation_url}/welcome/",
+        views.ConversationWelcomeView.as_view(),
+        name="welcome",
+    ),
+    path(
         f"{conversation_url}/comments/new/",
         views.NewCommentView.as_view(),
         name="new_comment",

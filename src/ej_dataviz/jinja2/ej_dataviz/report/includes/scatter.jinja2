@@ -1,33 +1,31 @@
 {% block content %}
-    <div class="scatter-col title flex">
+    <div class="scatter-section--grow scatter-section__title flex">
         <h2 class="text-accent">Nuvem de Pontos</h2>
         <p>
             {{_("Each chart point represents a different participant. Participants with similar voting, appears near each other.")}}
         </p>
 
     {% if json_data %}
-        <div class="scatter-filters">
-            <span class="filter-label bold">{{ _('filter by:') }}</span>
-            <div id="scatter-categories">
-                <button  class="" onclick="organizeBy(this, 3)">{{ _('Opinion') }}</button>
-                <button class="inactive-filter" onclick="organizeBy(this, 0)">{{ gender_field }}</button>
-                <button class="inactive-filter" onclick="organizeBy(this, 1)">{{ race_field }}</button>
-                <button class="inactive-filter" onclick="organizeBy(this, 2)">{{ _('State') }}</button>
+        <div class="scatter-filter">
+            <span class="bold scatter-filter__filter-by-text">{{ _('filter by') }}</span>
+            <div id="scatter-filter__categories">
+                <button class="" onclick="organizeBy(this, 3)">{{ _('Opinion') }}</button>
+                <button class="scatter-filter__button--inactive" onclick="organizeBy(this, 0)">{{ gender_field }}</button>
+                <button class="scatter-filter__button--inactive" onclick="organizeBy(this, 1)">{{ race_field }}</button>
+                <button class="scatter-filter__button--inactive" onclick="organizeBy(this, 2)">{{ _('State') }}</button>
             </div>
         </div>
     {% else %}
-        <div class="scatter-filters">
-            <div class="filter-label bold"><span>{{ _('filter by:') }}</span></div>
-            <div class="scatter-without-groups">
+        <div class="scatter-filter">
+            <div class="bold scatter-filter__filter-by-text"><span>{{ _('filter by') }}</span></div>
+            <div class="scatter-filter__no-group-text">
                 <span>{{_("There is no groups for this conversation.")}}</span>
             </div>
         </div>
     {% endif %}
     </div>
-    <div class="scatter-col scatters">
-        <div id="scatter-container">
-            <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
-        </div>
+    <div id="scatter-container" class="scatter-section__container">
+        <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js" defer></script>
@@ -66,8 +64,8 @@
         });
 
         function organizeBy(elem, idx) {
-            document.querySelector("button[class='']").classList.toggle('inactive-filter');
-            elem.classList.toggle('inactive-filter');
+            document.querySelector("button[class='']").classList.toggle('scatter-filter__button--inactive');
+            elem.classList.toggle('scatter-filter__button--inactive');
             var chart = $('#scatter-container')[0].chart;
             chart.organizeBy = idx;
             chart.option.visualMap = [chart.visualMap[idx]];

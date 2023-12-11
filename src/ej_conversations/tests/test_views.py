@@ -3,14 +3,13 @@ from django.http import HttpResponseServerError
 from django.contrib.auth.models import AnonymousUser
 from pytest import raises
 import pytest
-import json
+from django.shortcuts import reverse
 from ej_boards.models import Board
 
-from ej_conversations import create_conversation, views
+from ej_conversations import create_conversation
 from ej_conversations.models import Comment, FavoriteConversation, Conversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
-from ej_conversations.roles.comments import comment_summary
 from ej_users.models import User
 from ..enums import Choice
 
@@ -39,6 +38,33 @@ class ConversationSetup:
     def base_board(self, base_user):
         board = Board.objects.create(slug="userboard", owner=base_user, description="board")
         return board
+
+
+class TestConversationWelcome(ConversationSetup):
+    def test_redirect_user_to_detail_if_alredy_participated(self, conversation, comment):
+        client = Client()
+        welcome_url = reverse("boards:conversation-welcome", kwargs=conversation.get_url_kwargs())
+        response = client.get(welcome_url)
+        assert response.status_code == 302
+
+    def test_not_redirect_user_to_detail_if_welcome_message_exists(self, conversation, comment):
+        client = Client()
+        welcome_url = reverse("boards:conversation-welcome", kwargs=conversation.get_url_kwargs())
+        conversation.welcome_message = "<p>olá</p>"
+        conversation.save()
+        response = client.get(welcome_url)
+        assert response.status_code == 200
+
+    def test_redirect_user_to_detail_if_welcome_message_exists_with_votes(
+        self, conversation, comment, user
+    ):
+        client = Client()
+        client.force_login(user)
+        welcome_url = reverse("boards:conversation-welcome", kwargs=conversation.get_url_kwargs())
+        conversation.welcome_message = "<p>olá</p>"
+        conversation.save()
+        response = client.get(welcome_url)
+        assert response.status_code == 302
 
 
 class TestConversationDetail(ConversationSetup):
@@ -316,7 +342,7 @@ class TestConversationCreate(ConversationSetup):
         assert response.url == "/userboard/conversations/1/whatever/"
 
         conversation = Conversation.objects.first()
-        assert conversation.is_promoted
+        assert conversation.is_promoted == False
         assert conversation.board == base_board
 
     def test_user_should_not_create_conversation_on_another_users_board(self, base_board, base_user):

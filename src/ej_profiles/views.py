@@ -24,13 +24,14 @@ class DetailView(DetailView):
         profile = self.get_object()
 
         return {
-            "profile": self.get_object(),
+            "profile": profile,
             "n_conversations": profile.conversations.count(),
             "n_boards": profile.boards.count(),
             "n_favorites": profile.favorite_conversations.count(),
             "n_comments": profile.user.comments.count(),
             "n_votes": profile.votes.count(),
             "achievements_href": None,
+            "user_boards": Board.objects.filter(owner=self.request.user),
         }
 
 
@@ -41,11 +42,20 @@ class EditView(UpdateView):
 
     def post(self, request):
         form = self.form_class(instance=self.get_object(), request=self.request)
+        form_profile_photo = forms.ProfileFormProfilePhoto(
+            request.POST, request.FILES, instance=self.get_object()
+        )
+        has_changed = False
 
         if form.is_valid_post():
-            form.files = request.FILES
             form.save()
+            has_changed = True
 
+        if form_profile_photo.is_valid():
+            form_profile_photo.save()
+            has_changed = True
+
+        if has_changed:
             return redirect("/profile/")
 
         return render(request, self.template_name, self.get_context_data())
@@ -56,7 +66,10 @@ class EditView(UpdateView):
     def get_context_data(self, **kwargs):
         profile = self.get_object()
 
-        return {"form": self.form_class(instance=profile, request=self.request), "profile": profile}
+        return {
+            "form": self.form_class(instance=profile, request=self.request),
+            "profile": profile,
+        }
 
 
 @method_decorator([login_required], name="dispatch")
@@ -65,41 +78,48 @@ class ContributionsView(DetailView):
 
     def get_context_data(self, **kwargs):
         profile = self.request.user.get_profile()
-        return profile.get_contributions_data()
+        return {
+            **profile.get_contributions_data(),
+            "user_boards": Board.objects.filter(owner=self.request.user),
+        }
 
 
 @method_decorator([login_required], name="dispatch")
 class HomeView(ListView):
     template_name = "ej_profiles/home.jinja2"
-    queryset = Conversation.objects.filter(is_promoted=True)
+    queryset = Conversation.objects.filter(is_promoted=True).order_by("-created")
 
     def get(self, request, *args, **kwargs):
         user = request.user
         tour_url = reverse("profile:tour")
-        print(user.get_profile().completed_tour)
         if user.get_profile().completed_tour:
             return super().get(request, *args, **kwargs)
         return redirect(tour_url)
 
     def get_context_data(self, **kwargs):
         public_conversations = self.get_queryset()
-        user_participated_tags = self.request.user.profile.participated_tags()
-        public_tags = ConversationTag.objects.filter(content_object__is_promoted=True).distinct("tag")
-        my_tags = ConversationTag.objects.filter(content_object__author=self.request.user).distinct("tag")
-        contributions_data = self.request.user.profile.get_contributions_data()
-
-        public_tags_str = [str(tag.tag) for tag in public_tags]
-        my_tags_str = [str(tag.tag) for tag in my_tags]
-        participated_tag_str = [str(tag.tag) for tag in user_participated_tags]
+        profile = self.request.user.profile
+        profile_conversations_tags = list(profile.participated_tags().values_list("tag__name", flat=True))
+        public_tags = list(
+            ConversationTag.objects.filter(content_object__is_promoted=True)
+            .distinct("tag")
+            .values_list("tag__name", flat=True)
+        )
+        profile_selected_tags = list(
+            ConversationTag.objects.filter(content_object__author=self.request.user)
+            .distinct("tag")
+            .values_list("tag__name", flat=True)
+        )
+        contributions_data = profile.get_contributions_data()
 
         return {
             "user_boards": Board.objects.filter(owner=self.request.user),
-            "public_conversations": public_conversations,
-            "participated_tags": participated_tag_str,
-            "all_tags": public_tags_str,
+            "public_conversations": list(public_conversations),
+            "participated_tags": list(profile_conversations_tags),
+            "all_tags": list(public_tags),
+            "my_tags": profile_selected_tags,
             "host": get_host_with_schema(self.request),
             "has_filtered_tag": self.request.user.profile.filtered_home_tag,
-            "my_tags": my_tags_str,
             **contributions_data,
         }
 
@@ -113,8 +133,15 @@ class TourView(HomeView):
 
     def get(self, *args, **kwargs):
         user = self.request.user
-        if user.get_profile().completed_tour:
+        user_profile = user.get_profile()
+
+        if self.request.GET.get("completedTour") == "false":
+            user_profile.completed_tour = False
+            user_profile.save()
+
+        if user_profile.completed_tour:
             return redirect(reverse("profile:home"))
+
         tour_step = self.request.GET.get("step")
         template_name = self._get_tour_step_template(tour_step)
         return render(self.request, template_name, self.get_context_data())

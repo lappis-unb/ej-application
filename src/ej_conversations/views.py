@@ -1,45 +1,42 @@
 from logging import getLogger
 from typing import Any, Dict
 
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import F
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse, HttpResponseServerError, JsonResponse
-from django.urls import reverse
+from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
-
-from ej_boards.models import Board
-from ej_conversations.rules import max_comments_per_conversation
-from ej_users.models import SignatureFactory
-
-from . import forms, models
-from .models import Conversation, Comment
-from ej_users.models import User
-from .utils import (
-    check_promoted,
-    conversation_admin_menu_links,
-    handle_detail_favorite,
-    handle_detail_comment,
-    handle_detail_vote,
-)
-
+from django.contrib.flatpages.models import FlatPage
+from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
+    can_acess_list_view,
     can_add_conversations,
     can_edit_conversation,
     can_moderate_conversation,
-    can_acess_list_view,
-    is_superuser,
     check_conversation_overdue,
+    is_superuser,
 )
+from ej_boards.models import Board
+from ej_conversations.rules import max_comments_per_conversation
+from ej_users.models import SignatureFactory
+from ej_users.models import User
 
-from .decorators import create_session_key, user_can_post_anonymously
-from ej.components.menu import apps_custom_menu_links
+from .forms import CommentForm, ConversationForm
+from .decorators import create_session_key, user_can_post_anonymously, redirect_to_conversation_detail
+from .models import Comment, Conversation
+from .utils import (
+    conversation_admin_menu_links,
+    handle_detail_comment,
+    handle_detail_favorite,
+    handle_detail_vote,
+)
 
 log = getLogger("ej")
 
@@ -117,9 +114,20 @@ class PrivateConversationView(ConversationView):
         }
 
 
+class ConversationWelcomeView(DetailView):
+    queryset = Conversation.objects.all()
+    form_class = CommentForm
+    model = Conversation
+    template_name = "ej_conversations/conversation-welcome.jinja2"
+
+    @redirect_to_conversation_detail
+    def get(self, request, *args, **kwargs):
+        return super().get(request)
+
+
 @method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(DetailView):
-    form_class = forms.CommentForm
+    form_class = CommentForm
     model = Conversation
     template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
@@ -157,12 +165,19 @@ class ConversationDetailView(DetailView):
         max_comments = max_comments_per_conversation(conversation, user)
         conversation.set_request(self.request)
 
+        try:
+            privacy_policy = FlatPage.objects.get(url="/privacy-policy/").content
+        except FlatPage.DoesNotExist:
+            privacy_policy = ""
+
         if not user.is_anonymous:
             n_comments = user.comments.filter(conversation=conversation).count()
             n_user_final_votes = conversation.current_comment_count(user)
+            user_boards = Board.objects.filter(owner=user)
         else:
             n_comments = 0
             n_user_final_votes = 0
+            user_boards = []
 
         return {
             "conversation": conversation,
@@ -175,6 +190,8 @@ class ConversationDetailView(DetailView):
             "max_comments": max_comments,
             "n_user_final_votes": n_user_final_votes,
             "apps_menu_links": apps_custom_menu_links(conversation),
+            "user_boards": user_boards,
+            "privacy_policy": privacy_policy,
             **self.ctx,
         }
 
@@ -182,14 +199,13 @@ class ConversationDetailView(DetailView):
 @method_decorator([login_required, can_acess_list_view, can_add_conversations], name="dispatch")
 class ConversationCreateView(CreateView):
     template_name = "ej_conversations/conversation-create.jinja2"
-    form_class = forms.ConversationForm
+    form_class = ConversationForm
 
     def post(self, request, board_slug, *args, **kwargs):
         form = self.form_class(request=request)
-        kwargs.setdefault("is_promoted", True)
         kwargs["board"] = self.get_board()
 
-        if form.is_valid_post():
+        if form.is_valid():
             with transaction.atomic():
                 conversation = form.save_comments(self.request.user, **kwargs)
 
@@ -216,26 +232,15 @@ class ConversationCreateView(CreateView):
 class ConversationEditView(UpdateView):
     model = Conversation
     template_name = "ej_conversations/conversation-edit.jinja2"
-    form_class = forms.ConversationForm
+    form_class = ConversationForm
 
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
         board = Board.objects.get(slug=board_slug)
         form = self.form_class(request=request, instance=conversation)
-        is_promoted = conversation.is_promoted
 
         if form.is_valid_post():
-            # Check if user is not trying to edit the is_promoted status without
-            # permission. This is possible since the form sees this field
-            # for all users and does not check if the user is authorized to
-            # change is value.
-
-            new = form.save(board=board, **kwargs)
-            if new.is_promoted != is_promoted:
-                new.is_promoted = is_promoted
-                new.save()
-
-            # Now we decide the correct redirect page
+            form.save(board=board, **kwargs)
             page = request.POST.get("next")
             url = self.get_redirect_url(conversation, page)
             return redirect(url)
@@ -251,7 +256,7 @@ class ConversationEditView(UpdateView):
         elif conversation.is_promoted:
             return conversation.get_absolute_url()
         else:
-            return reverse("boards:conversation-list", kwargs={"board_slug": conversation.board.slug})
+            return reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
 
     def get_context_data(self, **kwargs: Any):
         conversation = self.get_object()
@@ -270,7 +275,7 @@ class ConversationEditView(UpdateView):
 class ConversationModerateView(UpdateView):
     model = Conversation
     template_name = "ej_conversations/conversation-moderate.jinja2"
-    status = models.Comment.STATUS
+    status = Comment.STATUS
 
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         payload = request.POST
@@ -317,14 +322,14 @@ class NewCommentView(UpdateView):
                         content=comment,
                         conversation=self.get_object(),
                         author=request.user,
-                        status=models.Comment.STATUS.approved,
+                        status=Comment.STATUS.approved,
                     )
         return render(request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
         conversation = self.get_object()
 
-        status = models.Comment.STATUS
+        status = Comment.STATUS
         comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
         approved, pending, rejected = [
             comments.filter(status=_status)

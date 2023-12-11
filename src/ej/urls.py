@@ -1,3 +1,5 @@
+import logging
+
 from boogie.rest import rest_api
 from django.apps import apps
 from django.conf import settings
@@ -8,17 +10,16 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import include, path, re_path
 from django.views import defaults as default_views
 from django.views.static import serve
-from ej_boards.api import BoardViewSet
-from rest_framework.documentation import include_docs_urls
-from rest_framework.routers import DefaultRouter
-
-from ej_profiles.api import ProfileViewSet
-from ej_tools.api import RasaConversationViewSet, OpinionComponentViewSet
-from ej_conversations.api import ConversationViewSet, CommentViewSet, VoteViewSet
-from ej_clusters.api import ClusterizationViewSet
-from ej_users.api import UsersViewSet, UserAuthViewSet
 from ej import services
 from ej.fixes import unregister_admin
+from ej_boards.api import BoardViewSet
+from ej_clusters.api import ClusterizationViewSet
+from ej_conversations.api import CommentViewSet, ConversationViewSet, VoteViewSet
+from ej_profiles.api import ProfileViewSet
+from ej_tools.api import OpinionComponentViewSet, RasaConversationViewSet
+from ej_users.api import UserAuthViewSet, UsersViewSet
+from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
 
 unregister_admin.unregister_apps()
 
@@ -34,10 +35,35 @@ api_router.register(r"boards", BoardViewSet, basename="v1-boards")
 api_router.register(r"users", UsersViewSet, basename="v1-users")
 api_router.register(r"", UserAuthViewSet, basename="v1-auth")
 
+log = logging.getLogger("ej")
 
-#
-# Optional urls
-#
+
+def get_apps_dynamic_urls():
+    """
+    Allows apps to include new urls without editing ej/urls.py directly.
+    In order to include new urls, the app must implements the get_app_urls method,
+    inside the apps.py file. The method must return a namespaced path, for example:
+
+    def get_app_urls(self):
+        from my_app.views import View
+        from django.urls import path
+
+        urlpatterns = [path("path/", View.as_view(), name="path")]
+        return path("customapp/", include(urlpatterns, namespace="customapp"))
+
+    Checks ej_activation app, for example.
+    """
+    apps_urls = []
+    for app_config in apps.app_configs:
+        try:
+            get_app_urls = getattr(apps.app_configs[app_config], "get_app_urls")
+            apps_urls += [get_app_urls()]
+            log.info(f"Including {app_config} URLs using get_apps_dynamic_urls()")
+        except Exception:
+            pass
+    return apps_urls
+
+
 def get_urlpatterns():
     fixes()
 
@@ -67,7 +93,6 @@ def get_urlpatterns():
         #  Global stereotype and cluster management
         path("conversations/", include("ej_clusters.urls.clusters", namespace="cluster")),
         path("stereotypes/", include("ej_clusters.urls.stereotypes", namespace="stereotypes")),
-        path("", include("ej_activation.urls", namespace="activation")),
         #
         #  Allauth
         path("accounts/", include("allauth.urls")),
@@ -97,6 +122,7 @@ def get_urlpatterns():
         #
         #  Boards
         *with_app("ej_boards", "", namespace="boards"),
+        *get_apps_dynamic_urls(),
     ]
 
     if settings.DEBUG:

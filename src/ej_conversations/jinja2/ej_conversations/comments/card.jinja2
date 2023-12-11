@@ -30,7 +30,7 @@
             </div>
         {% if comment %}
             <span class="voting-card__label">{% trans %} Comment {% endtrans %}</span><br>
-            <p class="voting-card__comment">{{ comment.content}}</p>
+            <div class="voting-card__comment"><p>{{ comment.content}}</p></div>
 
         <div>
             {% include 'ej_conversations/comments/voting-form.jinja2' %}
@@ -42,6 +42,11 @@
                 <span>{{_("Thank you for your participation!") }}</span>
             </div>
         {% endif %}
+        <span class="privacy-policy__title">{{_("Questions about privacy?")}}<a onclick="togglePrivacyBox()">{{_("Understand how your data is used")}}</a></span>
+        <div id="privacy-box" class="hide">
+            <div class="privacy-policy__text">{{ privacy_policy }}</div>
+            <a class="privacy-policy__close-button" onclick="togglePrivacyBox()">{{_("close")}}</a>
+        </div>
     </div>
 </div>
 
@@ -49,5 +54,9 @@
   window.onload = () => {
     addsNextCommentTransitionEvent();
   }
-</script>
 
+  function togglePrivacyBox() {
+    let box = $("#privacy-box")[0];
+    box.classList.toggle("hide");
+  }
+</script>

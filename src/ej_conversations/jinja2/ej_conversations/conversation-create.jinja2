@@ -1,6 +1,6 @@
 {% extends 'base.jinja2' %}
 {% set main_class = 'pad-x0' %}
-{% block menu %}{% include 'ej_boards/includes/menu-board.jinja2' %}{% endblock %}
+{% block menu %}{% include 'ej_conversations/includes/participant-menu.jinja2' %}{% endblock %}
 
 
 {% block content %}
@@ -13,6 +13,7 @@
         {% endblock %}
 
         {% block form_content %}
+            {{ form.media }}
             <div class="conversation-form content-grid">
                 <div>
                     {# CONVERSATION FORM #}
@@ -37,15 +38,21 @@
                         <legend>{{form.anonymous_votes_limit.help_text}}</legend>
                     </div>
 
-                    <h4>{{_("Conversation duration")}}</h4>
+                    <h4 class="conversation-form__h4">{{_("Conversation duration")}}</h4>
                     <div class="conversation-form__duration">
                         <div>{{form.start_date}}</div>
                         <div>{{form.end_date}}</div>
                     </div>
 
+                    <h4 class="conversation-form__h4">{{_("Conversation welcome message")}}</h4>
+                    <div class="conversation-form__duration">
+                        <div>{{form.welcome_message}}</div>
+                    </div>
+                    <legend>{{form.welcome_message.help_text}}</legend>
+
                     {% block initial_comments %}
                         {# ADD COMMENTS #}
-                        <h4>{{_("Initial comments")}}</h4>
+                        <h4 class="conversation-form__h4">{{_("Initial comments")}}</h4>
                         <p class="helptext">
                             {{ _('Add as many comments as you like (including none).') }}{{ ' ' }}
                             {{ _('Remember to give a minimum context and something for other users to explore.') }}{{ ' ' }}
@@ -56,7 +63,7 @@
                             {% for i in range(1, 4) %}
                                 <label>
                                     {% trans %}Comment {{ i }}{% endtrans %}
-                                    <textarea name="comment-{{ i }}"
+                                    <textarea maxlength="252" name="comment-{{ i }}"
                                             placeholder="{{ _('Type your comment here') }} #{{ i }}"></textarea>
                                 </label>
                             {% endfor %}

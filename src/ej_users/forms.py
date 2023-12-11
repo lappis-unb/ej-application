@@ -75,6 +75,7 @@ class RegistrationForm(PasswordForm, EjModelForm):
             "agree_with_privacy_policy",
         ]
         help_texts = {k: None for k in fields}
+        help_texts["email"] = "E-mail"
         widgets = {"agree_with_terms": TermsWidget, "agree_with_privacy_policy": PrivacyPolicyWidget}
 
 
