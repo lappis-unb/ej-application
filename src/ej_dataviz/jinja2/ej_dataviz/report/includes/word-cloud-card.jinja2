@@ -1,9 +1,7 @@
-<div class="words-container">
-    <div class="conversation-dashboard title flex">
-        <h2 class="text-accent">{{_('Word cloud')}}</h2>
-    </div>
-    <div id="word-cloud-card-id" class="word-cloud-card">
-        <div id="word-cloud" class="width-full">
+<div class="words-cloud-section center-grid">
+    <h2 class="words-cloud-section__title text-accent">{{_('Word cloud')}}</h2>
+    <div id="word-cloud-card-id" class="word-cloud-card words-cloud-section__container">
+        <div id="word-cloud">
             <div class="margin-3 text-2 center">
                 <div class="size-y6p col flex-center"><p>{{ _('Generating word cloud. Please wait...') }}</p></div>
             </div>

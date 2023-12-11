@@ -1,30 +1,27 @@
-<div class="voting-container">
-    <section>
-        <div class="conversation-dashboard title flex">
-            <h2 class="text-accent">{{_('Voting')}}</h2>
-            <span>&nbsp;{{_('General View')}}</span>
-            {{ export_modal(can_view_detail, conversation, "votes_data", conversation.slug) }}
-        </div>
-        <div class="conversation-dashboard voting">
-            <div class="flex wrap">
-                <div class="voting-item">
-                    <div class="voting-item-title">{{_("agree")}}</div>
-                    <div class="voting-item-value">{{voting_statistics.get('agree')}}</div>
-                </div>
-                <div class="voting-item">
-                    <div class="voting-item-title">{{_("disagree")}}</div>
-                    <div class="voting-item-value">{{voting_statistics.get('disagree')}}</div>
-                </div>
-                <div class="voting-item">
-                    <div class="voting-item-title">{{_("skip")}}</div>
-                    <div class="voting-item-value">{{voting_statistics.get('skip')}}</div>
-                </div>
-                <div class="voting-item">
-                    <div class="voting-item-title">{{_("total")}}</div>
-                    <div class="voting-item-value">{{voting_statistics.get('total')}}</div>
-                </div>
+<div class="center-grid">
+    <div class="conversation-dashboard voting-section__title flex">
+        <h2 class="text-accent">{{_('Voting')}}</h2>
+        {% include 'ej_dataviz/report/includes/voting-modal-export.jinja2' %}
+    </div>
+</div>
+<div class="voting-section__container center-grid">
+    <section class="flex dashboard-card__container">
+            <div class="dashboard-card">
+                <div class="dashboard-card__value">{{voting_statistics.get('agree')}}</div>
+                <div class="dashboard-card__title">{{_("agreed")}}</div>
             </div>
-        </div>
+            <div class="dashboard-card">
+                <div class="dashboard-card__value">{{voting_statistics.get('disagree')}}</div>
+                <div class="dashboard-card__title">{{_("disagreed")}}</div>
+            </div>
+            <div class="dashboard-card">
+                <div class="dashboard-card__value">{{voting_statistics.get('skip')}}</div>
+                <div class="dashboard-card__title">{{_("skip")}}</div>
+            </div>
+            <div class="dashboard-card dashboard-card--blue">
+                <div class="dashboard-card__value">{{voting_statistics.get('total')}}</div>
+                <div class="dashboard-card__title">{{_("votes")}}</div>
+            </div>
     </section>
 </div>
 

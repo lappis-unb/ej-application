@@ -1,31 +1,20 @@
-<div class="conversation-dashboard comments flex light-blue-bg">
-    <div class="comments-container">
-        <div class="conversation-dashboard title flex light-blue-bg">
-            <h2 class="text-accent">{{_('Comments')}}</h2>
-            <span>&nbsp;{{_('General View')}}</span>
-        </div>
-        <section class="flex wrap">
-            <div class="comments-item">
-                <div class="comments-item-title">{{_("approved comments")}}</div>
-                <div class="comments-item-value">{{comments_statistics.get('approved')}}</div>
-            </div>
-            <div class="comments-item">
-                <div class="comments-item-title">{{_("rejected comments")}}</div>
-                <div class="comments-item-value">{{comments_statistics.get('rejected')}}</div>
-            </div>
-            <div class="comments-item">
-                <div class="comments-item-title">{{_("pending")}}</div>
-                <div class="comments-item-value">{{comments_statistics.get('pending')}}</div>
-            </div>
-            <div class="comments-item">
-                <div class="comments-item-title">{{_("total")}}</div>
-                <div class="comments-item-value">{{comments_statistics.get('total')}}</div>
-            </div>
-        </section>
-        <div class="conversation-dashboard__button">
-            <a class="button square is-primary float-right" href="{{url('boards:dataviz-comments_report',  **conversation.get_url_kwargs())}}">{{_("comments report")}}</a>
-        </div>
-    </div>
+<div class="center-grid">
+    <h2 class="comments-section__title text-accent">{{_('Comments')}}</h2>
 </div>
-
+<div class="comments-section center-grid">
+    <section class="dashboard-card__container flex">
+        <div class="dashboard-card dashboard-card--fit-content">
+            <div class="dashboard-card__value">{{comments_statistics.get('approved')}}</div>
+            <div class="dashboard-card__title">{{_("approved comments")}}</div>
+        </div>
+        <div class="dashboard-card dashboard-card--fit-content">
+            <div class="dashboard-card__value">{{comments_statistics.get('rejected')}}</div>
+            <div class="dashboard-card__title">{{_("rejected comments")}}</div>
+        </div>
+        <div class="dashboard-card dashboard-card--fit-content">
+            <div class="dashboard-card__value">{{comments_statistics.get('pending')}}</div>
+            <div class="dashboard-card__title">{{_("pending moderation")}}</div>
+        </div>
+    </section>
+</div>
 

@@ -183,25 +183,6 @@ class TestReportRoutes(ClusterRecipes):
             "error": "end date and start date should be passed as a parameter."
         }
 
-    def test_conversation_has_no_stereotypes(self, conversation, board, author_db, logged_client):
-        conversation.author = author_db
-        board.owner = author_db
-        board.save()
-        conversation.board = board
-        conversation.save()
-
-        clusterization = Clusterization.objects.create(
-            conversation=conversation, cluster_status=ClusterStatus.ACTIVE
-        )
-        Cluster.objects.create(name="name", clusterization=clusterization)
-
-        url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
-        response = logged_client.get(url)
-        assert (
-            "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
-            in response.content.decode()
-        )
-
     def test_conversation_has_stereotypes(self, conversation, board, author_db, logged_client):
         conversation.author = author_db
         board.owner = author_db

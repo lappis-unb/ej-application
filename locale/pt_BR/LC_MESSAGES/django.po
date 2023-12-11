@@ -2478,7 +2478,6 @@ msgid "Neutral"
 msgstr "Neutro"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:7
-#: src/ej_dataviz/jinja2/ej_dataviz/report/clusters-warning-card.jinja2:7
 msgid "Create persona"
 msgstr "Criar persona"
 
@@ -2663,7 +2662,7 @@ msgid "Create conversation"
 msgstr "Criar conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:32
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:102
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:95
 #, fuzzy
 msgid " Comment "
 msgstr "Comentário"
@@ -2784,7 +2783,7 @@ msgstr "Gerenciar!"
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:8
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-card.jinja2:2
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:2
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
 #: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
@@ -2807,7 +2806,6 @@ msgstr "Comentários salvos"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:23
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:32
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:18
 msgid "Close"
 msgstr "Fechar"
 
@@ -3042,7 +3040,7 @@ msgid "Comments report"
 msgstr "Relatório de comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:65
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/participants.jinja2:9
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/participants.jinja2:8
 #, fuzzy
 msgid "Participants report"
 msgstr "Relatório de participantes"
@@ -3187,14 +3185,6 @@ msgstr "Ordena de forma ascendente"
 msgid "Sort column descending"
 msgstr "Ordena de forma decrescente"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/clusters-warning-card.jinja2:5
-msgid ""
-"Your conversation still does not have defined personas. Without personas, it "
-"is not possible to generate opinion groups."
-msgstr ""
-"Sua conversa ainda não tem personas definidas. Sem personas, não é possível "
-"gerar os grupos de opinião."
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:7
 #, fuzzy
 msgid "Comments Report"
@@ -3206,32 +3196,10 @@ msgid "The cluster has no comments"
 msgstr "Sugira um novo comentário"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/export-data.jinja2:16
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:9
 #, fuzzy
 msgid "Export"
 msgstr "Exportar"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:8
-msgid "Take the EJ wherever you want!"
-msgstr "Leve a EJ para onde quiser!"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:10
-msgid ""
-"Begin your collect journey with our quick links. For more integrations, "
-"access the tools area."
-msgstr ""
-"Inicie sua jornada de coleta com nossos links rápidos. Para mais "
-"integrações, acesse a área de Ferramentas."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:15
-#, fuzzy
-msgid "Use this link to make collect into Telegram."
-msgstr "Utilize esse link para realizar a coleta no telegram."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:22
-#: src/ej_dataviz/jinja2/ej_dataviz/report/tools-links-modal.jinja2:23
-#, fuzzy
-msgid "Go to Tools"
-msgstr "Ir para Ferramentas"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:9
 #, fuzzy
@@ -3243,109 +3211,100 @@ msgstr "Relatório de Participantes"
 msgid "group"
 msgstr "grupo"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:19
-#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:22
-#, fuzzy
-msgid "skip"
-msgstr "pulados"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:24
 #, fuzzy
 msgid "creation date"
 msgstr "data de criação"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:2
 #, fuzzy
-msgid "Channel participation"
-msgstr "participação"
+msgid "channel participation"
+msgstr "participação por canal"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:5
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:10
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:20
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:4
 #, fuzzy
 msgid "filter by:"
 msgstr "Filtrar por:"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:7
-#, fuzzy
-msgid "votes"
-msgstr "Votos"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:9
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:6
 #, fuzzy
 msgid "participants"
 msgstr "Participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:23
+#, fuzzy
+msgid "votes"
+msgstr "votos"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:4
 #, fuzzy
 msgid "Opinion Groups"
 msgstr "Grupos de opinião"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:17
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:13
+#, fuzzy
+msgid "In the group"
+msgstr "No grupo"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:16
 #, fuzzy
 msgid "agree with"
 msgstr "concorda que"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:21
 #, fuzzy
 msgid "Manage groups"
 msgstr "Gerenciar grupos"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:29
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:28
 #, fuzzy
 msgid "Your conversation does not have personas."
 msgstr "Sua conversa ainda não possui personas definidas."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:30
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:29
 #, fuzzy
 msgid "Without personas, it's not possible to create opinion groups."
 msgstr "Sem personas, não é possível gerar os grupos de opinião."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:31
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:30
 msgid "After modeling groups, you can check then here."
 msgstr "Depois de modelar os grupos, você terá uma visão geral deles aqui."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:35
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/clusters.jinja2:34
 #, fuzzy
 msgid "Creates groups"
 msgstr "Criar grupo"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:5
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment-participants.jinja2:4
 #, fuzzy
-msgid "General View"
-msgstr "Visão Geral"
+msgid "Total of comments"
+msgstr "total de comentários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:9
-#, fuzzy
-msgid "approved comments"
-msgstr "aprovados"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:13
-#, fuzzy
-msgid "rejected comments"
-msgstr "rejeitados"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:17
-#: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
-msgid "pending"
-msgstr "esperando"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:21
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:23
-#, fuzzy
-msgid "total"
-msgstr "Total"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:26
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment-participants.jinja2:8
 #, fuzzy
 msgid "comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/participants.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:6
+#, fuzzy
+msgid "approved comments"
+msgstr "aprovados"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:10
+#, fuzzy
+msgid "rejected comments"
+msgstr "rejeitados"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:14
+#, fuzzy
+msgid "pending moderation"
+msgstr "aguardando moderação"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/participants.jinja2:4
 #, fuzzy
 msgid "Total of participants"
-msgstr "Total de participantes"
+msgstr "total de participantes"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:5
 msgid ""
@@ -3354,6 +3313,12 @@ msgid ""
 msgstr ""
 "Cada ponto no gráfico representa um participante diferente. Participantes "
 "que votam de forma parecida, ficam mais próximos. "
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:10
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:20
+#, fuzzy
+msgid "filter by"
+msgstr "filtrar por"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:12
 #, fuzzy
@@ -3365,28 +3330,46 @@ msgstr "Opinião"
 msgid "There is no groups for this conversation."
 msgstr "Não há grupos para esta conversa."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:29
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:28
 msgid "Loading data..."
 msgstr "Carregando dados..."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:4
-#, fuzzy
-msgid "Vote"
-msgstr "Votação"
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:3
+msgid "Vote period"
+msgstr "votação no período"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:18
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:4
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:12
+msgid "or"
+msgstr "ou"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:3
 msgid "Voting"
 msgstr "Votação"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:11
+#, fuzzy
+msgid "agreed"
+msgstr "concordam"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:15
+#, fuzzy
+msgid "disagreed"
+msgstr "discordam"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:19
+#, fuzzy
+msgid "skip"
+msgstr "pular"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:2
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:6
 msgid "Generating word cloud. Please wait..."
 msgstr "Criando nuvem de palavras. Espere..."
 
@@ -3586,6 +3569,9 @@ msgstr ""
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:6
 msgid "Contributions"
 msgstr "Contribuições"
+#: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
+msgid "pending"
+msgstr "esperando"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:4
 #, fuzzy
@@ -4587,6 +4573,30 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "Welcome, Participant!"
 #~ msgstr "Bem vindo, Participante!"
+#~ msgid ""
+#~ "Your conversation still does not have defined personas. Without personas, "
+#~ "it is not possible to generate opinion groups."
+#~ msgstr ""
+#~ "Sua conversa ainda não tem personas definidas. Sem personas, não é "
+#~ "possível gerar os grupos de opinião."
+
+#~ msgid "Take the EJ wherever you want!"
+#~ msgstr "Leve a EJ para onde quiser!"
+
+#~ msgid ""
+#~ "Begin your collect journey with our quick links. For more integrations, "
+#~ "access the tools area."
+#~ msgstr ""
+#~ "Inicie sua jornada de coleta com nossos links rápidos. Para mais "
+#~ "integrações, acesse a área de Ferramentas."
+
+#, fuzzy
+#~ msgid "Use this link to make collect into Telegram."
+#~ msgstr "Utilize esse link para realizar a coleta no telegram."
+
+#, fuzzy
+#~ msgid "Go to Tools"
+#~ msgstr "Ir para Ferramentas"
 
 #~ msgid "Info"
 #~ msgstr "Info"
@@ -4632,6 +4642,18 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "%(n)s comments added (Máx. 2)"
 #~ msgstr "%(n)s Comentários adicionados (Máx. 2)"
+
+#, fuzzy
+#~ msgid "Vote"
+#~ msgstr "Votação"
+
+#, fuzzy
+#~ msgid "General View"
+#~ msgstr "Visão Geral"
+
+#, fuzzy
+#~ msgid "total"
+#~ msgstr "Total"
 
 #, fuzzy
 #~ msgid "Search for a conversation"

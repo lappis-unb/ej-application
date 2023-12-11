@@ -1,10 +1,9 @@
-<div class="time-chart chart">
-  <div class="voting-container">
-    <div class="time-chart__date-picker">
-      <h3 class="chart__title">{{_('Vote')}}</h3>
-      <div class="date-selector">
-        <input id="start-date" type="date">
-        <input id="end-date" type="date">
+<div class="time-chart">
+    <div class="date-picker">
+      <h3 class="charts-section__title">{{_('Vote period')}}</h3>
+      <div class="date-picker__date-selector">
+        <input id="start-date" class="date-picker__input date-picker__input--margin-bottom " type="date">
+        <input id="end-date" class="date-picker__input" type="date">
       </div>
     </div>
     
@@ -18,7 +17,6 @@
     <div class="time-chart--invalid-dates">
       <span class="helptext">{{ _('end date must be gratter then start date') }}</span>
     </div>
-  </div>
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
