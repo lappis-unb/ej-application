@@ -459,9 +459,11 @@ body {
     display: grid;
     grid-template-columns: 1.75rem auto 1.75rem;
 
-    
+
     &__item {
         grid-column: 2/3;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__item--margin {
