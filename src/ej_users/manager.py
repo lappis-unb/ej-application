@@ -61,6 +61,10 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         return user
 
     def create_user_from_session(self, session_key, email, password, **extra_fields):
+        """
+        creates a regular user and converts votes and comments from anonymous participant, if it exists.
+        This method implements part of the behavior of anonymous participation conversation option.
+        """
         user = self.create_user(email, password, **extra_fields)
         anonymous_user_query = self.filter(email=f"anonymoususer-{session_key}@mail.com")
         if anonymous_user_query.exists():
