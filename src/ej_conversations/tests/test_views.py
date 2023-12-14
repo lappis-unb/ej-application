@@ -1,16 +1,18 @@
-from django.test import Client
-from django.http import HttpResponseServerError
-from django.contrib.auth.models import AnonymousUser
-from pytest import raises
-import pytest
-from django.shortcuts import reverse
-from ej_boards.models import Board
+import re
 
+from django.contrib.auth.models import AnonymousUser
+from django.http import HttpResponseServerError
+from django.shortcuts import reverse
+from django.test import Client
+from ej_boards.models import Board
 from ej_conversations import create_conversation
-from ej_conversations.models import Comment, FavoriteConversation, Conversation
+from ej_conversations.models import Comment, Conversation, FavoriteConversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
 from ej_users.models import User
+from pytest import raises
+import pytest
+
 from ..enums import Choice
 
 
@@ -258,6 +260,7 @@ class TestConversationDetail(ConversationSetup):
         )
 
         register_url = response["HX-Redirect"]
+        assert re.match(r"^.*sessionKey=.*", register_url)
         response = client.post(
             register_url,
             data={
