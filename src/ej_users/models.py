@@ -85,8 +85,8 @@ class User(AbstractUser):
         anonymous_votes_limit bigger then 0 and user is anonymous.
         """
         user = request.user
-        request = User.creates_request_session_key(request)
         if user.is_anonymous and conversation.anonymous_votes_limit:
+            request = User.creates_request_session_key(request)
             session_key = request.session.session_key
             user, _ = User.objects.get_or_create(
                 email=f"anonymoususer-{session_key}@mail.com",
