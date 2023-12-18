@@ -1,9 +1,8 @@
-from django.conf import settings
-from ej.testing import UrlTester
-from ej import routes
 from constance import config
-from django.utils.text import slugify
 from django.contrib.auth.models import AnonymousUser
+from django.urls import reverse
+from ej import routes
+from ej.testing import UrlTester
 import pytest
 
 
@@ -18,9 +17,8 @@ class TestViews:
         user.save()
         request.user = user
         response = routes.index(request)
-        user_default_board = slugify(request.user.email)
         assert response.status_code == 302
-        assert response.url == f"/{user_default_board}/conversations/"
+        assert response.url == reverse("profile:home")
 
     @pytest.mark.django_db
     def test_index_anonymous_user(self, rf):

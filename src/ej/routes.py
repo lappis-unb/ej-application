@@ -22,8 +22,7 @@ urlpatterns = Router(template="pages/{name}.jinja2")
 @urlpatterns.route("")
 def index(request):
     if request.user.is_authenticated:
-        user_default_board = slugify(request.user.email)
-        return redirect(f"/{user_default_board}/conversations/")
+        return redirect("profile:home")
     else:
         return redirect(config.EJ_LANDING_PAGE_DOMAIN)
 
