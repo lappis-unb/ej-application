@@ -19,8 +19,7 @@ The following instructions works properly with compose plugin version `v2.21.0` 
 
 **3. Run inv tasks**
 
-    $ pip3 install invoke==2.0.0 --user
-    $ inv docker-build
+    $ pip3 install invoke==2.0.0 django-environ --user
     $ inv docker-up
 
 This will deploy EJ using **docker/docker-compose.yml** file.
@@ -41,6 +40,7 @@ Some useful commands to manage docker environment:
 | Command           | Description                                      |
 |-------------------|--------------------------------------------------|
 | inv docker-up     | Creates EJ containers and run the application    |
+| inv docker-build  | Builds EJ server Docker image                    |
 | inv docker-logs   | Shows django logs                                |
 | inv docker-stop   | Stops EJ containers                              |
 | inv docker-rm     | Removes EJ containers                            |
