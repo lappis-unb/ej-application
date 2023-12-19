@@ -1,0 +1,10 @@
+<div class="row flex-center items-center login-form__social-button--padding">
+    {% for button in social_buttons %}
+        <div class="login-form__social-button">
+            <a href="{{button.href}}">
+                <span>{{_("Login with account ")}}<span>{{button.provider}}</span></span>
+                <i class="google-icon {{button.class_}}"></i>
+            </a> 
+        </div>
+    {% endfor %}
+</div>

@@ -121,6 +121,7 @@ ul.errorlist {
         padding-right: 5.5rem !important;
         height: 3.3rem !important;
         margin-bottom: 5.9rem !important;
+        border: unset !important;
     }
 
     &__label {
@@ -142,6 +143,129 @@ ul.errorlist {
 
 }
 
+.login-form {
+    &__logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2.0625rem;
+        margin-top: 3.1875rem;
+    }
+
+    &__input {
+        input {
+            border-radius: 0.625rem !important;
+            background-color: $color-theme-report-gray-blue-transparent;
+            margin-bottom: 2.0625rem;
+        }
+    }
+
+    &__label {
+        text-transform: initial;
+    }
+
+    &__button-container {
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        margin-bottom: 2.0625rem;
+    }
+
+    &__submit-button {
+        width: 14.0625rem;
+        height: 3.3125rem !important;
+        margin-bottom: unset !important;
+        border: unset !important;
+    }
+
+    &__reset-password {
+        color: $color-accent;
+        font-family: "Work Sans", sans-serif;
+    }
+    &__reset-password:hover {
+        color: $color-accent !important;
+    }   
+
+    &__social-button {
+        width: 17.5rem;
+        height: 3.36rem;
+        border: 1px solid $color-button-gray;
+        border-radius: 0.3125rem;
+        box-shadow: 1px 1px 1px gray;;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 3.4375rem !important;
+
+        span {
+            font-weight: 700;
+            color: $color-gray-darker;
+            span {
+                text-transform: capitalize;
+            }
+        }
+        a i {
+            background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+            font-size: 1rem !important;
+        }
+
+        &--padding {
+            padding: 0 1.5rem;
+        }
+    }
+}
+
+.register-redirection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 30rem;
+    margin: auto;
+    padding: 0 1.5rem;
+    margin-bottom: 12.25rem;
+
+    &__hr {
+        margin-bottom: 3.0625rem !important;
+        width: 45%;
+    }
+    
+    img {
+        width: 9.3525rem;
+        height: 7.9375rem;
+    }
+
+    &__button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        span {
+            color: $color-theme-dark-blue;
+            font-family: "Work Sans", sans-serif;
+            margin-bottom: 1.36rem;
+        }
+
+        a {
+            border: 0.125rem solid $color-theme-dark-blue;
+            background-color: white;
+            color: $color-theme-dark-blue;
+            height: 3.3125rem;
+            line-height: 3.3125rem;
+            width: 266px;
+            border-radius: 0.3125rem;
+            margin-bottom: unset;
+        }
+
+        a:hover {
+            background-color: white !important;
+            color: $color-theme-dark-blue !important;
+        }
+    }
+}
+
 
 //overwrite mendeleev rules
 legend,
@@ -152,8 +276,8 @@ input {
     text-indent: unset !important;
 }
 input:not(.button) {
-    border: 1px solid color('brand') !important;
-    border-radius: 0.3125rem !important;
+    border: 1px solid color('brand');
+    border-radius: 0.3125rem;
 }
 legend {
     margin: unset !important;
@@ -251,6 +375,51 @@ legend {
             }
         }
     }
+
+    .register-redirection {
+        flex-direction: column;
+        
+        &__hr {
+            width: 100%;
+            padding: 0 1.5rem;
+        }
+
+        &__button {
+            span {
+                margin-top: 1.58rem;
+            }
+        }
+    }
+
+    .login-form {
+        &__input #id_password {
+            margin-bottom: 1rem;
+        }
+
+        &__button-container {
+            flex-direction: column;
+            row-gap: 1.21rem;
+            margin-bottom: unset;
+        }
+
+        &__label {
+            text-align: center !important;
+        }
+
+        &__social-button {
+            width: 100%;
+        }
+
+        &__reset-password {
+            margin-bottom: 1.1875rem;
+        }
+
+        &__submit-button {
+            margin-bottom: 1.5rem !important;
+        }
+    }
+
+
     .content-grid {
         grid-template-columns: 2% auto 2%;
     }
