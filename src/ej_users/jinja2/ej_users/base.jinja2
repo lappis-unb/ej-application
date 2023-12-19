@@ -15,10 +15,7 @@
     {# SOCIAL LOGIN #}
     {% if social_buttons|default(false) %}
         {{ social_js }}
-        <p class="center" aria-hidden="true">{{ _('or sign up through other networks') }}</p>
-        <div class="row flex-center items-center">
-            {% for button in social_buttons %}{{ button }}{% endfor %}
-        </div>
+        {% include 'ej_users/includes/social-buttons.jinja2' %}
     {% endif %}
     {% block form_footer %}{% endblock %}
 {% endblock %}
