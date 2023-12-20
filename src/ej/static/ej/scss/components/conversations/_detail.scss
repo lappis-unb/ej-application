@@ -103,6 +103,11 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         gap: 1rem;
         flex-wrap: wrap;
     }
+
+    .errorlist {
+        margin-bottom: revert;
+        margin-top: -0.8rem;
+    }
 }
 
 .comment-form {

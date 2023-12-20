@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-15 16:49-0300\n"
+"POT-Creation-Date: 2023-12-13 21:12-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -448,6 +448,11 @@ msgstr "Temas"
 #: src/ej_conversations/forms.py:60
 msgid "Tags, separated by commas."
 msgstr "Temas, separados por vírgula."
+
+#: src/ej_conversations/forms.py:86
+#, fuzzy
+msgid "This title already exists!"
+msgstr "Esse título já existe."
 
 #: src/ej_conversations/mixins.py:162
 #, fuzzy
@@ -4860,10 +4865,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "General report"
 #~ msgstr "Relatório Geral"
-
-#, fuzzy
-#~ msgid "This comment already exists."
-#~ msgstr "Esse comentário já existe."
 
 #~ msgid ""
 #~ "It's not possible to add comments with the same content. Try to write "

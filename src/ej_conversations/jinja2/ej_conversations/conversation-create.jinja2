@@ -21,10 +21,10 @@
                     <p class="helptext">
                     {% trans %}The following fields composes the conversation structure. They will help you to customize the participation process.Some fields are optional and can be edited later.{% endtrans %}</p>
                     <div>
-                        {{ form.non_field_errors() }}
                         <h4 class="conversation-form__h4">{{_("Conversation about")}}</h4>
-                        {{ form.title.errors }}
                         <label>{{ form.title.label }}{{ form.title }}</label>
+                        {{ form.title.errors }}
+                        {{ form.non_field_errors() }}
                     </div>
                     <legend>{{ form.title.help_text }}</legend>
 
