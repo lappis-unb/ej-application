@@ -1,6 +1,6 @@
-##############################################
+*********************************************
 Integre uma conversa com ferramentas externas
-##############################################
+*********************************************
 
 Uma conversa EJ pode ser integrada à outras ferramentas e plataformas,
 permitindo potencializar o engajamento do seu público durante uma coleta
@@ -10,7 +10,13 @@ completa.
 
 **Chatbot**: Permite realizar coletas de opinião por meio de uma interface conversacional,
 como o Telegram ou um cliente web, chamado de Webchat. O Bot se integra na API da EJ, e
-permite ao usuário votar nos comentários de uma conversa previamente selecionada pelo administrador do bot;
+permite ao usuário votar nos comentários de uma conversa previamente selecionada pelo administrador do bot.
+
+
+.. note::
+
+    Todos os Bots da EJ são oferecidos pela empresa `Pencillabs <https://pencillabs.tec.br/>`_ como serviço.
+    Entre em contato pelo email `contato@pencillabs.tec.br <contato@pencillabs.tec.br>`_ para mais informações.
 
 **Componente de opinião**: Permite realizar coletas de opinião em sites e blogs, sem que o
 usuário precise acessar a interface da plataforma. Este componente simula a tela de uma conversa,
@@ -25,7 +31,7 @@ Todas estas ferramentas podem ser acessadas clicando no link *Ferramentas*, dent
 uma conversa na EJ. O link só fica disponível para o criador da conversa.
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    tools-chatbot
    tools-ejgroups

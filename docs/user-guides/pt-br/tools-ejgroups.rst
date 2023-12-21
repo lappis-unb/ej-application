@@ -1,17 +1,17 @@
-========================================================
+*************************************
 EjGroupsBot: O bot de enquetes da EJ
-========================================================
+*************************************
 
-O EjGroupsBot é um bot de enquetes que permite realizar coletas no Telegram sem que 
-os participantes precisem ser encaminhados para um chat privado, como é o caso do :ref:`Bot de Opinião`. 
+O EjGroupsBot é um bot de enquetes que permite realizar coletas no Telegram sem que
+os participantes precisem ser encaminhados para um chat privado, como é o caso do :ref:`Bot de Opinião`.
 Na enquete gerada, cada pergunta é um comentário e o tema da enquete é o título da conversa.
 
-.. figure:: ../images/bot-de-enquetes.png 
+.. figure:: ../images/bot-de-enquetes.png
 
 Como faço para localizar o bot no Telegram?
 -------------------------------------------
 
-Para localizar o EjGroupsBot no Telegram, clique no campo de busca do Telegram e digite 
+Para localizar o EjGroupsBot no Telegram, clique no campo de busca do Telegram e digite
 EjGroupsBot ou se preferir acesse https://t.me/ejgroupsbot
 
 * O bot está denominado como Enquete Boca de Lobo.
@@ -40,19 +40,19 @@ Para realizar uma coleta através de um Grupo, execute os seguintes passos:
 
 É possível configurar os comandos **enquetenogrupo** e **enquetenocanal** de forma facilitada na EJ, selecione a sua conversa e através de **Ferramentas > Chatbot > Telegram**. Agora basta selecionar entre canal e grupo nos botões e o comando a ser utilizado é atualizado no cartão.
 
-.. figure:: ../images/bot-de-enquetes_0.png 
+.. figure:: ../images/bot-de-enquetes_0.png
 
-Para selecionar os comentários que vão compor a enquete, depois de selecionar entre **canal** e **grupo** clique no botão **Editar enquete**.  
+Para selecionar os comentários que vão compor a enquete, depois de selecionar entre **canal** e **grupo** clique no botão **Editar enquete**.
 
-.. figure:: ../images/bot-de-enquetes_1.png 
+.. figure:: ../images/bot-de-enquetes_1.png
 
-Uma janela com todos os comentários válidos da conversa vai aparecer. Clique em **Editar** para poder selecionar os comentários. 
+Uma janela com todos os comentários válidos da conversa vai aparecer. Clique em **Editar** para poder selecionar os comentários.
 
-.. figure:: ../images/bot-de-enquetes_2.png 
+.. figure:: ../images/bot-de-enquetes_2.png
 
-Defina os comentários clicando na **caixa** do lado esquerdo do *ID* do comentário. Ao clicar o comando de geração da enquete é atualizado na parte superior do cartão. 
+Defina os comentários clicando na **caixa** do lado esquerdo do *ID* do comentário. Ao clicar o comando de geração da enquete é atualizado na parte superior do cartão.
 
-.. figure:: ../images/bot-de-enquetes_3.png 
+.. figure:: ../images/bot-de-enquetes_3.png
 
 
 Limitações

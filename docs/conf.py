@@ -26,7 +26,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "Empurrando Juntos"
+project = "Empurrando Juntas"
 copyright = """2023, EJ"""
 
 # The short X.Y version.

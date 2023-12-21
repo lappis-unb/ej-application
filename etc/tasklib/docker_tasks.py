@@ -41,7 +41,7 @@ def docker_build(ctx, dry_run=False, no_cache=False, prod=False):
     argsList.append("--no-cache") if no_cache else False
     args: str = reduce(lambda x, y: x + " " + y, argsList)
 
-    do(f"docker build {args} -f docker/Dockerfile -t docker_server .")
+    do(f"docker build {args} -f docker/Dockerfile -t docker-server .")
 
 
 @task

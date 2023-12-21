@@ -1,5 +1,6 @@
+******
 Temas
-======
+******
 
 É possível implementar temas customizados para a plataforma. O tema padrão
 é versionado no app **ej**, no diretório **ej/static/ej/**.

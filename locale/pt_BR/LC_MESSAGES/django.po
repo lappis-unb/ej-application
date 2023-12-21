@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 21:12-0300\n"
+"POT-Creation-Date: 2023-12-20 15:35-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -71,11 +71,11 @@ msgstr "Seu progresso: {pc} por cento"
 msgid "Your progress: {n} of {total} {text}"
 msgstr "Seu progresso: {n} de {total} {text}"
 
-#: src/ej/routes.py:116
+#: src/ej/routes.py:115
 msgid "User Guides"
 msgstr "Guias de Usuário"
 
-#: src/ej/routes.py:117
+#: src/ej/routes.py:116
 msgid "Development Guides"
 msgstr "Guias de Desenvolvimento"
 
@@ -2759,8 +2759,8 @@ msgstr ""
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:64
 #, fuzzy, python-format
 msgid ""
-" In the current signature, you can create <span class=\"text-accent bold\">"
-"%(conversations_limit)s</span> conversations."
+" In the current signature, you can create <span class=\"text-accent "
+"bold\">%(conversations_limit)s</span> conversations."
 msgstr ""
 "Na sua assinatura atual, você pode criar <span\n"
 " class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
@@ -5554,8 +5554,8 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgstr "Confirmar"
 
 #~ msgid ""
-#~ "This e-mail confirmation link expired or is invalid. Please <a href="
-#~ "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+#~ "This e-mail confirmation link expired or is invalid. Please <a "
+#~ "href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 #~ msgstr ""
 #~ "Este link de confirmação de email expirou ou é inválido. Por favor <a "
 #~ "href=\"%(email_url)s\">peça uma nova confirmação</a>."
@@ -5681,8 +5681,8 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgstr "Nome do ícone"
 
 #~ msgid ""
-#~ "Icon name in font-awesome. Use short version like \"google\", \"facebook-f"
-#~ "\", etc."
+#~ "Icon name in font-awesome. Use short version like \"google\", \"facebook-"
+#~ "f\", etc."
 #~ msgstr ""
 #~ "Nome do ícone na Font-awesome. Use a versão curta como \"google\", "
 #~ "\"facebook-f\", etc."
