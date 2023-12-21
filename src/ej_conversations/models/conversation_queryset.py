@@ -1,7 +1,8 @@
 import logging
 import random
 
-from boogie.models import F, Value, IntegerField, FieldDoesNotExist
+from boogie.models import F, Value, IntegerField
+from django.core.exceptions import FieldDoesNotExist
 from boogie.models.wordcloud import WordCloudQuerySet
 from django.contrib.auth import get_user_model
 from django.db.models import Count, Q

@@ -1,21 +1,12 @@
+**********************************************
 Bem vinda à documentação da Empurrando Juntas.
-===============================================
+**********************************************
 
-A Empurrando Juntas (EJ) é uma plataforma de coleta de opinião multicanal,
-que permite construir grupos de opinião a partir da modelagem de personas.
-Os usuários participam em conversas, votando em comentários existentes e
-adicionando novos comentários para enriquecer a discussão.
-
-Cada comentário pode possui três opções de voto: concordar, discordar e pular.
-Conforme os usuários participam de uma conversa, o algorítmo de clusterização
-posiciona cada participante em um *cluster*. Um cluster representa um conjunto
-de usuários que votam de forma aproximada às personas modeladas para a conversa.
-
-.. note::
-
-   Uma persona representa um participante imaginário, que vota nos comentários
-   de determinada forma. O administrador pode definir personas depois de cadastrar
-   uma nova conversa.
+A Empurrando Juntas (EJ), é uma plataforma de pesquisa de opinião que,
+a partir da modelagem de personas, permite agrupar participantes com opiniões
+similares. Este agrupamento (também chamado de *cluster*), permite identificar
+bolhas de opinião que não poderiam ser capturadas
+por ferramentas comuns de *survey* como Google Forms e Survey Monkey.
 
 .. figure:: user-guides/images/bubbles.png
    :align: center
@@ -23,41 +14,52 @@ de usuários que votam de forma aproximada às personas modeladas para a convers
    Grupos de opinião de uma conversa
 
 
-Dizer que a EJ é multicanal significa que existe mais de uma forma de participar
-de uma conversa. A tabela a seguir lista quais possibilidades o administrador de
-uma conversa tem para disponibilizar uma conversa ao público:
+O processo de participação na EJ é bem simples e funciona da seguinte forma:
 
-.. csv-table:: Opções de multicanal
-   :header: "Canal", "Descrição"
+1. O usuário se registra na plataforma (ou faz login utilizando email/senha).
+2. O usuário cria uma nova conversa.
+3. O usuário compartilha o link da conversa com seu público.
+4. O público acessa a página da conversa e participa, votando nos comentários existentes e adicionando
+   novos comentários que serão moderados e disponibilizados para voto.
+5. O usuário acompanha a pesquisa por meio dos relatórios e pode modelar personas para gerar os
+   grupos de opinião.
+6. Com a modelagem das personas, a EJ gera os grupos de opinião e permite análises mais detalhadas
+   da opinião do público, como por exemplo: quais comentários geraram menor convergência entre os participantes.
 
-   "Página da conversa", "Modo convencional de participação. O usuário acessa a página da conversa na plataforma web e participa."
-   "Componente de opinião", "Componente Web integrado à API da EJ, que permite participar de uma conversa a partir de uma página html."
-   "Bot de enquetes", "Bot que converte uma conversa da EJ para uma enquete do Telegram. Pode ser utilizado em grupos e canais."
-   "Bot opinião", "Bot que simula uma conversa com o usuário e permite votar e adicionar comentários."
-   "Template de email", "Arquivo HTML que simula a página da conversa. Esse arquivo pode ser utilizado em campanhas de email."
-
-
-
-Além dos canais de participação, a EJ também disponibiliza uma conjunto de relatórios que
-permitem avaliar a performance dos comentários e dos grupos de opinião. É possível exportar
-os dados coletados para integração com outras ferramentas como Mautic, PowerBI e Excel.
+Com a nossa metodologia de criação e compartilhamento da conversa, é possível realizar pesquisas de opinião
+em multiplos canais de maneira simples e rápida. **A EJ é a plataforma para auxiliar organizações de todos os
+tamanhos à mapear as bolhas que compõe seu público-alvo e, a partir disso, traçar uma estratégia de comunicação vencedora.**
 
 .. note::
 
-    O objetivo deste guia é auxiliar pessoas interessadas em realizar projetos de escuta
-    e participação social a adotaram a EJ como uma solução viável para entender o que
-    determinado público pensa sobre determinado assunto e, a partir desse entendimento,
-    melhorar suas iniciativas de comunicação e ativações pós-coleta.
-
-
-.. toctree::
-   :caption: Guia de desenvolvimento
-   :maxdepth: 2
-
-   development-guides/pt-br/index
+    O objetivo deste guia é auxiliar a adoção da EJ em projetos de escuta
+    e participação social, de modo a melhorar ações de comunicação e *advocacy*.
+    A `Pencillabs <https://pencillabs.tec.br/>`_ em parceria com o `Instituto Cidade Democrática <https://cidadedemocratica.org.br/>`_ pode auxiliar na adoção da EJ na sua organização. Para uma demonstração,
+    entre em contato pelo email `contato@pencillabs.tec.br <contato@pencillabs.tec.br>`_.
 
 .. toctree::
    :caption: Guia de usuário
-   :maxdepth: 2
+   :hidden:
 
-   user-guides/pt-br/index
+   user-guides/pt-br/user-start
+   user-guides/pt-br/creating-conversation
+   user-guides/pt-br/voting
+   user-guides/pt-br/analysis
+   user-guides/pt-br/tools
+   user-guides/pt-br/user-environment
+   user-guides/pt-br/terms-of-use
+
+.. toctree::
+   :caption: Guia de desenvolvimento
+   :hidden:
+
+   development-guides/pt-br/architecture
+   development-guides/pt-br/dev-repository
+   development-guides/pt-br/dev-integration
+   development-guides/pt-br/environment-variables
+   development-guides/pt-br/translations
+   development-guides/pt-br/urls
+   development-guides/pt-br/social-login
+   development-guides/pt-br/dev-style
+   development-guides/pt-br/smtp
+   development-guides/pt-br/themes

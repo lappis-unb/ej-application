@@ -1,10 +1,6 @@
-============
+************
 Integrações
-============
-
-.. contents::
-   :depth: 2
-
+************
 
 
 Middlewares do EJ
@@ -87,7 +83,7 @@ E algo muito legal também é que podemos criar `roles` das funções. Roles sã
         Text(conversation.content)
       ]
     )
-    
+
   @html.register(model.Conversation, role='card')
   def conversation_card(conversation):
     return (
@@ -99,11 +95,11 @@ E algo muito legal também é que podemos criar `roles` das funções. Roles sã
         span(conversation.description)
       ]
     )
- 
+
 
 Com algumas configurações na linguagem de template, conseguimos utilizar as `roles` da seguinte maneira:
 
-.. code-block:: jinja 
+.. code-block:: jinja
 
   {{conversation|balloon}}
 

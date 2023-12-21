@@ -1,6 +1,6 @@
-##################
+******************
 Campanha de email
-##################
+******************
 
 
 A ferramenta Campanha de email, permite realizar coletas de opinião a partir emails enviados

@@ -1,9 +1,6 @@
-=====================
+**********************
 Variáveis de Ambiente
-=====================
-
-.. contents::
-   :depth: 2
+**********************
 
 EJ usa variáveis de ambiente para personalizar a maioria dos comportamentos e configurações da plataforma.
 As variáveis de ambiente podem ser definidas diretamente no ambiente host ou salvo em um arquivo de

@@ -1,0 +1,84 @@
+************************
+Analisando uma conversa
+************************
+
+A Empurrando Juntas possui um conjunto de visualizações para analisar os
+resultados de uma conversa. É importante ressaltar que o nível de confiabilidade
+dos resultados apresentados pela plataforma dependem do volume de opiniões
+coletadas. Quanto mais participantes votando e comentando, mais precisos
+serão os grupos de opinião formados e mais precisa será a análise dos
+comentários.
+
+Dashboard da conversa
+----------------------
+
+O Dashboard apresenta um resumo do andamento da coleta. Possui visualizações
+que permitem acompanhar a votação no tempo, as estatísticas de votação e de
+participantes. Também permite acesso rápido aos relatórios de comentários
+e de participantes. Tanto o criador da conversa quanto administradores
+do ambiente podem acessar o Dashboard de uma conversa,
+basta clicar na conversa desejada que o botão de acesso ao
+Dashboard será apresentado.
+
+.. figure:: ../images/dashboard.png
+   :align: center
+
+   Dashboard de uma conversa
+
+.. figure:: ../images/dashboard-groups-scatter.png
+   :align: center
+
+   Grupos de opinião e núvem de pontos
+
+
+.. note::
+
+    A etapa de análise é uma das mais importantes e é o que gera valor para organizações.
+    A `Pencillabs <https://pencillabs.tec.br/>`_ em parceria com o `Instituto Cidade Democrática <https://cidadedemocratica.org.br/>`_ pode te auxiliar na produção de relatórios ricos e informativos utilizando
+    os dados coletados pela EJ.
+
+Relatório de comentários
+-------------------------
+
+O relatório de comentários permite analisar a performance dos comentários,
+tanto no geral (considerando todos os participantes) tanto por grupo de opinião.
+É possível filtrar os comentarios pelo conteúdo, pelo nível de concordância, discordância,
+convergência entre outros. Também é possível exportar os dados apresentados, caso o usuário
+queira utilizar outras ferramentas de *dataviz* para realizar suas análises.
+
+
+
+.. figure:: ../images/comments-report2.png
+   :align: center
+
+   Relatório de comentários geral
+
+.. figure:: ../images/comments-report1.png
+   :align: center
+
+   Relatório de comentários por grupo
+
+
+Gestão de personas
+-------------------
+
+O estereótipo de uma conversa é uma generalização de um grupo de pessoas cujo as ações são similares, com base, no histórico comum de participação em uma conversa.  Seja curtindo, comentando ou pulando o sistema de votação. Exemplo: se temos uma conversa sobre uma temática de turismo, poderíamos definir como estereótipos os perfis de turistas: mochileiros, trabalho ou romântico, com base nos comentários ou participação nos comentários existentes.
+
+Podemos afirmar que os estereótipos de uma conversa são pressupostos sobre um determinado grupo de participantes. Eles não afetam a formação dos grupos de opinião, mas eles ajudam o nosso algoritmo a inferir os tipos de participantes que fazem parte de cada grupo. Por isso é importante, na criação de cada conversa, arriscar de 2 a 4 estereótipos iniciais. Sem eles, nosso algoritmo de clusterização não exibirá os grupos de opinião.
+
+Para criar uma persona, acesse a página de uma conversa e no menu lateral clique em "Criar/Editar grupos".
+
+.. figure:: ../images/personas.png
+   :align: center
+
+   Acesso à criação/edição de grupos
+
+Criada a persona, você poderá definir como essa persona se comporta na conversa em questão. Isso é feito
+simulando os votos da persona nos comentários da conversa. Esse processo é feito no painel "Gerenciar personas", que também pode ser acessado no menu lateral da conversa. Essa simulação é o que chamamos de modelagem e é
+a partir dela que os grupos de opinião serão formados.
+
+
+.. figure:: ../images/personas-voting.png
+   :align: center
+
+   Painel de modelagem das personas
