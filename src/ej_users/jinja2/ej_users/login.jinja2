@@ -19,6 +19,10 @@
             <input type="submit" name="submit" value="{{ _('Login') }}" class="width-full is-primary login-form__submit-button">
         </div>
     </form>
+    {% if social_buttons|default(false) %}
+        {{ social_js }}
+        {% include 'ej_users/includes/social-buttons.jinja2' %}
+    {% endif %}
 <script src="/static/js/vote-from-template.js"></script>
 {% endblock %}
 

@@ -141,6 +141,11 @@ ul.errorlist {
         }
     }
 
+    &__register-buttons {
+        display: flex;
+        align-items: start;
+    }
+
 }
 
 .login-form {
@@ -374,6 +379,20 @@ legend {
                 margin-bottom: 2.625rem;
             }
         }
+
+        &__register-buttons {
+            flex-direction: column-reverse;
+            align-items: center;
+
+            .login-form__social-button {
+                width: 17.5rem;
+            }
+        }
+
+        &__submit-button {
+            margin-bottom: 0.9rem !important;
+        }
+
     }
 
     .register-redirection {
