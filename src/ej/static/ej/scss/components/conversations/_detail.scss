@@ -2,6 +2,7 @@
 // CONVERSATION DETAIL (balloon / comment card / comment form / extra / progress bar)
 //------------------------------------------------------------------------------
 @import '../../../node_modules/mendeleev.css/src/components/mixins/arrow';
+@import '_detail-header';
 
 $component-border-radius: size(config('ej.style.border-radius'));
 
@@ -163,134 +164,6 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 }
 
-
-
-.sharing-card {
-    background-image: url("/static/img/comment_card/share-conversation-link-background.png");
-    height: 8.16rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background-size: cover;
-
-    &__link-text {
-        font-weight: 800;
-        font-size: 1.125rem;
-        text-transform: uppercase;
-        color: $color-theme-dark-blue;
-    }
-
-    &__description-text {
-        color: $color-theme-dark-blue;
-        margin-bottom: 0;
-    }
-
-    &__icon {
-        padding: 4px;
-        border-radius: 50%;
-        overflow: hidden;
-        background-color: $color-white;
-        color: $color-pink-light;
-        margin: 0 !important;
-        font-size: 0.875rem;
-
-        &--blue {
-            color: $color-theme-dark-blue;
-        }
-    }
-
-    &__link {
-        display: flex;
-        align-items: center;
-        gap: 0.625rem;
-    }
-
-}
-
-.secondary-cards-container {
-    display: flex;
-    gap: 1.25rem;
-    margin-top: 2.438rem;
-}
-
-.secondary-card {
-    background-color: $color-pink-light;
-    height: 5.25rem;
-    width: 100%;
-    border-radius: 0.3125rem;
-    color: $color-white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    white-space: nowrap;
-
-    &__link {
-        color: $color-white;
-        text-transform: uppercase;
-        font-size: 1.125rem;
-        font-weight: 800;
-        display: flex;
-        gap: 0.625rem;
-        align-items: center;
-        justify-content: center;
-
-        &:hover {
-            color: $color-white !important;
-        }
-    }
-
-    &__trending-icon {
-        background-image: url("/static/img/icons/trend.svg");
-        width: 21px;
-        height: 21px;
-        display: inline-block;
-    }
-
-    &--blue {
-        background-color: $color-theme-dark-blue;
-    }
-    &--pink {
-        background-color: $color-accent;
-    }
-
-    span, a {
-        text-align: center;
-        color: white;
-        vertical-align: middle;
-    }
-    span:nth-child(2) {
-        font-size: 1.125rem;
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-}
-
-.copy-info-card {
-    height: 3.875rem;
-    width: 15.1875rem;
-    background-color: $color-pink-light;
-    border-radius: 0.3125rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 100px;
-    left: calc(50% - (15.1875rem/2));
-
-    &__text {
-        text-align: left;
-        color: $color-white;
-    }
-
-    i {
-        color: $color-gray-brigther;
-        font-size: 2.5rem;
-        margin: auto 0.2em;
-    }
-}
-
 .voting-card {
     border-radius: 5px;
     background: rgba(48, 191, 211, 0.15);
@@ -316,6 +189,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
                 }
                 &__progress {
                     @extend .progress-bar__progress;
+                    background-color: $color-white;
                 }
                 &__fg {
                     @extend .progress-bar__progress;
@@ -335,41 +209,18 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
                 width: fit-content;
             }
         }
-        &__statistics {
-            display: flex;
-            font-family: Lexend Exa;
-            color:$color-complementary-gray;
-            margin-bottom: 0.813rem;
 
-            i {
-                font-size: 1rem;
-                margin: auto 0.688rem 0 0;
-            }
-
-            &__values {
-                font-size: 0.8rem;
-                margin-right: 2.813rem;
-            }
-        }
-
-        &__title,
         &__label {
             color: $color-complementary-gray;
             font-family: Lexend Exa;
             text-transform: uppercase;
-        }
-        &__title {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: $color-black-alternative;
-        }
-        &__label {
             font-size: 0.75rem;
             font-style: normal;
             font-weight: 500;
             line-height: 1.25rem;
 
         }
+
         &__add-comment {
             display: flex;
             width: max-content;
@@ -630,38 +481,14 @@ button[name='vote'] .loader {
 }
 
 @media (max-width: 875px) {
-    .secondary-cards-container {
-        flex-wrap: wrap;
-    }
     .comment-card {
         max-height: unset;
-    }
-    .voting-card hr {
-        margin: 1rem 0 0 0 !important;
-        max-width: unset !important;
     }
     .modal__buttons {
         margin: 1rem 0 0 0;
     }
-    .secondary-cards-container {
-        margin-top: 0rem;
-    }
-    .sharing-card {
-        height: unset;
-        padding: 1rem;
-    }
-    .sharing-card__description-text,
-    .secondary-card--blue span:first-child,
-    .secondary-card--accent span:first-child {
-        display: none;
-    }
-    .sharing-card__link-text,
-    .secondary-card--blue span:nth-child(2),
-    .secondary-card--accent span:nth-child(2) {
-        font-size: .9rem;
-    }
 
-    .privacy-policy--margin {
-        margin-bottom: 3rem;
+    .body {
+        margin: unset !important;
     }
 }

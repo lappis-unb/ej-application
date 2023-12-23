@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-20 15:35-0300\n"
+"POT-Creation-Date: 2023-12-23 13:11-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -449,7 +449,7 @@ msgstr "Temas"
 msgid "Tags, separated by commas."
 msgstr "Temas, separados por vírgula."
 
-#: src/ej_conversations/forms.py:86
+#: src/ej_conversations/forms.py:87
 #, fuzzy
 msgid "This title already exists!"
 msgstr "Esse título já existe."
@@ -1994,7 +1994,7 @@ msgstr "Mostrando"
 #: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:11
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "of"
 msgstr "de"
@@ -2429,7 +2429,7 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:48
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:30
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2450,7 +2450,7 @@ msgstr "Conta"
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:10
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:37
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:11
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
 #, fuzzy
@@ -2597,7 +2597,7 @@ msgstr ""
 "customização do processo de participação. Alguns campos são opcionais e "
 "poderão ser editados posteriormente."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:24
 #, fuzzy
 msgid "Conversation about"
 msgstr "Sobre a conversa"
@@ -2662,7 +2662,7 @@ msgstr "Adicionar mais comentários"
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:32
+#: src/ej_conversations/jinja2/ej_conversations/comments/voting-form.jinja2:1
 #: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:102
 #, fuzzy
 msgid " Comment "
@@ -2672,39 +2672,11 @@ msgstr "Comentário"
 msgid "Conversation: \"{}\""
 msgstr "Conversa: \"{}\""
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:30
-msgid "What have people responded so far?"
-msgstr "O que as pessoas responderam até agora?"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:33
-msgid "Access the dashboard and follow along"
-msgstr "Acesse o dashboard e acompanhe"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:37
-msgid "The more people participating, the better!"
-msgstr "Quanto mais gente participando, melhor!"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:40
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:54
-#, fuzzy
-msgid "Share the conversation link"
-msgstr "Compartilhe o link da conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:45
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:59
-#, fuzzy
-msgid "Link copied to clipboard"
-msgstr "Link copiado para a área de transferência"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:51
-msgid "What does your community think about this topic?"
-msgstr "O que sua comunidade pensa sobre esse assunto?"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:66
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:29
 msgid "Warning!"
 msgstr "Atenção!"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:67
+#: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:30
 msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
@@ -2759,8 +2731,8 @@ msgstr ""
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:64
 #, fuzzy, python-format
 msgid ""
-" In the current signature, you can create <span class=\"text-accent "
-"bold\">%(conversations_limit)s</span> conversations."
+" In the current signature, you can create <span class=\"text-accent bold\">"
+"%(conversations_limit)s</span> conversations."
 msgstr ""
 "Na sua assinatura atual, você pode criar <span\n"
 " class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
@@ -2905,7 +2877,7 @@ msgid "Conversation: "
 msgstr "Conversa "
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:29
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:28
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:16
 #, fuzzy
 msgid "Add comment"
 msgstr "Adicionar comentário"
@@ -2944,26 +2916,21 @@ msgstr ""
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:11
-#, fuzzy
-msgid " Conversation "
-msgstr "Conversa "
-
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
 #, fuzzy
 msgid "You have already voted on all the comments."
 msgstr "Você já votou em todos os comentários."
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:24
 #, fuzzy
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:27
 msgid "Questions about privacy?"
 msgstr "Dúvidas sobre privacidade? "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:27
 #, fuzzy
 msgid "Understand how your data is used"
 msgstr "Entenda como seus dados são utilizados"
@@ -2981,6 +2948,11 @@ msgstr "Não há comentários para votar :)"
 #, fuzzy
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:17
+#, fuzzy
+msgid "Link copied to clipboard"
+msgstr "Link copiado para a área de transferência"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/editable-conversation-balloon.jinja2:4
 #, fuzzy
@@ -4560,6 +4532,26 @@ msgstr "Logar com conta "
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
 
+#, fuzzy
+#~ msgid " Conversation "
+#~ msgstr "Conversa "
+
+#~ msgid "What have people responded so far?"
+#~ msgstr "O que as pessoas responderam até agora?"
+
+#~ msgid "Access the dashboard and follow along"
+#~ msgstr "Acesse o dashboard e acompanhe"
+
+#~ msgid "The more people participating, the better!"
+#~ msgstr "Quanto mais gente participando, melhor!"
+
+#, fuzzy
+#~ msgid "Share the conversation link"
+#~ msgstr "Compartilhe o link da conversa"
+
+#~ msgid "What does your community think about this topic?"
+#~ msgstr "O que sua comunidade pensa sobre esse assunto?"
+
 #~ msgid "Login using {}"
 #~ msgstr "Logue usando {}"
 
@@ -5554,8 +5546,8 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgstr "Confirmar"
 
 #~ msgid ""
-#~ "This e-mail confirmation link expired or is invalid. Please <a "
-#~ "href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+#~ "This e-mail confirmation link expired or is invalid. Please <a href="
+#~ "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 #~ msgstr ""
 #~ "Este link de confirmação de email expirou ou é inválido. Por favor <a "
 #~ "href=\"%(email_url)s\">peça uma nova confirmação</a>."
@@ -5681,8 +5673,8 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgstr "Nome do ícone"
 
 #~ msgid ""
-#~ "Icon name in font-awesome. Use short version like \"google\", \"facebook-"
-#~ "f\", etc."
+#~ "Icon name in font-awesome. Use short version like \"google\", \"facebook-f"
+#~ "\", etc."
 #~ msgstr ""
 #~ "Nome do ícone na Font-awesome. Use a versão curta como \"google\", "
 #~ "\"facebook-f\", etc."
