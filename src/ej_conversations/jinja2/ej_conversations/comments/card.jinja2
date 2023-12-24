@@ -1,17 +1,5 @@
 <div id="voting-card">
     <div class="voting-card">
-        <div class="voting-card__statistics">
-            <i class="fa fa-comments"></i>
-            <span class="voting-card__statistics__values">{{ conversation.n_approved_comments }}</span>
-
-            <i class="fa">&#xf772;</i>
-            <span class="voting-card__statistics__values">{{ conversation.n_final_votes }}</span>
-        </div>
-
-        <span class="voting-card__label">{% trans %} Conversation {% endtrans %}</span><br>
-        <span class="voting-card__title">{{ conversation.text }}</span>
-        <hr>
-
             <div class="voting-card__header">
                 <div class="voting-card__progress">
                     <span class="voting-card__progress__values">{{ user_progress_percentage }}%</span>
@@ -29,23 +17,17 @@
                 </a>
             </div>
         {% if comment %}
-            <span class="voting-card__label">{% trans %} Comment {% endtrans %}</span><br>
-            <div class="voting-card__comment"><p>{{ comment.content}}</p></div>
-
-        <div>
             {% include 'ej_conversations/comments/voting-form.jinja2' %}
-        </div>
-
         {% else %}
             <div class="voting-card__message">
                 <p>{{ _("You have already voted on all the comments.") }}</p>
                 <span>{{_("Thank you for your participation!") }}</span>
             </div>
         {% endif %}
-        <span class="privacy-policy__title">{{_("Questions about privacy?")}}<a onclick="togglePrivacyBox()">{{_("Understand how your data is used")}}</a></span>
+        <span class="privacy-policy__title privacy-policy--margin">{{_("Questions about privacy?")}}<a onclick="togglePrivacyBox()">{{_("Understand how your data is used")}}</a></span>
         <div id="privacy-box" class="hide">
             <div class="privacy-policy__text">{{ privacy_policy }}</div>
-            <a class="privacy-policy__close-button" onclick="togglePrivacyBox()">{{_("close")}}</a>
+            <a class="privacy-policy__close-button privacy-policy--margin" onclick="togglePrivacyBox()">{{_("close")}}</a>
         </div>
     </div>
 </div>

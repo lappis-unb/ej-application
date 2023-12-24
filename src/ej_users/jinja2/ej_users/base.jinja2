@@ -7,19 +7,7 @@
 
 
 {% block content %}
-    
-
-    {% block form_data %}{% endblock %}
-
-    <h2 class="screen-reader center">{{ _('Other options') }}</h2>
-    {# SOCIAL LOGIN #}
-    {% if social_buttons|default(false) %}
-        {{ social_js }}
-        <p class="center" aria-hidden="true">{{ _('or sign up through other networks') }}</p>
-        <div class="row flex-center items-center">
-            {% for button in social_buttons %}{{ button }}{% endfor %}
-        </div>
-    {% endif %}
+    {% block form_data %}{% endblock %} 
     {% block form_footer %}{% endblock %}
 {% endblock %}
 

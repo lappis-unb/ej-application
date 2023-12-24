@@ -19,6 +19,7 @@ local/
 docs/_build/
 dist/
 htmlcov/
+src/*/static/*/node_modules/
 node_modules/
 lib/.ipynb_checkpoints/
 lib/dist/

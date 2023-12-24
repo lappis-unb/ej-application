@@ -23,62 +23,17 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content-grid margin-y3">
-        {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
-            <div class="secondary-cards-container">
-                <div class="secondary-card secondary-card--blue">
-                    <span>{{_("What have people responded so far?")}}</span>
-                    <a href="{{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}" class="sharing-card--small__link">
-                        <span class="secondary-card__trending-icon"></span>
-                        <span>{{_("Access the dashboard and follow along")}}</span>
-                    </a>
-                </div>
-                <div class="secondary-card secondary-card--accent">
-                    <span>{{_("The more people participating, the better!")}}</span>
-                    <a class="secondary-card__link" onclick="copyToClipboard('copy-info-admin')">
-                        <i class="fas fa-link sharing-card__icon"></i>
-                        <span>{{_("Share the conversation link")}}</span>
-                    </a>
-                </div>
-                <div id="copy-info-admin" class="copy-info-card hide">
-                    <i class="fas fa-check-circle"></i>
-                    <span class="copy-info-card__text">{{_("Link copied to clipboard")}}</span>
-                </div>
-            </div>
-        {% else %}
-            <div>
-                <div class="sharing-card">
-                    <p class="sharing-card__description-text">{{_("What does your community think about this topic?")}}</p>
-                    <a class="sharing-card__link" onclick="copyToClipboard('copy-info')">
-                        <i class="fas fa-link sharing-card__icon sharing-card__icon--blue"></i>
-                        <span class="sharing-card__link-text">{{_("Share the conversation link")}}</span>
-                    </a>
-                </div>
-                <div id="copy-info" class="copy-info-card hide">
-                    <i class="fas fa-check-circle"></i>
-                    <span class="copy-info-card__text">{{_("Link copied to clipboard")}}</span>
-                </div>
-            </div>
-        {% endif %}
-
         {% if conversation.is_hidden %}
+        <div class="content-grid margin-y3">
             <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
                 <h2>{{ _('Warning!') }}</h2>
                 <p>{% trans %}This conversation is hidden.{% endtrans %}
             </div>
+        </div>
         {% else %}
-            <div class="margin-y3">
+            {% include 'ej_conversations/includes/conversation-detail-header.jinja2' %}
+            <div class="content-grid">
                 {% include 'ej_conversations/comments/card.jinja2' %}
             </div>
         {% endif %}
-    </div>
-    <script>
-        function copyToClipboard(id) {
-            navigator.clipboard.writeText(`${window.location.href}welcome`).then(() => {
-                let copyInfo = document.getElementById(id);
-                copyInfo.classList.remove("hide");
-                setTimeout(() => {  copyInfo.classList.add("hide"); }, 2000);
-            });
-        }
-    </script>
 {% endblock %}

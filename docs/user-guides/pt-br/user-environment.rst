@@ -1,13 +1,7 @@
+*************************
 Entendendo o Ambiente EJ
-========================
+*************************
 
-.. contents::
-   :depth: 2
-
-
-
-O que é o Ambiente EJ?
-----------------------
 A nossa plataforma disponibiliza uma área de gestão do ambiente, onde os administradores da página podem visualizar as estatísticas do ambiente e dados relacionados ao que é gerado na EJ.
 
 

@@ -1,6 +1,6 @@
-##############################
+******************************
 Duda: O chatbot oficial da EJ
-##############################
+******************************
 
 .. _Bot de Opinião:
 
@@ -27,7 +27,7 @@ uma URL que aponta para o chat da Duda, nosso bot de opinião disponível no pla
 Para gerar o link de participação acesse a área de **Ferramentas > Bot de Opinião > Telegram**.
 A área de ferramentas pode ser encontrada na página interna de uma conversa.
 
-.. figure:: ../images/ej-bot-de-opiniao.png 
+.. figure:: ../images/ej-bot-de-opiniao.png
 
 
 Nessa tela, você terá duas opções:
@@ -38,7 +38,7 @@ Nessa tela, você terá duas opções:
 
 Ao clicar no link, o participante é direcionado para o chat privado com o Bot.
 
-.. figure:: ../images/coleta-telegram.png 
+.. figure:: ../images/coleta-telegram.png
   :align: center
 
 
@@ -50,7 +50,7 @@ uma URL que aponta para o chat da Duda, nosso bot de opinião disponível no pla
 Para gerar o link de participação acesse a área de **Ferramentas > Bot de Opinião > WhatsApp**.
 A área de ferramentas pode ser encontrada na página interna de uma conversa.
 
-.. figure:: ../images/ej-bot-de-opiniao-whatsapp.png 
+.. figure:: ../images/ej-bot-de-opiniao-whatsapp.png
 
 Nessa tela, você terá duas opções:
 
@@ -68,7 +68,7 @@ Ao clicar no link, o participante é direcionado para o chat privado com o Bot.
 Webchat
 ==========================================
 O Webchat é uma das ferramentas de coleta da EJ e permite integrar o bot de opinião em uma página web.
-Essa página pode ser desde um post em um blog até uma plataforma de e-commerce. 
+Essa página pode ser desde um post em um blog até uma plataforma de e-commerce.
 
 Como posso utilizar a ferramenta?
 ----------------------------------
@@ -77,10 +77,10 @@ Exitem duas formas de utilizar o Webchat.
 
 1. Utilizando um link que a própria EJ disponibiliza. Esse link pode ser compartilhado com o seu público,
    que irá conseguir participar de uma coleta sem que você tenha que fazer qualquer outro procedimento.
-   Basta ir na área da ferramenta, clicar no botão **Compartilhar Bot** e o link para a coleta será 
+   Basta ir na área da ferramenta, clicar no botão **Compartilhar Bot** e o link para a coleta será
    copiado para a área de transferência.
-   Ao clicar nesse link, o usuário é redirecionado para uma página da EJ com o WebChat integrado. 
-   A partir dai, basta ele participar da coleta. 
+   Ao clicar nesse link, o usuário é redirecionado para uma página da EJ com o WebChat integrado.
+   A partir dai, basta ele participar da coleta.
    O botão **Iniciar Coleta** é um atalho para que o criador da conversa possa testar a integração com o Webchat.
 
 .. figure:: ../images/ej-webchat-integrado.png
@@ -148,14 +148,14 @@ Para realizar esse registro, basta acessar a área de **ferramentas** da convers
 Essa URL tem que ser exatamente igual à url em que o script do Webchat será configurado.
 Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
 
-.. figure:: ../images/ej-docs-webchat.png 
+.. figure:: ../images/ej-docs-webchat.png
 
 
-Quando devo utilizar o WebChat? 
+Quando devo utilizar o WebChat?
 --------------------------------
 
-Recomendamos utilizar o Webchat para situações em que utilizar o Telegram não é uma opção. 
-O usuário irá participar votando nos comentários e poderá adicionar um novo comentário, que será solicitado pelo bot. 
+Recomendamos utilizar o Webchat para situações em que utilizar o Telegram não é uma opção.
+O usuário irá participar votando nos comentários e poderá adicionar um novo comentário, que será solicitado pelo bot.
 Uma das vantagens do Webchat em relação ao Telegram é que ele pode ser integrado ao seu site ou plataforma web.
 
 
@@ -179,9 +179,9 @@ Caso você queira integrar a Duda à uma instância do Rocket.chat, siga os pass
 
 Se tudo foi feito corretamente, agora basta mandar uma mensagem no canal, que a Duda irá responder.
 
-.. figure:: ../images/ej-rasa-rocket.png 
+.. figure:: ../images/ej-rasa-rocket.png
 
-.. _Rasa: https://rasa.com/ 
+.. _Rasa: https://rasa.com/
 .. _rasa-webchat: https://github.com/botfront/rasa-webchat
 
 

@@ -1,5 +1,6 @@
+***************************************
 Termos de uso e Política de privacidade
-========================
+***************************************
 
 Os termos de uso da EJ ficam disponível na rota **/usage/**. Para alterar o texto,
 acesse a área administrativa (**/admin**) e, no menu lateral, clique em "Páginas Planas" ou "FlatPages".
@@ -13,7 +14,7 @@ Tanto o texto dos termos de uso quanto política de privacidade serão apresenta
 do registro.
 
 Texto base para LGPD
-====================
+--------------------
 
 Este documento contém os Termos de Uso da plataforma digital Empurrando Juntas (EJ), cuja aceitação plena e integral é requisito para todos os seus USUÁRIOS. Ele inclui, além de regras gerais de uso, política de moderação, política de responsabilidade, política de privacidade e confidencialidade, autorização de uso do conteúdo e contato para reportar violações, problemas no funcionamento e pleitos.
 

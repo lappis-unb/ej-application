@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.template.loader import get_template
 from sidekick import identity
-from datetime import datetime
+from datetime import datetime, date
 
 from ej.forms import EjModelForm, EjUserForm
 from .models import Conversation, Comment
@@ -40,7 +40,7 @@ class ConversationDateWidget(forms.DateInput):
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):
-        if value is not None:
+        if isinstance(value, date):
             value = value.strftime("%Y-%m-%d")
 
         if name == "start_date" and value == None:
@@ -77,6 +77,15 @@ class ConversationForm(EjModelForm):
             self.set_placeholder(field, self[field].help_text)
         if self.instance and self.instance.id is not None:
             self.fields["tags"].initial = ", ".join(self.instance.tags.values_list("name", flat=True))
+
+    def clean_title(self, *args, **kwargs):
+        title = self.cleaned_data["title"]
+        edited = title != self.instance.title
+        if not edited:
+            return title
+        if Conversation.objects.filter(title=title).exists():
+            raise ValidationError(_("This title already exists!"), code="duplicate")
+        return title
 
     def set_placeholder(self, field, value):
         self.fields[field].widget.attrs["placeholder"] = value

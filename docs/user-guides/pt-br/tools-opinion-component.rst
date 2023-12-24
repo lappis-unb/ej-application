@@ -1,6 +1,6 @@
-######################
+**********************
 Componente de opinião
-######################
+**********************
 
 O componente de opinião é um projeto desenvolvido separadamente do código principal da EJ.
 Seu objetivo integrar a jornada de participação em sites e plataformas de terceiros. O componente funciona da seguinte forma:

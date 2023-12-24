@@ -38,8 +38,14 @@
             {{ form.agree_with_privacy_policy }}
         </div>
 
-        <div class="register-form__grid--second-column register-form__grid--align-end">
-            <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary register-form__submit-button">
+        <div class="register-form__grid--second-column register-form__grid--align-end register-form__register-buttons">
+            {% if social_buttons|default(false) %}
+                {{ social_js }}
+                {% include 'ej_users/includes/social-buttons.jinja2' %}
+            {% endif %}
+            <div class="register-form__grid--second-column register-form__grid--align-end">
+                <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary register-form__submit-button">
+            </div>
         </div>
     </form>
 	<script src="/static/js/vote-from-template.js"></script>

@@ -1,16 +1,13 @@
-========================
+************************
 Arquitetura de Software
-========================
-
-.. contents::
-   :depth: 2
+************************
 
 Visão geral
 ===================
 
 A EJ é uma plataforma de pesquisa de opinião multicanal e comunicação digital segmentada.
 É desenvolvida utilizando o Framework `Django <https://www.djangoproject.com/>`_ e disponibiliza parte de seus recursos por meio de
-uma `API REST <https://restfulapi.net/>`_. Algumas das suas principais funcionalidadades: 
+uma `API REST <https://restfulapi.net/>`_. Algumas das suas principais funcionalidadades:
 
 1. Permite a criação de pesquisas por meio de conversas temáticas.
 2. Permite que usuários participem de uma conversa votando em comentários, que representam diferentes opiniões sobre o tema pesquisado.
@@ -20,8 +17,8 @@ uma `API REST <https://restfulapi.net/>`_. Algumas das suas principais funcional
 6. Permite integrar uma conversa em diferentes canais como: Telegram, Whatsapp, lista de email e páginas html.
 
 A EJ utiliza uma arquitetura monolítica em que todo o processo de criação, modelagem e acompanhamento
-das conversas é realizado. Junto da aplicação web também é executada uma API REST, 
-utilizada pelas ferramentas de coleta. 
+das conversas é realizado. Junto da aplicação web também é executada uma API REST,
+utilizada pelas ferramentas de coleta.
 Uma ferramenta de coleta é uma aplicação que se integra na EJ para levar os recursos de
 participação para outros canais, como Telegram e Whatsapp.
 
@@ -123,7 +120,7 @@ Aplicativos
 ``ej_conversations``
 
     Aplicativo responsável por gerenciar a criação e gestão de uma conversa, comentários e votos.
-    
+
 ``ej_users``
 
     Aplicativo responsável por gerenciar a criação e gestão dos usuários, incluíndo o processo de
@@ -153,7 +150,7 @@ Aplicativos
 
 ``ej_signatures``
 
-    Aplicativo responsável por gerenciar os modelos de assinatura da plataforma, além de restringir 
+    Aplicativo responsável por gerenciar os modelos de assinatura da plataforma, além de restringir
     o uso de alguns recursos dependendo do usuário que está logado.
 
 Módulos
@@ -183,7 +180,7 @@ temos uma visão geral dos principais subpacotes e módulos:
     e podem não estar diretamente associados a algum tipo de dados Python conhecido.
 
 ``ej.contrib``
-    Local para incluir migrações ad-hoc para implantações específicas. 
+    Local para incluir migrações ad-hoc para implantações específicas.
     A maioria dos usuários e desenvolvedores *nunca* deve tocar nisso.
 
 ``ej.fixes``
@@ -212,8 +209,8 @@ temos uma visão geral dos principais subpacotes e módulos:
     Banco de dados Postgres SQL e redis (se habilitado).
 
 ``ej.settings``
-    Módulo de configurações do Django. 
-    Define a configuração usando a estrutura de configuração do Django Boogie, 
+    Módulo de configurações do Django.
+    Define a configuração usando a estrutura de configuração do Django Boogie,
     na qual a configuração é definida em classes reutilizáveis em vez de um módulo Python simples.
 
 ``ej/templates/jinja2``
@@ -228,7 +225,7 @@ temos uma visão geral dos principais subpacotes e módulos:
     Testes globais. A maioria dos testes são implementados nas pastas dos apps.
 
 ``ej.urls``
-    Mapeamento de URLs para o projeto. A maioria das URLs são incluídas no próprio 
+    Mapeamento de URLs para o projeto. A maioria das URLs são incluídas no próprio
     `` routes.py`` do aplicativo.
 
 ``ej.utils``

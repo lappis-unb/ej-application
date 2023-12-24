@@ -1,10 +1,6 @@
-===============
+***************
 Guia de Design
-===============
-
-.. contents::
-   :depth: 2
-
+***************
 
 Intro
 ======
@@ -65,13 +61,13 @@ Cards
 Card da conversa
 ----------------
 
-Texto principal: Raleway Semibold 16px; Margem interna lateral: 100px (50px;50px); 
+Texto principal: Raleway Semibold 16px; Margem interna lateral: 100px (50px;50px);
 Alinhamento de texto: Centro;
 
 Card interno da conversa
 ------------------------
 
-Texto principal: Raleway Regular 20px; Alinhamento de texto: centro. 
+Texto principal: Raleway Regular 20px; Alinhamento de texto: centro.
 
 Card de comentário
 ------------------
@@ -114,9 +110,9 @@ Links
 Menus
 =====
 
-Menu expandível; máximo de elementos internos: 3; acima de 3, usar em conjunto com link 
+Menu expandível; máximo de elementos internos: 3; acima de 3, usar em conjunto com link
 
-Menu de itens cujo número pode exceder a 3 (exemplo: tags, clusters). 
+Menu de itens cujo número pode exceder a 3 (exemplo: tags, clusters).
 
 Menu de abas.
 

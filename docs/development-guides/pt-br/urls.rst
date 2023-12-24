@@ -1,13 +1,9 @@
-=====================
+**********************
 Estruturação das URLs
-=====================
+**********************
 
 
-.. contents::
-   :depth: 2
-
-
-Este documento registra as URLs padrão usadas na plataforma e onde encontrar-las em seus 
+Este documento registra as URLs padrão usadas na plataforma e onde encontrar-las em seus
 respectivos aplicativos.
 
 Users/login (ej_users app)
