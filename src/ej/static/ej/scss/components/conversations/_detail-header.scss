@@ -73,3 +73,12 @@
         color: $color-black;
     }
 }
+
+@media (max-width: 900px) {
+    .conversation-header {
+        padding: 1.875rem 1.625rem 0.531rem 2rem;
+    }
+    .conversation-header__buttons {
+        right: 0;
+    }
+}
