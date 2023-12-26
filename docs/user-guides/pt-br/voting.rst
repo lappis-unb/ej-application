@@ -7,9 +7,10 @@ Isso pode ser feito pelo criador da conversa, clicando no botão de compartilham
 para outras redes como grupos no WhatsApp e Telegram ou publicações no Facebook e Instagram.
 Usuários logados também podem encontrar conversas que foram marcadas como "públicas" pelo administrador
 do ambiente. Essas conversas irão aparecer na página Home, na aba "CONVERSAS PÚBLICAS".
+
 .. note::
 
-    Caso o criador da conversa tenha definido um período de encerramento para a conversa e o acesso
+    Caso o criador da conversa tenha definido um período de encerramento e o acesso
     seja posterior à data final, a tela de participação não será apresentada.
 
 Página de participação
