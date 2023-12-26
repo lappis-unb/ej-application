@@ -6,6 +6,29 @@ label + select + br {
     display: none;
 }
 
+.flex {
+    display: flex;
+}
+.flex--wrap {
+    @extend .flex;
+    flex-wrap: wrap;
+}
+
+.flex--gap-1 {
+    gap: 1rem;
+}
+.wrap {
+    flex-wrap: wrap;
+    justify-content: space-between !important;
+}
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+
+
 input + .helptext,
 textarea + .helptext,
 select + .helptext,
@@ -80,7 +103,7 @@ ul.errorlist {
         grid-column: 2/5;
         margin-bottom: 2.1875rem;
         margin-top: 4.5rem;
-        
+
         h2 {
             margin: unset;
             color: $color-theme-osf-light;
@@ -188,7 +211,7 @@ ul.errorlist {
     }
     &__reset-password:hover {
         color: $color-accent !important;
-    }   
+    }
 
     &__social-button {
         width: 17.5rem;
@@ -236,7 +259,7 @@ ul.errorlist {
         margin-bottom: 3.0625rem !important;
         width: 45%;
     }
-    
+
     img {
         width: 9.3525rem;
         height: 7.9375rem;
@@ -397,7 +420,7 @@ legend {
 
     .register-redirection {
         flex-direction: column;
-        
+
         &__hr {
             width: 100%;
             padding: 0 1.5rem;

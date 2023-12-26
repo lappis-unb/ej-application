@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-23 13:11-0300\n"
+"POT-Creation-Date: 2023-12-26 11:50-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1994,7 +1994,7 @@ msgstr "Mostrando"
 #: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:11
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-progress.jinja2:8
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "of"
 msgstr "de"
@@ -2429,7 +2429,7 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2450,7 +2450,7 @@ msgstr "Conta"
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:10
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:37
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:11
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-progress.jinja2:8
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:85
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:55
 #, fuzzy
@@ -2871,39 +2871,33 @@ msgid ""
 "Thank you! Your comment was sent to moderation and will be evaluated soon."
 msgstr "Obrigado! Seu comentário foi enviado para moderação."
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:18
 #, fuzzy
-msgid "Conversation: "
-msgstr "Conversa "
+msgid "Adds your opinion"
+msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:29
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:16
-#, fuzzy
-msgid "Add comment"
-msgstr "Adicionar comentário"
-
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:19
 #, fuzzy
 msgid "Comments added (Max. "
 msgstr "Comentários adicionados (Máx. "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:35
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:24
 #, fuzzy
 msgid "Characters remaining)"
 msgstr "Caracteres restantes)"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:45
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:34
 #: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:25
 msgid "Return"
 msgstr "Voltar"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:48
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:68
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:57
 #, fuzzy
 msgid "Send to moderation"
 msgstr "Enviar para moderação"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:56
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:45
 #, fuzzy
 msgid ""
 "You have already submitted the maximum number of comments allowed for this "
@@ -2911,26 +2905,31 @@ msgid ""
 msgstr ""
 "Você já enviou o número máximo permitido de comentários para esta conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:65
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:54
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:92
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:9
+#, fuzzy
+msgid "Add comment"
+msgstr "Adicionar comentário"
+
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:16
 #, fuzzy
 msgid "You have already voted on all the comments."
 msgstr "Você já votou em todos os comentários."
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:24
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:17
 #, fuzzy
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:27
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
 msgid "Questions about privacy?"
 msgstr "Dúvidas sobre privacidade? "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:27
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
 #, fuzzy
 msgid "Understand how your data is used"
 msgstr "Entenda como seus dados são utilizados"
@@ -2949,7 +2948,7 @@ msgstr "Não há comentários para votar :)"
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:17
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:26
 #, fuzzy
 msgid "Link copied to clipboard"
 msgstr "Link copiado para a área de transferência"
@@ -4414,10 +4413,6 @@ msgstr "Esta operação não pode ser desfeita!"
 msgid "You have to type your e-mail to confirm."
 msgstr "Você tem que digitar seu e-mail para confirmar."
 
-#: src/ej_users/jinja2/ej_users/base.jinja2:14
-msgid "Other options"
-msgstr "Outras opções"
-
 #: src/ej_users/jinja2/ej_users/login.jinja2:4
 msgid "Login form"
 msgstr "Formulário de login"
@@ -4432,11 +4427,11 @@ msgstr "Esqueci minha senha"
 msgid "Login"
 msgstr "Entrar"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:31
+#: src/ej_users/jinja2/ej_users/login.jinja2:35
 msgid "Create your account!"
 msgstr "Criar uma conta!"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:31
+#: src/ej_users/jinja2/ej_users/login.jinja2:35
 msgid "Register now!"
 msgstr "Registre-se"
 
@@ -4499,7 +4494,7 @@ msgid "Register new user"
 msgstr "Registre novo usuário"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
-#: src/ej_users/jinja2/ej_users/register.jinja2:42
+#: src/ej_users/jinja2/ej_users/register.jinja2:47
 msgid "Register"
 msgstr "Registrar"
 
@@ -4531,6 +4526,13 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#, fuzzy
+#~ msgid "Conversation: "
+#~ msgstr "Conversa "
+
+#~ msgid "Other options"
+#~ msgstr "Outras opções"
 
 #, fuzzy
 #~ msgid " Conversation "

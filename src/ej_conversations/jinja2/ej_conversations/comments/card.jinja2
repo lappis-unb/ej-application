@@ -1,14 +1,7 @@
 <div id="voting-card">
     <div class="voting-card">
             <div class="voting-card__header">
-                <div class="voting-card__progress">
-                    <span class="voting-card__progress__values">{{ user_progress_percentage }}%</span>
-                    <div class="voting-card__progress-bar">
-                        <div class="voting-card__progress-bar__progress"></div>
-                        <div class="voting-card__progress-bar__fg" style="width:{{ user_progress_percentage }}%"></div>
-                    </div>
-                </div>
-                <span class="voting-card__progress__values">{{ n_user_final_votes }} {{_("of")}} {{ conversation.n_approved_comments }} {{_("comments")}}</span>
+                {% include 'ej_conversations/includes/conversation-progress.jinja2' %}
                 <a class="voting-card__label voting-card__add-comment"
                 hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
                 hx-target="#voting-card"

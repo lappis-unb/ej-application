@@ -33,6 +33,12 @@
         font-weight: 600;
         text-transform: uppercase;
         font-size: .75em;
+        font-family: 'Lexend Exa'
+    }
+
+    &__label--dark {
+        @extend .conversation-header__label;
+        color: $color-black-alternative;
     }
 
     &__text {
