@@ -1,22 +1,4 @@
 /* generic classes */
-.flex {
-    display: flex;
-}
-.flex--gap-1 {
-    gap: 1rem;
-}
-.wrap {
-    flex-wrap: wrap;
-    justify-content: space-between !important;
-}
-
-.float-left {
-    float: left;
-}
-.float-right {
-    float: right;
-}
-
 .center-grid {
     grid-column: 2/3;
 }

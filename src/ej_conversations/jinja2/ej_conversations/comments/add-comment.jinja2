@@ -12,24 +12,14 @@
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
             <div>
-                <div class="voting-card__statistics">
-                    <i class="fa fa-comments"></i>
-                    <span class="voting-card__statistics__values">{{ conversation.n_approved_comments }}</span>
-
-                    <i class="fa">&#xf772;</i>
-                    <span class="voting-card__statistics__values">{{ conversation.n_final_votes }}</span>
+                <div class="voting-card__header">
+                    {% include 'ej_conversations/includes/conversation-progress.jinja2' %}
                 </div>
 
-                <span class="voting-card__label">{{_("Conversation: ")}}</span><br>
-                <span class="voting-card__title">{{ conversation.text }}</span><br>
-
-                <hr>
-
-                <div class="voting-card__header">
-                    <span class="voting-card__title margin-r3">{{_("Add comment")}}</span>
+                <div class="margin-y3 flex--wrap flex--gap-1">
+                    <span class="conversation-header__label--dark margin-r3">{{_("Adds your opinion")}}</span>
                     <span class="voting-card__label">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
                 </div>
-
                 <textarea name="content" id="id_content" maxlength="256" required></textarea>
                 <p class="voting-card__label left no-margin">
                     (<span id="maxLenght">256</span><span> {{_("Characters remaining)")}}</span>
