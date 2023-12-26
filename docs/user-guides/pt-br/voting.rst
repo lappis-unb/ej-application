@@ -32,3 +32,17 @@ da conversa. Estes comentários irão para moderação, antes de ficarem dispon�
    :align: center
 
    Tela de adição de comentários apresentada aos usuários comuns.
+
+
+Compartilhndo uma conversa
+--------------------------
+
+É possível compartilhar o link para a conversa utilizando o botão de compartilhamento, disponível ao lado
+do título da conversa. Qualquer pessoa que clicar no link será redirecionado para a tela de participação e poderá
+votar mesmo estando deslogado, caso o criador da conversa tenha configurado a participação anônima, nos `campos
+opcionais da conversa <creating-conversation.html#campos-opcionais>`_.
+
+.. figure:: ../images/conversation-share-btn.png
+   :align: center
+
+   Botão de compartilhamento de uma conversa
