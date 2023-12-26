@@ -7,9 +7,10 @@ Isso pode ser feito pelo criador da conversa, clicando no botão de compartilham
 para outras redes como grupos no WhatsApp e Telegram ou publicações no Facebook e Instagram.
 Usuários logados também podem encontrar conversas que foram marcadas como "públicas" pelo administrador
 do ambiente. Essas conversas irão aparecer na página Home, na aba "CONVERSAS PÚBLICAS".
+
 .. note::
 
-    Caso o criador da conversa tenha definido um período de encerramento para a conversa e o acesso
+    Caso o criador da conversa tenha definido um período de encerramento e o acesso
     seja posterior à data final, a tela de participação não será apresentada.
 
 Página de participação
@@ -31,3 +32,17 @@ da conversa. Estes comentários irão para moderação, antes de ficarem dispon�
    :align: center
 
    Tela de adição de comentários apresentada aos usuários comuns.
+
+
+Compartilhndo uma conversa
+--------------------------
+
+É possível compartilhar o link para a conversa utilizando o botão de compartilhamento, disponível ao lado
+do título da conversa. Qualquer pessoa que clicar no link será redirecionado para a tela de participação e poderá
+votar mesmo estando deslogado, caso o criador da conversa tenha configurado a participação anônima, nos `campos
+opcionais da conversa <creating-conversation.html#campos-opcionais>`_.
+
+.. figure:: ../images/conversation-share-btn.png
+   :align: center
+
+   Botão de compartilhamento de uma conversa
