@@ -7,7 +7,7 @@
     border-bottom-color: $color-brand;
     color: $color-brand;
   }
-  
+
 }
 
 .inputs-min-size{
@@ -55,8 +55,8 @@
   align-items: center;
   justify-content: start;
   column-gap: 2rem;
-  padding: 3rem 0px;
-  
+  padding: 2.5rem 0;
+
   &__photo {
       position: relative;
       &--rounded {
@@ -170,7 +170,7 @@
   &__political_activity {
     grid-area: 5 / 1 / 7 / 3;
   }
-  
+
   &__political_activity--detail{
     grid-area: 5 / 1 / 7 / 2;
   }
