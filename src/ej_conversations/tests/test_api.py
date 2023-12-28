@@ -2,9 +2,8 @@ import pytest
 from django.utils.translation import gettext_lazy as _
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
-from rest_framework.test import force_authenticate
 
-from ej_conversations.models import Conversation, Comment, Vote
+from ej_conversations.models import Comment, Vote
 from ej_conversations.roles.comments import comment_summary
 from ej_conversations.models.util import vote_count, statistics_for_user, statistics
 from ej_conversations.mommy_recipes import ConversationRecipes
@@ -175,7 +174,7 @@ class TestGetViews:
 
     def test_get_conversation_by_tags(self, conversation):
         tag = "tag"
-        conversation.tags.set(tag)
+        conversation.tags.set([tag])
         path = BASE_URL + f"/conversations/?tags={tag}"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data

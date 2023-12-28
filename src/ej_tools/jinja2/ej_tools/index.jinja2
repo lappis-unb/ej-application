@@ -6,8 +6,6 @@
 <meta property="og:description" content="Area de integração da EJ com outras ferramentas.">
 
 {% endblock metaOG2 %}
-
-{% set main_class = "board-container" %}
 {% block content %}
 <div class="tools">
 	<div class="tools-title">
@@ -27,7 +25,7 @@
 				{{ tool.description }}&ensp;<a class="tools-table-about" href="{{ tool.about }}">{{ _('Learn more about this integration') }}.</a>
 				<br>
 				<span class="helptext text-accent">{{_("This tool is not available on your current signature.")}}</span>
-				
+
 			</td>
 		</tr>
 		{% else %}

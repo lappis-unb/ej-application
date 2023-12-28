@@ -11,7 +11,7 @@
     place-items: baseline;
     margin-top: 1.125rem;
     flex-flow: wrap;
-  
+
     #public-tag-choice {
       width: auto;
       border-radius: 5px;
@@ -27,7 +27,7 @@
     .public-tag-header--add--not-allowed {
       cursor: not-allowed;
     }
-      
+
     &--add {
       color: $color-white;
       background: $color-theme-report-light-blue;
@@ -41,7 +41,7 @@
 
       i {
         margin: auto 0.6em;
-      } 
+      }
     }
 
     &__tags {
@@ -50,7 +50,7 @@
       flex-flow: wrap;
 
       &--selected {
-        background-color: $color-theme-dark-blue; 
+        background-color: $color-theme-dark-blue;
         border: 1px solid $color-theme-dark-blue;
         color: $color-white;
       }
@@ -65,41 +65,41 @@
         border-radius: 5px;
         text-transform: lowercase;
         font-size: 1rem;
-        font-weight: 700; 
+        font-weight: 700;
         padding: 0 .75rem;
         margin-right: 1.25rem;
       }
     }
-  
+
     &__all-conversations--unselected, &__all--unselected {
       border: 1px solid $color-pink-light;
       background-color: $color-white;
       color: $color-pink-light;
     }
-  
+
     &__all-conversations--selected,  &__all--selected  {
       border: 1px solid $color-pink-light;
       background-color: $color-pink-light;
       color: $color-white;
-      
+
     }
-  
+
     &__all-conversations--unselected, &__all-conversations--selected,
     &__all--unselected,  &__all--selected  {
       border-radius: 5px;
       text-transform: lowercase;
       font-size: 1rem;
-      font-weight: 700; 
+      font-weight: 700;
       padding: 0 .75rem;
       margin-right: 1.25rem;
     }
 
 
-    .my-tag-header__all-conversations--unselected, 
+    .my-tag-header__all-conversations--unselected,
     .my-tag-header__all-conversations--selected {
       margin-left: 0;
     }
-  
+
     &__tooltip {
       color: $color-white;
       font-size: 1rem;
@@ -108,17 +108,17 @@
       padding: .75rem;
       padding-left: 0;
       border-radius: 5px;
-      background: $color-pink-light; 
+      background: $color-pink-light;
       max-width: 16.563rem;
-      height: 62px; 
-      position: relative; 
+      height: 62px;
+      position: relative;
       top: 5px;
-  
+
       &__arrow {
         color: $color-pink-light;
         border-top: 10px solid transparent;
-        border-bottom: 10px solid transparent; 
-        border-right:10px solid $color-pink-light; 
+        border-bottom: 10px solid transparent;
+        border-right:10px solid $color-pink-light;
         border-left: 0;
         position: relative;
         right: .563rem;
@@ -168,25 +168,25 @@
 }
 
 #comments-current-cards {
-  display: grid; 
-  grid-template-columns: repeat(2, 50%); 
-  grid-column-gap: 1.625rem; 
-  grid-row-gap: 1.5rem; 
-  color: $color-theme-dark-blue; 
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-column-gap: 1.625rem;
+  grid-row-gap: 1.5rem;
+  color: $color-theme-dark-blue;
   font-weight: 500;
 }
 
 .contribution_votes {
   &__card {
-    display: grid; 
-    grid-template-columns: auto auto; 
-    grid-column-gap: 1.938rem; 
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 1.938rem;
     grid-row-gap: 2.25rem;
   }
 }
 
 .conversation-summary {
-  display: flex; 
+  display: flex;
   margin-bottom: .938rem;
 
   &__title {
@@ -194,7 +194,7 @@
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
-    line-height: normal; 
+    line-height: normal;
 }
 
   .span-icon {
@@ -210,6 +210,7 @@
   padding: 1.125rem 1.188rem;
   border-radius: 5px;
   background: $color-theme-report-light-gray;
+  max-width: 43.75rem;
 
   &__status {
     color: $color-pink-light;
@@ -245,14 +246,14 @@
   margin-top: 1.5rem;
 
   &__add {
-    display: flex; 
-    align-items: center; 
-    white-space: nowrap; 
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
     margin-right: 2.625rem;
     padding-bottom: 1.6rem;
 
     i {
-      color: $color-theme-report-light-blue; 
+      color: $color-theme-report-light-blue;
       margin: 0 0.688rem 0 0;
     }
 
@@ -276,24 +277,24 @@
   gap: 1.313rem;
 
   &__filter-theme, &__filter-theme:hover {
-    color: $color-theme-osf-light; 
-    font-family: Raleway; 
-    font-size: 1rem; 
-    font-style: normal; 
+    color: $color-theme-osf-light;
+    font-family: Raleway;
+    font-size: 1rem;
+    font-style: normal;
     font-weight: 700;
-    line-height: 24px; 
+    line-height: 24px;
     text-transform: lowercase;
     display: flex;
   }
 
   &__search {
-    border-radius: 5px !important; 
-    border: 1px solid $color-complementary-gray !important; 
+    border-radius: 5px !important;
+    border: 1px solid $color-complementary-gray !important;
     height: 2.25rem !important;
     box-sizing: border-box;
     background-position: 0.5rem 0.563rem !important;
     background-size: 1.25rem !important;
-    background-repeat: no-repeat !important; 
+    background-repeat: no-repeat !important;
     padding: 0.875rem 0px 0.75rem 1.75rem !important;
     background: url('/static/img/icons/gray-search.svg');
     width: 14.7rem !important;
@@ -327,15 +328,15 @@
       margin: 0px 0.7rem 0 0;
     }
 
-    .public-tag-header__tags--selected, 
-    .public-tag-header__tags--unselected, 
-    .my-tag-header__tags--selected, 
-    .my-tag-header__tags--unselected, 
-    .comments-tag-header__tags--selected, 
-    .comments-tag-header__tags--unselected, 
-    .public-tag-header__all-conversations--unselected, 
+    .public-tag-header__tags--selected,
+    .public-tag-header__tags--unselected,
+    .my-tag-header__tags--selected,
+    .my-tag-header__tags--unselected,
+    .comments-tag-header__tags--selected,
+    .comments-tag-header__tags--unselected,
+    .public-tag-header__all-conversations--unselected,
     .public-tag-header__all-conversations--selected,
-    .my-tag-header__all-conversations--unselected, 
+    .my-tag-header__all-conversations--unselected,
     .my-tag-header__all-conversations--selected,
     .comments-tag-header__all--unselected,
     .comments-tag-header__all--selected {
@@ -389,10 +390,10 @@
     button {
       margin-top: .75rem;
     }
-    
-    .public-tag-header__all-conversations--unselected, 
+
+    .public-tag-header__all-conversations--unselected,
     .public-tag-header__all-conversations--selected,
-    .my-tag-header__all-conversations--unselected, 
+    .my-tag-header__all-conversations--unselected,
     .my-tag-header__all-conversations--selected,
     .comments-tag-header__all--unselected,
     .comments-tag-header__all--selected {
@@ -400,11 +401,11 @@
       margin-right: 0.75rem;
     }
 
-    .public-tag-header__tags--selected, 
-    .public-tag-header__tags--unselected, 
-    .my-tag-header__tags--selected, 
-    .my-tag-header__tags--unselected, 
-    .comments-tag-header__tags--selected, 
+    .public-tag-header__tags--selected,
+    .public-tag-header__tags--unselected,
+    .my-tag-header__tags--selected,
+    .my-tag-header__tags--unselected,
+    .comments-tag-header__tags--selected,
     .comments-tag-header__tags--unselected {
       margin-right: .75rem;
     }

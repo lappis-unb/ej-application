@@ -2,15 +2,15 @@
 {% set main_class = 'report-container measure-wide margin-xauto' %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 {% from "ej_dataviz/report/export-data.jinja2" import export_modal %}
-{% set main_class = "report-container" %}
 
 
 {% block content %}
-    <div class="dashboard-balloon__container content-grid">
-        <h2 class="dashboard-balloon__title center-grid">{{_("Conversation")}}
-        <h2 class="dashboard-balloon__title center-grid">{{conversation.text}}</h2>
-        <span class="dashboard-balloon__title--underline center-grid"></span>
-    </div>
+    <div class="report-container">
+        <div class="dashboard-balloon__container content-grid">
+            <h2 class="dashboard-balloon__title center-grid">{{_("Conversation")}}
+            <h2 class="dashboard-balloon__title center-grid">{{conversation.text}}</h2>
+            <span class="dashboard-balloon__title--underline center-grid"></span>
+        </div>
 {% block report %}
     <section class="conversation-dashboard content-grid">
         {% with voting_statistics = conversation.statistics().get('votes') %}
@@ -42,5 +42,4 @@
 
 {% endblock %}
     </div>
-    {% include 'ej_dataviz/includes/datatables.jinja2' %}
 {% endblock %}

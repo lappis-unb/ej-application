@@ -10,6 +10,7 @@ class MiddlewareConf(Base):
             "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
             "ej_boards.middleware.BoardFallbackMiddleware",
             *middleware,
+            "allauth.account.middleware.AccountMiddleware",
         ]
         if "debug_toolbar" in self.INSTALLED_APPS:
             middleware = ["debug_toolbar.middleware.DebugToolbarMiddleware", *middleware]

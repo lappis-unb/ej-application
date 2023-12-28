@@ -73,13 +73,6 @@
                             </a>
                         </div>
                     </li>
-                    <li>
-                        <div id="scatter" class="scatter-item">
-                            <a href=" {{ url('boards:dataviz-scatter',  **conversation.get_url_kwargs()) }}">
-                                {{ _('Scatter plot') }}
-                            </a>
-                        </div>
-                    </li>
                 {% endif %}
             </ul>
         </li>
@@ -94,6 +87,15 @@
             <li><a href={{ link["a"] }}>{{link["text"]}}</a></li>
         {% endfor %}
     {% endfor %}
+    </ul>
+
+
+    <hr class="nav-divider">
+    <ul class="menu-padding nav-categories">
+        <h3>{{_("Help")}}</h3>
+        <div><a href="{{ url("profile:tour")+'?completedTour=false' }}">{{_("Tour")}}</a></div>
+        <div><a href="/docs" target="#blank">{{_("Documentation")}}</a></div>
+    </ul>
 
 <script>
     function setChecked(check_id) {

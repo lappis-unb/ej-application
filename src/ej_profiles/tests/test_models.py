@@ -46,7 +46,8 @@ class TestProfile(ConversationRecipes):
     @pytest.mark.skipif(
         settings.EJ_THEME not in ("default", None), reason="Do not work if theme modify profile fields"
     )
-    def test_profile_invariants(self, profile):
+    def test_profile_invariants(self, db, profile):
+        profile.user.save()
         expected = {
             (_("City"), _("city")),
             (_("State"), _("state")),

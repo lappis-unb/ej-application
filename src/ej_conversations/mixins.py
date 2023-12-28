@@ -1,4 +1,4 @@
-from collections import Iterable
+from collections.abc import Iterable
 from random import randrange
 
 from boogie import db
@@ -7,11 +7,10 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
-from sidekick import import_later
-
 from ej_profiles.enums import Gender, Race
 from ej_profiles.utils import years_from
-from ej_conversations.models.vote import VoteChannels
+from sidekick import import_later
+
 from .math import user_statistics
 
 db = db.ej_conversations

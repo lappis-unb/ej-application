@@ -7,17 +7,18 @@
 {% endblock %}
 
 
-{% set main_class = "activation-grid" %}
 {%block content %}
-    <ul class="segments-list">
-        {% for segment in object_list %}
-            <li>
-                <a href= {{url('ej_activation:detail', **{"board_slug": conversation.board.slug, "slug": conversation.slug, "conversation_id": conversation.id, "pk": segment.id})}}>
-                    {{_("Segment")}} {{segment.id}}
-                </a>
-            </li>
-        {% endfor %}
-    <a href="{{url('ej_activation:add', **{ "board_slug": conversation.board.slug, "slug": conversation.slug, "conversation_id": conversation.id})}}"
-        class="button is-primary" target="_blank">{{_("New")}}</a>
-    </ul>
+    <section class="content-grid content-grid--bigger activation-grid">
+        <ul class="segments-list">
+            {% for segment in object_list %}
+                <li>
+                    <a href= {{url('ej_activation:detail', **{"board_slug": conversation.board.slug, "slug": conversation.slug, "conversation_id": conversation.id, "pk": segment.id})}}>
+                        {{_("Segment")}} {{segment.id}}
+                    </a>
+                </li>
+            {% endfor %}
+        <a href="{{url('ej_activation:add', **{ "board_slug": conversation.board.slug, "slug": conversation.slug, "conversation_id": conversation.id})}}"
+            class="button is-primary" target="_blank">{{_("New")}}</a>
+        </ul>
+    </section>
 {% endblock %}

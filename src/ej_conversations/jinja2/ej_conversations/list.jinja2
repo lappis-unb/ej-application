@@ -1,5 +1,4 @@
 {% extends 'base.jinja2' %}
-{% set main_class = "board-container" %}
 {% block menu %}
     {% if request.user.is_authenticated %}
         {% include 'ej_conversations/includes/participant-menu.jinja2' %}
