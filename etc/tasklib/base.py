@@ -33,13 +33,6 @@ def manage(ctx, cmd, *args, env=None, **kwargs):
     ctx.run(cmd, pty=True, env=env)
 
 
-def su_docker(cmd):
-    if os.getuid() == 0:
-        return cmd
-    else:
-        return f"sudo {cmd}"
-
-
 def runner(ctx, dry_run, **extra):
     def do(cmd, **kwargs):
         if dry_run:
@@ -49,16 +42,6 @@ def runner(ctx, dry_run, **extra):
             return ctx.run(cmd, **kwargs)
 
     return do
-
-
-def docker_deploy_variables(path):
-    ns = {}
-    seq = (list, tuple)
-    to_str = lambda x: ",".join(map(str, x)) if isinstance(x, seq) else str(x)
-    with open(path) as fd:
-        src = fd.read()
-        exec(src, ns)
-    return {k: to_str(v) for k, v in ns.items() if k.isupper()}
 
 
 def set_theme(theme):

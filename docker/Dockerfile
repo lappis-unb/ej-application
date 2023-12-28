@@ -1,4 +1,4 @@
-FROM python:3.8.18-slim-bullseye as base
+FROM python:3.8.18-slim-bullseye
 RUN apt-get update \
     && apt-get install -y \
     curl \
@@ -18,9 +18,5 @@ RUN pip install poetry
 RUN poetry config virtualenvs.create false
 COPY ./ /ej-application
 WORKDIR ej-application
-# Installs only production dependencies
-FROM base as baseprod
-RUN poetry install --without dev
-# Installs all dependencies.
-FROM baseprod as basedev
-RUN poetry install --only dev
+# Installs main and dev groups dependencies
+RUN poetry install --with main,dev

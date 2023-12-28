@@ -16,6 +16,12 @@ body {
 //------------------------------------------------------------------------------
 // header navigation
 
+.main-container {
+    width: 100%;
+    text-align: left !important;
+    margin: 0 0 0 264px;
+}
+
 .main-header {
     @include utilities("row items-center center sticky pin-top");
     @include color("navigation");
@@ -28,10 +34,9 @@ body {
         align-items: center;
     }
     > a {
-        @include utilities("margin-0");
-
         display: flex;
         align-items: center;
+        margin: 0 0.75rem;
 
         color: color("navigation-text");
         height: $_sm-header-height;
@@ -63,9 +68,6 @@ body {
 
 // Reorganize using media queries
 @include breakpoint("sm") {
-    .container-1 {
-        max-width: 60vw;
-    }
 
     .container-temporary {
         max-width: 64vw !important;
@@ -467,7 +469,7 @@ body {
     }
 
     &__item--margin {
-        margin-top: 2.5rem !important;
+        margin-top: 2rem !important;
     }
 
     &__welcome-title {
@@ -491,8 +493,6 @@ body {
 @include breakpoint("sm") {
     .page-menu {
         z-index: 750;
-        position: relative;
-
         .nav-header {
             background-color: $color-navigation-header;
             grid-template-columns: auto;
@@ -713,5 +713,12 @@ body {
 .hide-board-statistics {
     @media screen and (max-width: 559px) {
         display: none;
+    }
+}
+
+@media screen and (max-width: 559px) {
+    .main-container {
+        max-width: unset;
+        margin: unset;
     }
 }

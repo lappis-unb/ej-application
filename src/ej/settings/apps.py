@@ -26,8 +26,6 @@ class InstalledAppsConf(Base, EjOptions):
         "allauth",
         "allauth.account",
         "allauth.socialaccount",
-        "allauth.socialaccount.providers.facebook",
-        "allauth.socialaccount.providers.twitter",
         "allauth.socialaccount.providers.google",
         "ej_users",
         "rest_framework",
@@ -52,15 +50,11 @@ class InstalledAppsConf(Base, EjOptions):
     def get_third_party_apps(self):
         apps = [*super().get_third_party_apps(), *self.third_party_apps]
         if self.ENVIRONMENT == "local":
-            if self.DISABLE_DJANGO_DEBUG_TOOLBAR:
-                apps = [*apps, "django_extensions"]
-            else:
-                apps = ["debug_toolbar", *apps, "django_extensions"]
+            if not self.DISABLE_DJANGO_DEBUG_TOOLBAR:
+                apps = ["debug_toolbar", *apps]
 
         elif self.DEBUG and not self.DISABLE_DJANGO_DEBUG_TOOLBAR:
             apps = ["debug_toolbar", *apps]
         if self.ENVIRONMENT == "production":
-            # "raven.contrib.django.raven_compat" ?
-            # "anymail"?
             apps = ["gunicorn", *apps]
         return apps

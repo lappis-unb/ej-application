@@ -1,146 +1,146 @@
 {% extends 'ej_conversations/base.jinja2' %}
-{% set main_class = 'container-1 pad-x0 moderate' %}
-{% set body_class = 'body theme-' + conversation.board.palette %}
 
 {% block content %}
-    {{ conversation|role('balloon', actions=False) }}
-    <h1 class="h2 relative text-accent left">
-        {{ _('Comments') }}
-        <div class="tooltip">
-            <i class="tooltip__icon fas fa-info-circle"></i>
-            <div class="tooltip__content">
-                {{ _('Here you can moderate the comments and add new ones. Those that have not yet been approved or rejected are in the "Pending" Tab') }}
+    <section class="content-grid content-grid--bigger moderate">
+        {{ conversation|role('balloon', actions=False) }}
+        <h1 class="h2 relative text-accent left">
+            {{ _('Comments') }}
+            <div class="tooltip">
+                <i class="tooltip__icon fas fa-info-circle"></i>
+                <div class="tooltip__content">
+                    {{ _('Here you can moderate the comments and add new ones. Those that have not yet been approved or rejected are in the "Pending" Tab') }}
+                </div>
+            </div>
+        </h1>
+
+        {% if comment_saved %}
+            <div class="modal__overlay" id="comment-saved">
+                <div class="modal__container" >
+                    <i class="modal__icon--success fas fa-check-circle fa-4x"></i>
+                    <div class="modal__title">{{_("Comments Saved")}}</div>
+                    <a class="text-accent bold underline margin-b2" href="{{ url('boards:cluster-stereotype_votes', **conversation.get_url_kwargs()) }}">Gerenciar personas</a>
+                    <a class="modal__btn modal__btn--no-fill underline lowercase" onclick="closePopup('comment-saved')">{{_('Close')}}</a>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="modal__overlay hide" id="comment-erased">
+            <div class="modal__container">
+                <i class="modal__icon--alert fas fa-times-circle fa-4x"></i>
+                <div class="modal__title margin-b2">{{_("Comment excluded")}}</div>
+                <a class="modal__btn underline" onclick="closePopup('comment-erased')">{{_('Close')}}</a>
             </div>
         </div>
-    </h1>
-    
-    {% if comment_saved %}
-        <div class="modal__overlay" id="comment-saved">
-            <div class="modal__container" >
-                <i class="modal__icon--success fas fa-check-circle fa-4x"></i>
-                <div class="modal__title">{{_("Comments Saved")}}</div>
-                <a class="text-accent bold underline margin-b2" href="{{ url('boards:cluster-stereotype_votes', **conversation.get_url_kwargs()) }}">Gerenciar personas</a>
-                <a class="modal__btn modal__btn--no-fill underline lowercase" onclick="closePopup('comment-saved')">{{_('Close')}}</a>
+
+        <div class="modal__overlay hide" id="erase-comment-confirm">
+            <div class="modal__container">
+                <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+                <p>{{_("If the comment has votes, they will be lost.")}}</p>
+                <div class="modal__buttons">
+                    <button class="modal__btn modal__btn--red" onclick="eraseFn()">
+                        <i class="fas fa-lg fa-times-circle"></i> {{_("Yes, I want to erase the comment")}}
+                    </button>
+                    <button class="modal__btn modal__btn--blue" onclick="closePopup('erase-comment-confirm')">
+                        <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                    </button>
+                </div>
             </div>
         </div>
-    {% endif %}
 
-    <div class="modal__overlay hide" id="comment-erased">
-        <div class="modal__container">
-            <i class="modal__icon--alert fas fa-times-circle fa-4x"></i>
-            <div class="modal__title margin-b2">{{_("Comment excluded")}}</div>
-            <a class="modal__btn underline" onclick="closePopup('comment-erased')">{{_('Close')}}</a>
-        </div>
-    </div>
-
-    <div class="modal__overlay hide" id="erase-comment-confirm">
-        <div class="modal__container">
-            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
-            <p>{{_("If the comment has votes, they will be lost.")}}</p>
-            <div class="modal__buttons">
-                <button class="modal__btn modal__btn--red" onclick="eraseFn()">
-                    <i class="fas fa-lg fa-times-circle"></i> {{_("Yes, I want to erase the comment")}}
-                </button>
-                <button class="modal__btn modal__btn--blue" onclick="closePopup('erase-comment-confirm')">
-                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
-                </button>
+        <div class="modal__overlay hide" id="reject-comment-confirm">
+            <div class="modal__container">
+                <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+                <p>{{_("Modified comments will appear on the Reproved tab.")}}</p>
+                <div class="modal__buttons">
+                    <button class="modal__btn--black" onclick="approveFormSubmit()">
+                        <i class="fas fa-lg fa-ban"></i> {{_("Yes, I want to disapprove the comments")}}
+                    </button>
+                    <button class="modal__btn--no-fill" onclick="closePopup('reject-comment-confirm')">
+                        <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal__overlay hide" id="reject-comment-confirm">
-        <div class="modal__container">
-            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
-            <p>{{_("Modified comments will appear on the Reproved tab.")}}</p>
-            <div class="modal__buttons">
-                <button class="modal__btn--black" onclick="approveFormSubmit()">
-                    <i class="fas fa-lg fa-ban"></i> {{_("Yes, I want to disapprove the comments")}}
-                </button>
-                <button class="modal__btn--no-fill" onclick="closePopup('reject-comment-confirm')">
-                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
-                </button>
+        <div class="modal__overlay hide" id="approve-comment-confirm">
+            <div class="modal__container">
+                <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+                <p>{{_("Modified comments will appear on the Approved tab.")}}</p>
+                <div class="modal__buttons">
+                    <button class="modal__btn--black" onclick="reproveFormSubmit()">
+                        <i class="fas fa-lg fa-thumbtack"></i> {{_("Yes, I want to approve the comments")}}
+                    </button>
+                    <button class="modal__btn--no-fill" onclick="closePopup('approve-comment-confirm')">
+                        <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal__overlay hide" id="approve-comment-confirm">
-        <div class="modal__container">
-            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
-            <p>{{_("Modified comments will appear on the Approved tab.")}}</p>
-            <div class="modal__buttons">
-                <button class="modal__btn--black" onclick="reproveFormSubmit()">
-                    <i class="fas fa-lg fa-thumbtack"></i> {{_("Yes, I want to approve the comments")}}
-                </button>
-                <button class="modal__btn--no-fill" onclick="closePopup('approve-comment-confirm')">
-                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
-                </button>
+        <div class="modal__overlay hide" id="pending-comment-confirm">
+            <div class="modal__container">
+                <div class="modal__title">{{_("Are you sure about this action?")}}</div>
+                <div class="modal__buttons">
+                    <button class="modal__btn--black" onclick="pendingFormSubmit()">
+                        <i class="fas fa-lg fa-thumbtack"></i> {{_("Yes, I want to change the comments")}}
+                    </button>
+                    <button class="modal__btn--no-fill" onclick="closePopup('pending-comment-confirm')">
+                        <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal__overlay hide" id="pending-comment-confirm">
-        <div class="modal__container">
-            <div class="modal__title">{{_("Are you sure about this action?")}}</div>
-            <div class="modal__buttons">
-                <button class="modal__btn--black" onclick="pendingFormSubmit()">
-                    <i class="fas fa-lg fa-thumbtack"></i> {{_("Yes, I want to change the comments")}}
-                </button>
-                <button class="modal__btn--no-fill" onclick="closePopup('pending-comment-confirm')">
-                    <i class="fas fa-lg fa-minus-circle"></i> {{_("No, I want get back")}}
-                </button>
-            </div>
-        </div>
-    </div>
+        {{ tabs({_('Pending'): '#moderate-pending',
+                _('Approved'): '#moderate-approved',
+                _('Rejected'): '#moderate-rejected',
+                _('Add'): '#moderate-add'}) }}
+        {{ show_comments(pending, 'pending') }}
+        {{ show_comments(approved, 'approved') }}
+        {{ show_comments(rejected, 'rejected') }}
 
-    {{ tabs({_('Pending'): '#moderate-pending',
-            _('Approved'): '#moderate-approved',
-            _('Rejected'): '#moderate-rejected',
-            _('Add'): '#moderate-add'}) }}
-    {{ show_comments(pending, 'pending') }}
-    {{ show_comments(approved, 'approved') }}
-    {{ show_comments(rejected, 'rejected') }}
+        <script>
+            const path = document.location.href.split('/');
+            if(path[path.length - 2] == 'new') {
+                const tab = document.querySelector(".tabs :last-child");
+                tab.click();
+            }
+        </script>
 
-    <script>
-        const path = document.location.href.split('/');
-        if(path[path.length - 2] == 'new') {
-            const tab = document.querySelector(".tabs :last-child");
-            tab.click();
-        }
-    </script>
+        <script>
+            function toggleComment(commentID, status) {
+                const commentElem = document.querySelector(`[data-comment-id='${commentID}']`);
+                const commentInput = commentElem.querySelector("input");
+                const antistatus = status == 'approved' ? 'rejected' : 'approved';
 
-    <script>
-        function toggleComment(commentID, status) {
-            const commentElem = document.querySelector(`[data-comment-id='${commentID}']`);
-            const commentInput = commentElem.querySelector("input");
-            const antistatus = status == 'approved' ? 'rejected' : 'approved';
-                
-            if (commentElem.classList.contains(status)) {
-                commentElem.classList.remove(status);
-                commentInput.name = '';
-                return;
+                if (commentElem.classList.contains(status)) {
+                    commentElem.classList.remove(status);
+                    commentInput.name = '';
+                    return;
+                }
+
+                commentElem.classList.remove(antistatus)
+                commentElem.classList.add(status);
+                commentInput.name = status;
             }
 
-            commentElem.classList.remove(antistatus)
-            commentElem.classList.add(status);
-            commentInput.name = status;
-        }
+            const rejectComment = (commentID) => toggleComment(commentID, "rejected");
+            const approveComment = (commentID) => toggleComment(commentID, "approved");
 
-        const rejectComment = (commentID) => toggleComment(commentID, "rejected");
-        const approveComment = (commentID) => toggleComment(commentID, "approved");
+            const formSubmit = (formID) => {
+                const form = document.querySelector(`${formID}`);
+                form.submit();
+            }
 
-        const formSubmit = (formID) => {
-            const form = document.querySelector(`${formID}`);
-            form.submit();
-        }
+            const approveFormSubmit = () => formSubmit("#moderate-approved");
+            const reproveFormSubmit = () => formSubmit("#moderate-rejected");
+            const pendingFormSubmit = () => formSubmit("#moderate-pending");
 
-        const approveFormSubmit = () => formSubmit("#moderate-approved");
-        const reproveFormSubmit = () => formSubmit("#moderate-rejected");
-        const pendingFormSubmit = () => formSubmit("#moderate-pending");
+        </script>
 
-    </script>
+        {% include 'ej_conversations/includes/tab-moderate-add-comments.jinja2' %}
 
-    {% include 'ej_conversations/includes/tab-moderate-add-comments.jinja2' %}
-
+    </section>
 {% endblock %}
 
 {% macro show_comments(comments, id) %}

@@ -3,21 +3,23 @@
 
 
 {% block content %}
-    {{ conversation|role('balloon', actions=False) }}
+    <section class="content-grid content-grid--bigger">
+        {{ conversation|role('balloon', actions=False) }}
 
-    <div class="edit-content">
-        <h1 class="h2 left text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
-        <hr id="hr-divider">
-        
-        {% include 'ej_clusters/edit/select-groups.jinja2'%}
-        
-        {% if new_cluster_form %}
-            {% include 'ej_clusters/edit/new-cluster-form.jinja2'%}
-        {% endif %}
+        <div class="edit-content">
+            <h1 class="h2 left text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
+            <hr id="hr-divider">
 
-        {% if edit_cluster %}
-            {% include 'ej_clusters/edit/edit-cluster-form.jinja2'%}
-        {% endif %}
-    </div>
-{% endblock %} 
+            {% include 'ej_clusters/edit/select-groups.jinja2'%}
+
+            {% if new_cluster_form %}
+                {% include 'ej_clusters/edit/new-cluster-form.jinja2'%}
+            {% endif %}
+
+            {% if edit_cluster %}
+                {% include 'ej_clusters/edit/edit-cluster-form.jinja2'%}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
 

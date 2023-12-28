@@ -4,9 +4,11 @@
 
 
 {% block content %}
-    {{ conversation|role('balloon', actions=False) }}
-    <div class="pad-x3">
-        {% block report %}{% endblock %}
-    </div>
-    {% include 'ej_dataviz/includes/datatables.jinja2' %}
+    <section class="content-grid content-grid--bigger">
+        {{ conversation|role('balloon', actions=False) }}
+        <div class="pad-x3">
+            {% block report %}{% endblock %}
+        </div>
+        {% include 'ej_dataviz/includes/datatables.jinja2' %}
+    </section>
 {% endblock %}

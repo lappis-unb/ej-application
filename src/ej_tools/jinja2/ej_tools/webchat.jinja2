@@ -9,7 +9,6 @@
 {% endblock metaOG2 %}
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
-{% set main_class = "board-container" %}
 
 {% block content %}
 <div class="tools">
@@ -22,14 +21,14 @@
         </span>
         <span class="helptext">{{_("With Webchat you can perform collections on web pages using our guided bot.")}}</span>
     </div>
-    
+
     <h3 class="h3 divider">{{_("Webchat")}}</h3>
     <span class="helptext">{{_("Integrate a new page with webchat or click <b>Start Collection</b> to utilize our standard integration.")}}</span>
     <div class="webchat-card">
         {% include 'ej_tools/webchat/webchat-preview-card.jinja2' %}
         <hr class="webchat-card__divider">
         {% include 'ej_tools/webchat/form-integration.jinja2' %}
-    </div>    
+    </div>
 
     <div id="webchat-help-card">
         {{ help_card(_("When should I use webchat?"), "/docs/user-guides/pt-br/tools-chatbot.html#webchat")}}

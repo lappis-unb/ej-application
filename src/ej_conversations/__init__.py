@@ -23,5 +23,5 @@ def create_conversation(
     if commit:
         conversation.save()
     if tags:
-        conversation.tags.set(tags)
+        conversation.tags.set(tags.split(","))
     return conversation

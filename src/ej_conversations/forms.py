@@ -105,8 +105,7 @@ class ConversationForm(EjModelForm):
 
             # Save tags on the database
             tags = self.cleaned_data["tags"].split(",")
-            tags = map(lambda x: x.strip(",."), tags)
-            conversation.tags.set(*filter(identity, tags), clear=True)
+            conversation.tags.set(tags, clear=True)
 
         return conversation
 

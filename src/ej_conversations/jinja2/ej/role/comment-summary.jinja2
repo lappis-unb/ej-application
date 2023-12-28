@@ -3,8 +3,8 @@
         <div class="comment-summary__status">
             {{ span_icon(status, status_icon) }}
         </div>
-        <a class="comment-summary__title" href="{{ comment_url }}">{{ text }}</a>
-        <span class="comment-summary__info">{{_("Created at:")}} 
+        <a class="comment-summary__title" href="{{ comment_url }}"><p>{{ text }}</p></a>
+        <span class="comment-summary__info">{{_("Created at:")}}
             {{ created|role('simple') }}
         </span><br>
         <span class="comment-summary__info">

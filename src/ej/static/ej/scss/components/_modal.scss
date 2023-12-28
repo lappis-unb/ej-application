@@ -8,7 +8,7 @@
         top: 0;
         left: 0;
         z-index: 750;
-        
+
         &.hide {visibility: hidden;}
 
         > * {
@@ -18,7 +18,7 @@
 
         background: rgba($color-black-alternative, .25);
     }
-    
+
     &__container {
         @extend .pad-4;
         position: relative;
@@ -26,9 +26,10 @@
         z-index: 1250;
         background-color: $color-theme-report-light-gray;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        
+        text-align: center;
+
         h3 {color: $color-black-alternative;}
-        
+
         &--sm {
             @extend .modal__container;
             min-width: 20rem;
@@ -65,7 +66,7 @@
         top: 0;
         color: $color-black-alternative;
         cursor: pointer;
-        
+
         background: transparent;
         padding: 0;
         margin: 0;
@@ -88,7 +89,7 @@
         gap: .5rem;
         border: none !important;
         border-radius: 3rem;
-        
+
         font-size: .875rem;
 
         i {margin: 0;}
@@ -98,7 +99,7 @@
 
             background-color: $color-red-negative;
         }
-        
+
         &--blue {
             @extend .modal__btn;
 

@@ -12,7 +12,6 @@
 
 
 {% block _menu %} {{ menu(request.user, board_palette) }} {% endblock %}
-{% set main_class = "board-container" %}
 
 {% block content %}
 
@@ -34,7 +33,7 @@
     <div class="tools-divider">
       {{opinion_bot(conversation, tool, "whatsapp", static('/img/logo/channel_wpp.svg'))}}
     </div>
-  
+
   </div>
-</div> 
+</div>
 {% endblock %}

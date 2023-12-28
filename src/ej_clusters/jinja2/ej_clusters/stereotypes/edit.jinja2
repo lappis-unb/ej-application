@@ -4,30 +4,32 @@
 
 
 {% block content %}
-    <h1 class="h2 text-accent">{% trans %}Edit persona:{% endtrans %} <em>{{ stereotype.name }}</em></h1>
+    <section class="content-grid content-grid--bigger">
+        <h1 class="h2 text-accent">{% trans %}Edit persona:{% endtrans %} <em>{{ stereotype.name }}</em></h1>
 
-    <form method="post" class="measure" id="edit-form">
-        <a class="width-full bold lowercase text-brand margin-b3 block" href="{{ url('stereotypes:list') }}">
-            <i class="fa fa-chevron-left"></i>Personas
-        </a>
-        {{ csrf_input }}
-        {{ form.non_field_errors() }}
+        <form method="post" class="measure" id="edit-form">
+            <a class="width-full bold lowercase text-brand margin-b3 block" href="{{ url('stereotypes:list') }}">
+                <i class="fa fa-chevron-left"></i>Personas
+            </a>
+            {{ csrf_input }}
+            {{ form.non_field_errors() }}
 
-        <label>{{ form.name.label }} {{ form.name.errors }}{{ form.name }}</label>
-        <label>{{ form.description.label }} {{ form.description.errors }}{{ form.description }}
-            <legend>{{ form.description.help_text }}</legend>
-        </label>
-    </form>
-    <form method="post" id="delete-form" hidden>{{ csrf_input }}</form>
+            <label>{{ form.name.label }} {{ form.name.errors }}{{ form.name }}</label>
+            <label>{{ form.description.label }} {{ form.description.errors }}{{ form.description }}
+                <legend>{{ form.description.help_text }}</legend>
+            </label>
+        </form>
+        <form method="post" id="delete-form" hidden>{{ csrf_input }}</form>
 
-    <div class="measure width-full row">
-        <button name="action" value="delete" class="is-negative" form="delete-form">
-            <i class="fa fa-times"></i>{{ _('Delete') }}
-        </button>
-        <button name="action" value="save" class="is-primary" form="edit-form">
-            <i class="fa fa-save"></i>{{ _('Save') }}
-        </button>
-    </div>
+        <div class="measure width-full row">
+            <button name="action" value="delete" class="is-negative" form="delete-form">
+                <i class="fa fa-times"></i>{{ _('Delete') }}
+            </button>
+            <button name="action" value="save" class="is-primary" form="edit-form">
+                <i class="fa fa-save"></i>{{ _('Save') }}
+            </button>
+        </div>
+    </section>
 {% endblock %}
 
 
