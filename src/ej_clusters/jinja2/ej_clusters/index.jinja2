@@ -4,58 +4,59 @@
 
 
 {% block content %}
-<section class="content-grid content-grid--padding">
+<section>
+    {% include 'ej_dataviz/includes/header.jinja2' %}
+    <div class="content-grid">
+        <h1 class="text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
+        {% if clusters %}
+            <p class="margin-y2 helptext">
+                {% trans %}We use votes to classify different users according to their opinions. Users who vote similarly tend to be in the same group.{% endtrans %}
+                {% if user_group|default(False) %}{{ ' ' }}
+                    {% trans %}You belong to group <strong>{{ user_group }}</strong>, for instance.{% endtrans %}
+                    {% else %}{{ ' ' }}
+                    {% trans %}We could not indentify your opinion group yet. Keep Voting!{% endtrans %}
+                {% endif %}
+            </p>
 
-    <h1 class="h2 center text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
-    {% if clusters %}
-        <p class="measure margin-xauto center">
-            {% trans %}We use votes to classify different users according to their opinions. Users who vote similarly tend to be in the same group.{% endtrans %}
-            {% if user_group|default(False) %}{{ ' ' }}
-                {% trans %}You belong to group <strong>{{ user_group }}</strong>, for instance.{% endtrans %}
-                {% else %}{{ ' ' }}
-                {% trans %}We could not indentify your opinion group yet. Keep Voting!{% endtrans %}
+            <div id="cluster-canvas-container">
+                <canvas id="cluster-canvas" class="margin-xauto block"></canvas>
+            </div>
+
+
+            {{ categories(groups, class_='margin-t3') }}
+            <script up-always-execute>
+                window.addEventListener('load', function () {
+                    $('.expand-details').off('click').on('click', function (e) {
+                        $(e.target.parentNode).find('.details').toggle(200);
+                        e.preventDefault();
+                    });
+                })
+            </script>
+            {% for cluster in clusters %}
+                <div id="cluster-{{ cluster.id }}">{{ show_cluster(cluster) }}</div>
+            {% endfor %}
+
+            {% if has_edit_perm %}
+                <div class="center bg-brand-lighter pad-2 rounded-2 margin-y4">
+                    <h2 class="h4 uppercase margin-t2">{{ _('Admin actions') }}</h2>
+                    <form class="margin-0" method="POST" action="./ctrl/">
+                        {{ csrf_input }}
+                        <button name="action" value="force-clusterization">{{ _('Force clusterization') }}</button>
+                    </form>
+                </div>
             {% endif %}
-        </p>
+        {% else %}
+            <div class="margin-y3">
+                <p class="helptext left">{{ _('Could not determine the opinion groups for this conversation.') }}
+                {% if has_edit_perm %}
+                    {% trans %}You can edit the clusterization options for this conversation {% endtrans %}
+                    <a class="text-accent" href="{{ url("boards:cluster-edit", **conversation.get_url_kwargs()) }}">{{_("here")}}</a>.
+                {% endif %}
+                </p>
 
-        <div id="cluster-canvas-container">
-            <canvas id="cluster-canvas" class="margin-xauto block"></canvas>
-        </div>
-
-
-        {{ categories(groups, class_='margin-t3') }}
-        <script up-always-execute>
-            window.addEventListener('load', function () {
-                $('.expand-details').off('click').on('click', function (e) {
-                    $(e.target.parentNode).find('.details').toggle(200);
-                    e.preventDefault();
-                });
-            })
-        </script>
-        {% for cluster in clusters %}
-            <div id="cluster-{{ cluster.id }}">{{ show_cluster(cluster) }}</div>
-        {% endfor %}
-
-        {% if has_edit_perm %}
-            <div class="center bg-brand-lighter pad-2 rounded-2 margin-y4">
-                <h2 class="h4 uppercase margin-t2">{{ _('Admin actions') }}</h2>
-                <form class="margin-0" method="POST" action="./ctrl/">
-                    {{ csrf_input }}
-                    <button name="action" value="force-clusterization">{{ _('Force clusterization') }}</button>
-                </form>
             </div>
         {% endif %}
-    {% else %}
-        <div class="pad-x3 rounded-3 color-negative border-1">
-            <h2 class="h3 center">{{ _('Error') }}</h2>
-            <p class="center">{{ _('Could not determine the opinion groups for this conversation.') }}</p>
-        </div>
-        {% if has_edit_perm %}
-            <p class="center margin-3">
-                {% trans link=edit_link %}You can edit the clusterization options for this conversation {{ link }}
-                    .{% endtrans %}
-            </p>
-        {% endif %}
-    {% endif %}
+    </div>
 </section>
 {% endblock %}
 
