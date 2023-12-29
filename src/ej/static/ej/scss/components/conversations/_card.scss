@@ -92,7 +92,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
         }
         background-blend-mode: luminosity;
         width: 100%;
-        
+
         @media only screen and (max-width: 560px) {
             a {
                 margin-bottom: 1.5rem;
@@ -110,14 +110,12 @@ $_card-bg: config('ej.conversation-card.bg-image');
 }
 
 .alternate-cards {
-    margin: 0 auto;
-
     @include breakpoint('md') {
         align-items: center;
         display: grid;
         grid-gap: size(0.5);
         grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-        
+
         > * {
             justify-self: center;
             width: 100%;
@@ -186,7 +184,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
             justify-content: flex-end;
             padding: .5rem;
         }
-        
+
         h2 {
             color: $color-secondary;
             text-align: center;
@@ -198,7 +196,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
         &.show-board-statistics {
             display: flex;
             bottom: 0;
-            
+
             .cards-divider-header {
                 display: flex;
             }
@@ -208,12 +206,12 @@ $_card-bg: config('ej.conversation-card.bg-image');
         margin: 0;
 
         transition: .25s;
-        
+
         position: fixed;
         bottom: -100%;
         left: 0;
         z-index: 1006;
-        
+
         border-radius: 10px 10px 0 0;
         background-color: $color-white;
         width: 100%;
@@ -226,7 +224,7 @@ $_card-bg: config('ej.conversation-card.bg-image');
             margin: 0;
             padding: 1.25rem 0;
         }
-        
+
 
         p {
             text-align: center;
