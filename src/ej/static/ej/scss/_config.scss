@@ -170,8 +170,8 @@ $mendeleev-color-palette: (
 @import '../node_modules/mendeleev.css/src/profiles/default';
 
 // Font roles and base styles
-$font-stack-paragraph: $font-stack-raleway !default;
-$font-stack-headings: $font-stack-patua-one !default;
+$font-stack-paragraph: "Work Sans" !default;
+$font-stack-headings: "Work Sans" !default;
 
 // Reset Mendeleev variables and styles
 $mendeleev-typeface: $font-stack-paragraph;

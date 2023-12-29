@@ -43,7 +43,7 @@ export class Shape {
     highlight: boolean = false;
     name: string = "Group";
     fontSize: number = 12 + view.size.height / 80;
-    fontFamily: string = "Raleway";
+    fontFamily: string = "Work Sans";
 
 
     constructor({size, intersections, radius = 50, pos = null, vel = null, isUserGroup = false, name = "Group"}) {
