@@ -14,7 +14,6 @@ class Head(BaseHead):
 
         self.stylesheets = [
             *self.stylesheets,
-            "https://fonts.googleapis.com/css?family=Raleway:400,700,900&subset=latin-ext",
             "https://unpkg.com/unpoly@0.54.0/dist/unpoly.min.css",
             static("css/fontawesome-all.min.css"),
             static("js/jquery-ui/jquery-ui.min.css"),

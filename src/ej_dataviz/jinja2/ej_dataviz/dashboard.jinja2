@@ -6,10 +6,8 @@
 
 {% block content %}
     <div class="report-container">
-        <div class="dashboard-balloon__container content-grid">
-            <h2 class="dashboard-balloon__title center-grid">{{_("Conversation")}}
-            <h2 class="dashboard-balloon__title center-grid">{{conversation.text}}</h2>
-            <span class="dashboard-balloon__title--underline center-grid"></span>
+        <div class="dashboard-balloon__container">
+            {% include 'ej_dataviz/includes/header.jinja2' %}
         </div>
 {% block report %}
     <section class="conversation-dashboard content-grid">
@@ -30,12 +28,12 @@
         <div class="scatter-section flex wrap center-grid">
             {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
         </div>
-        <div class="dashboard__separator-line center-grid"></div>
+        <hr class="nav-divider nav-divider--darker"></hr>
         {% with comments_statistics = conversation.statistics().get('comments') %}
             {% include 'ej_dataviz/report/includes/comments.jinja2' %}
             {% include 'ej_dataviz/report/includes/comment-participants.jinja2' %}
-            <div class="dashboard__separator-line center-grid"></div>
         {% endwith %}
+        <hr class="nav-divider nav-divider--darker"></hr>
         {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}
 
     </section>

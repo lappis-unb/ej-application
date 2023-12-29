@@ -123,6 +123,16 @@ body {
 //------------------------------------------------------------------------------
 // Sidebar / menu
 
+.nav-divider {
+    width: 100%;
+    border-top: 1px solid $color-navigation-header;
+    margin: unset;
+
+    &--darker {
+        border-top: 1px solid #BABABA;
+    }
+}
+
 .page-menu {
     height: 100%;
     z-index: 750;
@@ -130,11 +140,11 @@ body {
     transition: .3s;
 
     background-color: $color-navigation-menu-background;
-    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
     overflow: hidden auto;
+    border-right: 1px solid rgba(0, 0, 0, .05);
 
     h3{
-        font-family: 'Raleway', 'sans-serif';
+        font-family: 'Work Sans', 'sans-serif';
     }
 
     .nav-header{
@@ -174,7 +184,7 @@ body {
         }
         li:nth-of-type(2) {
             font-size: 1.5rem;
-            font-family: "Patua One", sans-serif;
+            font-family: "Work Sans", sans-serif;
             line-height: 1.5rem;
             padding-bottom: 0.25rem;
             text-decoration: none;
@@ -187,7 +197,7 @@ body {
             justify-content: space-between;
 
             font-size: .875rem;
-            font-family: "Raleway", sans-serif;
+            font-family: "Work Sans", sans-serif;
             line-height: 1.5rem;
 
             grid-column: 1/span 1;
@@ -239,19 +249,12 @@ body {
             letter-spacing: 0;
         }
         li{
-            padding-left: 0.438rem;
             padding-top: 0.313rem;
         }
         a{
             font-size: 1rem;
             font-weight: bold;
         }
-    }
-
-    .nav-divider{
-        width: 100%;
-        border-top: 1px solid $color-navigation-header;
-        margin: unset;
     }
 
     .menu-padding{
@@ -268,7 +271,6 @@ body {
     @include utilities("rounded-2");
 
     background-color: color("white");
-    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
     overflow: hidden auto;
 
     &[is-menu] {
@@ -517,7 +519,7 @@ body {
             li:nth-of-type(2) {
                 font-weight: bold;
                 font-size: 1.5rem;
-                font-family: "Patua One", sans-serif;
+                font-family: "Work Sans", sans-serif;
                 padding-bottom: 0.25rem;
                 justify-self: flex-start;
 
@@ -532,7 +534,7 @@ body {
                 justify-content: space-between;
 
                 font-size: .875rem;
-                font-family: "Raleway", sans-serif;
+                font-family: "Work Sans", sans-serif;
                 text-decoration: underline;
                 color: $color-navigation-header-text;
 
@@ -551,7 +553,6 @@ body {
         //background-color: rgba(0, 0, 0, 0.008);
         background-color: $color-navigation-menu-background;
         border-radius: 0;
-        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
         flex: 1;
         min-height: calc(100vh - 3rem);
         min-width: size(11);

@@ -1,9 +1,9 @@
 <div class="conversation-balloon">
-    <article class="content-grid">
+    <article class="content-grid content-grid--padding">
         {% if create_mode %}
-            <h2 class="text-accent">{{_("Create Conversation")}}</h2>
+            <h1 class="text-accent">{{_("Create Conversation")}}</h1>
         {% else %}
-            <h2 class="text-accent">{{_("Edit Conversation")}}</h2>
+            <h1 class="text-accent">{{_("Edit Conversation")}}</h1>
         {% endif %}
         <p class="helptext">
             {{_("This informations will be visible for conversation participants.")}}

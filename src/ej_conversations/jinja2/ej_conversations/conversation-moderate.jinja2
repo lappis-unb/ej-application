@@ -1,7 +1,7 @@
 {% extends 'ej_conversations/base.jinja2' %}
 
 {% block content %}
-    <section class="content-grid content-grid--bigger moderate">
+    <section class="content-grid content-grid--padding moderate">
         {{ conversation|role('balloon', actions=False) }}
         <h1 class="h2 relative text-accent left">
             {{ _('Comments') }}

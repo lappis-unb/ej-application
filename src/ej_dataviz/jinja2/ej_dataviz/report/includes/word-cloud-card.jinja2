@@ -1,5 +1,5 @@
 <div class="words-cloud-section center-grid">
-    <h2 class="words-cloud-section__title text-accent">{{_('Word cloud')}}</h2>
+    <h1 class="words-cloud-section__title text-accent">{{_('Word cloud')}}</h1>
     <div id="word-cloud-card-id" class="word-cloud-card words-cloud-section__container">
         <div id="word-cloud">
             <div class="margin-3 text-2 center">
@@ -17,7 +17,7 @@
     function drawWorldCloud(words, layout) {
         var x = layout.size()[0],
             y = layout.size()[1];
-        
+
         let wordCloudCard = document.getElementById('word-cloud-card-id');
         if (wordCloudCard) {
             x = wordCloudCard.offsetWidth;
@@ -35,7 +35,7 @@
             .enter()
             .append('text')
             .style('font-size', word => word.size + 'px')
-            .style('font-family', 'Raleway')
+            .style('font-family', 'Work Sans')
             .style('fill', word => word.color)
             .attr('text-anchor', 'middle')
             .attr('transform', word => `translate(${word.x},${word.y})rotate(${word.rotate})`)
@@ -71,7 +71,7 @@
                     .padding(-1)
                     {#.rotate(() => [-45, 0, 45][~~(Math.random() * 3)] )#}
                     .rotate(() => [-60, -30, 0, 30, 60][~~(Math.random() * 5)] )
-                    .font('Raleway')
+                    .font('Work Sans')
                     .fontSize(word => word.size)
                     .on('end', x => drawWorldCloud(x, layout));
             layout.start();
