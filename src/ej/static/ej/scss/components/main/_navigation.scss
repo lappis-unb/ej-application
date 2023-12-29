@@ -16,6 +16,12 @@ body {
 //------------------------------------------------------------------------------
 // header navigation
 
+.main-container {
+    width: 100%;
+    text-align: left !important;
+    margin: 0 0 0 264px;
+}
+
 .main-header {
     @include utilities("row items-center center sticky pin-top");
     @include color("navigation");
@@ -28,10 +34,9 @@ body {
         align-items: center;
     }
     > a {
-        @include utilities("margin-0");
-
         display: flex;
         align-items: center;
+        margin: 0 0.75rem;
 
         color: color("navigation-text");
         height: $_sm-header-height;
@@ -63,9 +68,6 @@ body {
 
 // Reorganize using media queries
 @include breakpoint("sm") {
-    .container-1 {
-        max-width: 60vw;
-    }
 
     .container-temporary {
         max-width: 64vw !important;
@@ -121,6 +123,16 @@ body {
 //------------------------------------------------------------------------------
 // Sidebar / menu
 
+.nav-divider {
+    width: 100%;
+    border-top: 1px solid $color-navigation-header;
+    margin: unset;
+
+    &--darker {
+        border-top: 1px solid #BABABA;
+    }
+}
+
 .page-menu {
     height: 100%;
     z-index: 750;
@@ -128,11 +140,11 @@ body {
     transition: .3s;
 
     background-color: $color-navigation-menu-background;
-    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
     overflow: hidden auto;
+    border-right: 1px solid rgba(0, 0, 0, .05);
 
     h3{
-        font-family: 'Raleway', 'sans-serif';
+        font-family: 'Work Sans', 'sans-serif';
     }
 
     .nav-header{
@@ -172,7 +184,7 @@ body {
         }
         li:nth-of-type(2) {
             font-size: 1.5rem;
-            font-family: "Patua One", sans-serif;
+            font-family: "Work Sans", sans-serif;
             line-height: 1.5rem;
             padding-bottom: 0.25rem;
             text-decoration: none;
@@ -185,7 +197,7 @@ body {
             justify-content: space-between;
 
             font-size: .875rem;
-            font-family: "Raleway", sans-serif;
+            font-family: "Work Sans", sans-serif;
             line-height: 1.5rem;
 
             grid-column: 1/span 1;
@@ -237,19 +249,12 @@ body {
             letter-spacing: 0;
         }
         li{
-            padding-left: 0.438rem;
             padding-top: 0.313rem;
         }
         a{
             font-size: 1rem;
             font-weight: bold;
         }
-    }
-
-    .nav-divider{
-        width: 100%;
-        border-top: 1px solid $color-navigation-header;
-        margin: unset;
     }
 
     .menu-padding{
@@ -266,7 +271,6 @@ body {
     @include utilities("rounded-2");
 
     background-color: color("white");
-    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.12);
     overflow: hidden auto;
 
     &[is-menu] {
@@ -467,7 +471,7 @@ body {
     }
 
     &__item--margin {
-        margin-top: 2.5rem !important;
+        margin-top: 2rem !important;
     }
 
     &__welcome-title {
@@ -491,8 +495,6 @@ body {
 @include breakpoint("sm") {
     .page-menu {
         z-index: 750;
-        position: relative;
-
         .nav-header {
             background-color: $color-navigation-header;
             grid-template-columns: auto;
@@ -517,7 +519,7 @@ body {
             li:nth-of-type(2) {
                 font-weight: bold;
                 font-size: 1.5rem;
-                font-family: "Patua One", sans-serif;
+                font-family: "Work Sans", sans-serif;
                 padding-bottom: 0.25rem;
                 justify-self: flex-start;
 
@@ -532,7 +534,7 @@ body {
                 justify-content: space-between;
 
                 font-size: .875rem;
-                font-family: "Raleway", sans-serif;
+                font-family: "Work Sans", sans-serif;
                 text-decoration: underline;
                 color: $color-navigation-header-text;
 
@@ -551,7 +553,6 @@ body {
         //background-color: rgba(0, 0, 0, 0.008);
         background-color: $color-navigation-menu-background;
         border-radius: 0;
-        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
         flex: 1;
         min-height: calc(100vh - 3rem);
         min-width: size(11);
@@ -713,5 +714,12 @@ body {
 .hide-board-statistics {
     @media screen and (max-width: 559px) {
         display: none;
+    }
+}
+
+@media screen and (max-width: 559px) {
+    .main-container {
+        max-width: unset;
+        margin: unset;
     }
 }

@@ -4,23 +4,25 @@
 
 
 {% block content %}
-    <h1 class="h2 text-accent">{% trans %}Create persona{% endtrans %}</h1>
+    <section class="content-grid content-grid--padding">
+        <h1 class="h2 text-accent">{% trans %}Create persona{% endtrans %}</h1>
 
-    <form method="post" class="measure">
-        <a class="width-full bold lowercase text-brand margin-b3 block" href="{{ url('stereotypes:list') }}">
-            <i class="fa fa-chevron-left"></i>Personas
-        </a>
+        <form method="post" class="measure">
+            <a class="width-full bold lowercase text-brand margin-b3 block" href="{{ url('stereotypes:list') }}">
+                <i class="fa fa-chevron-left"></i>Personas
+            </a>
 
-        {{ csrf_input }}
-        {{ form.non_field_errors() }}
+            {{ csrf_input }}
+            {{ form.non_field_errors() }}
 
-        <label>{{ form.name.label }} {{ form.name.errors }}{{ form.name }}</label>
-        <label>{{ form.description.label }} {{ form.description.errors }}{{ form.description }}
-            <legend>{{ form.description.help_text }}</legend>
-        </label>
+            <label>{{ form.name.label }} {{ form.name.errors }}{{ form.name }}</label>
+            <label>{{ form.description.label }} {{ form.description.errors }}{{ form.description }}
+                <legend>{{ form.description.help_text }}</legend>
+            </label>
 
-        <div class="margin-y3 center">
-            <button name="submit" value="save" class="is-primary pad-x4">{{ _('Save') }}</button>
-        </div>
-    </form>
+            <div class="margin-y3 center">
+                <button name="submit" value="save" class="is-primary pad-x4">{{ _('Save') }}</button>
+            </div>
+        </form>
+    </section>
 {% endblock %}

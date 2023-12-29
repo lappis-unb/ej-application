@@ -9,23 +9,19 @@
     }
 
     &__title {
-        font-size: 0.875rem;
         color: $color-theme-dark-blue;
-        font-weight: 500;
         line-height: 1.375rem;
-        font-family: Lexend Exa;
-        text-transform: uppercase;
         margin-top: 0px;
         margin-bottom: 0px;
-
-        &--underline {
-            border: 1px solid $color-theme-report-gray;
-            margin-top: 1.68rem;
-        }
     }
-
-    &__title:first-child {
+    &__label {
         color:$color-theme-report-light-blue;
+        margin-bottom: .3rem;
+    }
+    &__label,
+    &__title {
+        text-transform: uppercase;
+        font-weight: 500;
     }
 }
 
@@ -78,7 +74,7 @@
         display: flex;
         text-transform: lowercase;
         color: $color-theme-dark-blue;
-        font-family: "Raleway", sans-serif;
+        font-family: "Work Sans", sans-serif;
         font-weight: bold;
     }
 
@@ -260,10 +256,10 @@
 
     &__title {
         div {
-            max-width: 6.625rem;
+            max-width: 8rem;
             span {
                 text-align: left;
-                font-family: "Patua One", "sans-serif";
+                font-family: "Work Sans", "sans-serif";
                 font-size: 1.5rem;
             }
         }
@@ -280,7 +276,7 @@
         }
 
         p, button {
-            font-family: "Raleway";
+            font-family: "Work Sans";
         }
 
         button {
@@ -338,7 +334,7 @@
         }
         p {
             color: $color-black;
-            font-family: "Raleway";
+            font-family: "Work Sans";
             font-size: 1rem;
         }
     }
@@ -391,14 +387,14 @@
             font-weight: 600;
             color: $color-white;
             font-size: 1.25rem;
-            font-family: "Raleway";
+            font-family: "Work Sans";
         }
     }
 }
 
 .report-container .conversation-dashboard .words-cloud-section {
     &__title {
-        margin-top: 3remx;
+        margin-top: 3rem;
         margin-bottom: 1.75rem;
     }
     &__container {
@@ -431,17 +427,13 @@
         }
     }
 
-    hr {
-        background-color: $color-black;
-    }
-
     .title {
         align-items: baseline;
         h2 {
             margin: unset;
         }
         span {
-            font-family: "Raleway";
+            font-family: "Work Sans";
         }
     }
 
@@ -500,10 +492,6 @@
         border-bottom: 0.9375rem solid $color-base-pink;
         transform: rotate(-90deg);
     }
-}
-
-.dashboard__separator-line {
-    border: 1px solid $color-gray-brigther;
 }
 
 @media (max-width: 375px) {
@@ -570,7 +558,7 @@
             span {
                 width: 100% !important;
                 text-align: left;
-                font-family: "Patua One", "sans-serif";
+                font-family: "Work Sans", "sans-serif";
                 font-size: 1.5rem;
             }
         }
@@ -579,10 +567,6 @@
             margin-bottom: 2rem;
             max-width: 100%;
             width: 100%;
-
-            hr {
-                display: none !important;
-            }
 
             h2 {
                 max-width: 90vw;
@@ -644,9 +628,6 @@
         gap: 0px !important;
     }
 
-    .dashboard__separator-line {
-        display: none;
-    }
     .conversation-dashboard__button {
         a {
             float: right;
@@ -697,11 +678,6 @@
         }
     }
 
-    hr {
-        display: block !important;
-        max-width: 18.625rem;
-        margin: auto !important;
-    }
 }
 
 @media (max-width: 1366px) {

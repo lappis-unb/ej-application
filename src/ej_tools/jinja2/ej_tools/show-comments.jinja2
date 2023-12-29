@@ -1,19 +1,19 @@
 <span class="close-report" onclick='closeCommentsModal(this)'>&times;</span>
 
 <div class="tools-title">
-  <h1 id="pool-title" class="h2 text-accent">{{_('Poll Comments')}}</h1>
+  <h1 id="pool-title" class="text-accent">{{_('Poll Comments')}}</h1>
   <span id="pool-text" class="pool-text">
     {{_('It presents the list of comments that will compose the telegram poll.')}}
     <p class="warning-comments">{{_('Only comments shorter than 100 characters can be selected.')}}</p>
   </span>
 </div>
 <hr class="pools-comments-divider">
-  
-{%if comments.count() < 2 %}  
+
+{%if comments.count() < 2 %}
   <span>
     {{_("You don't have enough approved comments")}}
   </span>
-  
+
 {% endif %}
 
 {%if comments.count() >= 2  %}
@@ -28,7 +28,7 @@
     <a id="a_tag_modal" class="tools-link">/enquetenogrupo {{conversation.id}}</a>
   </span>
 
-    
+
   <div class="comments-table">
     <div class="edit-pool-container">
       <a id="open-edit-comments" class="edit-pool-comments">
@@ -47,7 +47,7 @@
             <td colspan="1">{{comment.id}}</td>
             <td colspan="7" class="table-text">{{comment}}</td>
           </tr>
-        {% endfor %}      
+        {% endfor %}
       </tbody>
       <tfoot>
         <tr>
@@ -59,4 +59,4 @@
 
     </table>
   </div>
-  {% endif %} 
+  {% endif %}

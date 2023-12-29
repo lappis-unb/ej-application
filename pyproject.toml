@@ -7,16 +7,14 @@ license = "AGPL-3.0"
 
 [tool.poetry.dependencies]
 python = ">= 3.8.18, <4"
-django = "==3.2"
+django = "4.1.13"
 django-constance = {version = "^2.3", extras = ["database"]}
-django-allauth = "0.44.0"
-django-taggit = "^1.1.0"
+django-allauth = "0.59.0"
+django-taggit = "3.0.0"
 django-autoslug = "^1.9"
-django-jsonfield = "^1.0"
 django-environ = "^0.4.5"
-django-extensions = "^2.1"
 django-bulk-update = "^2.2"
-django-manager-utils = "^1.4"
+django-manager-utils = "^3.0.1"
 django-polymorphic = "^2.0"
 django-pandas = "^0.5.1"
 django-filter = "^1.1"
@@ -35,7 +33,7 @@ markdown = "^3.0"
 invoke = "2.0.0"
 wordcloud = "^1.5"
 stop-words = "^2018.7"
-djangorestframework = "3.12.4"
+djangorestframework = "3.14.0"
 django-cors-headers = "^3.3.0"
 babel = "^2.9.0"
 sphinx = "^1.8"
@@ -52,7 +50,6 @@ django-debug-toolbar = "3.2.0"
 setuptools = "61.2.0"
 django-anymail = {extras = ["mailgun"], version = "^10.0"}
 django-ckeditor = "6.3.2"
-black = "22.3.0"
 colorama = "^0.4.6"
 django-boogie = {git = "https://gitlab.com/pencillabs/ej/django-boogie.git", rev = "fixes-python38"}
 
@@ -88,16 +85,14 @@ mock = "^2.0"
 model_mommy = "^1.6"
 pytest = "==7.0.0"
 pytest-django = "^3.4"
-django = "==3.2"
+django = "4.1.13"
 django-boogie = {git = "https://gitlab.com/pencillabs/ej/django-boogie.git", rev = "fixes-python38"}
-django-allauth = "0.44.0"
-django-taggit = "^1.1.0"
+django-allauth = "0.59.0"
+django-taggit = "^3.0.0"
 django-autoslug = "^1.9"
-django-jsonfield = "^1.0"
 django-environ = "^0.4.5"
-django-extensions = "^2.1"
 django-bulk-update = "^2.2"
-django-manager-utils = "^1.4"
+django-manager-utils = "^3.0.1"
 django-polymorphic = "^2.0"
 django-pandas = "^0.5.1"
 django-filter = "^1.1"
@@ -146,9 +141,3 @@ pythonpath = "src"
 testpaths = "src"
 norecursedirs = [".tox", "lib"]
 addopts = "--nomigrations"
-filterwarnings = [
-   "error",
-   "ignore::UserWarning",
-   "ignore::DeprecationWarning",
-   "ignore::django.utils.deprecation.RemovedInDjango41Warning",
-   "ignore::django.utils.deprecation.RemovedInDjango40Warning"]

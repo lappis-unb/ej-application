@@ -2,7 +2,7 @@ import os
 from functools import reduce
 from invoke import task
 
-from .base import su_docker, runner
+from .base import runner
 
 __all__ = [
     "docker_up",
@@ -37,7 +37,6 @@ def docker_build(ctx, dry_run=False, no_cache=False, prod=False):
     """
     do = runner(ctx, dry_run, pty=True)
     argsList = []
-    argsList.append("--target baseprod") if prod else argsList.append("--target basedev")
     argsList.append("--no-cache") if no_cache else False
     args: str = reduce(lambda x, y: x + " " + y, argsList)
 

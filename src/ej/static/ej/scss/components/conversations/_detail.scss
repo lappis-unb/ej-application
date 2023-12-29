@@ -25,16 +25,14 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     margin-bottom: .75rem;
 
     article {
-        @include utilities('pad-y3 pad-x3');
         @include themed('background', light);
-
 
         text-align: left;
         // border-radius: 0 0 $component-border-radius $component-border-radius;
 
         span {
             @include themed('color');
-            font-family: 'roboto', sans-serif;
+            font-family: "Work Sans", sans-serif;
 
             i {
                 margin-left: 0;
@@ -42,9 +40,8 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         }
     }
     h1 {
-        @include utilities('sans-serif margin-y3');
-        @extend .h2;
-        font-family: 'roboto', sans-serif;
+        @extend .text-accent;
+        font-family: "Work Sans", sans-serif;
     }
     &__social {
         @include utilities('row pad-x4');
@@ -79,7 +76,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 .conversation-form div label
 {
     color: $color-theme-dark-blue;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Work Sans', sans-serif;
 }
 .conversation-balloon article label:first-letter,
 .conversation-form div label:first-letter {
@@ -94,7 +91,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         font-size: 1.5rem;
     }
     &__h4 {
-        font-family: 'Raleway', sans-serif;
+        font-family: 'Work Sans', sans-serif;
         font-size: 1.125rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -200,7 +197,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
             }
             &__values {
                 color: $color-black-alternative;
-                font-family: Lexend Exa;
+                font-family: Work Sans;
                 font-size: 0.75rem;
                 font-style: normal;
                 font-weight: 500;
@@ -212,7 +209,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
         &__label {
             color: $color-complementary-gray;
-            font-family: Lexend Exa;
+            font-family: Work Sans;
             text-transform: uppercase;
             font-size: 0.75rem;
             font-style: normal;
@@ -246,7 +243,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
         &__comment {
             color: $color-black-alternative;
-            font-family: Raleway;
+            font-family: "Work Sans";
             font-size: 1.5rem;
             font-style: normal;
             font-weight: 300;
@@ -396,7 +393,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     &__message {
         padding: 1rem 0 2rem 0;
         color: $color-black-alternative;
-        font-family: Raleway;
+        font-family: "Work Sans";
         font-size: 1.75rem;
         font-style: normal;
         font-weight: 300;

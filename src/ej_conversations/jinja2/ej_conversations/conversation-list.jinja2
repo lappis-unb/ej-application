@@ -6,83 +6,82 @@
     <meta name="twitter:title" content="{{ board.title }}">
 {% endblock metaOG2 %}
 
-{% set main_class = "board-container" %}
 {% set body_class = 'body theme-' + board.palette %}
 
 {% block menu %}{% include 'ej_conversations/includes/participant-menu.jinja2' %}{% endblock %}
 
 {% block content %}
-<div class="board-statistics-container">
-    <div id="edit-board">
-        <div class="left-side">
-            <h1 class="h2 text-accent">{{ board.title}}</h1>
+<section class="content-grid">
+    <div class="board-statistics-container">
+        <div id="edit-board">
+            <div class="left-side">
+                <h1 class="h2 text-accent">{{ board.title}}</h1>
 
-            {%- if request.user.has_perm('ej.can_edit_board', board) %}
-                <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
-            {% endif %}
+                {%- if request.user.has_perm('ej.can_edit_board', board) %}
+                    <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
+                {% endif %}
 
-        </div>
-        <div onclick="toggleStatisticsMenu()" class="right-side">
-            <i class="fas fa-info"></i>
-        </div>
-    </div>
-    <div onclick="toggleStatisticsMenu()" id="bg-modal" class="hide-board-statistics"></div>
-    {%- if board.conversations.count() == 0 %}
-        <div class="helptext board-helptext">{{ _("Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion.") }}</div>
-    {% endif %}
-    <div class="cards-divider hide-board-statistics">
-        <div class="cards-divider-header">
-            <div class="close-btn">
-                <i onclick="toggleStatisticsMenu()" class="fas fa-times"></i>
             </div>
-            <h2>{{ _("Board statistics") }}</h2>
-        </div>
-        <div class="cards-divider-body">
-            {% with value=board.statistics()["votes"], title=_('Total votes') %}
-                {% include 'ej_boards/includes/stats-card.jinja2' %}
-            {% endwith %}
-            {% with value=board.statistics()["participants"], title=_('Total participants') %}
-                {% include 'ej_boards/includes/stats-card.jinja2' %}
-            {% endwith %}
-            {% with value=board.statistics()["conversations"], title=_('Total conversations') %}
-                {% include 'ej_boards/includes/stats-card.jinja2' %}
-            {% endwith %}
-        </div>
-    </div>
-    <div class="signature-text">
-        {{_('Signature model')}}:
-        <a href="{{ url('boards:signatures-list', board.slug) }}" class="help-text signature-link">{{board.owner.get_signature_display()}}</a>
-
-    </div>
-    {% if not (request.user.is_staff or request.user.is_superuser) %}
-        {% if conversations_limit > 1000000 %}
-            <div class="helptext">{% trans %}In the current signature, you can create <span
-                 class="text-accent bold">unlimited</span> conversations.{% endtrans %}{{ '
-                ' }}</div>
-        {% else %}
-            <div class="helptext">
-                 {% trans %} In the current signature, you can create <span class="text-accent bold">{{conversations_limit}}</span> conversations.{% endtrans %}
-                <a href="{{ url('boards:signatures-list', board.slug) }}">
-                    <span class="text-accent bold signature-link">{{_("Request upgrade.")}}</span>
-                </a>
+            <div onclick="toggleStatisticsMenu()" class="right-side">
+                <i class="fas fa-info"></i>
             </div>
+        </div>
+        <div onclick="toggleStatisticsMenu()" id="bg-modal" class="hide-board-statistics"></div>
+        {%- if board.conversations.count() == 0 %}
+            <div class="helptext board-helptext">{{ _("Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion.") }}</div>
         {% endif %}
-    {% endif %}
+        <div class="cards-divider hide-board-statistics">
+            <div class="cards-divider-header">
+                <div class="close-btn">
+                    <i onclick="toggleStatisticsMenu()" class="fas fa-times"></i>
+                </div>
+                <h2>{{ _("Board statistics") }}</h2>
+            </div>
+            <div class="cards-divider-body">
+                {% with value=board.statistics()["votes"], title=_('Total votes') %}
+                    {% include 'ej_boards/includes/stats-card.jinja2' %}
+                {% endwith %}
+                {% with value=board.statistics()["participants"], title=_('Total participants') %}
+                    {% include 'ej_boards/includes/stats-card.jinja2' %}
+                {% endwith %}
+                {% with value=board.statistics()["conversations"], title=_('Total conversations') %}
+                    {% include 'ej_boards/includes/stats-card.jinja2' %}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="signature-text">
+            {{_('Signature model')}}:
+            <a href="{{ url('boards:signatures-list', board.slug) }}" class="help-text signature-link">{{board.owner.get_signature_display()}}</a>
 
-    {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
-        <a class="is-primary button square" href="{{ url('boards:conversation-create', board_slug=board.slug) }}">{{ _('New conversation') }}</a>
-    {% endif %}
-</div>
+        </div>
+        {% if not (request.user.is_staff or request.user.is_superuser) %}
+            {% if conversations_limit > 1000000 %}
+                <div class="helptext">{% trans %}In the current signature, you can create <span
+                     class="text-accent bold">unlimited</span> conversations.{% endtrans %}{{ '
+                    ' }}</div>
+            {% else %}
+                <div class="helptext">
+                     {% trans %} In the current signature, you can create <span class="text-accent bold">{{conversations_limit}}</span> conversations.{% endtrans %}
+                    <a href="{{ url('boards:signatures-list', board.slug) }}">
+                        <span class="text-accent bold signature-link">{{_("Request upgrade.")}}</span>
+                    </a>
+                </div>
+            {% endif %}
+        {% endif %}
 
-<hr>
+        {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
+            <a class="is-primary button square" href="{{ url('boards:conversation-create', board_slug=board.slug) }}">{{ _('New conversation') }}</a>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="alternate-cards">
+        {% for conversation in conversations %}
+            <div class="margin-y3">{{ conversation|role('card', url=url('boards:dataviz-dashboard',  **conversation.get_url_kwargs()), button_text=_("Manage!")) }}</div>
+        {% endfor %}
+    </div>
 
-<div class="alternate-cards">
-    {% for conversation in conversations %}
-        <div class="margin-y3">{{ conversation|role('card', url=url('boards:dataviz-dashboard',  **conversation.get_url_kwargs()), button_text=_("Manage!")) }}</div>
-    {% endfor %}
-</div>
-
-{% include 'ej_conversations/includes/favorite-button.jinja2' %}
+    {% include 'ej_conversations/includes/favorite-button.jinja2' %}
+</section>
 
 <script>
     cards = document.querySelector(".cards-divider");

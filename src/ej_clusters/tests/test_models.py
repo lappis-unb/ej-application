@@ -11,12 +11,12 @@ class TestClusterization(ClusterRecipes):
         assert hasattr(conversation_db.clusterization, "clusters")
         assert hasattr(conversation_db, "clusters")
 
-    def test_clusterization_str_method(self, clusterization):
-        conversation = clusterization.conversation
-        conversation.id = 1
+    def test_clusterization_str_method(self, conversation_db):
+        conversation_db.get_clusterization()
+        clusterization = conversation_db.clusterization
 
-        assert str(clusterization) == f"{conversation} (0 clusters)"
-        assert f"{clusterization.get_absolute_url()}" == f"{conversation.get_absolute_url()}clusters/"
+        assert str(clusterization) == f"{conversation_db} (0 clusters)"
+        assert f"{clusterization.get_absolute_url()}" == f"{conversation_db.get_absolute_url()}clusters/"
 
 
 class TestCluster:

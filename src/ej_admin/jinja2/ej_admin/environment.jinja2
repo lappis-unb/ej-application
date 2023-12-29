@@ -1,5 +1,4 @@
 {% extends 'base.jinja2' %}
-{% set main_class = "board-container" %}
 
 {% block menu %}{% include 'ej_conversations/includes/participant-menu.jinja2' %}{% endblock %}
 
@@ -59,7 +58,7 @@ function updateConversationSearch(page, numEntries, orderBy, sort, searchString)
         }
     })
 }
-        
+
 function getFavoriteBoards() {
     $.ajax({
         url: 'favorite-boards',

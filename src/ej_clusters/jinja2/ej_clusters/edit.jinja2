@@ -3,21 +3,21 @@
 
 
 {% block content %}
-    {{ conversation|role('balloon', actions=False) }}
+    <section>
+        {% include 'ej_dataviz/includes/header.jinja2' %}
+        <div class="content-grid">
+            <h1 class="h2 left text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
+            <section class="margin-y1">
+                {% include 'ej_clusters/edit/select-groups.jinja2'%}
+                {% if new_cluster_form %}
+                    {% include 'ej_clusters/edit/new-cluster-form.jinja2'%}
+                {% endif %}
 
-    <div class="edit-content">
-        <h1 class="h2 left text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
-        <hr id="hr-divider">
-        
-        {% include 'ej_clusters/edit/select-groups.jinja2'%}
-        
-        {% if new_cluster_form %}
-            {% include 'ej_clusters/edit/new-cluster-form.jinja2'%}
-        {% endif %}
-
-        {% if edit_cluster %}
-            {% include 'ej_clusters/edit/edit-cluster-form.jinja2'%}
-        {% endif %}
-    </div>
-{% endblock %} 
+                {% if edit_cluster %}
+                    {% include 'ej_clusters/edit/edit-cluster-form.jinja2'%}
+                {% endif %}
+            </section>
+        </div>
+    </section>
+{% endblock %}
 

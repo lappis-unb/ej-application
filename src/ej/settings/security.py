@@ -38,9 +38,7 @@ class SecurityConf(Base):
         if self.ENVIRONMENT == "local":
             settings["INTERNAL_IPS"].append("127.0.0.1")
             settings["CORS_ORIGIN_ALLOW_ALL"] = True
-            settings["CSRF_TRUSTED_ORIGINS"].extend(
-                "localhost" + x for x in ["", ":8000", ":3000", ":5000"]
-            )
+            settings["CSRF_TRUSTED_ORIGINS"] = []
         return settings
 
 

@@ -9,15 +9,6 @@
     text-align: center;
 }
 
-.board-container {
-    padding: 0 6rem;
-    max-width: 80%;
-    @media only screen and (max-width: 667px) {
-        padding: 0 1.5rem 1rem;
-        max-width: unset;
-    }
-}
-
 .form-container {
     margin: 0 auto;
     max-width: 70rem;

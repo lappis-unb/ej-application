@@ -6,6 +6,8 @@ $modal-transparent-backgound: rgba(0, 0, 0, 0.4);
 $modal-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.35);
 
 .tools {
+    @extend .content-grid;
+    @extend .content-grid--padding;
     max-width: 70vw;
     padding: 2rem 0;
 

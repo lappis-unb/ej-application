@@ -1,5 +1,4 @@
 import logging
-from django.utils.translation import gettext as _
 
 from allauth.socialaccount import providers
 from allauth.socialaccount.models import SocialApp
@@ -7,6 +6,7 @@ from allauth.socialaccount.providers.facebook.provider import FacebookProvider
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 log = logging.getLogger("ej")
 SOCIAL_BUTTON_REGISTRY = {}
@@ -24,9 +24,7 @@ def social_buttons(request):
     Return a list of all active social buttons for the current request.
     """
     if apps.is_installed("allauth.socialaccount"):
-        # TODO: Generates new credentials to Facebook login
-        active_apps = SocialApp.objects.exclude(provider="facebook").values_list("provider", flat=True)
-        return [social_button(id_, request) for id_ in active_apps]
+        return [social_button("google", request)]
     else:
         return ()
 
@@ -39,23 +37,30 @@ def register_button(provider_id, fa_class=None, query=None):
 
     def social_button(request):
         redirect_url = reverse("profile:home")
-        provider = providers.registry.by_id(provider_id, request)
-        url = provider.get_login_url(request, next=request.GET.get("next", redirect_url), **(query or {}))
+        providers_classes = providers.registry.get_class_list()
 
-        return {
-            "provider": provider_id,
-            "href": url,
-            "id": f"{provider_id}-button",
-            "class_": f"fab {fa_class} icon-{provider_id} rounded-icon",
-        }
+        try:
+            Provider = list(filter(lambda provider: provider.id == provider_id, providers_classes))[0]
+            app = SocialApp.objects.get(provider=provider_id)
+            provider = Provider(request, app)
+            url = provider.get_login_url(
+                request, next=request.GET.get("next", redirect_url), **(query or {})
+            )
+            return {
+                "provider": provider_id,
+                "href": url,
+                "id": f"{provider_id}-button",
+                "class_": f"fab {fa_class} icon-{provider_id} rounded-icon",
+            }
+        except Exception as e:
+            log.error(f"{e}")
+
+        return {"provider": "", "href": "", "id": "", "class_": ""}
 
     SOCIAL_BUTTON_REGISTRY[provider_id] = social_button
     return social_button
 
 
-register_button("facebook", query={"method": "oauth2"})
-register_button("twitter")
-register_button("github")
 register_button("google", fa_class="fab fa-google")
 
 
