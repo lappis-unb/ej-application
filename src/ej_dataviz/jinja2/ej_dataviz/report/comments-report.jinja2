@@ -4,9 +4,7 @@
 {% block report %}
 <section>
         <div class="comment-report-title">
-            <span class="report-title text-accent">
-                {{_('Comments Report')}}
-            </span>
+            <h1 class="text-accent">{{_('Groups report')}}</h1>
             <a class="show-reports-link" href="#all-comments-section">{{_('see all')}}</a>
         </div>
         {% if clusters %}
@@ -22,9 +20,20 @@
                 {% endif %}
 
             {% endfor %}
+        {% else %}
+            <div class="margin-y2 italic helptext">
+                <p>
+                    {{_("Your conversation does not have groups.")}}
+                    {% trans %}You can edit the clusterization options for this conversation {% endtrans %}
+                    <a class="text-accent" href="{{ url("boards:cluster-edit", **conversation.get_url_kwargs()) }}">{{_("here")}}</a>.
+                </p>
+
+            </div>
         {% endif %}
-        {% include 'ej_dataviz/report/includes/comment_report/filter-section.jinja2' %}
-        {% include 'ej_dataviz/report/includes/comment_report/show-comments.jinja2' %}
+        <div class="margin-y4">
+            {% include 'ej_dataviz/report/includes/comment_report/filter-section.jinja2' %}
+            {% include 'ej_dataviz/report/includes/comment_report/show-comments.jinja2' %}
+        </div>
     <script>
     let clusterFilters = ["general"];
     let sortFilter = "desc";
