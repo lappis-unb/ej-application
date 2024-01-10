@@ -84,3 +84,37 @@ class TestUserView(UserRecipes):
         client.post("/account/remove/", data={"confirm": "true", "email": user.email})
         updated_user = User.objects.get(id=user.id)
         assert updated_user.email.endswith("@deleted-account")
+
+    def test_register_invalid_email(self, client, db):
+        User.objects.create_user("name@server.com", "1234", name="name")
+
+        response = client.post(
+            "/register/",
+            data={
+                "name": "Turanga Leela",
+                "email": "name@server.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+                "agree_with_terms": True,
+                "agree_with_privacy_policy": True,
+            },
+        )
+
+        assert response.status_code == 200
+        assert b"User with this Email address already exists." in response.content
+
+    def test_register_unmatch_passwords(self, client, db):
+        response = client.post(
+            "/register/",
+            data={
+                "name": "Turanga Leela",
+                "email": "name@server.com",
+                "password": "password",
+                "password_confirm": "anotherpassword",
+                "agree_with_terms": True,
+                "agree_with_privacy_policy": True,
+            },
+        )
+
+        assert response.status_code == 200
+        assert b"Passwords do not match" in response.content

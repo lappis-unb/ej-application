@@ -5,7 +5,7 @@
 
     <form method="post" class="register-form__grid">
         <div class="register-form__title">
-            <h2 aria-hidden="true">{{ _("Register new user") }}</h2>
+            <h1 class="text-accent" aria-hidden="true">{{ _("Register new user") }}</h1>
             <img class="register-form__image" src="{{ static('/img/login/login.svg') }}" style="left: 1rem" alt="">
         </div>
         {{ csrf_input }}
@@ -14,19 +14,39 @@
             <label class="register-form__label">{{ form.name.label }}</label>
             {{ form.name }}
         </div>
-        <div class="register-form__grid--second-column register-form__input--margin">
-            <label class="register-form__label">{{ form.email.help_text }}</label>
-            {{ form.email }}
-        </div>
-        <div class="register-form__grid--first-column register-form__input--margin">
-            <label class="register-form__label">{{ form.password.label }}</label>
-            {{ form.password }}
-        </div>
+        {% if form.email.errors %}
+            <div class="register-form__grid--second-column register-form__grid--second-column--email input-error">
+                <label class="register-form__label">{{ form.email.help_text }}</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+        {% else %}
+            <div class="register-form__grid--second-column register-form__grid--second-column--email">
+                <label class="register-form__label">{{ form.email.help_text }}</label>
+                {{ form.email }}
+            </div>
+        {% endif %}
 
-        <div class="register-form__grid--second-column register-form__input--margin">
-            <label class="register-form__label">{{ form.password_confirm.label }}</label>
-            {{ form.password_confirm }}
-        </div>
+        {% if form.password.errors%}
+            <div class="register-form__grid--first-column register-form__grid--first-column--password input-error">
+                <label class="register-form__label">{{ form.password.label }}</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+            <div class="register-form__grid--second-column register-form__input--margin input-error">
+                <label class="register-form__label">{{ form.password_confirm.label }}</label>
+                {{ form.password_confirm }}
+            </div>
+        {% else %}
+            <div class="register-form__grid--first-column register-form__grid--first-column--password">
+                <label class="register-form__label">{{ form.password.label }}</label>
+                {{ form.password }}
+            </div>
+            <div class="register-form__grid--second-column register-form__input--margin">
+                <label class="register-form__label">{{ form.password_confirm.label }}</label>
+                {{ form.password_confirm }}
+            </div>
+        {% endif %}
 
         <div class="register-form__grid--full-width">
             <label class="register-form__label register-form__label--margin">{{ form.agree_with_terms.label }}</label>

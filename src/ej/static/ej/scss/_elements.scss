@@ -82,6 +82,7 @@ ul.errorlist {
     list-style: none;
     margin: size(0.25);
     text-align: left;
+    font-style: italic;
 }
 
 .terms {
@@ -108,6 +109,10 @@ ul.errorlist {
     }
 }
 
+.input-error {
+    input, input:hover, input:focus {background: rgba(255, 62, 114, 0.15);}
+}
+
 .register-form {
     &__title {
         display: flex;
@@ -116,11 +121,6 @@ ul.errorlist {
         grid-column: 2/5;
         margin-bottom: 2.1875rem;
         margin-top: 4.5rem;
-
-        h2 {
-            margin: unset;
-            color: $color-theme-osf-light;
-        }
     }
 
     &__image {
@@ -137,10 +137,18 @@ ul.errorlist {
 
         &--first-column {
             grid-column: 2/3;
+
+            &--password {
+                input {margin: 0;}
+            }
         }
 
         &--second-column {
             grid-column: 4/5;
+            
+            &--email {
+                input {margin: 0;}
+            }
         }
 
         &--full-width {
@@ -192,6 +200,11 @@ ul.errorlist {
     }
 
     &__input {
+        input[type='password'] {
+            margin: 0;
+            margin-top: -1.125rem;
+        }
+
         input {
             border-radius: 0.625rem !important;
             background-color: $color-theme-report-gray-blue-transparent;
@@ -207,7 +220,7 @@ ul.errorlist {
         justify-content: space-between;
         align-items: center;
         display: flex;
-        margin-bottom: 2.0625rem;
+        margin: 2.0625rem 0 2.0625rem;
     }
 
     &__submit-button {

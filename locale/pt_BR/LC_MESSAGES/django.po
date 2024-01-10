@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-29 19:22-0300\n"
+"POT-Creation-Date: 2024-01-09 19:28-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1661,7 +1661,7 @@ msgstr "Lamentamos que você vá :( <br> <br> Boa sorte em sua jornada."
 #: src/ej_users/views/user.py:56
 #, fuzzy
 msgid "Invalid email or password"
-msgstr "Senha inválida"
+msgstr "E-mail ou senha inválida"
 
 #: src/ej_users/views/user.py:59
 msgid "Welcome to EJ!"
@@ -2174,23 +2174,23 @@ msgstr "Próximo"
 msgid "boards"
 msgstr "murais"
 
-#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:5
 msgid "Create board"
 msgstr "Criar mural"
 
-#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:7
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
 msgid "Fill up the form to create a new conversation board"
 msgstr "Preencha os campos para criar ou editar o mural de conversas"
 
-#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:12
+#: src/ej_boards/jinja2/ej_boards/board-create.jinja2:11
 msgid "Create Board"
 msgstr "Criar mural"
 
-#: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
+#: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:2
 msgid "Edit board"
 msgstr "Editar mural"
 
-#: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:4
+#: src/ej_boards/jinja2/ej_boards/board-edit.jinja2:3
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/create.jinja2:24
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:29
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:18
@@ -2237,11 +2237,11 @@ msgstr "Gerenciar murais"
 msgid "New board"
 msgstr "Novo mural"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:10
+#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:9
 msgid "Configure opinion groups"
 msgstr "Configurar grupos de opinião"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:12
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:13
 #, fuzzy
 msgid ""
 "We use votes to classify different users according to their opinions. Users "
@@ -2250,21 +2250,21 @@ msgstr ""
 "Usamos os votos para classificar usuários de acordo com suas opiniões. "
 "Usuários que votam de forma parecida, tendem a estar no mesmo grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:14
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:15
 #, python-format
 msgid "You belong to group <strong>%(user_group)s</strong>, for instance."
 msgstr "Você pertence ao grupo <strong>%(user_group)s</strong>, por exemplo."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:16
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:17
 msgid "We could not indentify your opinion group yet. Keep Voting!"
 msgstr ""
 "Ainda não conseguimos identificar seu grupo de opinião. Continue votando!"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:40
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:41
 msgid "Admin actions"
 msgstr "Ações de administração"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:43
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:44
 msgid "Force clusterization"
 msgstr "Forçar agrupamento"
 
@@ -2272,32 +2272,30 @@ msgstr "Forçar agrupamento"
 msgid "Could not determine the opinion groups for this conversation."
 msgstr "Não foi possível determinar os grupos de opinião para esta conversa."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:54
-#, python-format
-msgid ""
-"You can edit the clusterization options for this conversation %(link)s\n"
-"                    ."
-msgstr ""
-"Você pode editar as opções de clusterização para esta conversa %(link)s."
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:52
+#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:27
+#, fuzzy
+msgid "You can edit the clusterization options for this conversation "
+msgstr "Você pode editar as opções de clusterização para esta conversa"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:70
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:71
 #, python-format
 msgid "Typical comments cor cluster <strong>%(cluster)s</strong>."
 msgstr "Comentários típicos do grupo <strong>%(cluster)s</strong>."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:72
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:73
 msgid "Positive comments"
 msgstr "Comentários positivos"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:73
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:74
 msgid "No positive comments in cluster"
 msgstr "Nenhum comentário positivo no grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:77
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:78
 msgid "Negative comments"
 msgstr "Comentários negativos"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:78
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:79
 msgid "No negative comments in cluster"
 msgstr "Nenhum comentário negativo no grupo"
 
@@ -2685,7 +2683,7 @@ msgstr "Esta conversa está oculta."
 msgid "Edit conversation"
 msgstr "Editar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:31
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -2695,41 +2693,42 @@ msgstr ""
 "disponíveis. Clique no botão “Nova conversa” para começar a ouvir a opinião "
 "da sua audiência."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:37
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:38
 #, fuzzy
 msgid "Board statistics"
 msgstr "Estatísticas"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:41
 #, fuzzy
 msgid "Total votes"
 msgstr "Total de votos"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:44
 #, fuzzy
 msgid "Total participants"
 msgstr "Total de participantes"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:47
 #, fuzzy
 msgid "Total conversations"
 msgstr "Conversas hospedadas"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:52
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:53
 #, fuzzy
 msgid "Signature model"
 msgstr "Modelo de assinatura"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:58
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:59
 #, fuzzy
 msgid ""
 "In the current signature, you can create <span\n"
-"                 class=\"text-accent bold\">unlimited</span> conversations."
+"                     class=\"text-accent bold\">unlimited</span> "
+"conversations."
 msgstr ""
 "Na sua assinatura atual, você pode criar <span\n"
 " class=\"text-accent bold\">conversas ilimitadas</span>."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:64
 #, fuzzy, python-format
 msgid ""
 " In the current signature, you can create <span class=\"text-accent bold\">"
@@ -2738,18 +2737,18 @@ msgstr ""
 "Na sua assinatura atual, você pode criar <span\n"
 " class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:65
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:66
 #, fuzzy
 msgid "Request upgrade."
 msgstr "Solicite upgrade."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:72
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
 #: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:80
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:79
 #, fuzzy
 msgid "Manage!"
 msgstr "Gerenciar!"
@@ -3171,12 +3170,6 @@ msgstr "Sugira um novo comentário"
 #, fuzzy
 msgid "Your conversation does not have groups."
 msgstr "Sua conversa ainda não possui grupos definidos."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:27
-#, fuzzy
-msgid "You can edit the clusterization options for this conversation "
-msgstr ""
-"Você pode editar as opções de clusterização para esta conversa"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/export-data.jinja2:16
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:9
@@ -4427,21 +4420,21 @@ msgstr "Você tem que digitar seu e-mail para confirmar."
 msgid "Login form"
 msgstr "Formulário de login"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:18
+#: src/ej_users/jinja2/ej_users/login.jinja2:19
 #, fuzzy
 msgid "I forgot my password"
 msgstr "Esqueci minha senha"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:4
-#: src/ej_users/jinja2/ej_users/login.jinja2:19
+#: src/ej_users/jinja2/ej_users/login.jinja2:20
 msgid "Login"
 msgstr "Entrar"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:35
+#: src/ej_users/jinja2/ej_users/login.jinja2:36
 msgid "Create your account!"
 msgstr "Criar uma conta!"
 
-#: src/ej_users/jinja2/ej_users/login.jinja2:35
+#: src/ej_users/jinja2/ej_users/login.jinja2:36
 msgid "Register now!"
 msgstr "Registre-se"
 
@@ -4504,7 +4497,7 @@ msgid "Register new user"
 msgstr "Registre novo usuário"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
-#: src/ej_users/jinja2/ej_users/register.jinja2:47
+#: src/ej_users/jinja2/ej_users/register.jinja2:49
 msgid "Register"
 msgstr "Registrar"
 
@@ -4536,6 +4529,13 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#, python-format
+#~ msgid ""
+#~ "You can edit the clusterization options for this conversation %(link)s\n"
+#~ "                    ."
+#~ msgstr ""
+#~ "Você pode editar as opções de clusterização para esta conversa %(link)s."
 
 #, fuzzy
 #~ msgid "Comments Report"
