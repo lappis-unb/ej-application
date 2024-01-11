@@ -32,6 +32,7 @@ class DetailView(DetailView):
             "n_votes": profile.votes.count(),
             "achievements_href": None,
             "user_boards": Board.objects.filter(owner=self.request.user),
+            "current_page": "detail-profile",
         }
 
 
@@ -69,6 +70,7 @@ class EditView(UpdateView):
         return {
             "form": self.form_class(instance=profile, request=self.request),
             "profile": profile,
+            "current_page": "edit-profile",
         }
 
 
@@ -120,6 +122,7 @@ class HomeView(ListView):
             "my_tags": profile_selected_tags,
             "host": get_host_with_schema(self.request),
             "has_filtered_tag": self.request.user.profile.filtered_home_tag,
+            "current_page": "home",
             **contributions_data,
         }
 

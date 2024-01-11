@@ -35,7 +35,7 @@ def index(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
     user_signature = SignatureFactory.get_user_signature(conversation.author)
     tools = user_signature.get_conversation_tools(conversation)
-    context = {"tools": tools, "conversation": conversation}
+    context = {"tools": tools, "conversation": conversation, "current_page": "tools"}
     return render(request, "ej_tools/index.jinja2", context)
 
 

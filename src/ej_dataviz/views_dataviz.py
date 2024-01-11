@@ -59,6 +59,7 @@ def index(request, conversation_id, **kwargs):
         "race_field": names.get("race", _("Race")),
         "conversation": check_promoted(conversation, request),
         "pca_link": _("https://en.wikipedia.org/wiki/Principal_component_analysis"),
+        "current_page": "dashboard",
     }
 
     return render(request, "ej_dataviz/dashboard.jinja2", render_context)

@@ -1,0 +1,19 @@
+{% macro menu_item(current_page, page, href, title) %}
+    {% if page == 'home' %}
+        <a href={{ href }}
+            class="{{'participant-menu__item participant-menu__home-link participant-menu__home-link--selected' if current_page is defined and current_page == page else 'participant-menu__item participant-menu__home-link'}}">
+            <i class="fas fa-home"></i> {{ title }}
+        </a>
+    {% else %}
+        <li class={{"participant-menu__home-link--selected" if current_page is defined and current_page == page else ""}}>
+            <a href={{href}}>{{ title }}</a>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% macro board_menu_item(current_page, page, href, board) %}
+        <li class={{"participant-menu__home-link--selected" if current_page is defined and current_page == page else ""}}>
+            <a href={{href}}>{{ board.title }}</a>
+            <p>({{board.conversations.count()}})</p>
+        </li>
+{% endmacro %}

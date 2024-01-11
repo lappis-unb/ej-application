@@ -44,25 +44,3 @@ def _patch_conversation_app():
     Conversation.get_clusterization = get_clusterization
     Conversation._clusterization = lazy(get_clusterization)
     Conversation.clusters = delegate_to("_clusterization")
-
-    @register_menu("conversations:detail-admin")
-    def _detail_links(request, conversation):
-        if request.user.has_perm("ej.can_edit_conversation", conversation):
-            return [
-                a(
-                    _("Create/Edit groups"),
-                    href=reverse(
-                        "boards:cluster-edit",
-                        kwargs=conversation.get_url_kwargs(),
-                    ),
-                ),
-                a(
-                    _("Manage personas"),
-                    href=reverse(
-                        "boards:cluster-stereotype_votes",
-                        kwargs=conversation.get_url_kwargs(),
-                    ),
-                ),
-            ]
-        else:
-            return []

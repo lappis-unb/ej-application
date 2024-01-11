@@ -153,6 +153,7 @@ class ClustersEditView(UpdateView):
             "new_cluster_form": new_cluster_form,
             "edit_cluster": selected_cluster,
             "show_modal": show_modal,
+            "current_page": "edit-groups",
         }
 
 
@@ -168,7 +169,11 @@ class StereotypeVotesView(ListView):
 
     def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         if self.clusterization is None:
-            return render(request, self.template_name, {"conversation": self.conversation, "groups": None})
+            return render(
+                request,
+                self.template_name,
+                {"conversation": self.conversation, "groups": None, "current_page": "stereotypes"},
+            )
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
@@ -205,6 +210,7 @@ class StereotypeVotesView(ListView):
                 self.stereotype, self.clusterization, self.conversation
             ),
             "groups": self.clusterization.get_stereotypes(),
+            "current_page": "stereotypes",
         }
 
 
