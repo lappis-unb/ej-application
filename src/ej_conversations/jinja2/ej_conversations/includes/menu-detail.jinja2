@@ -1,3 +1,5 @@
+{% from 'ej/includes/menu-item.jinja2' import menu_item %}
+
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
     <ul class="nav-header menu-padding">
         <li id="board-name">
@@ -21,22 +23,27 @@
             </li>
         {% endif %}
     </ul>
-
-    <ul class="menu-padding nav-categories">
-        <h3 id="menu-conversation">{{ _('Collect opinions') }}</h3>
-
-        {% for link in page_menu.links('conversations:detail-actions', request, conversation) %}
-            <li>{{ link }}</li>
-        {% endfor %}
+</nav>
+<nav class="participant-menu">
+    <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{ _('Collect opinions') }}</h3>
+    <ul class="participant-menu__item">
+        {{ menu_item(current_page, "dashboard", url('boards:dataviz-dashboard', **conversation.get_url_kwargs()), _('Dashboard')) }}
+        {{ menu_item(current_page, "voting", conversation.patch_url('conversation:detail'), _('Voting')) }}
+        {{ menu_item(current_page, "tools", conversation.patch_url('conversation-tools:index'), _('Tools')) }}
         {%- if request.user.has_perm('ej.can_moderate_conversation', conversation) %}
-            <li><a href="{{ conversation.patch_url('conversation:moderate') }}">{{ _('Manage Comments') }}</a></li>
+            {{ menu_item(current_page, "moderate", conversation.patch_url('conversation:moderate'), _('Manage Comments')) }}
         {% endif %}
-    </ul>
+        </ul>
 
     <hr class="nav-divider">
 
-    <ul class="menu-padding nav-categories">
-        <h3 id="menu-conversation">{{ _('Model and Analyze') }}</h3>
+    <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{ _('Model and Analyze') }}</h3>
+    <ul class="participant-menu__item">
+        {% if request.user.has_perm("ej.can_edit_conversation", conversation) %}
+            {{ menu_item(current_page, "edit-groups", url('boards:cluster-edit', **conversation.get_url_kwargs()), _("Create/Edit groups")) }}
+            {{ menu_item(current_page, "stereotypes", url("boards:cluster-stereotype_votes", **conversation.get_url_kwargs()), _("Manage personas")) }}
+        {% endif %}
+
         {% for link in page_menu.links('conversations:detail-admin', request, conversation) %}
             <li>{{ link }}</li>
         {% endfor %}
@@ -80,11 +87,12 @@
     </ul>
 
     <hr class="nav-divider">
+
     {% for section in conversation.custom_apps_menu_links() %}
-    <ul class="menu-padding nav-categories">
-        <h3>{{section["title"]}}</h3>
+    <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{section["title"]}}</h3>
+    <ul class="participant-menu__item">
         {% for link in section["links"] %}
-            <li><a href={{ link["a"] }}>{{link["text"]}}</a></li>
+            {{ menu_item(current_page, link["current_page"], link["a"], link["text"]) }}
         {% endfor %}
     {% endfor %}
     </ul>

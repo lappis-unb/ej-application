@@ -30,6 +30,7 @@ class EjActivationConfig(AppConfig):
                         },
                     ),
                     "text": _("Public segmentation"),
+                    "current_page": "activation",
                 }
             ],
         }

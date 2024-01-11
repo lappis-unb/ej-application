@@ -39,13 +39,6 @@ from .vote import Vote
 NOT_GIVEN = object()
 
 
-@register_menu("conversations:detail-actions")
-def conversation_links(request, conversation):
-    return [
-        a(_("Tools"), href=conversation.patch_url("conversation-tools:index")),
-    ]
-
-
 class Conversation(HasFavoriteMixin, TimeStampedModel):
     """
     A topic of conversation.

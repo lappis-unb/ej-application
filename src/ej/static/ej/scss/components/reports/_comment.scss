@@ -300,16 +300,6 @@
     align-items: baseline;
 }
 
-/* Responsive cards */
-@media (max-width: 1530px) {
-    .comment-card-group {
-        display: block;
-    }
-    .comment-report-card {
-        width: 100%;
-    }
-}
-
 @media (max-width: 820px) {
     .paginator li {
         margin: auto 0.2rem auto 0.2rem;

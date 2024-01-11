@@ -2,6 +2,7 @@
 {% set page_title = _('Logout') %}
 {% set show_account_link = false %}
 {% set login_link = link(_('login'), href='auth:login') %}
+{% set hide_menu = true %}
 
 {% block content %}
     {% if has_logout %}

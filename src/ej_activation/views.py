@@ -151,6 +151,7 @@ class ActivationIndexView(DetailView):
         conversation = self.get_object()
         context["conversation"] = conversation
         context["object_list"] = SegmentFilter.objects.filter(conversation=conversation).order_by("id")
+        context["current_page"] = "activation"
         return context
 
 

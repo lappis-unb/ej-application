@@ -28,6 +28,7 @@ def index(request):
             "boards_count": boards_count,
             "conversations_count": conversations_count,
             "users_count": users_count,
+            "current_page": "administration",
         },
     )
 

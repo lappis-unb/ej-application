@@ -111,6 +111,7 @@ class PrivateConversationView(ConversationView):
             "conversations_limit": max_conversation_per_user,
             "board": board,
             "user_boards": user_boards,
+            "current_page": board.slug,
         }
 
 
@@ -192,6 +193,7 @@ class ConversationDetailView(DetailView):
             "apps_menu_links": apps_custom_menu_links(conversation),
             "user_boards": user_boards,
             "privacy_policy": privacy_policy,
+            "current_page": "voting",
             **self.ctx,
         }
 
@@ -305,6 +307,7 @@ class ConversationModerateView(UpdateView):
             "created": created_comments,
             "menu_links": conversation_admin_menu_links(conversation, self.request.user),
             "comment_saved": False,
+            "current_page": "moderate",
         }
 
 
