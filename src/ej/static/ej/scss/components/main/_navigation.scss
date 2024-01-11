@@ -134,6 +134,12 @@ body {
 }
 
 .page-menu {
+
+    @media only screen and (min-height: 500px) and (max-width: 800px) {
+        max-height: unset;
+    }
+
+    max-height: 600px;
     height: 100%;
     z-index: 750;
     position: fixed;
@@ -287,8 +293,6 @@ body {
     }
 
     nav {
-
-        border-bottom: 1px solid color("brand");
         h1,
         h2,
         h3 {
@@ -463,15 +467,29 @@ body {
     display: grid;
     grid-template-columns: 1.75rem auto 1.75rem;
 
-
     &__item {
-        grid-column: 2/3;
         overflow: hidden;
         text-overflow: ellipsis;
+        grid-column: 1/4;
+        li {
+            padding: 0.32rem 0 0.32rem 1.75rem;
+            box-sizing: content-box;
+        }
+
+        &--column-2 {
+            grid-column: 2/3;
+            padding: unset !important;
+        }
     }
 
     &__item--margin {
         margin-top: 2rem !important;
+
+        &:last-child {
+            @media only screen and (min-height: 500px) {
+                margin-bottom: 2rem;
+            }
+        }
     }
 
     &__welcome-title {
@@ -482,13 +500,16 @@ body {
     }
 
     &__home-link {
-        grid-column: 1/4;
         margin: 2.5rem 0 2.5rem 0;
         padding: 0.32rem 0 0.32rem 1.75rem;
-
         &--selected {
             background-color: $color-navigation-header-with-opacity;
         }
+    }
+
+    .nav-divider {
+        margin: 1rem 0 0 0 !important;
+        grid-column: 1/4;
     }
 }
 
@@ -582,7 +603,7 @@ body {
             }
         }
         nav:first-child a {
-            font-weight: 700;
+            font-weight: 500;
         }
         nav:last-child::after {
             content: none;
