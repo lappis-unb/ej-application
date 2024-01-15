@@ -16,9 +16,10 @@
             </div>
         </div>
     </div>
-    <div class="form-element ">
+    <div class="form-element">
         <div class="content-grid inputs-min-size">
-        {{ tabs({_('Perfil'): '#profile-info',}, class_='width-full tab-color') }}
+        {{ tabs({_('Perfil'): '#profile-info', 
+                _('Account'): '#profile-account',}, class_='width-full tab-color') }}
             <div class="form-profile form-profile--row-separation" id="profile-info">
                 <div class="form-profile__name">
                     <label>{{_("name")}}</label>
@@ -78,15 +79,49 @@
                     <label>{{_("biography")}}</label>
                     <span>{{ profile.biography}}</span>
                 </div>
-            </div>
-        </div>
 
-    <div class="content-grid">
-        <div id="btn-edit" class="form-profile--buttons">
-            {{ link(_("Edit profile"), href="profile:edit", button=True, class="block margin-y3 form-profile--buttons__action") }}
+                <div class="form-profile__edit">
+                    <div class="content-grid">
+                        <div id="btn-edit" class="form-profile--buttons">
+                            {{ link(_("Edit profile"), href="profile:edit", button=True, class="block margin-y3 form-profile--buttons__action") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form method="post" class="form-element profile-form-account" enctype="multipart/form-data"> 
+                {{ csrf_input }}
+                <div id="profile-account">
+                    <div class="inputs-min-size"> 
+                        <h3 class="form-profile--subtitle">{{_("Change password")}}</h3>
+                        <div class="form-profile">
+                            <div class="form-profile__current-password">
+                                <label>{{_("current password")}}</label>
+                                {{change_password_form.current_password}}
+                                {{change_password_form.current_password.errors}}
+                            </div>
+                            <div class="form-profile__new-password">
+                                <label>{{_("new password")}}</label>
+                                {{change_password_form.password}}
+                                {{change_password_form.password.errors}}
+                            </div>
+                            <div class="form-profile__confirm-password">
+                                <label>{{_("confirm password")}}</label>
+                                {{change_password_form.password_confirm}}
+                            </div>
+                            <div class="form-profile__save">
+                                <input class="button" type="submit" name="submit" value="{{ _('Save') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    </div>
+
+{% if go_to_password %}
+    <script> window.location.hash = '#profile-account'; </script>
+{% endif %}
+
 {% endblock %}
 
 

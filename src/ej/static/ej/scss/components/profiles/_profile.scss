@@ -112,11 +112,17 @@
   padding-top: 1.5rem;
 }
 
+.form-profile--subtitle {
+  font-weight: 500;
+  font-size: 24px;
+}
+
 .form-profile {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
   grid-column-gap: 1.4rem;
+  grid-row-gap: 1rem;
 
   span{
     font-family: 'Work Sans';
@@ -147,7 +153,6 @@
   }
 
   &__occupation {
-    // grid-area: 3 / 2 / 4 / 3;
     grid-area: 3 / 2 / 4 / 4;
   }
 
@@ -183,6 +188,34 @@
     grid-area: 5 / 2 / 7 / 5;
   }
 
+  &__current-password {
+    grid-area: 1 / 1 / 1 / 1;
+    input[type='password'] {margin: -1.125rem 0 0rem 0;}
+  } 
+  
+  &__new-password {
+    grid-area: 2 / 1 / 2 / 2;
+    input[type='password'] {margin: -1.125rem 0 0rem 0;}
+  }
+
+  &__confirm-password {
+    grid-area: 2;
+  }
+
+  &__save {
+    grid-area: 2;
+    align-items: center;
+    display: grid;
+    input {
+      margin: 0;
+      width: fit-content;
+    }
+  }
+
+  &__edit {
+    grid-area: 6 / 4 / 6 / 4;
+  }
+
   select, textarea{
     border-radius: 0.3125rem !important;
   }
@@ -193,11 +226,11 @@
     align-items: end;
     justify-content: end;
     column-gap: 2rem;
-    input, a{
+    input, a {
       border: none !important;
       border-radius: 1.5625rem !important;
     }
-    a{
+    a {
       background-color: $color-base-pink !important;
     }
   }
@@ -207,8 +240,12 @@
 
 @media (max-width:900px){
 
-  .profile-header, .form-element{
+  .profile-header {
     padding: 0px 1.88rem;
+  }
+
+  .form-element {
+    padding: 0 0.6rem;
   }
 
   .profile-header{
@@ -226,6 +263,10 @@
     &--buttons{
       flex-direction: column;
       align-items: center;
+    }
+
+    &__save {
+      justify-content: center;
     }
   }
 
