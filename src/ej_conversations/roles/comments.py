@@ -8,7 +8,6 @@ from ej.roles import with_template
 from .. import models
 from ..enums import RejectionReason
 from ..models import Comment
-from ..utils import show_vote_actions_on_card
 
 
 @with_template(Comment, role="card")
@@ -36,8 +35,6 @@ def comment_card(comment: Comment, request=None, target=None, show_actions=None,
 
     if user and user.is_anonymous:
         show_actions, message = True, None
-    else:
-        show_actions, message = show_vote_actions_on_card(request)
 
     return {
         "author": comment.author.username,

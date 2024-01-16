@@ -143,18 +143,6 @@ class OpinionComponentTool(AbstractTool):
         return author_token
 
 
-class RocketChat(AbstractTool):
-    def __init__(self, conversation, is_active=True):
-        AbstractTool.__init__(self)
-        self.name: str = _("Rocket.Chat")
-        self.description: str = _(
-            "Rocket.Chat instance for segmented communication with conversation participants."
-        )
-        self.link: str = reverse("boards:dataviz-communication", kwargs=conversation.get_url_kwargs())
-        self.about: str = "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
-        self.is_active = is_active
-
-
 class MailingTool(AbstractTool):
     MAILING_TOOL_CHOICES = (
         ("mautic", _("Mautic")),
@@ -182,16 +170,3 @@ class MailingTool(AbstractTool):
         self.link: str = conversation.patch_url("conversation-tools:mailing")
         self.about: str = "/docs/user-guides/pt-br/tools-mail-template.html#"
         self.is_active = is_active
-
-
-class Tools:
-    """
-    Tools is an utility class to manage EJ tools;
-    """
-
-    @staticmethod
-    def get(tool_name, tools):
-        tool = list(filter(lambda tool: tool.name == tool_name, tools))
-        if len(tool) == 0 or len(tool) > 1:
-            raise Exception("tool not found")
-        return tool[0]

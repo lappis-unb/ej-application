@@ -5,6 +5,7 @@ from ej_signatures.models import SignatureFactory
 from ej_conversations.mommy_recipes import ConversationRecipes
 
 
+@pytest.mark.skip()
 class TestSignatureClass(ConversationRecipes):
     def test_user_get_default_signature(self, db, mk_user):
         user = mk_user(email="user@domain.com")

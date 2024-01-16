@@ -17,7 +17,6 @@ from django.contrib.flatpages.models import FlatPage
 from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
     can_acess_list_view,
-    can_add_conversations,
     can_edit_conversation,
     can_moderate_conversation,
     check_conversation_overdue,
@@ -25,7 +24,6 @@ from ej.decorators import (
 )
 from ej_boards.models import Board
 from ej_conversations.rules import max_comments_per_conversation
-from ej_users.models import SignatureFactory
 from ej_users.models import User
 
 from .forms import CommentForm, ConversationForm
@@ -64,24 +62,17 @@ class PublicConversationView(ConversationView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         user = self.request.user
-        user_boards = []
-        if user.is_authenticated:
-            user_signature = SignatureFactory.get_user_signature(user)
-            max_conversation_per_user = user_signature.get_conversation_limit()
-            user_boards = Board.objects.filter(owner=user)
-        else:
-            max_conversation_per_user = 0
+        user_boards = Board.objects.filter(owner=user) if user.is_authenticated else []
 
         return {
             "conversations": self.get_queryset(),
             "user_boards": user_boards,
-            "conversations_limit": max_conversation_per_user,
         }
 
 
 @method_decorator([login_required, can_acess_list_view], name="dispatch")
-class PrivateConversationView(ConversationView):
-    template_name = "ej_conversations/conversation-list.jinja2"
+class BoardConversationsView(ConversationView):
+    template_name = "ej_conversations/board-conversations-list.jinja2"
 
     def get_queryset(self) -> QuerySet[Any]:
         user = self.request.user
@@ -100,15 +91,12 @@ class PrivateConversationView(ConversationView):
         user = self.request.user
         board_slug = self.kwargs.get("board_slug", None)
         board = Board.objects.get(slug=board_slug)
-        user_signature = SignatureFactory.get_user_signature(user)
-        max_conversation_per_user = user_signature.get_conversation_limit()
         user_boards = Board.objects.filter(owner=user)
 
         return {
             "conversations": self.get_queryset(),
             "title": _(board.title),
             "subtitle": _("Participate voting and creating comments!"),
-            "conversations_limit": max_conversation_per_user,
             "board": board,
             "user_boards": user_boards,
             "current_page": board.slug,
@@ -198,7 +186,7 @@ class ConversationDetailView(DetailView):
         }
 
 
-@method_decorator([login_required, can_acess_list_view, can_add_conversations], name="dispatch")
+@method_decorator([login_required, can_acess_list_view], name="dispatch")
 class ConversationCreateView(CreateView):
     template_name = "ej_conversations/conversation-create.jinja2"
     form_class = ConversationForm

@@ -19,15 +19,15 @@
 		</tr>
 		{%  for tool in tools %}
 		{% if not tool.is_active %}
-		<tr>
-			<td><span>{{ tool.name }}<span></td>
-			<td>
-				{{ tool.description }}&ensp;<a class="tools-table-about" href="{{ tool.about }}">{{ _('Learn more about this integration') }}.</a>
-				<br>
-				<span class="helptext text-accent">{{_("This tool is not available on your current signature.")}}</span>
+            <tr>
+                <td><span>{{ tool.name }}<span></td>
+                <td>
+                    {{ tool.description }}&ensp;<a class="tools-table-about" href="{{ tool.about }}">{{ _('Learn more about this integration') }}.</a>
+                    <br>
+                    <span class="helptext text-accent">{{_("This tool is not available.")}}</span>
 
-			</td>
-		</tr>
+                </td>
+            </tr>
 		{% else %}
 			<tr>
 				<td><a href="{{ tool.link }}">{{ tool.name }}</a></td>

@@ -892,8 +892,6 @@ class TestPublicConversations(ConversationRecipes):
         assert board4 in response.context["user_boards"]
         assert len(response.context["user_boards"]) == 4
 
-        assert response.context["conversations_limit"] == 20
-
         assert promoted_conversation in response.context["conversations"]
         assert not_promoted_conversation not in response.context["conversations"]
         assert hiden_conversation in response.context["conversations"]
@@ -907,6 +905,5 @@ class TestPublicConversations(ConversationRecipes):
 
         assert response.status_code == 200
         assert response.context["user_boards"] == []
-        assert response.context["conversations_limit"] == 0
         assert promoted_conversation in response.context["conversations"]
         assert response.context["conversations"][0].is_hidden == True

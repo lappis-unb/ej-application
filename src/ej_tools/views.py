@@ -20,7 +20,6 @@ from .models import (
     WebchatHelper,
 )
 from ej_conversations.models import Conversation
-from ej_signatures.models import SignatureFactory
 from ej.decorators import can_access_tool_page, can_edit_conversation
 from .utils import (
     npm_version,
@@ -28,14 +27,27 @@ from .utils import (
     prepare_host_with_https,
     get_host_with_schema,
 )
+from ej_tools.tools import (
+    MailingTool,
+    BotsTool,
+    MauticTool,
+    OpinionComponentTool,
+    BotsWebchatTool,
+    BotsWhatsappTool,
+    BotsTelegramTool,
+)
 
 
 @can_edit_conversation
 def index(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tools = user_signature.get_conversation_tools(conversation)
-    context = {"tools": tools, "conversation": conversation, "current_page": "tools"}
+    tools = [
+        MailingTool(conversation),
+        OpinionComponentTool(conversation),
+        BotsTool(conversation, exclude=["whatsapp"]),
+        MauticTool(conversation, is_active=False),
+    ]
+    context = {"tools": tools, "conversation": conversation}
     return render(request, "ej_tools/index.jinja2", context)
 
 
@@ -44,10 +56,6 @@ def mailing(request, board_slug, conversation_id, slug):
     from .mailing import TemplateGenerator
 
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Mailing campaign"), conversation)
-    tool.raise_error_if_not_active()
-
     template = "null"
     form = MailingToolForm(request.POST, conversation_id=conversation)
     if request.method == "POST" and form.is_valid():
@@ -62,7 +70,7 @@ def mailing(request, board_slug, conversation_id, slug):
             template = json.dumps(template, ensure_ascii=False)
     context = {
         "conversation": conversation,
-        "tool": tool,
+        "tool": MailingTool(conversation),
         "template_preview": template,
         "form": form,
     }
@@ -107,11 +115,7 @@ class OpinionComponentView(UpdateView):
         return redirect(self.conversation.patch_url("conversation-tools:opinion-component-preview"))
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        user_signature = SignatureFactory.get_user_signature(self.conversation.author)
-        tool = user_signature.get_tool(_("Opinion component"), self.conversation)
-        tool.raise_error_if_not_active()
         opinion_component = self.get_object()
-
         if opinion_component:
             background_url = opinion_component.background_image.name
             logo_url = opinion_component.logo_image.name
@@ -121,7 +125,7 @@ class OpinionComponentView(UpdateView):
 
         return {
             "ej_domain": get_host_with_schema(self.request),
-            "tool": tool,
+            "tool": OpinionComponentTool(self.conversation),
             "npm_version": npm_version(),
             "conversation": self.conversation,
             "opinion_component_form": self.opinion_component_form,
@@ -134,8 +138,7 @@ def opinion_component_preview(request, board_slug, conversation_id, slug):
     host = get_host_with_schema(request)
 
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion component"), conversation)
+    tool = OpinionComponentTool(conversation)
     preview_token = tool.get_preview_token(request, conversation)
     tool.raise_error_if_not_active()
     theme = request.GET.get("theme", "icd")
@@ -151,40 +154,27 @@ def opinion_component_preview(request, board_slug, conversation_id, slug):
 @can_access_tool_page
 def chatbot(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    context = {
-        "conversation": conversation,
-        "tool": user_signature.get_tool(_("Opinion Bots"), conversation),
-    }
+    context = {"conversation": conversation, "tool": BotsTool(conversation)}
     return render(request, "ej_tools/chatbot.jinja2", context)
 
 
 @can_access_tool_page
 def telegram(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion Bots"), conversation).telegram
-    tool.raise_error_if_not_active()
-    context = {"conversation": conversation, "tool": tool}
+    context = {"conversation": conversation, "tool": BotsTelegramTool(conversation)}
     return render(request, "ej_tools/telegram.jinja2", context)
 
 
 @can_access_tool_page
 def whatsapp(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion Bots"), conversation).whatsapp
-    tool.raise_error_if_not_active()
-    context = {"conversation": conversation, "tool": tool}
+    context = {"conversation": conversation, "tool": BotsWhatsappTool(conversation)}
     return render(request, "ej_tools/whatsapp.jinja2", context)
 
 
 @can_access_tool_page
 def webchat(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
-    tool.raise_error_if_not_active()
 
     user_can_add = user_can_add_new_domain(request.user, conversation)
     host = get_host_with_schema(request)
@@ -208,7 +198,7 @@ def webchat(request, board_slug, conversation_id, slug):
     context = {
         "conversation": conversation,
         "conversation_rasa_connections": conversation_rasa_connections,
-        "tool": tool,
+        "tool": BotsWebchatTool(conversation),
         "form": form,
         "is_valid_user": user_can_add,
         "webchat_preview_url": webchat_preview_url,
@@ -218,9 +208,6 @@ def webchat(request, board_slug, conversation_id, slug):
 
 def webchat_preview(request, board_slug, conversation_id, slug):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
-    tool.raise_error_if_not_active()
 
     host = get_host_with_schema(request)
     rasa_domain = WebchatHelper.get_rasa_domain(host)
@@ -233,9 +220,6 @@ def delete_connection(request, board_slug, conversation_id, slug, connection_id)
 
     rasa_connection = RasaConversation.objects.get(id=connection_id)
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Opinion Bots"), conversation).webchat
-    tool.raise_error_if_not_active()
 
     if user.is_staff or user.is_superuser or rasa_connection.conversation.author.id == user.id:
         rasa_connection.delete()
@@ -250,10 +234,6 @@ def delete_connection(request, board_slug, conversation_id, slug, connection_id)
 @can_access_tool_page
 def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
     conversation = Conversation.objects.get(id=conversation_id)
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Mautic"), conversation)
-    tool.raise_error_if_not_active()
-
     error_message = None
     connections = None
 
@@ -291,7 +271,7 @@ def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
     context = {
         "conversation": conversation,
         "connections": connections,
-        "tool": tool,
+        "tool": MauticTool(conversation),
         "form": form,
         "errors": error_message,
     }
@@ -302,11 +282,6 @@ def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
 def delete_mautic_connection(request, board_slug, conversation_id, slug, mautic_connection_id):
     conversation = Conversation.objects.get(id=conversation_id)
     mautic_connection = ConversationMautic.objects.get(conversation_id=conversation_id)
-
-    user_signature = SignatureFactory.get_user_signature(conversation.author)
-    tool = user_signature.get_tool(_("Mautic"), conversation)
-    tool.raise_error_if_not_active()
-
     mautic_connection.delete()
     return redirect(conversation.patch_url("conversation-tools:mautic"))
 

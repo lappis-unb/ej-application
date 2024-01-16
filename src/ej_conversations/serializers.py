@@ -4,9 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from ej_conversations.roles.conversations import conversation_card
 from ej_conversations.roles.comments import comment_summary
-from ej_conversations.decorators import conversation_can_receive_channel_vote
 from ej_tools.models import ConversationMautic, MauticClient
-from ej_users.models import SignatureFactory
 from ej.serializers import BaseApiSerializer
 from .models import Conversation, Comment, Vote
 from ej_users.models import User
@@ -163,31 +161,26 @@ class VoteSerializer(BaseApiSerializer):
         validated_data["comment"] = comment
         return Vote(**validated_data)
 
-    @conversation_can_receive_channel_vote
     def save_hook(self, request, vote):
         user = request.user
-        author = vote.comment.conversation.author
-        user_signature = SignatureFactory.get_user_signature(author)
+        # TODO: remove the integration with Mautic
         create_mautic_contact_from_author(request, vote)
-        if user_signature.can_vote():
-            try:
-                skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
-                skipped_vote.choice = vote.choice
-                skipped_vote.analytics_utm = vote.analytics_utm
-                skipped_vote.save()
-                return skipped_vote
-            except Exception as e:
-                pass
-            if vote.id is None:
-                vote.author = user
-                vote.save()
-            elif vote.author != user:
-                raise PermissionError("cannot update vote of a different user")
-            else:
-                vote.save(update_fields=["choice", "analytics_utm"])
-            return vote
+        try:
+            skipped_vote = Vote.objects.get(comment=vote.comment, choice=0, author=user)
+            skipped_vote.choice = vote.choice
+            skipped_vote.analytics_utm = vote.analytics_utm
+            skipped_vote.save()
+            return skipped_vote
+        except Exception as e:
+            pass
+        if vote.id is None:
+            vote.author = user
+            vote.save()
+        elif vote.author != user:
+            raise PermissionError("cannot update vote of a different user")
         else:
-            raise PermissionError("vote limit reached")
+            vote.save(update_fields=["choice", "analytics_utm"])
+        return vote
 
 
 def create_mautic_contact_from_author(request, vote):

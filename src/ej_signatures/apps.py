@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 
@@ -11,9 +10,8 @@ class EjSignaturesConfig(AppConfig):
     roles = None
 
     def ready(self):
-        pass
-        # from . import rules, api, roles
+        import ej_conversations.views as ej_conversations_views
 
-        # self.rules = rules
-        # self.api = api
-        # self.roles = roles
+        ej_conversations_views.BoardConversationsView.template_name = (
+            "ej_signatures/board-conversations-list.jinja2"
+        )

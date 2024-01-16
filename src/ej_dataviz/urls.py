@@ -13,11 +13,6 @@ urlpatterns = [
         name="dashboard",
     ),
     path(
-        conversation_url + "communication/",
-        views_dataviz.communication,
-        name="communication",
-    ),
-    path(
         conversation_url + "scatter/",
         views_dataviz.scatter,
         name="scatter",

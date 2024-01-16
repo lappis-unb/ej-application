@@ -47,7 +47,6 @@ CONVERSATION = {
             "webchat": 0,
             "whatsapp": 0,
             "ej": 0,
-            "rocketchat": 0,
         },
         "channel_participants": {
             "opinion_component": 0,
@@ -56,7 +55,6 @@ CONVERSATION = {
             "ej": 0,
             "webchat": 0,
             "whatsapp": 0,
-            "rocketchat": 0,
         },
     },
     "text": "test",

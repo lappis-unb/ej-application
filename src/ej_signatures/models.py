@@ -25,16 +25,6 @@ class Signature(ABC):
         else:
             return False
 
-    def get_tool(self, tool_name, conversation):
-        """Returns a tool that is available on user signature
-
-        :tool_name: Tool Name
-        :conversation: Conversation instance
-        :returns: Tool instance
-        """
-        tools = self.get_conversation_tools(conversation)
-        return Tools.get(tool_name, tools)
-
     def can_vote(self) -> bool:
         if self.user.is_superuser:
             return True
@@ -84,7 +74,6 @@ class ListenToCommunity(Signature):
             OpinionComponentTool(conversation),
             BotsTool(conversation, exclude=exclude),
             MauticTool(conversation, is_active=False),
-            RocketChat(conversation, is_active=False),
         ]
 
 
@@ -110,7 +99,6 @@ class ListenToCity(Signature):
             OpinionComponentTool(conversation),
             BotsTool(conversation),
             MauticTool(conversation),
-            RocketChat(conversation),
         ]
 
 
@@ -141,7 +129,6 @@ class ListenToCityYearly(Signature):
             OpinionComponentTool(conversation),
             BotsTool(conversation, exclude=whatsapp),
             MauticTool(conversation, is_active=False),
-            RocketChat(conversation, is_active=False),
         ]
 
 

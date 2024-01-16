@@ -24,10 +24,7 @@ class TestIntegrationsRoutes(ConversationRecipes):
 
     def test_get_tools_routes(self, conversation_db):
         client = Client()
-        conversation_db.author.signature = "listen_to_city"
-        conversation_db.author.save()
         client.force_login(conversation_db.author)
-
         for route in self.ROUTES:
             response = client.get(conversation_db.get_absolute_url() + route)
             assert response.status_code == 200
