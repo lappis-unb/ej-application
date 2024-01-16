@@ -50,6 +50,7 @@ class Conf(
     LOGIN_REDIRECT_URL = "/"
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
     ACCOUNT_EMAIL_VERIFICATION = "none"
+    SOCIALACCOUNT_ADAPTER = "ej_users.adapters.SocialAccountAdapter"
     SOCIALACCOUNT_PROVIDERS = {
         "google": {
             "SCOPE": [
