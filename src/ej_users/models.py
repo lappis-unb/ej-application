@@ -6,7 +6,6 @@ from django.utils.text import slugify
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from ej_signatures.models import SignatureFactory
 from model_utils.models import TimeStampedModel
 
 from .manager import UserManager
@@ -28,14 +27,6 @@ class User(AbstractUser):
         max_length=50, default=random_name, help_text=_("Name used to publicly identify user")
     )
     username = property(lambda self: self.name or self.email.replace("@", "__"))
-    signature = models.CharField(
-        _("Signature"),
-        max_length=50,
-        blank=False,
-        help_text=_("User signature"),
-        choices=SignatureFactory.plans(),
-        default=SignatureFactory.LISTEN_TO_COMMUNITY,
-    )
     agree_with_terms = models.BooleanField(
         default=False, help_text=_("Agree with terms"), verbose_name=_("Agree with terms")
     )

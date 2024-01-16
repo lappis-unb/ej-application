@@ -1,19 +1,16 @@
 from collections import defaultdict
 from logging import getLogger
-from typing import Callable
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.shortcuts import redirect, reverse
-from django.utils.translation import gettext as __, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from ej.decorators import can_access_dataviz
 from ej_clusters.models.clusterization import Clusterization
 from ej_conversations.models import Conversation
 from ej_conversations.utils import check_promoted
 from ej_dataviz.models import ToolsLinksHelper
-from ej_signatures.models import SignatureFactory
 from ej_tools.utils import get_host_with_schema
 from sidekick import import_later
 
@@ -63,26 +60,6 @@ def index(request, conversation_id, **kwargs):
     }
 
     return render(request, "ej_dataviz/dashboard.jinja2", render_context)
-
-
-@can_access_dataviz
-def communication(request, conversation_id, **kwargs):
-    import os
-
-    conversation = Conversation.objects.get(id=conversation_id)
-    author = conversation.author
-    user_signature = SignatureFactory.get_user_signature(author)
-    tool = user_signature.get_tool(_("Rocket.Chat"), conversation)
-    host = get_host_with_schema(request)
-    dashboard_route = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
-    if tool.is_active:
-        context = {
-            "conversation": conversation,
-            "ROCKETCHAT_HOST": os.getenv("ROCKETCHAT_HOST"),
-            "dashboard_location": f"{host}{dashboard_route}",
-        }
-        return render(request, "ej_dataviz/communication.jinja2", context)
-    return redirect("boards:signatures-upgrade", board_slug=conversation.board.slug)
 
 
 @can_access_dataviz

@@ -6,7 +6,6 @@ from django.utils.timezone import now
 from boogie import rules
 from .enums import Choice
 from .models import Comment, Conversation
-from ej_users.models import SignatureFactory
 
 
 #
@@ -200,17 +199,6 @@ def can_promote_conversation(user):
     * User is a publisher (explicit admin permission).
     """
     return user.has_perm("ej_conversations.can_publish_promoted")
-
-
-@rules.register_perm("ej.can_add_conversation")
-def can_add_conversation(user):
-    """
-    Check if user can add a conversation
-    """
-    # Creates a instance from user signature
-    user_signature = SignatureFactory.get_user_signature(user)
-
-    return user_signature.can_add_conversation()
 
 
 @rules.register_perm("ej.can_access_tools_page")

@@ -43,15 +43,6 @@ def can_access_tool_page(view_func):
     return wrapper_func
 
 
-def can_add_conversations(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        if request.user.has_perm("ej.can_add_conversation"):
-            return view_func(request, *args, **kwargs)
-        return redirect("auth:login")
-
-    return wrapper_func
-
-
 def can_moderate_conversation(view_func):
     def wrapper_func(request, *args, **kwargs):
         try:

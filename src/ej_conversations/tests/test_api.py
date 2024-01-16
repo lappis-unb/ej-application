@@ -529,44 +529,6 @@ class TestApiRoutes:
         assert vote.analytics_utm == {"utm_test": "updated test"}
         assert vote.choice == Choice.DISAGREE
 
-    def test_should_not_create_unknown_vote(self, comment, user):
-        path = BASE_URL + f"/votes/"
-        post_data = {
-            "choice": 1,
-            "comment": comment.id,
-            "channel": "unknown",
-        }
-
-        # Authenticated user
-        token = Token.objects.create(user=user)
-        _api = APIClient()
-        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-
-        response = _api.post(path, post_data, format="json")
-        assert response.status_code == 403
-
-        vote = comment.votes.last()
-        assert vote is None
-
-    def test_should_not_create_twilio_vote(self, comment, user):
-        path = BASE_URL + f"/votes/"
-        post_data = {
-            "choice": 1,
-            "comment": comment.id,
-            "channel": "twilio",
-        }
-
-        # Authenticated user
-        token = Token.objects.create(user=user)
-        _api = APIClient()
-        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-
-        response = _api.post(path, post_data, format="json")
-        assert response.status_code == 403
-
-        vote = comment.votes.last()
-        assert vote is None
-
 
 class TestConversartionStatistics(ConversationRecipes):
     def test_vote_count_of_a_conversation(self, db, mk_conversation, mk_user):

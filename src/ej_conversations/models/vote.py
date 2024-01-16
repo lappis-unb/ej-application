@@ -22,7 +22,6 @@ class VoteChannels:
     RASAX = "rasa"
     UNKNOWN = "unknown"
     EJ = "ej"
-    ROCKETCHAT = "rocketchat"
 
     @staticmethod
     def choices():
@@ -33,7 +32,6 @@ class VoteChannels:
             (VoteChannels.OPINION_COMPONENT, _("Opinion Component")),
             (VoteChannels.RASA_WEBCHAT, _("Rasa webchat")),
             (VoteChannels.EJ, _("EJ")),
-            (VoteChannels.ROCKETCHAT, _("RocketChat")),
             (VoteChannels.UNKNOWN, _("Unknown")),
         ]
 

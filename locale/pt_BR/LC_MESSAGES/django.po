@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 11:25-0300\n"
+"POT-Creation-Date: 2024-01-16 16:55-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -276,7 +276,7 @@ msgid "Comment"
 msgstr "Comentar"
 
 #: src/ej_clusters/models/stereotype_vote.py:24
-#: src/ej_conversations/models/vote.py:48
+#: src/ej_conversations/models/vote.py:46
 msgid "Choice"
 msgstr "Escolha"
 
@@ -358,23 +358,18 @@ msgstr "{n} votos criados"
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej_conversations/decorators.py:11 src/ej_conversations/decorators.py:12
-#: src/ej_conversations/decorators.py:13 src/ej_tools/tools.py:94
-#: src/ej_tools/views.py:157 src/ej_tools/views.py:166
-#: src/ej_tools/views.py:176 src/ej_tools/views.py:186
-#: src/ej_tools/views.py:222 src/ej_tools/views.py:237
+#: src/ej_conversations/decorators.py:8 src/ej_conversations/decorators.py:9
+#: src/ej_conversations/decorators.py:10 src/ej_tools/tools.py:94
 #, fuzzy
 msgid "Opinion Bots"
 msgstr "Bot de Opinião"
 
-#: src/ej_conversations/decorators.py:14 src/ej_tools/tools.py:126
-#: src/ej_tools/views.py:111 src/ej_tools/views.py:138
+#: src/ej_conversations/decorators.py:11 src/ej_tools/tools.py:126
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
-#: src/ej_conversations/decorators.py:15 src/ej_dataviz/views_dataviz.py:75
-#: src/ej_tools/tools.py:149
+#: src/ej_conversations/decorators.py:12
 msgid "Rocket.Chat"
 msgstr "Rocket.Chat"
 
@@ -403,19 +398,19 @@ msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
 #: src/ej_conversations/enums.py:25 src/ej_conversations/enums.py:35
-#: src/ej_conversations/roles/comments.py:33 src/ej_dataviz/roles.py:154
+#: src/ej_conversations/roles/comments.py:32 src/ej_dataviz/roles.py:154
 #: src/ej_dataviz/roles.py:171
 msgid "Skip"
 msgstr "Pular"
 
 #: src/ej_conversations/enums.py:26 src/ej_conversations/enums.py:36
-#: src/ej_conversations/roles/comments.py:34 src/ej_dataviz/roles.py:139
+#: src/ej_conversations/roles/comments.py:33 src/ej_dataviz/roles.py:139
 #: src/ej_dataviz/roles.py:164
 msgid "Agree"
 msgstr "Concorda"
 
 #: src/ej_conversations/enums.py:27 src/ej_conversations/enums.py:37
-#: src/ej_conversations/roles/comments.py:32 src/ej_dataviz/roles.py:146
+#: src/ej_conversations/roles/comments.py:31 src/ej_dataviz/roles.py:146
 #: src/ej_dataviz/roles.py:169
 msgid "Disagree"
 msgstr "Discorda"
@@ -606,49 +601,45 @@ msgstr ""
 "voto que deve ser uma das opções de 'concorda', 'discorda' ou 'pula', foi "
 "{value}"
 
-#: src/ej_conversations/models/vote.py:33
+#: src/ej_conversations/models/vote.py:32
 #, fuzzy
 msgid "Opinion Component"
 msgstr "Componente de Opinião"
 
-#: src/ej_conversations/models/vote.py:34
+#: src/ej_conversations/models/vote.py:33
 msgid "Rasa webchat"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:35
+#: src/ej_conversations/models/vote.py:34
 msgid "EJ"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:36
-msgid "RocketChat"
-msgstr "RocketChat"
-
-#: src/ej_conversations/models/vote.py:37
+#: src/ej_conversations/models/vote.py:35
 #, fuzzy
 msgid "Unknown"
 msgstr "*Desconhecido*"
 
-#: src/ej_conversations/models/vote.py:48
+#: src/ej_conversations/models/vote.py:46
 msgid "Agree, disagree or skip"
 msgstr "Concorda, discorda ou pula"
 
-#: src/ej_conversations/models/vote.py:49
+#: src/ej_conversations/models/vote.py:47
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/ej_conversations/models/vote.py:51
+#: src/ej_conversations/models/vote.py:49
 msgid "Channel"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:54
+#: src/ej_conversations/models/vote.py:52
 msgid "From which EJ channel the vote comes from"
 msgstr ""
 
-#: src/ej_conversations/models/vote.py:71
+#: src/ej_conversations/models/vote.py:69
 msgid "non-moderated comments cannot receive votes"
 msgstr "comentários não-moderados não podem receber votos"
 
-#: src/ej_conversations/roles/comments.py:27
+#: src/ej_conversations/roles/comments.py:26
 #: src/ej_conversations/roles/conversations.py:73
 msgid "login"
 msgstr "entrar"
@@ -672,7 +663,7 @@ msgstr " comentários"
 msgid " of "
 msgstr " de "
 
-#: src/ej_conversations/serializers.py:102
+#: src/ej_conversations/serializers.py:100
 msgid "Participate"
 msgstr "Participar"
 
@@ -680,32 +671,23 @@ msgstr "Participar"
 msgid "Authentication credentials were not provided."
 msgstr ""
 
-#: src/ej_conversations/utils.py:50
+#: src/ej_conversations/utils.py:49
 msgid "Edit"
 msgstr "Editar"
 
-#: src/ej_conversations/utils.py:53
+#: src/ej_conversations/utils.py:52
 msgid "Manage Comments"
 msgstr "Gerenciar comentários"
 
-#: src/ej_conversations/utils.py:86
-#, fuzzy
-msgid ""
-"You've reached vote limit. Contact an administrator and request subscription "
-"change."
-msgstr ""
-"Você atingiu o limite de votos. Entre em contato com um administrador e "
-"solicite uma mudança de assinatura."
-
-#: src/ej_conversations/utils.py:105
+#: src/ej_conversations/utils.py:94
 msgid "Thanks for voting."
 msgstr "Obrigado por votar."
 
-#: src/ej_conversations/utils.py:135
+#: src/ej_conversations/utils.py:124
 msgid "This conversation is now favorite."
 msgstr "Esta conversa é agora favorita."
 
-#: src/ej_conversations/utils.py:137
+#: src/ej_conversations/utils.py:126
 msgid "Conversation removed from favorites."
 msgstr "Conversa removida dos favoritos."
 
@@ -713,7 +695,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:110
+#: src/ej_conversations/views.py:99 src/ej_signatures/views.py:25
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -734,13 +716,13 @@ msgstr ""
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/ej_dataviz/constants.py:177 src/ej_dataviz/views_dataviz.py:58
-#: src/ej_dataviz/views_dataviz.py:93
+#: src/ej_dataviz/constants.py:177 src/ej_dataviz/views_dataviz.py:55
+#: src/ej_dataviz/views_dataviz.py:70
 msgid "Gender"
 msgstr "Gênero"
 
-#: src/ej_dataviz/constants.py:187 src/ej_dataviz/views_dataviz.py:59
-#: src/ej_dataviz/views_dataviz.py:94 src/ej_profiles/models.py:32
+#: src/ej_dataviz/constants.py:187 src/ej_dataviz/views_dataviz.py:56
+#: src/ej_dataviz/views_dataviz.py:71 src/ej_profiles/models.py:32
 #: src/ej_profiles/tests/test_models.py:60
 msgid "Race"
 msgstr "Raça"
@@ -842,11 +824,11 @@ msgstr "Dados do PCA"
 msgid "You!"
 msgstr "Você!"
 
-#: src/ej_dataviz/views_dataviz.py:61 src/ej_dataviz/views_dataviz.py:96
+#: src/ej_dataviz/views_dataviz.py:58 src/ej_dataviz/views_dataviz.py:73
 msgid "https://en.wikipedia.org/wiki/Principal_component_analysis"
 msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 
-#: src/ej_dataviz/views_dataviz.py:116
+#: src/ej_dataviz/views_dataviz.py:93
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
@@ -1151,25 +1133,25 @@ msgstr "número de telefone"
 msgid "name's profile"
 msgstr "perfil"
 
-#: src/ej_profiles/views.py:48
+#: src/ej_profiles/views.py:50
 msgid "Password changed successfully."
 msgstr "Senha alterada com sucesso."
 
-#: src/ej_signatures/apps.py:8
+#: src/ej_signatures/apps.py:7
 #, fuzzy
 msgid "Signatures"
 msgstr "Planos"
 
-#: src/ej_signatures/models.py:178
+#: src/ej_signatures/models.py:165
 msgid "Listen to community"
 msgstr "Ouça a Comunidade"
 
-#: src/ej_signatures/models.py:179
+#: src/ej_signatures/models.py:166
 #, fuzzy
 msgid "Listen to city"
 msgstr "Ouça a Cidade"
 
-#: src/ej_signatures/models.py:180
+#: src/ej_signatures/models.py:167
 #, fuzzy
 msgid "Listen to city yearly"
 msgstr "Ouça a Cidade anual"
@@ -1375,8 +1357,7 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/tools.py:80 src/ej_tools/tools.py:160 src/ej_tools/views.py:254
-#: src/ej_tools/views.py:307
+#: src/ej_tools/tools.py:80 src/ej_tools/tools.py:148
 msgid "Mautic"
 msgstr ""
 
@@ -1410,48 +1391,40 @@ msgstr ""
 "a EJ. Permite votar, comentar e visualizar os grupos diretamente em páginas "
 "html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
-#: src/ej_tools/tools.py:151
-msgid ""
-"Rocket.Chat instance for segmented communication with conversation "
-"participants."
-msgstr ""
-"Integração com o Rocket.Chat para comunicação segmentada com os "
-"participantes da conversa."
-
-#: src/ej_tools/tools.py:161
+#: src/ej_tools/tools.py:149
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/tools.py:165
+#: src/ej_tools/tools.py:153
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:166
+#: src/ej_tools/tools.py:154
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_tools/tools.py:170
+#: src/ej_tools/tools.py:158
 msgid "OSF"
 msgstr ""
 
-#: src/ej_tools/tools.py:171
+#: src/ej_tools/tools.py:159
 msgid "Votorantim"
 msgstr ""
 
-#: src/ej_tools/tools.py:172
+#: src/ej_tools/tools.py:160
 msgid "ICD"
 msgstr ""
 
-#: src/ej_tools/tools.py:173
+#: src/ej_tools/tools.py:161
 msgid "Boca de Lobo"
 msgstr ""
 
-#: src/ej_tools/tools.py:178 src/ej_tools/views.py:48
+#: src/ej_tools/tools.py:166
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:180
+#: src/ej_tools/tools.py:168
 msgid ""
 "Generates a html template of this conversation, for mailing marketing "
 "campaigns."
@@ -1602,43 +1575,33 @@ msgid ""
 msgstr ""
 "Já tem uma conta? Então por favor  <a href=\"%(login_url)s\">faça login</a>."
 
-#: src/ej_users/models.py:26
+#: src/ej_users/models.py:25
 #, fuzzy
 msgid "email address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:26
+#: src/ej_users/models.py:25
 msgid "Your e-mail address"
 msgstr "Seu endereço de e-mail"
 
-#: src/ej_users/models.py:28
+#: src/ej_users/models.py:27
 msgid "Name used to publicly identify user"
 msgstr "Apelido público usado para identificar o usuário"
 
-#: src/ej_users/models.py:32
-#, fuzzy
-msgid "Signature"
-msgstr "Registrar"
-
-#: src/ej_users/models.py:35
-#, fuzzy
-msgid "User signature"
-msgstr "Pontuação do usuário"
-
-#: src/ej_users/models.py:40
+#: src/ej_users/models.py:31
 #, fuzzy
 msgid "Agree with terms"
 msgstr "Termos de uso"
 
-#: src/ej_users/models.py:43
+#: src/ej_users/models.py:34
 msgid "Agree with privacy policy"
 msgstr "Política de privacidade"
 
-#: src/ej_users/models.py:106
+#: src/ej_users/models.py:97
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:152
+#: src/ej_users/models.py:143
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -2606,6 +2569,54 @@ msgstr[1] "Você pode postar até %(n)s comentários."
 msgid "Send"
 msgstr "Enviar"
 
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:31
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:31
+msgid ""
+"Welcome to EJ. This is your personal board. Board is where your "
+"conversations will be available. Press 'New conversation' to starts "
+"collecting yours audience opinion."
+msgstr ""
+"Bem vinda à EJ. Este é o seu mural. O mural é onde suas conversas ficarão "
+"disponíveis. Clique no botão “Nova conversa” para começar a ouvir a opinião "
+"da sua audiência."
+
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:38
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:38
+#, fuzzy
+msgid "Board statistics"
+msgstr "Estatísticas"
+
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:41
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:41
+#, fuzzy
+msgid "Total votes"
+msgstr "Total de votos"
+
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:44
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:44
+#, fuzzy
+msgid "Total participants"
+msgstr "Total de participantes"
+
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:47
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:47
+#, fuzzy
+msgid "Total conversations"
+msgstr "Conversas hospedadas"
+
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:54
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:73
+#, fuzzy
+msgid "New conversation"
+msgstr "Nova conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:60
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:79
+#, fuzzy
+msgid "Manage!"
+msgstr "Gerenciar!"
+
 #: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:22
 #, fuzzy
 msgid ""
@@ -2703,76 +2714,6 @@ msgstr "Esta conversa está oculta."
 #: src/ej_conversations/jinja2/ej_conversations/conversation-edit.jinja2:17
 msgid "Edit conversation"
 msgstr "Editar conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:31
-msgid ""
-"Welcome to EJ. This is your personal board. Board is where your "
-"conversations will be available. Press 'New conversation' to starts "
-"collecting yours audience opinion."
-msgstr ""
-"Bem vinda à EJ. Este é o seu mural. O mural é onde suas conversas ficarão "
-"disponíveis. Clique no botão “Nova conversa” para começar a ouvir a opinião "
-"da sua audiência."
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:38
-#, fuzzy
-msgid "Board statistics"
-msgstr "Estatísticas"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:41
-#, fuzzy
-msgid "Total votes"
-msgstr "Total de votos"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:44
-#, fuzzy
-msgid "Total participants"
-msgstr "Total de participantes"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:47
-#, fuzzy
-msgid "Total conversations"
-msgstr "Conversas hospedadas"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:53
-#, fuzzy
-msgid "Signature model"
-msgstr "Modelo de assinatura"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:59
-#, fuzzy
-msgid ""
-"In the current signature, you can create <span\n"
-"                     class=\"text-accent bold\">unlimited</span> "
-"conversations."
-msgstr ""
-"Na sua assinatura atual, você pode criar <span\n"
-" class=\"text-accent bold\">conversas ilimitadas</span>."
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:64
-#, fuzzy, python-format
-msgid ""
-" In the current signature, you can create <span class=\"text-accent bold\">"
-"%(conversations_limit)s</span> conversations."
-msgstr ""
-"Na sua assinatura atual, você pode criar <span\n"
-" class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:66
-#, fuzzy
-msgid "Request upgrade."
-msgstr "Solicite upgrade."
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
-#, fuzzy
-msgid "New conversation"
-msgstr "Nova conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:79
-#, fuzzy
-msgid "Manage!"
-msgstr "Gerenciar!"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:7
@@ -3687,6 +3628,35 @@ msgstr ""
 msgid "Starts"
 msgstr "Iniciar"
 
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:53
+#, fuzzy
+msgid "Signature model"
+msgstr "Modelo de assinatura"
+
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:59
+#, fuzzy
+msgid ""
+"In the current signature, you can create <span\n"
+"                     class=\"text-accent bold\">unlimited</span> "
+"conversations."
+msgstr ""
+"Na sua assinatura atual, você pode criar <span\n"
+" class=\"text-accent bold\">conversas ilimitadas</span>."
+
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:64
+#, fuzzy, python-format
+msgid ""
+" In the current signature, you can create <span class=\"text-accent bold\">"
+"%(conversations_limit)s</span> conversations."
+msgstr ""
+"Na sua assinatura atual, você pode criar <span\n"
+" class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
+
+#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:66
+#, fuzzy
+msgid "Request upgrade."
+msgstr "Solicite upgrade."
+
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:11
 #, fuzzy
 msgid "Your plan is"
@@ -3821,8 +3791,9 @@ msgstr "Entraremos em contato nas próximas 24 horas."
 
 #: src/ej_tools/jinja2/ej_tools/card_tools.jinja2:22
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:27
-msgid "This tool is not available on your current signature."
-msgstr "Essa ferramenta não está diponível na sua assinatura atual."
+#, fuzzy
+msgid "This tool is not available."
+msgstr "Essa ferramenta não está diponível."
 
 #: src/ej_tools/jinja2/ej_tools/chatbot.jinja2:23
 #, fuzzy
@@ -4425,7 +4396,7 @@ msgstr "Remover conta"
 
 #: src/ej_users/jinja2/account/logout.jinja2:11
 msgid "We hope we'll see you soon ;)"
-msgstr "Esperamos ver você em breve ;)"
+msgstr "Esperamos ver você em breve;)"
 
 #: src/ej_users/jinja2/account/logout.jinja2:12
 #, python-format
@@ -4573,6 +4544,35 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#~ msgid "This tool is not available on your current signature."
+#~ msgstr "Essa ferramenta não está diponível na sua assinatura atual."
+
+#~ msgid "RocketChat"
+#~ msgstr "RocketChat"
+
+#, fuzzy
+#~ msgid ""
+#~ "You've reached vote limit. Contact an administrator and request "
+#~ "subscription change."
+#~ msgstr ""
+#~ "Você atingiu o limite de votos. Entre em contato com um administrador e "
+#~ "solicite uma mudança de assinatura."
+
+#~ msgid ""
+#~ "Rocket.Chat instance for segmented communication with conversation "
+#~ "participants."
+#~ msgstr ""
+#~ "Integração com o Rocket.Chat para comunicação segmentada com os "
+#~ "participantes da conversa."
+
+#, fuzzy
+#~ msgid "Signature"
+#~ msgstr "Registrar"
+
+#, fuzzy
+#~ msgid "User signature"
+#~ msgstr "Pontuação do usuário"
 
 #, python-format
 #~ msgid ""

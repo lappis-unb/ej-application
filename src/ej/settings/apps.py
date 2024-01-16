@@ -14,7 +14,6 @@ class InstalledAppsConf(Base, EjOptions):
         "ej_profiles",
         "ej_conversations",
         "ej_tools",
-        "ej_signatures",
         "ej_admin",
         "ej_activation",
     ]
