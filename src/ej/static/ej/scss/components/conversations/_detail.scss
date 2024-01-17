@@ -443,17 +443,18 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     margin: 0;
 }
 
-button[name='vote'] .loader {
-    @extend .loader;
-    margin-top: unset !important;
-    border-bottom-color: transparent !important;
-}
 .voting-card__voting-form__choices--disagree .loader,
 .voting-card__voting-form__choices--agree .loader {
     border: 2px solid $color-white !important;
 }
 .voting-card__voting-form__choices--skip .loader {
     border: 2px solid $color-black-alternative !important;
+}
+.voting-card__voting-form__choices--disagree .loader,
+.voting-card__voting-form__choices--agree .loader,
+.voting-card__voting-form__choices--skip .loader {
+    margin-top: unset !important;
+    border-bottom-color: transparent !important;
 }
 
 @media (max-width: 375px) {
