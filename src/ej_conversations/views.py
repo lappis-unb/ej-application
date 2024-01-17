@@ -17,7 +17,6 @@ from django.contrib.flatpages.models import FlatPage
 from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
     can_acess_list_view,
-    can_add_conversations,
     can_edit_conversation,
     can_moderate_conversation,
     check_conversation_overdue,
@@ -25,7 +24,6 @@ from ej.decorators import (
 )
 from ej_boards.models import Board
 from ej_conversations.rules import max_comments_per_conversation
-from ej_users.models import SignatureFactory
 from ej_users.models import User
 
 from .forms import CommentForm, ConversationForm
@@ -37,6 +35,8 @@ from .utils import (
     handle_detail_favorite,
     handle_detail_vote,
 )
+
+from . import forms
 
 log = getLogger("ej")
 
@@ -64,24 +64,17 @@ class PublicConversationView(ConversationView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         user = self.request.user
-        user_boards = []
-        if user.is_authenticated:
-            user_signature = SignatureFactory.get_user_signature(user)
-            max_conversation_per_user = user_signature.get_conversation_limit()
-            user_boards = Board.objects.filter(owner=user)
-        else:
-            max_conversation_per_user = 0
+        user_boards = Board.objects.filter(owner=user) if user.is_authenticated else []
 
         return {
             "conversations": self.get_queryset(),
             "user_boards": user_boards,
-            "conversations_limit": max_conversation_per_user,
         }
 
 
 @method_decorator([login_required, can_acess_list_view], name="dispatch")
-class PrivateConversationView(ConversationView):
-    template_name = "ej_conversations/conversation-list.jinja2"
+class BoardConversationsView(ConversationView):
+    template_name = "ej_conversations/board-conversations-list.jinja2"
 
     def get_queryset(self) -> QuerySet[Any]:
         user = self.request.user
@@ -100,15 +93,12 @@ class PrivateConversationView(ConversationView):
         user = self.request.user
         board_slug = self.kwargs.get("board_slug", None)
         board = Board.objects.get(slug=board_slug)
-        user_signature = SignatureFactory.get_user_signature(user)
-        max_conversation_per_user = user_signature.get_conversation_limit()
         user_boards = Board.objects.filter(owner=user)
 
         return {
             "conversations": self.get_queryset(),
             "title": _(board.title),
             "subtitle": _("Participate voting and creating comments!"),
-            "conversations_limit": max_conversation_per_user,
             "board": board,
             "user_boards": user_boards,
             "current_page": board.slug,
@@ -126,41 +116,19 @@ class ConversationWelcomeView(DetailView):
         return super().get(request)
 
 
-@method_decorator([check_conversation_overdue], name="dispatch")
-class ConversationDetailView(DetailView):
+class ConversationCommonView:
+    """
+    ConversationCommonView implements common behaviors for some ej_conversations views.
+    This class must be reused on actual ej_conversations views.
+    """
+
+    queryset = Conversation.objects.all()
     form_class = CommentForm
     model = Conversation
-    template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
 
-    def get(self, request, *args, **kwargs):
-        if request.GET.get("comment-addition"):
-            return render(request, "ej_conversations/comments/add-comment.jinja2", self.get_context_data())
-        if request.GET.get("comment-addition-cancel"):
-            return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
-        return super().get(request, *args, **kwargs)
-
-    @user_can_post_anonymously
-    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
-        conversation = self.get_object()
-        request.user = User.creates_from_request_session(conversation, request)
-        action = request.POST["action"]
-        if action == "vote":
-            self.ctx = handle_detail_vote(request)
-            return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
-        elif action == "comment":
-            self.ctx = handle_detail_comment(request, conversation)
-            return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
-        elif action == "favorite":
-            self.ctx = handle_detail_favorite(request, conversation)
-        else:
-            log.warning(f"user {request.user.id} se nt invalid POST request: {request.POST}")
-            return HttpResponseServerError("invalid action")
-
-        return render(request, self.template_name, self.get_context_data())
-
     @create_session_key
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         conversation = self.get_object()
         user = self.request.user
         max_comments = max_comments_per_conversation(conversation, user)
@@ -194,11 +162,76 @@ class ConversationDetailView(DetailView):
             "user_boards": user_boards,
             "privacy_policy": privacy_policy,
             "current_page": "voting",
+            "form": forms.CommentForm(conversation=conversation, request=self.request),
             **self.ctx,
+            **kwargs,
         }
 
 
-@method_decorator([login_required, can_acess_list_view, can_add_conversations], name="dispatch")
+@method_decorator([check_conversation_overdue], name="dispatch")
+class ConversationCommentView(ConversationCommonView, DetailView):
+    def get(self, request, *args, **kwargs):
+        conversation = self.get_object()
+        return render(
+            request,
+            "ej_conversations/comments/add-comment.jinja2",
+            self.get_context_data(form=forms.CommentForm(conversation=conversation, request=request)),
+        )
+
+    @user_can_post_anonymously
+    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+        conversation = self.get_object()
+        request.user = User.creates_from_request_session(conversation, request)
+        self.ctx = handle_detail_comment(request, conversation)
+
+        return render(
+            request,
+            "ej_conversations/comments/add-comment.jinja2",
+            self.get_context_data(),
+        )
+
+
+@method_decorator([check_conversation_overdue], name="dispatch")
+class ConversationDetailView(ConversationCommonView, DetailView):
+    form_class = CommentForm
+    model = Conversation
+    template_name = "ej_conversations/conversation-detail.jinja2"
+    ctx = {}
+
+
+@method_decorator([check_conversation_overdue], name="dispatch")
+class ConversationFavoriteView(ConversationCommonView, DetailView):
+    template_name = "ej_conversations/conversation-detail.jinja2"
+
+    @user_can_post_anonymously
+    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+        conversation = self.get_object()
+        request.user = User.creates_from_request_session(conversation, request)
+        self.ctx = handle_detail_favorite(request, conversation)
+        return render(request, self.template_name, self.get_context_data())
+
+
+@method_decorator([check_conversation_overdue], name="dispatch")
+class ConversationVoteView(ConversationCommonView, DetailView):
+    form_class = CommentForm
+    model = Conversation
+    ctx = {}
+
+    @user_can_post_anonymously
+    def get(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+        conversation = self.get_object()
+        request.user = User.creates_from_request_session(conversation, request)
+        return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
+
+    @user_can_post_anonymously
+    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+        conversation = self.get_object()
+        request.user = User.creates_from_request_session(conversation, request)
+        self.ctx = handle_detail_vote(request)
+        return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
+
+
+@method_decorator([login_required, can_acess_list_view], name="dispatch")
 class ConversationCreateView(CreateView):
     template_name = "ej_conversations/conversation-create.jinja2"
     form_class = ConversationForm

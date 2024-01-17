@@ -117,6 +117,44 @@ class TestEditProfile:
             if attr not in blacklist:
                 assert getattr(user.profile, attr) == form_data[attr], attr
 
+    def test_change_password(self, logged_client):
+        response = logged_client.post(
+            "/profile/",
+            {
+                "current_password": "password",
+                "password": "newpassword",
+                "password_confirm": "newpassword",
+            },
+        )
+        assert response.status_code == 200
+        assert response.wsgi_request.user.check_password("newpassword")
+
+    def test_change_password_wrong_current_password(self, logged_client):
+        response = logged_client.post(
+            "/profile/",
+            {
+                "current_password": "wrongpassword",
+                "password": "newpassword",
+                "password_confirm": "newpassword",
+            },
+        )
+        assert response.status_code == 200
+        assert b"Incorrect current password" in response.content
+        assert not response.wsgi_request.user.check_password("newpassword")
+
+    def test_change_password_wrong_repeat_password(self, logged_client):
+        response = logged_client.post(
+            "/profile/",
+            {
+                "current_password": "password",
+                "password": "newpassword",
+                "password_confirm": "wrongpassword",
+            },
+        )
+        assert response.status_code == 200
+        assert b"Passwords do not match" in response.content
+        assert not response.wsgi_request.user.check_password("newpassword")
+
 
 class TestTour:
     def test_redirect_if_tour_is_incomplete(self, test_user):

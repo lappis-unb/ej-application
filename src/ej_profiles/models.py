@@ -1,5 +1,6 @@
 import hashlib
 import toolz
+import logging
 from boogie.fields import EnumField
 from rest_framework.authtoken.models import Token
 from sidekick import delegate_to, import_later
@@ -18,6 +19,7 @@ from .enums import Race, Gender, STATE_CHOICES_MAP
 from .utils import years_from
 
 SocialAccount = import_later("allauth.socialaccount.models:SocialAccount")
+log = logging.getLogger("ej")
 User = get_user_model()
 
 
@@ -301,7 +303,9 @@ def get_profile(user):
     try:
         return user.profile
     except Profile.DoesNotExist:
-        return Profile.objects.create(user=user)
+        profile = Profile.objects.create(user=user)
+        log.info("profile successfully created")
+        return profile
 
 
 User.get_profile = get_profile

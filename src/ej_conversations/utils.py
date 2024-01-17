@@ -7,7 +7,8 @@ from hyperpython import a
 from sidekick import import_later
 
 from ej.components.builtins import toast
-from ej_users.models import SignatureFactory
+from django.forms.utils import ErrorList
+from django.core.exceptions import ValidationError
 
 log = getLogger("ej")
 models = import_later(".models", package=__package__)
@@ -78,16 +79,6 @@ def normalize_status(value):
         raise ValueError(f"invalid status value: {value}")
 
 
-def show_vote_actions_on_card(request):
-    user = request.user
-    user_signature = SignatureFactory.get_user_signature(user)
-    if not user_signature.can_vote():
-        show_actions = False
-        message = _("You've reached vote limit. Contact an administrator and request subscription change.")
-        return show_actions, message
-    return True, None
-
-
 #
 # Auxiliary classes
 #
@@ -118,9 +109,9 @@ def handle_detail_comment(request, conversation):
     """
     form = forms.CommentForm(conversation=conversation, request=request)
     if form.is_valid():
-        new_comment = form.cleaned_data["content"]
+        content = form.cleaned_data.get("content")
         user = request.user
-        new_comment = conversation.create_comment(user, new_comment)
+        new_comment = conversation.create_comment(user, content)
         log.info(f"user {user.id} posted comment {new_comment.id} on {conversation.id}")
     return {"form": form}
 

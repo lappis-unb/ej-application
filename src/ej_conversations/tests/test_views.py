@@ -88,10 +88,10 @@ class TestConversationDetail(ConversationSetup):
         client.force_login(user)
 
         comment = first_conversation.comments.first()
-        response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
         )
+        response = client.post(conversation_vote_url, {"vote": "agree", "comment_id": comment.id})
 
         assert response.context["conversation"] == first_conversation
         assert votes_counter(comment) == 1
@@ -106,9 +106,12 @@ class TestConversationDetail(ConversationSetup):
         client.force_login(user)
 
         comment = first_conversation.comments.first()
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
+        )
         response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "vote", "vote": "disagree", "comment_id": comment.id},
+            conversation_vote_url,
+            {"vote": "disagree", "comment_id": comment.id},
         )
         assert response.context["conversation"] == first_conversation
         assert votes_counter(comment) == 1
@@ -123,9 +126,12 @@ class TestConversationDetail(ConversationSetup):
         client.force_login(user)
 
         comment = first_conversation.comments.first()
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
+        )
         response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "vote", "vote": "skip", "comment_id": comment.id},
+            conversation_vote_url,
+            {"vote": "skip", "comment_id": comment.id},
         )
         assert response.context["conversation"] == first_conversation
         assert votes_counter(comment) == 1
@@ -140,25 +146,15 @@ class TestConversationDetail(ConversationSetup):
         client.force_login(user)
 
         comment = first_conversation.comments.first()
+
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
+        )
         with raises(Exception):
             client.post(
-                f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-                {"action": "vote", "vote": "INVALID", "comment_id": comment.id},
+                conversation_vote_url,
+                {"vote": "INVALID", "comment_id": comment.id},
             )
-
-    def test_invalid_action_conversation_detail(self, first_conversation):
-        user = User.objects.create_user("user@server.com", "password")
-
-        client = Client()
-        client.force_login(user)
-
-        comment = first_conversation.comments.first()
-
-        response = client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "invalid", "vote": "INVALID", "comment_id": comment.id},
-        )
-        assert isinstance(response, HttpResponseServerError)
 
     def test_user_can_comment(self, first_conversation):
         user = User.objects.create_user("user@server.com", "password")
@@ -166,9 +162,12 @@ class TestConversationDetail(ConversationSetup):
         client = Client()
         client.force_login(user)
 
+        conversation_comment_url = reverse(
+            "boards:conversation-comment", kwargs=first_conversation.get_url_kwargs()
+        )
         client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "comment", "content": "test comment"},
+            conversation_comment_url,
+            {"content": "test comment"},
         )
 
         assert Comment.objects.filter(author=user)[0].content == "test comment"
@@ -179,10 +178,8 @@ class TestConversationDetail(ConversationSetup):
         client = Client()
         client.force_login(user)
 
-        client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "comment", "content": ""},
-        )
+        conversation_url = reverse("boards:conversation-detail", kwargs=first_conversation.get_url_kwargs())
+        client.post(conversation_url, {"content": ""})
 
         assert not Comment.objects.filter(author=user).exists()
 
@@ -190,50 +187,56 @@ class TestConversationDetail(ConversationSetup):
         client = Client()
         comment = first_conversation.comments.first()
 
-        conversation_url = f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        conversation_url = reverse("boards:conversation-detail", kwargs=first_conversation.get_url_kwargs())
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
+        )
+
         response = client.get(conversation_url)
         assert response.status_code == 200
 
         response = client.post(
-            conversation_url,
-            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+            conversation_vote_url,
+            {"vote": "agree", "comment_id": comment.id},
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
 
         response = client.post(
-            conversation_url,
-            {"action": "comment", "content": "test comment"},
+            conversation_vote_url,
+            {"content": "test comment"},
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
 
         response = client.post(
-            conversation_url,
-            {"action": "favorite"},
+            conversation_vote_url,
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
 
     def test_anonymous_user_can_participate(self, first_conversation):
         client = Client()
         comment = first_conversation.comments.first()
-        conversation_url = f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        conversation_url = reverse("boards:conversation-detail", kwargs=first_conversation.get_url_kwargs())
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
+        )
         response = client.get(conversation_url)
         assert response.status_code == 200
         response = client.post(
-            conversation_url,
-            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+            conversation_vote_url,
+            {"vote": "agree", "comment_id": comment.id},
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
 
         first_conversation.anonymous_votes_limit = 1
         first_conversation.save()
 
         response = client.post(
-            conversation_url,
-            {"action": "vote", "vote": "agree", "comment_id": comment.id},
+            conversation_vote_url,
+            {"vote": "agree", "comment_id": comment.id},
         )
         assert response.status_code == 200
 
@@ -243,20 +246,23 @@ class TestConversationDetail(ConversationSetup):
 
         client = Client()
 
-        conversation_url = f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/"
+        conversation_url = reverse("boards:conversation-detail", kwargs=first_conversation.get_url_kwargs())
+        conversation_vote_url = reverse(
+            "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
+        )
         first_comment = first_conversation.comments.first()
         last_comment = first_conversation.comments.last()
 
         client.post(
-            conversation_url,
-            {"action": "vote", "vote": "agree", "comment_id": first_comment.id},
+            conversation_vote_url,
+            {"vote": "agree", "comment_id": first_comment.id},
         )
 
         session_user_email = User.objects.last().email
 
         response = client.post(
-            conversation_url,
-            {"action": "vote", "vote": "agree", "comment_id": last_comment.id},
+            conversation_vote_url,
+            {"vote": "agree", "comment_id": last_comment.id},
         )
 
         register_url = response["HX-Redirect"]
@@ -286,8 +292,7 @@ class TestConversationDetail(ConversationSetup):
         client.force_login(user)
 
         client.post(
-            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/",
-            {"action": "favorite"},
+            f"/board/conversations/{first_conversation.id}/{first_conversation.slug}/comment/favorite/",
         )
 
         assert FavoriteConversation.objects.filter(user=user, conversation=first_conversation).exists()
@@ -892,8 +897,6 @@ class TestPublicConversations(ConversationRecipes):
         assert board4 in response.context["user_boards"]
         assert len(response.context["user_boards"]) == 4
 
-        assert response.context["conversations_limit"] == 20
-
         assert promoted_conversation in response.context["conversations"]
         assert not_promoted_conversation not in response.context["conversations"]
         assert hiden_conversation in response.context["conversations"]
@@ -907,6 +910,5 @@ class TestPublicConversations(ConversationRecipes):
 
         assert response.status_code == 200
         assert response.context["user_boards"] == []
-        assert response.context["conversations_limit"] == 0
         assert promoted_conversation in response.context["conversations"]
         assert response.context["conversations"][0].is_hidden == True

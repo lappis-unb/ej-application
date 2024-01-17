@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django.template.loader import get_template
+from django.core.exceptions import ValidationError
 
 
 from ej.forms import EjForm, EjModelForm
@@ -105,3 +106,23 @@ class RemoveAccountForm(EmailForm):
     """
 
     confirm = forms.BooleanField(label=_("Yes, I understand the consequences."))
+
+
+class ChangePasswordForm(PasswordForm):
+    current_password = forms.CharField(
+        label=_("Current password"), required=True, widget=forms.PasswordInput
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def clean_current_password(self):
+        password = self.cleaned_data["current_password"]
+        if not self.user.check_password(password):
+            raise ValidationError(_("Incorrect current password"))
+
+    def save(self, commit=True, **kwargs):
+        self.user.set_password(self.cleaned_data["password"])
+        self.user.save()
+        return self.user

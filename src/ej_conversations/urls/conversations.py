@@ -7,7 +7,7 @@ conversation_url = "<int:conversation_id>/<slug:slug>"
 urlpatterns = [
     path(
         "",
-        views.PrivateConversationView.as_view(),
+        views.BoardConversationsView.as_view(),
         name="list",
     ),
     path(
@@ -44,6 +44,21 @@ urlpatterns = [
         f"{conversation_url}/",
         views.ConversationDetailView.as_view(),
         name="detail",
+    ),
+    path(
+        f"{conversation_url}/comment/",
+        views.ConversationCommentView.as_view(),
+        name="comment",
+    ),
+    path(
+        f"{conversation_url}/comment/vote/",
+        views.ConversationVoteView.as_view(),
+        name="vote",
+    ),
+    path(
+        f"{conversation_url}/comment/favorite/",
+        views.ConversationFavoriteView.as_view(),
+        name="favorite",
     ),
     path(
         "add/",

@@ -1,13 +1,18 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import UpdateView
 from django.http import HttpResponse
+from django.utils.translation import gettext_lazy as _
+
+from ej.components.builtins import toast
 from ej_boards.models import Board
 from ej_conversations.models import Conversation, ConversationTag
 from ej_tools.utils import get_host_with_schema
+from ej_users.forms import ChangePasswordForm
 
 from . import forms
 from .models import Profile
@@ -32,8 +37,23 @@ class DetailView(DetailView):
             "n_votes": profile.votes.count(),
             "achievements_href": None,
             "user_boards": Board.objects.filter(owner=self.request.user),
+            "change_password_form": ChangePasswordForm(self.request.user),
+            "go_to_password": False,
             "current_page": "detail-profile",
         }
+
+    def post(self, request):
+        change_password_form = ChangePasswordForm(self.request.user, request=request)
+        if change_password_form.is_valid():
+            change_password_form.save()
+            update_session_auth_hash(request, request.user)
+            toast(request, _("Password changed successfully."))
+            return render(request, self.template_name, self.get_context_data())
+
+        context = self.get_context_data()
+        context["change_password_form"] = change_password_form
+        context["go_to_password"] = True
+        return render(request, self.template_name, context)
 
 
 @method_decorator([login_required], name="dispatch")
