@@ -46,6 +46,21 @@ urlpatterns = [
         name="detail",
     ),
     path(
+        f"{conversation_url}/comment/",
+        views.ConversationCommentView.as_view(),
+        name="comment",
+    ),
+    path(
+        f"{conversation_url}/comment/vote/",
+        views.ConversationVoteView.as_view(),
+        name="vote",
+    ),
+    path(
+        f"{conversation_url}/comment/favorite/",
+        views.ConversationFavoriteView.as_view(),
+        name="favorite",
+    ),
+    path(
         "add/",
         views.ConversationCreateView.as_view(),
         name="create",

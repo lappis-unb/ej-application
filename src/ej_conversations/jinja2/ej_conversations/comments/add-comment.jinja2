@@ -1,13 +1,17 @@
+
+
 <dialog class="toast toast--hide" id="comment-dialog-confirmation">
     <div class="toast__content">
         <span>{{_("Thank you! Your comment was sent to moderation and will be evaluated soon.")}}</span>
     </div>
 </dialog>
-
 <div class="voting-card comment-card">
-    <form method="post" id="add-comment"
-        hx-post="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
-        hx-swap="none"
+
+    <form
+        id="add-comment"
+        hx-post="{{ url('boards:conversation-comment', **conversation.get_url_kwargs()) }}"
+        hx-swap="innerHTML"
+        hx-target="#voting-card"
     >
         {{ csrf_input }}
         <input type="hidden" name="action" value="comment">
@@ -20,6 +24,7 @@
                     <span class="conversation-header__label--dark margin-r3">{{_("Adds your opinion")}}</span>
                     <span class="voting-card__label">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
                 </div>
+                {{ form.content.errors }}
                 <textarea name="content" id="id_content" maxlength="256" required></textarea>
                 <p class="voting-card__label left no-margin">
                     (<span id="maxLenght">256</span><span> {{_("Characters remaining)")}}</span>
@@ -28,10 +33,9 @@
             {% if not n_comments >= max_comments or request.user.is_superuser %}
                 <div class="modal__buttons">
                     <button class="modal__buttons--white" type="button"
-                        hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
+                        hx-get="{{ url('boards:conversation-vote', **conversation.get_url_kwargs()) }}"
                         hx-target="#voting-card"
-                        hx-params="comment-addition-cancel"
-                        hx-swap="outerHTML">
+                        hx-swap="innerHTML">
                         {{ _('Return') }}
                     </button>
                     <button class="modal__buttons--blue" type="submit">
@@ -62,7 +66,6 @@
             {% endif %}
     </form>
 </div>
-
 <script>
 
 $('textarea').keyup(function() {
@@ -80,8 +83,13 @@ if (sendButton) {
     });
 }
 
-$("#add-comment").on("htmx:afterRequest", () => {
-    $('textarea')[0].value = "";
-    showConfirmationDialogFor("#comment-dialog-confirmation")
+$("#add-comment").on("htmx:afterRequest", (event) => {
+    const response = event.detail.xhr.response;
+    if ($(".errorlist").length == 0) {
+        if ($('textarea').length > 0){
+            $('textarea')[0].value = "";
+            showConfirmationDialogFor("#comment-dialog-confirmation")
+        }
+    }
 });
 </script>
