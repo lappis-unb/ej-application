@@ -3,9 +3,9 @@
             <div class="voting-card__header">
                 {% include 'ej_conversations/includes/conversation-progress.jinja2' %}
                 <a class="voting-card__label voting-card__add-comment"
-                hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
-                hx-target="#voting-card"
-                hx-params="comment-addition">
+                hx-get="{{ url('boards:conversation-comment', **conversation.get_url_kwargs()) }}"
+                hx-target="#voting-card"    
+                hx-swap="innerHTML">
                     <i class="fa">&#xf055;</i> {{ _('Add comment') }}
                 </a>
             </div>
