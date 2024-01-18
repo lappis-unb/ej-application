@@ -51,6 +51,7 @@ class Conf(
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
     ACCOUNT_EMAIL_VERIFICATION = "none"
     SOCIALACCOUNT_ADAPTER = "ej_users.adapters.SocialAccountAdapter"
+    SOCIALACCOUNT_LOGIN_ON_GET = True
     SOCIALACCOUNT_PROVIDERS = {
         "google": {
             "SCOPE": [
