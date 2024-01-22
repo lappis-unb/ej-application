@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1015 200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-2 {
+        fill: url(#Gradiente_sem_nome_16);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="-13.29" y="-4.16" width="1041.57" height="208.31"/>
+    </clipPath>
+    <linearGradient id="Gradiente_sem_nome_16" data-name="Gradiente sem nome 16" x1="143.39" y1="435.35" x2="935.98" y2="-295.84" gradientUnits="userSpaceOnUse">
+      <stop offset=".03" stop-color="#ff3d73"/>
+      <stop offset=".06" stop-color="#ea497c"/>
+      <stop offset=".15" stop-color="#b26d96"/>
+      <stop offset=".24" stop-color="#838bac"/>
+      <stop offset=".32" stop-color="#5fa2bd"/>
+      <stop offset=".4" stop-color="#45b2c9"/>
+      <stop offset=".47" stop-color="#35bcd0"/>
+      <stop offset=".52" stop-color="#30c0d3"/>
+      <stop offset=".57" stop-color="#2eb9cd"/>
+      <stop offset=".63" stop-color="#29a8be"/>
+      <stop offset=".7" stop-color="#218ba6"/>
+      <stop offset=".78" stop-color="#176483"/>
+      <stop offset=".86" stop-color="#093158"/>
+      <stop offset=".89" stop-color="#05214a"/>
+    </linearGradient>
+  </defs>
+  <g class="cls-3">
+    <rect class="cls-2" x="-145.75" y="-407.32" width="1202.08" height="1109.87"/>
+  </g>
+</svg>

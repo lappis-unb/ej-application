@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-16 16:55-0300\n"
+"POT-Creation-Date: 2024-01-22 17:21-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -415,27 +415,27 @@ msgstr "Concorda"
 msgid "Disagree"
 msgstr "Discorda"
 
-#: src/ej_conversations/forms.py:21
+#: src/ej_conversations/forms.py:22
 msgid "Give your opinion here"
 msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/forms.py:22
+#: src/ej_conversations/forms.py:23
 msgid "Suggest a new comment"
 msgstr "Sugira um novo comentário"
 
-#: src/ej_conversations/forms.py:32 src/ej_conversations/tests/test_forms.py:69
+#: src/ej_conversations/forms.py:33 src/ej_conversations/tests/test_forms.py:69
 msgid "You already submitted this comment."
 msgstr "Você já enviou este comentário."
 
-#: src/ej_conversations/forms.py:60
+#: src/ej_conversations/forms.py:61
 msgid "Tags"
 msgstr "Temas"
 
-#: src/ej_conversations/forms.py:60
+#: src/ej_conversations/forms.py:61
 msgid "Tags, separated by commas."
 msgstr "Temas, separados por vírgula."
 
-#: src/ej_conversations/forms.py:87
+#: src/ej_conversations/forms.py:88
 #, fuzzy
 msgid "This title already exists!"
 msgstr "Esse título já existe."
@@ -671,23 +671,23 @@ msgstr "Participar"
 msgid "Authentication credentials were not provided."
 msgstr ""
 
-#: src/ej_conversations/utils.py:49
+#: src/ej_conversations/utils.py:51
 msgid "Edit"
 msgstr "Editar"
 
-#: src/ej_conversations/utils.py:52
+#: src/ej_conversations/utils.py:54
 msgid "Manage Comments"
 msgstr "Gerenciar comentários"
 
-#: src/ej_conversations/utils.py:94
+#: src/ej_conversations/utils.py:96
 msgid "Thanks for voting."
 msgstr "Obrigado por votar."
 
-#: src/ej_conversations/utils.py:124
+#: src/ej_conversations/utils.py:126
 msgid "This conversation is now favorite."
 msgstr "Esta conversa é agora favorita."
 
-#: src/ej_conversations/utils.py:126
+#: src/ej_conversations/utils.py:128
 msgid "Conversation removed from favorites."
 msgstr "Conversa removida dos favoritos."
 
@@ -695,7 +695,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:99 src/ej_signatures/views.py:25
+#: src/ej_conversations/views.py:101 src/ej_signatures/views.py:25
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2828,38 +2828,38 @@ msgstr "Conversas públicas"
 msgid "Participate!"
 msgstr "Participar!"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:3
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:5
 msgid ""
 "Thank you! Your comment was sent to moderation and will be evaluated soon."
 msgstr "Obrigado! Seu comentário foi enviado para moderação."
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:24
 #, fuzzy
 msgid "Adds your opinion"
 msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:25
 #, fuzzy
 msgid "Comments added (Max. "
 msgstr "Comentários adicionados (Máx. "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:25
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:30
 #, fuzzy
 msgid "Characters remaining)"
 msgstr "Caracteres restantes)"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:35
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:39
 #: src/ej_tools/jinja2/ej_tools/mautic-form.jinja2:25
 msgid "Return"
 msgstr "Voltar"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:38
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:58
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:62
 #, fuzzy
 msgid "Send to moderation"
 msgstr "Enviar para moderação"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:50
 #, fuzzy
 msgid ""
 "You have already submitted the maximum number of comments allowed for this "
@@ -2867,7 +2867,7 @@ msgid ""
 msgstr ""
 "Você já enviou o número máximo permitido de comentários para esta conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:55
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:59
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:92
 msgid "Cancel"
 msgstr "Cancelar"

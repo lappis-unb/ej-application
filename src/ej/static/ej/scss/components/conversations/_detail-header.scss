@@ -1,7 +1,7 @@
 .conversation-header {
     width: 100%;
     margin: auto;
-    background-image: url("/static/img/comment_card/conversation-title-bg.png");
+    background-image: url("/static/img/comment_card/conversation-title-bg.svg");
     background-size: cover;
     position: relative;
 
@@ -13,7 +13,7 @@
 
     &-grid {
         display: grid;
-        grid-template-rows: 6rem auto 6rem;
+        grid-template-rows: 4rem auto 2rem;
         min-height: 220px;
         position: relative;
     }

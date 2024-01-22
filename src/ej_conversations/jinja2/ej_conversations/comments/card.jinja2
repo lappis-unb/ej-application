@@ -4,7 +4,7 @@
                 {% include 'ej_conversations/includes/conversation-progress.jinja2' %}
                 <a class="voting-card__label voting-card__add-comment"
                 hx-get="{{ url('boards:conversation-comment', **conversation.get_url_kwargs()) }}"
-                hx-target="#voting-card"    
+                hx-target="#voting-card"
                 hx-swap="innerHTML">
                     <i class="fa">&#xf055;</i> {{ _('Add comment') }}
                 </a>
@@ -13,8 +13,9 @@
             {% include 'ej_conversations/comments/voting-form.jinja2' %}
         {% else %}
             <div class="voting-card__message">
-                <p>{{ _("You have already voted on all the comments.") }}</p>
-                <span>{{_("Thank you for your participation!") }}</span>
+                <p>
+                {{ _("You have already voted on all the comments.") }} {{_("Thank you for your participation!") }}
+                </p>
             </div>
         {% endif %}
         <span class="privacy-policy__title privacy-policy--margin">{{_("Questions about privacy?")}}<a onclick="togglePrivacyBox()">{{_("Understand how your data is used")}}</a></span>
