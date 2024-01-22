@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 17:21-0300\n"
+"POT-Creation-Date: 2024-01-22 18:52-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1730,92 +1730,6 @@ msgstr "Sair"
 msgid "EJ - A platform for social participation."
 msgstr "EJ - Uma plataforma de participação social."
 
-#: src/ej/templates/jinja2/pages/home.jinja2:13
-msgid "Create opinion surveys"
-msgstr "Crie consultas de opinião"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:14
-msgid "Try it now!"
-msgstr "Começar agora!"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:21
-msgid "How does it work?"
-msgstr "Como funciona?"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:25
-#: src/ej/templates/jinja2/pages/home.jinja2:58
-msgid "Create a conversation"
-msgstr "Criar conversa"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:26
-msgid ""
-"create conversations on EJ to receive ideas and opinions about politics, "
-"services or public equipments."
-msgstr ""
-"crie conversas no EJ para receber ideias e opiniões sobre políticas, "
-"serviços ou equipamentos públicos."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:31
-#, fuzzy
-msgid "Listen to the people"
-msgstr "Escute a população"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:32
-msgid ""
-"identify the priorities and the different opinion groups in the society."
-msgstr ""
-"identifique suas prioridades e os diferentes grupos de opinião existentes na "
-"sociedade."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:37
-msgid "Take decisions"
-msgstr "Tome decisões"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:38
-msgid ""
-"make participants know, communicating directly and amplifying the responses."
-msgstr ""
-"faça os participantes saberem, comunicando diretamente e amplificando as "
-"respostas."
-
-#: src/ej/templates/jinja2/pages/home.jinja2:44
-msgid "Participative conversations"
-msgstr "Conversas participativas"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:48
-msgid "Community driven"
-msgstr "Orientado pela comunidade"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:49
-msgid "No attacks or fakes"
-msgstr "Sem ataques ou fakes"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:50
-msgid "Nuances instead of bubbles"
-msgstr "Nuances invés de bolhas"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:51
-msgid "Free and open source"
-msgstr "Código livre e aberta"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:63
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:105
-#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:36
-msgid "Documentation"
-msgstr "Documentação"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:64
-msgid "Explore the EJ resources with our documented guides"
-msgstr "Explore o máximo dos recursos do EJ com nossos guias documentados"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:78
-msgid "EJ Community"
-msgstr "Comunidade EJ"
-
-#: src/ej/templates/jinja2/pages/home.jinja2:91
-msgid "Who is using EJ?"
-msgstr "Quem já adotou o EJ?"
-
 #: src/ej/templates/jinja2/pages/info-django-settings.jinja2:2
 #: src/ej/templates/jinja2/pages/info-environ.jinja2:2
 msgid "Django settings"
@@ -2415,7 +2329,7 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:24
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2720,7 +2634,6 @@ msgstr "Editar conversa"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-card.jinja2:2
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:2
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
 #: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
 msgid "Comments"
@@ -2877,7 +2790,7 @@ msgstr "Cancelar"
 msgid "Add comment"
 msgstr "Adicionar comentário"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:16
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:17
 #, fuzzy
 msgid "You have already voted on all the comments."
 msgstr "Você já votou em todos os comentários."
@@ -2887,11 +2800,11 @@ msgstr "Você já votou em todos os comentários."
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:21
 msgid "Questions about privacy?"
 msgstr "Dúvidas sobre privacidade? "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:21
 #, fuzzy
 msgid "Understand how your data is used"
 msgstr "Entenda como seus dados são utilizados"
@@ -3005,6 +2918,11 @@ msgstr "Ajuda"
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:35
 msgid "Tour"
 msgstr "Tour"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:105
+#: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:36
+msgid "Documentation"
+msgstr "Documentação"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-list.jinja2:6
 msgid "New Conversation"
@@ -3426,7 +3344,6 @@ msgid "You have not created any conversation yet!"
 msgstr "Você ainda não criou nenhuma conversa!"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:45
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:43
 msgid "List of conversations created by you."
 msgstr "Lista de conversas criadas por você."
 
@@ -3490,51 +3407,34 @@ msgstr "Conversas públicas"
 msgid "My conversations"
 msgstr "Minhas Conversas"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:24
 #, fuzzy
-msgid ""
-"List of conversations created by EJ community and available for "
-"participation."
-msgstr ""
-"Lista de conversas criadas pela comunidade EJ e disponíveis para "
-"participação."
+msgid "My Votes"
+msgstr "Meus Votos"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:46
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
+#, fuzzy
+msgid "My Comments"
+msgstr "Meus Comentários"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:42
 #, fuzzy
 msgid "You have not created any conversations."
 msgstr "Você ainda não criou nenhuma conversa."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:52
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:48
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:61
-#, fuzzy
-msgid ""
-"List of conversations you participated at least once. To resume voting, "
-"click on the title."
-msgstr ""
-"Lista de conversas que você participou pelo menos uma vez. Para retomar à "
-"votação, clique no título."
-
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:78
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
 #, fuzzy
 msgid "You haven't voted in any conversations yet."
 msgstr "Você ainda não votou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:91
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:82
 #, fuzzy
 msgid "You haven't commented in any conversations yet."
 msgstr "Você ainda não comentou em nenhuma conversa!"
-
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:94
-#, fuzzy
-msgid ""
-"Comments you've submitted for approval in third-party conversations, in "
-"descending date order"
-msgstr ""
-"Comentários que você submeteu para aprovação em conversas de terceiros, em "
-"ordem decrescente de data"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
 msgid "pending"
@@ -3546,8 +3446,8 @@ msgstr "Contribuições"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:4
 #, fuzzy
-msgid "Search"
-msgstr "Busca"
+msgid "Search conversation"
+msgstr "Buscar conversa"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:8
 #, fuzzy
@@ -4544,6 +4444,93 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#~ msgid "Create opinion surveys"
+#~ msgstr "Crie consultas de opinião"
+
+#~ msgid "Try it now!"
+#~ msgstr "Começar agora!"
+
+#~ msgid "How does it work?"
+#~ msgstr "Como funciona?"
+
+#~ msgid "Create a conversation"
+#~ msgstr "Criar conversa"
+
+#~ msgid ""
+#~ "create conversations on EJ to receive ideas and opinions about politics, "
+#~ "services or public equipments."
+#~ msgstr ""
+#~ "crie conversas no EJ para receber ideias e opiniões sobre políticas, "
+#~ "serviços ou equipamentos públicos."
+
+#, fuzzy
+#~ msgid "Listen to the people"
+#~ msgstr "Escute a população"
+
+#~ msgid ""
+#~ "identify the priorities and the different opinion groups in the society."
+#~ msgstr ""
+#~ "identifique suas prioridades e os diferentes grupos de opinião existentes "
+#~ "na sociedade."
+
+#~ msgid "Take decisions"
+#~ msgstr "Tome decisões"
+
+#~ msgid ""
+#~ "make participants know, communicating directly and amplifying the "
+#~ "responses."
+#~ msgstr ""
+#~ "faça os participantes saberem, comunicando diretamente e amplificando as "
+#~ "respostas."
+
+#~ msgid "Participative conversations"
+#~ msgstr "Conversas participativas"
+
+#~ msgid "Community driven"
+#~ msgstr "Orientado pela comunidade"
+
+#~ msgid "No attacks or fakes"
+#~ msgstr "Sem ataques ou fakes"
+
+#~ msgid "Nuances instead of bubbles"
+#~ msgstr "Nuances invés de bolhas"
+
+#~ msgid "Free and open source"
+#~ msgstr "Código livre e aberta"
+
+#~ msgid "Explore the EJ resources with our documented guides"
+#~ msgstr "Explore o máximo dos recursos do EJ com nossos guias documentados"
+
+#~ msgid "EJ Community"
+#~ msgstr "Comunidade EJ"
+
+#~ msgid "Who is using EJ?"
+#~ msgstr "Quem já adotou o EJ?"
+
+#, fuzzy
+#~ msgid ""
+#~ "List of conversations created by EJ community and available for "
+#~ "participation."
+#~ msgstr ""
+#~ "Lista de conversas criadas pela comunidade EJ e disponíveis para "
+#~ "participação."
+
+#, fuzzy
+#~ msgid ""
+#~ "List of conversations you participated at least once. To resume voting, "
+#~ "click on the title."
+#~ msgstr ""
+#~ "Lista de conversas que você participou pelo menos uma vez. Para retomar à "
+#~ "votação, clique no título."
+
+#, fuzzy
+#~ msgid ""
+#~ "Comments you've submitted for approval in third-party conversations, in "
+#~ "descending date order"
+#~ msgstr ""
+#~ "Comentários que você submeteu para aprovação em conversas de terceiros, "
+#~ "em ordem decrescente de data"
 
 #~ msgid "This tool is not available on your current signature."
 #~ msgstr "Essa ferramenta não está diponível na sua assinatura atual."

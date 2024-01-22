@@ -145,7 +145,7 @@ ul.errorlist {
 
         &--second-column {
             grid-column: 4/5;
-            
+
             &--email {
                 input {margin: 0;}
             }
@@ -347,6 +347,15 @@ legend {
     &--padding {
         padding: 2rem 0 0 0;
     }
+    @media only screen and (max-width: 900px) {
+        & {
+            grid-template-columns: 3% auto 3%;
+        }
+
+        &--padding {
+            padding: 1rem 0 0 0;
+        }
+    }
 }
 
 .loader {
@@ -488,10 +497,5 @@ legend {
         &__submit-button {
             margin-bottom: 1.5rem !important;
         }
-    }
-
-
-    .content-grid {
-        grid-template-columns: 2% auto 2%;
     }
 }

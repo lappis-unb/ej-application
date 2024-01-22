@@ -1,7 +1,7 @@
 {% macro search_filter(all_tags, participated_tags, name, has_filtered_tag, host, api_args) %}
     <div class="input-container">
         <input class="input-container__search" type="search"
-            placeholder="{{_('Search')}}"
+            placeholder="{{_('Search conversation')}}"
             onkeyup="{{name}}filterConversationByTagAndName(this);"
         >
         <a class="input-container__filter-theme" onclick="{{name}}filterByTheme()">
