@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 18:52-0300\n"
+"POT-Creation-Date: 2024-01-22 19:40-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -3196,7 +3196,7 @@ msgstr ""
 "que votam de forma parecida, ficam mais próximos. "
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:10
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:20
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:22
 #, fuzzy
 msgid "filter by"
 msgstr "filtrar por"
@@ -3206,12 +3206,12 @@ msgstr "filtrar por"
 msgid "Opinion"
 msgstr "Opinião"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:26
 #, fuzzy
-msgid "There is no groups for this conversation."
-msgstr "Não há grupos para esta conversa."
+msgid "Create some personas to visualize this graph."
+msgstr "Cadastre personas para visualizar esse gráfico."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:28
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:33
 msgid "Loading data..."
 msgstr "Carregando dados..."
 
@@ -4444,6 +4444,10 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#, fuzzy
+#~ msgid "There is no groups for this conversation."
+#~ msgstr "Não há grupos para esta conversa."
 
 #~ msgid "Create opinion surveys"
 #~ msgstr "Crie consultas de opinião"

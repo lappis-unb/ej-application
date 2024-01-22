@@ -1,6 +1,6 @@
 {% block content %}
     <div class="scatter-section--grow scatter-section__title flex">
-        <h1 class="text-accent">{{_("Scatter plot")}}</h1>
+        <h1 class="conversation-dashboard-section__title text-accent">{{_("Scatter plot")}}</h1>
         <p>
             {{_("Each chart point represents a different participant. Participants with similar voting, appears near each other.")}}
         </p>
@@ -17,17 +17,17 @@
         </div>
     {% else %}
         <div class="scatter-filter">
-            <div class="bold scatter-filter__filter-by-text"><span>{{ _('filter by') }}</span></div>
-            <div class="scatter-filter__no-group-text">
-                <span>{{_("There is no groups for this conversation.")}}</span>
+            <div class="input-container__warn-message">
+                <span>{{_("Create some personas to visualize this graph.")}}</span>
             </div>
         </div>
     {% endif %}
     </div>
-    <div id="scatter-container" class="scatter-section__container">
-        <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
-    </div>
-
+    {% if json_data %}
+        <div id="scatter-container" class="scatter-section__container">
+            <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
+        </div>
+    {% endif %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js" defer></script>
     <script defer>
         window.addEventListener('load', function () {
