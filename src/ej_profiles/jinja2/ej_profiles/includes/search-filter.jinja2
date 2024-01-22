@@ -35,13 +35,6 @@
         {% endfor %}
     </div>
 
-    {% if participated_tags and not has_filtered_tag %}
-        <div class="{{name}}-tag-header__tooltip" id="{{name}}-tag-tooltip">
-            <div class="{{name}}-tag-header__tooltip__arrow"></div>
-            {{ _('Select to view conversations within that topic.') }}
-        </div>
-    {% endif %}
-
     <script>
 
     let {{name}}selectedTags = [];
