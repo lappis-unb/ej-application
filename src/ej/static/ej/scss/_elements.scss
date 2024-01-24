@@ -41,6 +41,9 @@ label + select + br {
 .float-right {
     float: right;
 }
+.inline-grid {
+    display: inline-grid;
+}
 
 
 input + .helptext,

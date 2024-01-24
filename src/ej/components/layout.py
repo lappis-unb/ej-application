@@ -5,11 +5,11 @@ from hyperpython import a, div
 from ..roles.tags import icon
 
 
-def tabs(items, select=0, js=True, **kwargs):
+def tabs(items, select=0, js=True, classes="", **kwargs):
     """
     Return a tabbed interface.
     """
-    return _make_tabs("tabs", js, kwargs, list(_tab_anchors(items, select)))
+    return _make_tabs(f"tabs {classes}", js, kwargs, list(_tab_anchors(items, select)))
 
 
 def categories(items, select=0, js=True, **kwargs):
