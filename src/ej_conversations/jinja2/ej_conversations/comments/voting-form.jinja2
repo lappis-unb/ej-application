@@ -1,3 +1,9 @@
+<dialog class="toast toast--hide" id="voting-dialog-confirmation">
+    <div class="toast__content">
+        <span>{{_("Thank you for voting.")}}</span>
+    </div>
+</dialog>
+
 <span class="voting-card__label">{% trans %} Comment {% endtrans %}</span><br>
 <div class="voting-card__comment"><p>{{ comment.content}}</p></div>
 <div>
@@ -51,5 +57,6 @@ function showSpinner (choice) {
     button.children()[0].remove();
     let spinner = $(`#${choice}-spinner`)[0];
     spinner.classList.add("show")
+    showConfirmationDialogFor('#voting-dialog-confirmation')
 }
 </script>
