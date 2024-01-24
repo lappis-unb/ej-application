@@ -115,9 +115,11 @@ class Conf(
             }
         }
 
-    CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
+    CORS_ALLOWED_ORIGINS = (
+        [] if not os.getenv("CORS_ALLOWED_ORIGINS") else os.getenv("CORS_ALLOWED_ORIGINS").split(",")
+    )
 
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = ["*"] if not os.getenv("DJANGO_ALLOWED_HOSTS") else os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
 
     REST_AUTH_REGISTER_SERIALIZERS = {
         "REGISTER_SERIALIZER": "ej_users.rest_auth_serializer.RegistrationSerializer"
