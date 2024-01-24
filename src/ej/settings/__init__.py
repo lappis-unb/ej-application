@@ -115,13 +115,7 @@ class Conf(
             }
         }
 
-    CORS_ALLOWED_ORIGINS = [
-        "https://debates.nic.br",
-        "https://wordpress.pencillabs.com.br",
-        "https://agentesdacidadania.org.br",
-        "http://192.168.0.248:3333",
-        "https://enquete.org.br",
-    ]
+    CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
 
     ALLOWED_HOSTS = ["*"]
 
