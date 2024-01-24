@@ -113,9 +113,9 @@ logomarca e mensagem de encerramento configuradas na página da ferramenta.
 Configuração de CORS
 --------------------
 
-Para que o componente possa fazer requisições na API da EJ a partir de um domínio externo, é preciso adiciona-lo
-na variável **CORS_ALLOWED_ORIGINS**, definida no arquivo :code:`src/ej/settings/__init__.py`.
-Do contrário, o componente irá acusar acusar erro de `Cross-Origin Resource Sharing <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_,
+Para que o componente possa fazer requisições na API da EJ a partir de um domínio externo, é preciso adicioná-lo
+na variável **CORS_ALLOWED_ORIGINS**, definida no arquivo :code:`docker/variables.env`, em uma lista separada por vírgulas.
+Do contrário, o componente irá acusar erro de `Cross-Origin Resource Sharing <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_,
 sempre que tentar requisitar informações na API da EJ a partir do domínio que estiver integrado.
 
 Correções de css na pagina do componente
