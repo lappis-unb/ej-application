@@ -19,7 +19,7 @@
             </p>
 
             <div id="cluster-canvas-container">
-                <canvas id="cluster-canvas" class="margin-xauto block"></canvas>
+                <canvas id="cluster-canvas" class="block"></canvas>
             </div>
 
 
@@ -109,11 +109,12 @@
         <script src="{{ static('js/clusterviz.js') }}"></script>
         <script>
             window.addEventListener('load', function () {
-                var $canvas = $('#cluster-canvas'),
-                    $canvasContainer = $('#cluster-canvas-container'),
-                    size = Math.min($canvasContainer.width(), 500);
-
-                $canvas.css({width: size, height: size * 0.80});
+                let canvas = $('#cluster-canvas');
+                let size = Math.min($(window).width() * 0.95, 500);
+                if (size >= 500) {
+                    $("#cluster-canvas")[0].classList.add("margin-auto");
+                }
+                canvas.css({width: size, height: size * 0.80});
                 initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
             });
         </script>

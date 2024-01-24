@@ -299,6 +299,7 @@
             h2 {
                 font-size: 1.5rem;
                 margin-top: unset;
+                font-weight: bold;
             }
             max-width: 20rem;
         }
@@ -320,6 +321,7 @@
     &__main-comment {
         font-size: 1rem;
         margin-bottom: 3rem;
+        font-weight: 500;
     }
 }
 
@@ -428,8 +430,8 @@
             border-radius: 0.313rem;
             text-transform: capitalize;
             font-size: 1rem;
-            padding: 0.2rem 0.75rem;
-            height: 2.625rem;
+            padding: .2rem .8rem;
+            box-sizing: content-box;
         }
     }
 
@@ -571,12 +573,6 @@
             margin-bottom: 2rem;
             max-width: 100%;
             width: 100%;
-
-            h2 {
-                max-width: 90vw;
-                margin: auto;
-                font-size: 1.25rem;
-            }
         }
 
         &__chart {
