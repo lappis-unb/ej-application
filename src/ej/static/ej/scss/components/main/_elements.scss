@@ -54,10 +54,13 @@ i.fa, i.fas, i.fab, i.far {
     @extend .uppercase;
     border-bottom: 1px solid $color-theme-report-gray;
     justify-content: flex-start;
+    overflow-x: scroll;
 
     a {
         margin-right: 2.625rem;
-        padding-bottom: 1.125rem;
+    }
+    a:last-child {
+        margin-right: unset;
     }
 }
 

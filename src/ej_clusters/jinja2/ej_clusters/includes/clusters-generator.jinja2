@@ -1,0 +1,15 @@
+{% macro clustersGenerator(json_data) %}
+<script src="{{ static('js/clusterviz.js') }}"></script>
+<script>
+    window.addEventListener('load', function () {
+        let canvas = $('#cluster-canvas');
+        let size = Math.min($(window).width() * 0.95, 500);
+        if (size >= 500) {
+            $("#cluster-canvas")[0].classList.add("margin-auto");
+        }
+        canvas.css({width: size, height: size * 0.80});
+        initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
+    });
+</script>
+{% endmacro %}
+
