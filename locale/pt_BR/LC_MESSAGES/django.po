@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-22 19:40-0300\n"
+"POT-Creation-Date: 2024-01-22 22:14-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1648,11 +1648,11 @@ msgstr "Você precisa concordar com os nossos termos antes de se cadastrar."
 msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
-#: src/ej/templates/jinja2/base.jinja2:34
+#: src/ej/templates/jinja2/base.jinja2:36
 msgid "Jump to main content"
 msgstr "Pular para conteúdo principal"
 
-#: src/ej/templates/jinja2/base.jinja2:68
+#: src/ej/templates/jinja2/base.jinja2:70
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -2607,7 +2607,7 @@ msgstr "Adicionar mais comentários"
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/voting-form.jinja2:1
+#: src/ej_conversations/jinja2/ej_conversations/comments/voting-form.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:102
 #, fuzzy
 msgid " Comment "
@@ -2822,6 +2822,11 @@ msgstr "Não há comentários para votar :)"
 #, fuzzy
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/comments/voting-form.jinja2:3
+#, fuzzy
+msgid "Thank you for voting."
+msgstr "Obrigado por votar."
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:26
 #, fuzzy

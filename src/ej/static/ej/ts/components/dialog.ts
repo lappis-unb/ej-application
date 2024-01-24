@@ -1,8 +1,10 @@
 const showConfirmationDialogFor = (selector) => {
-  $(selector)[0].classList.toggle("toast--show");
+  const dialogElement = $(selector)[0];
+  dialogElement.classList.toggle("toast--show");
   setTimeout(() => {
-    $(selector)[0].classList.toggle("toast--show");
-  }, 1500);
+    if(dialogElement){
+      dialogElement.classList.toggle("toast--show");}
+    }, 1500);
 };
 
 window["showConfirmationDialogFor"] = showConfirmationDialogFor;
