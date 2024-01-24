@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
     <div class="title-export">
-        <h1 class="h2 text-accent">{{ _('Users report') }}</h1>
+        <h1 class="text-accent">{{ _('Users report') }}</h1>
         {{ export_modal(can_view_detail, conversation, "users_data", conversation.slug) }}
     </div>
     <div id="order-participants">
@@ -58,8 +58,13 @@
         }
 
         $(document).ready(function () {
-            const orderFilter = document.getElementById('order-participants');
-            document.getElementById("participants-table-report_length").append(orderFilter);
+            let orderFilter = document.getElementById('order-participants');
+            if (orderFilter) {
+                let element = $("#participants-table-report_length");
+                if (element[0]) {
+                    element[0].append(orderFilter);
+                }
+            }
         });
 
     </script>

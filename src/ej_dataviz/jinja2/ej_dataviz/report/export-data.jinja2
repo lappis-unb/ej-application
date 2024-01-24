@@ -20,19 +20,23 @@
 
 <script>
 function closeExportDropdown(closeIcon) {
-  const modal = document.getElementById("export-modal-{{type_data}}-{{_id}}");
-  modal.classList.remove("show-options");
+  let modal = $("#export-modal-{{type_data}}-{{_id}}")[0];
+    if (modal) {
+        modal.classList.remove("show-options");
+    }
 }
 
 function openExportDropdown(event) {
     if (event.target.classList[0] != "close-report") {
-        const modal = document.getElementById("export-modal-{{type_data}}-{{_id}}");
+        let modal = $("export-modal-{{type_data}}-{{_id}}")[0];
         modal.classList.toggle("show-options");
     }
 }
 
-var exportBtn = document.getElementById("export-btn-{{type_data}}-{{_id}}");
-exportBtn.onclick = openExportDropdown;
+let exportBtn = $("export-btn-{{type_data}}-{{_id}}")[0];
+if (exportBtn) {
+    exportBtn.onclick = openExportDropdown;
+}
 </script>
 
 {% endmacro %}

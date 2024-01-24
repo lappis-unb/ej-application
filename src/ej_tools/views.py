@@ -47,7 +47,7 @@ def index(request, board_slug, conversation_id, slug):
         BotsTool(conversation, exclude=["whatsapp"]),
         MauticTool(conversation, is_active=False),
     ]
-    context = {"tools": tools, "conversation": conversation}
+    context = {"tools": tools, "conversation": conversation, "current_page": "tools"}
     return render(request, "ej_tools/index.jinja2", context)
 
 

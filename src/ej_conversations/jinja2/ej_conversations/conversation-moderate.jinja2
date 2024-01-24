@@ -91,13 +91,15 @@
             </div>
         </div>
 
-        {{ tabs({_('Pending'): '#moderate-pending',
-                _('Approved'): '#moderate-approved',
-                _('Rejected'): '#moderate-rejected',
-                _('Add'): '#moderate-add'}) }}
-        {{ show_comments(pending, 'pending') }}
-        {{ show_comments(approved, 'approved') }}
-        {{ show_comments(rejected, 'rejected') }}
+        <div class="margin-y2">
+            {{ tabs({_('Pending'): '#moderate-pending',
+                    _('Approved'): '#moderate-approved',
+                    _('Rejected'): '#moderate-rejected',
+                    _('Add'): '#moderate-add'}) }}
+            {{ show_comments(pending, 'pending') }}
+            {{ show_comments(approved, 'approved') }}
+            {{ show_comments(rejected, 'rejected') }}
+        </div>
 
         <script>
             const path = document.location.href.split('/');
