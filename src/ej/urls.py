@@ -11,6 +11,7 @@ from django.urls import include, path, re_path
 from django.views import defaults as default_views
 from django.views.static import serve
 from ej import services
+from ej import views
 from ej.fixes import unregister_admin
 from ej_boards.api import BoardViewSet
 from ej_clusters.api import ClusterizationViewSet
@@ -70,7 +71,31 @@ def get_urlpatterns():
     patterns = [
         #
         # Basic authentication and authorization
-        path("", include("ej.routes")),
+        path(
+            "",
+            views.IndexView.as_view(),
+            name="index",
+        ),
+        path(
+            "info/styles/",
+            views.InfoStylesView.as_view(),
+            name="info-styles",
+        ),
+        path(
+            "info/django-settings/",
+            views.InfoDjangoSettingsView.as_view(),
+            name="info-django-settings",
+        ),
+        path(
+            "info/environment/",
+            views.InfoEnvironView.as_view(),
+            name="info-environ",
+        ),
+        path(
+            "sw.js",
+            views.ServiceWorkerView.as_view(),
+            name="service-worker",
+        ),
         path("", include("ej_users.urls.user", namespace="auth")),
         path("", include("ej_users.urls.account", namespace="account")),
         #
