@@ -210,21 +210,21 @@ class Profile(models.Model):
     def default_url(self):
         return reverse(("profile:home"))
 
-    def participated_conversations(self):
+    def participated_public_conversations(self):
         """
         Return conversations that an user has commented or voted
         """
         user = self.user
         return Conversation.objects.filter(
-            Q(comments__author=user) | Q(comments__votes__author=user)
+            Q(comments__author=user) | Q(comments__votes__author=user), is_promoted=True
         ).distinct()
 
-    def participated_tags(self):
+    def participated_public_tags(self):
         """
         Return tags of conversations that an user has commented or voted
         """
         return ConversationTag.objects.filter(
-            content_object__in=self.participated_conversations()
+            content_object__in=self.participated_public_conversations()
         ).distinct("tag")
 
     def get_contributions_data(self):

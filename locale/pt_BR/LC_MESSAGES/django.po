@@ -3474,7 +3474,7 @@ msgstr "Selecione para ver as conversas dentro deste tema."
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:9
 msgid "Bubbles"
-msgstr ""
+msgstr "Bolhas"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/tour-page1.jinja2:12
 #, fuzzy
