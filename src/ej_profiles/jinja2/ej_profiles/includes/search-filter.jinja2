@@ -35,6 +35,13 @@
         {% endfor %}
     </div>
 
+    {% if participated_tags and not has_filtered_tag %}
+        <div class="{{name}}-tag-header__tooltip" id="{{name}}-tag-tooltip">
+            <div class="{{name}}-tag-header__tooltip__arrow"></div>
+            {{ _('Select to view conversations within that topic.') }}
+        </div>
+    {% endif %}
+
     <script>
 
     let {{name}}selectedTags = [];
@@ -56,8 +63,6 @@
             }
         }
     }
-
-    document.addEventListener("click", {{name}}removeTooltip);
 
     function {{name}}removeTooltip() {
         $(".{{name}}-tag-header__tags--unselected").insertBefore($(".{{name}}-tag-header__tooltip"));
@@ -194,11 +199,22 @@
         });
     }
 
+    let {{name}}hasViewedTooltip = false;
+
+    function {{name}}checkTooltipStatus() {
+        if(!{{name}}hasViewedTooltip){
+            setTimeout( () => {
+                $(document).on("click", document, {{name}}removeTooltip); 
+                {{name}}hasViewedTooltip = true;
+            }, 100);
+        }
+    }
     function {{name}}filterByTheme() {
         let sectionTags = document.getElementById("{{name}}-tag-buttons");
         let filterIconTheme = document.getElementById("{{name}}filter-icon");
         sectionTags.classList.toggle("{{name}}-tag-header");
         filterIconTheme.classList.toggle("move-icon");
+        {{name}}checkTooltipStatus();
     }
     </script>
 
