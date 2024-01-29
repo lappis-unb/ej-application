@@ -123,7 +123,7 @@ class Conf(
     CSRF_TRUSTED_ORIGINS = (
         []
         if not os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS")
-        else os.getenv("DJANGO_CORS_ALLOWED_ORIGINS").split(",")
+        else os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS").split(",")
     )
 
     ALLOWED_HOSTS = (
