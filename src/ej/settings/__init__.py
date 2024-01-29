@@ -115,8 +115,15 @@ class Conf(
             }
         }
 
+    # django-cors-headers
     CORS_ALLOWED_ORIGINS = (
         [] if not os.getenv("CORS_ALLOWED_ORIGINS") else os.getenv("CORS_ALLOWED_ORIGINS").split(",")
+    )
+
+    CSRF_TRUSTED_ORIGINS = (
+        []
+        if not os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS")
+        else os.getenv("DJANGO_CORS_ALLOWED_ORIGINS").split(",")
     )
 
     ALLOWED_HOSTS = (
