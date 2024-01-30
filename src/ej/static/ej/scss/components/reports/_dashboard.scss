@@ -3,9 +3,18 @@
     grid-column: 2/3;
 }
 
+.conversation-dashboard {
+    &-section {
+        &__title {
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+
 .dashboard-balloon {
     &__container {
-        margin: 2.5rem 0 1rem 0;
+        margin: 2.5rem 0 3rem 0;
     }
 
     &__title {
@@ -232,7 +241,6 @@
 
     &__title {
         margin-bottom: 2.56rem;
-        margin-top: 3rem;
     }
 }
 
@@ -251,12 +259,11 @@
 
 .report-container .conversation-dashboard .clusters-section {
     background-color: $color-theme-report-gray-blue;
-    margin-bottom: 3.625rem;
+    margin-bottom: 3rem;
     grid-column: 1/4;
 
     &__title {
         div {
-            max-width: 8rem;
             span {
                 text-align: left;
                 font-family: "Work Sans", "sans-serif";
@@ -292,6 +299,7 @@
             h2 {
                 font-size: 1.5rem;
                 margin-top: unset;
+                font-weight: bold;
             }
             max-width: 20rem;
         }
@@ -313,12 +321,13 @@
     &__main-comment {
         font-size: 1rem;
         margin-bottom: 3rem;
+        font-weight: 500;
     }
 }
 
 .report-container .conversation-dashboard .scatter-section {
     gap: 2.5rem;
-    margin-bottom: 2.34rem;
+    margin-bottom: 3rem;
 
     &--grow {
         flex-grow: 1;
@@ -394,7 +403,6 @@
 
 .report-container .conversation-dashboard .words-cloud-section {
     &__title {
-        margin-top: 3rem;
         margin-bottom: 1.75rem;
     }
     &__container {
@@ -422,8 +430,8 @@
             border-radius: 0.313rem;
             text-transform: capitalize;
             font-size: 1rem;
-            padding: 0.2rem 0.75rem;
-            height: 2.625rem;
+            padding: .2rem .8rem;
+            box-sizing: content-box;
         }
     }
 
@@ -543,8 +551,6 @@
 
 
     .report-container .conversation-dashboard .clusters-section {
-        margin-bottom: unset;
-
         &__container {
             padding: unset !important;
             max-width: unset !important;
@@ -567,12 +573,6 @@
             margin-bottom: 2rem;
             max-width: 100%;
             width: 100%;
-
-            h2 {
-                max-width: 90vw;
-                margin: auto;
-                font-size: 1.25rem;
-            }
         }
 
         &__chart {
@@ -592,9 +592,6 @@
     }
 
     .report-container .conversation-dashboard .scatter-section {
-        padding-top: 2.81rem !important;
-        margin-bottom: unset;
-
         &__title {
             max-width: 100%;
 

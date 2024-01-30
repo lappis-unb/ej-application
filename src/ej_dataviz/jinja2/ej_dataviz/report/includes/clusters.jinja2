@@ -1,6 +1,8 @@
+{% from "ej_clusters/includes/clusters-generator.jinja2" import clustersGenerator %}
+
 <div class="clusters-section content-grid">
     <div class="clusters-section__container {% if not json_data%}clusters-section__detail--padding{%endif%}">
-        <div class="clusters-section__title flex">
+        <div class="conversation-dashboard-section__title clusters-section__title flex">
             <div><h1 class="text-accent">{{_('Opinion Groups')}}</h1></div>
         </div>
         {% if json_data %}
@@ -40,20 +42,6 @@
 
 {% block javascript %}
     {% if json_data %}
-        <script src="{{ static('js/clusterviz.js') }}"></script>
-        <script>
-            window.addEventListener('load', function () {
-                var $canvas = $('#cluster-canvas'),
-                    $canvasContainer = $('.clusters-section__chart'),
-                    size = $canvasContainer.width();
-                    width = size;
-
-                if(size >= 667) {
-                    width = 500;
-                }
-                $canvas.css({width: width, height: 400});
-                initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
-            });
-        </script>
+        {{ clustersGenerator(json_data) }}
     {% endif %}
 {% endblock %}

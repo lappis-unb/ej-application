@@ -54,7 +54,7 @@ Segurança
 
 DJANGO_ALLOWED_HOSTS:
     Define a lista de domínios externos que poderão requisitar recursos da EJ.
-    Essa variável garante que apenas domínios conhecidos possam interagir com os recursos 2023-07-03aplicação.
+    Essa variável garante que apenas domínios conhecidos possam interagir com os recursos da aplicação.
 
 DJANGO_SECRET_KEY:
     Uma string randômica utilizada pelo Django para assinaturas criptografadas.

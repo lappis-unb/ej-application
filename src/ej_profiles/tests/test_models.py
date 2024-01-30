@@ -100,7 +100,19 @@ class TestProfile(ConversationRecipes):
         profile_url = profile.default_url()
         assert profile_url == reverse("profile:home")
 
-    def test_participated_conversation_vote(self, db, user, other_user):
+    def test_participated_on_promoted_conversation_vote(self, db, user, other_user):
+        user.save()
+        other_user.save()
+        conversation = create_conversation("this is the text", "this is the title", user, is_promoted=True)
+        comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
+        Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
+
+        profile = other_user.get_profile()
+        retrieved_conversation = profile.participated_public_conversations().first()
+
+        assert retrieved_conversation == conversation
+
+    def test_participated_private_conversation_vote(self, db, user, other_user):
         user.save()
         other_user.save()
         conversation = create_conversation("this is the text", "this is the title", user)
@@ -108,34 +120,47 @@ class TestProfile(ConversationRecipes):
         Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
 
         profile = other_user.get_profile()
-        retrieved_conversation = profile.participated_conversations().first()
+        retrieved_conversation = profile.participated_public_conversations().first()
+
+        assert retrieved_conversation == None
+
+    def test_participated_promoted_conversation_comment(self, db, user, other_user):
+        user.save()
+        other_user.save()
+        conversation = create_conversation("this is the text", "this is the title", user, is_promoted=True)
+        Comment.objects.create(author=other_user, content="just a comment", conversation=conversation)
+
+        profile = other_user.get_profile()
+        retrieved_conversation = profile.participated_public_conversations().first()
 
         assert retrieved_conversation == conversation
 
-    def test_participated_conversation_comment(self, db, user, other_user):
+    def test_participated_private_conversation_comment(self, db, user, other_user):
         user.save()
         other_user.save()
         conversation = create_conversation("this is the text", "this is the title", user)
         Comment.objects.create(author=other_user, content="just a comment", conversation=conversation)
 
         profile = other_user.get_profile()
-        retrieved_conversation = profile.participated_conversations().first()
+        retrieved_conversation = profile.participated_public_conversations().first()
 
-        assert retrieved_conversation == conversation
+        assert retrieved_conversation == None
 
     def test_participated_conversation_comment_vote(self, db, user, other_user):
         user.save()
         other_user.save()
-        conversation = create_conversation("this is the text", "this is the title", user)
+        conversation = create_conversation("this is the text", "this is the title", user, is_promoted=True)
         comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
         Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
 
-        other_conversation = create_conversation("this is another text", "this is another title", user)
+        other_conversation = create_conversation(
+            "this is another text", "this is another title", user, is_promoted=True
+        )
         Comment.objects.create(
             author=other_user, content="just another comment", conversation=other_conversation
         )
         profile = other_user.get_profile()
-        retrieved_conversations = profile.participated_conversations()
+        retrieved_conversations = profile.participated_public_conversations()
 
         assert conversation in retrieved_conversations
         assert other_conversation in retrieved_conversations

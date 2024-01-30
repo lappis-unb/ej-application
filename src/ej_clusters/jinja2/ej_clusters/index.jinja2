@@ -1,4 +1,5 @@
 {% extends 'base.jinja2' %}
+{% from "ej_clusters/includes/clusters-generator.jinja2" import clustersGenerator %}
 {% set main_class = 'measure-wide margin-xauto pad-x2' %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
@@ -19,7 +20,7 @@
             </p>
 
             <div id="cluster-canvas-container">
-                <canvas id="cluster-canvas" class="margin-xauto block"></canvas>
+                <canvas id="cluster-canvas" class="block"></canvas>
             </div>
 
 
@@ -106,16 +107,6 @@
 {% block javascript %}
     {{ super() }}
     {% if json_data %}
-        <script src="{{ static('js/clusterviz.js') }}"></script>
-        <script>
-            window.addEventListener('load', function () {
-                var $canvas = $('#cluster-canvas'),
-                    $canvasContainer = $('#cluster-canvas-container'),
-                    size = Math.min($canvasContainer.width(), 500);
-
-                $canvas.css({width: size, height: size * 0.80});
-                initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
-            });
-        </script>
+        {{ clustersGenerator(json_data) }}
     {% endif %}
 {% endblock %}

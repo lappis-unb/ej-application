@@ -1,7 +1,7 @@
 {% macro search_filter(all_tags, participated_tags, name, has_filtered_tag, host, api_args) %}
     <div class="input-container">
         <input class="input-container__search" type="search"
-            placeholder="{{_('Search')}}"
+            placeholder="{{_('Search conversation')}}"
             onkeyup="{{name}}filterConversationByTagAndName(this);"
         >
         <a class="input-container__filter-theme" onclick="{{name}}filterByTheme()">
@@ -11,7 +11,7 @@
     </div>
 
     <div id="{{name}}-tag-buttons">
-        <input list="{{name}}-all-tags" id="{{name}}-tag-choice" name="{{name}}-tag-choice" placeholder="{{ _('Find a theme') }}">  
+        <input list="{{name}}-all-tags" id="{{name}}-tag-choice" name="{{name}}-tag-choice" placeholder="{{ _('Find a theme') }}">
         <datalist id="{{name}}-all-tags">
             {% for tag in all_tags %}
                 {% if not tag in participated_tags %}
@@ -22,14 +22,14 @@
 
         <a class="{{name}}-tag-header--add" id="{{name}}-tag-input-button" onclick="{{name}}addInputTag()">
             <i class="fa fa-chevron-right fa-2xl"></i>
-        </a> 
-        <button id="{{name}}-all-conversations-button" 
-                class="{{name}}-tag-header__all-conversations--selected" 
-                onclick="{{name}}changeStateAllConversations()" 
+        </a>
+        <button id="{{name}}-all-conversations-button"
+                class="{{name}}-tag-header__all-conversations--selected"
+                onclick="{{name}}changeStateAllConversations()"
                 data-selected="true">
                 {{ _('All') }}
         </button>
-        
+
         {% for tag in participated_tags %}
             <button class="{{name}}-tag-header__tags--unselected" onclick="{{name}}changeStateTag(this)" data-selected="false">{{tag}}</button>
         {% endfor %}
@@ -43,6 +43,7 @@
     {% endif %}
 
     <script>
+
     let {{name}}selectedTags = [];
     const {{name}}allTags = {{ all_tags|safe }};
 
@@ -62,8 +63,6 @@
             }
         }
     }
-
-    document.addEventListener("click", {{name}}removeTooltip);
 
     function {{name}}removeTooltip() {
         $(".{{name}}-tag-header__tags--unselected").insertBefore($(".{{name}}-tag-header__tooltip"));
@@ -87,7 +86,7 @@
         if (isAllSelected){
             {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__all-conversations--selected", "{{name}}-tag-header__all-conversations--unselected");
             allConversationsButton.dataset.selected = !isAllSelected;
-        } 
+        }
         document.querySelector(`#{{name}}-all-tags option[value='${typedTag}']`).remove();
     }
 
@@ -128,7 +127,7 @@
 
                 }
             }
-        }); 
+        });
     }
 
     function {{name}}getPromotedConversations(){
@@ -147,7 +146,7 @@
         if (isSelected){
             {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__all-conversations--selected", "{{name}}-tag-header__all-conversations--unselected");
             {{name}}getConversationByTag();
-        } 
+        }
         else {
             tags = document.getElementById("{{name}}-tag-buttons");
             const tagButtons = tags.getElementsByTagName("button");
@@ -188,7 +187,7 @@
             success: (retrievedConversations) => {
                 const warnMessage = "Não há conversas cadastradas com essas palavras-chave dentro deste tema. Por gentileza, refaça a busca."
                 let cardsDiv = document.getElementById("{{name}}-current-cards");
-                
+
                 if (retrievedConversations.length >= 1) {
                     {{name}}updateConversations(retrievedConversations);
                     cardsDiv.classList.remove("input-container__warn-message");
@@ -197,14 +196,25 @@
                     cardsDiv.classList.add("input-container__warn-message");
                 }
             }
-        }); 
+        });
     }
 
+    let {{name}}hasViewedTooltip = false;
+
+    function {{name}}checkTooltipStatus() {
+        if(!{{name}}hasViewedTooltip){
+            setTimeout( () => {
+                $(document).on("click", document, {{name}}removeTooltip); 
+                {{name}}hasViewedTooltip = true;
+            }, 100);
+        }
+    }
     function {{name}}filterByTheme() {
         let sectionTags = document.getElementById("{{name}}-tag-buttons");
         let filterIconTheme = document.getElementById("{{name}}filter-icon");
         sectionTags.classList.toggle("{{name}}-tag-header");
         filterIconTheme.classList.toggle("move-icon");
+        {{name}}checkTooltipStatus();
     }
     </script>
 

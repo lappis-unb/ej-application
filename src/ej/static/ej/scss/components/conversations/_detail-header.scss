@@ -1,9 +1,10 @@
 .conversation-header {
     width: 100%;
     margin: auto;
-    background-image: url("/static/img/comment_card/conversation-title-bg.png");
+    background-image: url("/static/img/comment_card/conversation-title-bg.svg");
     background-size: cover;
     position: relative;
+    box-shadow: 0px 10px 10px #00000033;
 
     img {
         width: 100%;
@@ -13,7 +14,7 @@
 
     &-grid {
         display: grid;
-        grid-template-rows: 6rem auto 6rem;
+        grid-template-rows: 4rem auto 2rem;
         min-height: 220px;
         position: relative;
     }
@@ -25,7 +26,6 @@
         display: flex;
         row-gap: .5rem;
         flex-flow: column;
-        max-width: 800px;
     }
 
     &__label {

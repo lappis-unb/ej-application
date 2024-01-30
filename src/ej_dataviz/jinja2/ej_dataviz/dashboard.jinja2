@@ -28,12 +28,10 @@
         <div class="scatter-section flex wrap center-grid">
             {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
         </div>
-        <hr class="nav-divider nav-divider--darker"></hr>
         {% with comments_statistics = conversation.statistics().get('comments') %}
             {% include 'ej_dataviz/report/includes/comments.jinja2' %}
             {% include 'ej_dataviz/report/includes/comment-participants.jinja2' %}
         {% endwith %}
-        <hr class="nav-divider nav-divider--darker"></hr>
         {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}
 
     </section>

@@ -59,11 +59,15 @@ i.fa, i.fas, i.fab, i.far {
         margin-right: 2.625rem;
         padding-bottom: 1.125rem;
     }
+    &--scroll-x {
+        overflow-x: scroll;
+    }
 }
 
 .categories {
     @include color(mix(color('brand-lighter'), color('white')), 'brand');
     @extend .bold;
+    flex-wrap: wrap;
 
     * {
         @extend .pad-1, .margin-x1;
@@ -209,12 +213,10 @@ dialog.toast--show {
     .toast {
         margin-left: auto;
     }
-
     .tabs {
         display: block;
     }
 }
-
 //------------------------------------------------------------------------------
 // Description list (for profile and others)
 .description {

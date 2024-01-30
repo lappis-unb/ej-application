@@ -36,11 +36,11 @@ def docker_build(ctx, dry_run=False, no_cache=False, prod=False):
     By default, this command will install all EJ dependencies.
     """
     do = runner(ctx, dry_run, pty=True)
-    argsList = []
+    argsList = ["-f docker/Dockerfile", "-t docker-server"]
     argsList.append("--no-cache") if no_cache else False
     args: str = reduce(lambda x, y: x + " " + y, argsList)
 
-    do(f"docker build {args} -f docker/Dockerfile -t docker-server .")
+    do(f"docker build {args} .")
 
 
 @task

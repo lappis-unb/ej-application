@@ -93,8 +93,6 @@ def handle_detail_vote(request):
     comment_id = data["comment_id"]
     try:
         models.Comment.objects.get(id=comment_id).vote(user, vote)
-        toast(request, _("Thanks for voting."))
-
         log.info(f"user {user.id} voted {vote} on comment {comment_id}")
     except ValidationError:
         # User voted twice and too quickly... We simply ignore the last vote

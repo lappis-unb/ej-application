@@ -6,8 +6,8 @@
     <section>
         {% include 'ej_dataviz/includes/header.jinja2' %}
         <div class="content-grid">
-            <h1 class="h2 left text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
-            <section class="margin-y1">
+            <h1 class="left text-accent">{% trans %}Configure opinion groups{% endtrans %}</h1>
+            <section class="margin-y2">
                 {% include 'ej_clusters/edit/select-groups.jinja2'%}
                 {% if new_cluster_form %}
                     {% include 'ej_clusters/edit/new-cluster-form.jinja2'%}

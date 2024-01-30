@@ -2,8 +2,8 @@
 
 {% block content %}
     {% include 'ej_dataviz/includes/header.jinja2' %}
-    <section class="content-grid content-grid--padding moderate">
-        <h1 class="h2 relative text-accent left">
+    <section class="content-grid moderate">
+        <h1 class="relative text-accent left">
             {{ _('Comments') }}
             <div class="tooltip">
                 <i class="tooltip__icon fas fa-info-circle"></i>
@@ -91,13 +91,14 @@
             </div>
         </div>
 
-        {{ tabs({_('Pending'): '#moderate-pending',
-                _('Approved'): '#moderate-approved',
-                _('Rejected'): '#moderate-rejected',
-                _('Add'): '#moderate-add'}) }}
-        {{ show_comments(pending, 'pending') }}
-        {{ show_comments(approved, 'approved') }}
-        {{ show_comments(rejected, 'rejected') }}
+                {{ tabs({_('Pending'): '#moderate-pending',
+                        _('Approved'): '#moderate-approved',
+                        _('Rejected'): '#moderate-rejected',
+                        _('Add'): '#moderate-add'},
+                        classes="tabs--scroll-x margin-y2") }}
+                {{ show_comments(pending, 'pending') }}
+                {{ show_comments(approved, 'approved') }}
+                {{ show_comments(rejected, 'rejected') }}
 
         <script>
             const path = document.location.href.split('/');

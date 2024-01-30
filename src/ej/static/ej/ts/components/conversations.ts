@@ -1,13 +1,16 @@
 const manageNextCommentTransition = () => {
   calculateCommentHeight();
-  $(".voting-card__comment")[0].style.opacity = "0";
-  $(".voting-card__comment")[0].classList.remove("voting-card__comment--show");
-  setTimeout(() => {
-    $(".voting-card__comment")[0].classList.add("voting-card__comment--show");
-  }, 500);
-  $("form")[0].addEventListener("htmx:afterRequest", () => {
-    manageNextCommentTransition();
-  });
+  const commentElement = $(".voting-card__comment")[0];
+  if(commentElement){
+    commentElement.style.opacity = "0";
+    commentElement.classList.remove("voting-card__comment--show");
+    setTimeout(() => {
+      commentElement.classList.add("voting-card__comment--show");
+    }, 500);
+    $("form")[0].addEventListener("htmx:afterRequest", () => {
+      manageNextCommentTransition();
+    });
+  }
 };
 
 const calculateCommentHeight = () => {

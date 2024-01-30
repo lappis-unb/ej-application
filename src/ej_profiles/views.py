@@ -121,7 +121,9 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         public_conversations = self.get_queryset()
         profile = self.request.user.profile
-        profile_conversations_tags = list(profile.participated_tags().values_list("tag__name", flat=True))
+        profile_conversations_tags = list(
+            profile.participated_public_tags().values_list("tag__name", flat=True)
+        )
         public_tags = list(
             ConversationTag.objects.filter(content_object__is_promoted=True)
             .distinct("tag")
