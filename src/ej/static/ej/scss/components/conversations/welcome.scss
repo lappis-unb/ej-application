@@ -1,19 +1,39 @@
 .conversation-welcome {
+    @media only screen and (max-width: 900px) {
+        font-size: 14px;
+        grid-template-columns: 5% auto 5%;
+        grid-template-rows: 1vh auto 1fr;
+    }
+    @media only screen and (max-width: 500px) {
+        font-size: 13px;
+        grid-template-columns: 5% auto 5%;
+        &__link {
+            max-width: unset !important;
+        }
+        h1 {
+            margin-bottom: 1rem !important;
+        }
+    }
+    @media only screen and (max-width: 375px) {
+        font-size: 12px;
+        grid-template-columns: 2% auto 2%;
+    }
+
     font-family: 'Work Sans';
     display: grid;
-    grid-template-columns: auto minmax(auto, 834px) auto;
-    grid-template-rows: 18vh auto 18vh;
+    grid-template-columns: auto minmax(auto, 800px) auto;
+    grid-template-rows: 7vh auto 1fr;
 
     &__item {
         grid-column: 2;
         grid-row: 2;
     }
     h1 {
-        font-size: 2.625rem;
+        font-size: 2.625em;
         margin-bottom: 5.5rem;
     }
     &__message {
-        font-size: 1.75rem;
+        font-size: 1.75em;
         p {
             font-weight: 400;
         }
@@ -35,16 +55,3 @@
     }
 }
 
-@media (max-width: 430px) {
-    .conversation-welcome {
-        grid-template-columns: 5% auto 5%;
-        grid-template-rows: 9vh auto 9vh;
-    }
-    .conversation-welcome__link {
-        display: block;
-        max-width: unset;
-        width: 80%;
-        margin: auto;
-        float: unset;
-    }
-}
