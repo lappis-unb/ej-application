@@ -2,20 +2,24 @@
 {% set hide_menu = true %}
 {% set main_class = '' %}
 
-{% block content %}
-<div class="conversation-welcome">
-    <div></div>
-    <div class="conversation-welcome__item">
-        <h1 class="h2 text-accent left">{{_("Hello!")}}</h1>
-        <div class="conversation-welcome__message left">
-            {{object.welcome_message|safe}}
-        </div>
-        <a href={{url("boards:conversation-detail", **conversation.get_url_kwargs())}}>
-            <div class="conversation-welcome__link">
-                {{_("Lets Go!")}}
+{% block main %}
+    <{{ main_tag }} id="main-content" tabindex=0>
+    {% block content %}
+        <div class="conversation-welcome">
+            <div></div>
+            <div class="conversation-welcome__item">
+                <h1 class="h2 text-accent left">{{_("Hello!")}}</h1>
+                <div class="conversation-welcome__message left">
+                    {{object.welcome_message|safe}}
+                </div>
+                <a href={{url("boards:conversation-detail", **conversation.get_url_kwargs())}}>
+                    <div class="conversation-welcome__link">
+                        {{_("Lets Go!")}}
+                    </div>
+                </a>
             </div>
-        </a>
-    </div>
-    <div></div>
-</div>
+            <div></div>
+        </div>
+    {% endblock %}
+    </{{ main_tag }}>
 {% endblock %}
