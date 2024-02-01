@@ -38,7 +38,7 @@ class TestRoutes(ConversationRecipes):
         client.force_login(conversation_db.author)
         conversation_db.author.save()
         tools_url = conversation_db.patch_url("conversation-tools:mautic")
-        response = client.get(tools_url, HTTP_HOST="ejlocal")
+        response = client.get(tools_url, HTTP_HOST="localhost")
         assert isinstance(response.context["tool"], MauticTool)
 
     def test_200_for_whatsapp_tool(self, conversation_db):

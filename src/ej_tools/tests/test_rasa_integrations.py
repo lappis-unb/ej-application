@@ -41,7 +41,7 @@ class TestRasaConversationForm(ConversationRecipes):
 
     def test_rasa_conversation_form_exists(self, db, mk_conversation):
         conversation = mk_conversation()
-        RasaConversation.objects.create(conversation=conversation, domain="https://domain.com.br")
+        RasaConversation.objects.create(conversation=conversation, domain=TEST_DOMAIN)
         form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation.id})
         assert not form.is_valid()
         assert (
@@ -53,7 +53,7 @@ class TestRasaConversationForm(ConversationRecipes):
         conversation1 = mk_conversation()
         user = mk_user(email="test@domain.com")
         conversation2 = mk_conversation(author=user)
-        RasaConversation.objects.create(conversation=conversation1, domain="https://domain.com.br")
+        RasaConversation.objects.create(conversation=conversation1, domain=TEST_DOMAIN)
         form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation2.id})
         assert (
             _("Site already integrated with conversation Conversation, try another url.")

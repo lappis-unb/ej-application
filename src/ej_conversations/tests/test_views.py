@@ -200,20 +200,20 @@ class TestConversationDetail(ConversationSetup):
             {"vote": "agree", "comment_id": comment.id},
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
 
         response = client.post(
             conversation_vote_url,
             {"content": "test comment"},
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
 
         response = client.post(
             conversation_vote_url,
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
 
     def test_anonymous_user_can_participate(self, first_conversation):
         client = Client()
@@ -229,7 +229,7 @@ class TestConversationDetail(ConversationSetup):
             {"vote": "agree", "comment_id": comment.id},
         )
         assert response.status_code == 302
-        assert response["HX-Redirect"] == f"/register/?next={conversation_vote_url}"
+        assert response["HX-Redirect"] == f"/register/?next={conversation_url}"
 
         first_conversation.anonymous_votes_limit = 1
         first_conversation.save()
