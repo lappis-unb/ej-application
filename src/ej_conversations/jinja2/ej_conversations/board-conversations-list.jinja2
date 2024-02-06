@@ -18,7 +18,7 @@
                 <h1 class="h2 text-accent">{{ board.title}}</h1>
 
                 {%- if request.user.has_perm('ej.can_edit_board', board) %}
-                    <a href="{{ url('boards:board-edit', board=board) }}"><i class="fas fa-pen"></i></a>
+                    <a href="{{ url('boards:board-edit', board_slug=board.slug) }}"><i class="fas fa-pen"></i></a>
                 {% endif %}
 
             </div>
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}
+        {%- if request.user.has_perm('ej.can_edit_board', board) %}
             <a class="is-primary button square" href="{{ url('boards:conversation-create', board_slug=board.slug) }}">{{ _('New conversation') }}</a>
         {% endif %}
     </div>
