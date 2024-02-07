@@ -127,19 +127,3 @@ def check_conversation_overdue(view_func):
         return view_func(request, *args, **kwargs)
 
     return wrapper_func
-
-
-def can_edit_board(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        try:
-            user = request.user
-            board_slug = kwargs.get("board_slug")
-            board = Board.objects.get(slug=board_slug)
-        except AttributeError:
-            return redirect("auth:login")
-
-        if user == board.owner:
-            return view_func(request, *args, **kwargs)
-        return redirect("auth:login")
-
-    return wrapper_func
