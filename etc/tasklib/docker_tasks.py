@@ -30,16 +30,17 @@ def docker_up(ctx, dry_run=False, d=False):
 
 
 @task
-def docker_build(ctx, dry_run=False, no_cache=False, prod=False):
+def docker_build(ctx, dry_run=False, no_cache=False, prod=False, registry="", tag=""):
     """
     Build EJ web server image;
     By default, this command will install all EJ dependencies.
     """
     do = runner(ctx, dry_run, pty=True)
-    argsList = ["-f docker/Dockerfile", "-t docker-server"]
+    image = f"{registry}/ej-server" if registry else "docker-server"
+    tagged_image = f"{image}:{tag}" if tag else image
+    argsList = ["-f docker/Dockerfile", f"-t {tagged_image}"]
     argsList.append("--no-cache") if no_cache else False
     args: str = reduce(lambda x, y: x + " " + y, argsList)
-
     do(f"docker build {args} .")
 
 
