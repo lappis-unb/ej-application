@@ -2,18 +2,17 @@ from logging import getLogger
 from typing import Any, Dict
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.flatpages.models import FlatPage
 from django.db import transaction
 from django.db.models import F
 from django.db.models.query import QuerySet
-from django.http import HttpResponse, HttpResponseServerError, JsonResponse
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.flatpages.models import FlatPage
 from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
     can_acess_list_view,
@@ -26,8 +25,13 @@ from ej_boards.models import Board
 from ej_conversations.rules import max_comments_per_conversation
 from ej_users.models import User
 
+from . import forms
+from .decorators import (
+    create_session_key,
+    redirect_to_conversation_detail,
+    user_can_post_anonymously,
+)
 from .forms import CommentForm, ConversationForm
-from .decorators import create_session_key, user_can_post_anonymously, redirect_to_conversation_detail
 from .models import Comment, Conversation
 from .utils import (
     conversation_admin_menu_links,
@@ -35,8 +39,6 @@ from .utils import (
     handle_detail_favorite,
     handle_detail_vote,
 )
-
-from . import forms
 
 log = getLogger("ej")
 
