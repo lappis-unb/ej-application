@@ -27,7 +27,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Empurrando Juntas"
-copyright = """2023, EJ"""
+copyright = """2024, EJ"""
 
 # The short X.Y version.
 version = pyproject_data.get("tool").get("poetry").get("version")
