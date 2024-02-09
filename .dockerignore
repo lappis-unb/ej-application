@@ -71,3 +71,6 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 $RECYCLE.BIN/
+
+# Ignore e2e tests
+e2e/
