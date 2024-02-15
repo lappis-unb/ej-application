@@ -10,15 +10,6 @@ h4 {
     margin-top: 1.75rem;
 }
 
-.activation {
-    &-grid {
-        grid-template-columns: 10% auto 10%;
-        grid-template-rows: 70% 30%;
-        display: grid;
-        margin: 3.5rem 0 0 0;
-    }
-}
-
 .steps {
     display: flex;
     gap: 2rem;
