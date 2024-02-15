@@ -1,6 +1,6 @@
-**************************
+=========================
 Internalização e tradução
-**************************
+=========================
 
 Para identificar qual tradução utilizar, são utilizadas variáveis de ambiente. É importante ressaltar
 que os textos escritos em código, sejam em templates ou em help_text de forms, ou em outro lugar de códigos

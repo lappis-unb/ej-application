@@ -1,41 +1,57 @@
-************************
+=======================
 Arquitetura de Software
-************************
+=======================
 
-Visão geral
-===================
+A Empurrando Juntas (EJ), é uma plataforma de pesquisa de opinião que,
+a partir da modelagem de personas, permite agrupar participantes com opiniões
+similares. Este agrupamento (também chamado de *cluster*), permite identificar
+bolhas de opinião que não poderiam ser capturadas
+por ferramentas comuns de *survey* como Google Forms e Survey Monkey. Para uma visão
+mais aprofundada do funcionamento da plataforma, acesse :ref:`Start using`.
 
-A EJ é uma plataforma de pesquisa de opinião multicanal e comunicação digital segmentada.
-É desenvolvida utilizando o Framework `Django <https://www.djangoproject.com/>`_ e disponibiliza parte de seus recursos por meio de
-uma `API REST <https://restfulapi.net/>`_. Algumas das suas principais funcionalidadades:
 
-1. Permite a criação de pesquisas por meio de conversas temáticas.
-2. Permite que usuários participem de uma conversa votando em comentários, que representam diferentes opiniões sobre o tema pesquisado.
-3. Permite agrupar os participantes em grupos (clusters), a partir da forma como eles votam nos comentários.
-4. Permite a modelagem de personas para viabilizar o agrupamento por opinião.
-5. Permite acompanhar o resultado de uma conversa por meio de diferentes relatórios.
-6. Permite integrar uma conversa em diferentes canais como: Telegram, Whatsapp, lista de email e páginas html.
+A EJ é uma aplicação monolítica desenvolvida com o framework `Django <https://www.djangoproject.com/>`_.
+Além da aplicação web, também disponibilizamos uma API REST
+implementada com o framework `DRF <https://www.django-rest-framework.org/>`_. Enquanto a aplicação web
+permite a gestão do processo de participação, a API permite integrar uma pesquisa em
+multiplos canais como Telegram, WhatsApp e sites de terceiros.
 
-A EJ utiliza uma arquitetura monolítica em que todo o processo de criação, modelagem e acompanhamento
-das conversas é realizado. Junto da aplicação web também é executada uma API REST,
-utilizada pelas ferramentas de coleta.
-Uma ferramenta de coleta é uma aplicação que se integra na EJ para levar os recursos de
-participação para outros canais, como Telegram e Whatsapp.
+Atualmente, a aplicação é disponibilizada tanto em ambiente local quanto na nuvem utilizando Docker.
+Para instruções de como subir o ambiente, acesse o `repositório do projeto <https://gitlab.com/pencillabs/ej/ej-application/>`_.
+O diagrama a seguir apresenta uma visão geral de como estão organizados os containers do sistema.
 
-.. figure:: ../images/c4-container-diagram.png
+
+.. figure:: ../diagrams/architecture_c4.png
+   :align: center
+
+   Diagrama de arquitetura da aplicação
+
+No diagrama de arquitetura, temos dois sistemas externos em que o
+perfil participante também interage. Isso ocorre porque um dos objetivos da plataforma
+é realizar pesquisas de opinião em multiplos canais como listas de email e Telegram. Isso
+só é possível por conta da API REST, que expõe parte das funcionalidades da aplicação
+web para que seja possível conecta-la à outros sistemas.
+
+.. note::
+
+   O diagrama de arquitetura é versionado junto com o código-fonte. Para altera-lo,
+   utilize o `arquivo docs/development-guides/diagrams/architecture_c4.puml` em conjunto
+   com a biblioteca `PlantUML <https://plantuml.com>`_.
+
+
 
 Ecossistema
 ============
 
-O Ecossistema EJ é o conjunto de repositórios e ferramentas que utilizamos para viabilizar a coleta
-de opinião multicanal. Listaremos aqui os respositórios e uma breve descrição para cada um.
+O Ecossistema EJ é o conjunto de repositórios e ferramentas que desenvolvemos para permitir a coleta
+de opinião em multiplos canais. Listaremos aqui os respositórios e uma breve descrição de cada um.
 
 EJ Application
 ---------------
 
     **Repositório**: https://gitlab.com/pencillabs/ej/ej-application
 
-    Aplicação WEB, onde se encontra esta documentação.
+    Aplicação web, API REST e guias de usuário e desenvolvimento.
 
 
 Componente de Opinião
@@ -63,59 +79,42 @@ Bot de Enquetes
     Permite relizar coletas EJ no formato de enquetes do Telegram. O bot é implementando utilizando
     a SDK Python do Telegram.
 
-Blog
-------
 
-    **Repositório**: https://gitlab.com/pencillabs/ej/blog
+.. _RST Aplicações que compõe o core:
 
-    Aplicação feita com `Wagtail <https://wagtail.org/>`_ para gerenciar as publicações do ecossistema
-    EJ.
+Aplicações que compõe o core
+============================
 
+O Django utiliza a arquitetura MVT https://djangobook.com/mdj2-django-structure/. Nela, temos models (M)
+controlando regras de negócio, views (V) processando requisições HTTP e templates (T), que controlam
+apresentação e interação com o usuário. Todo projeto Django é composto por um ou mais ``apps``,
+que são partes do sistema que agrupam funcionalidades relacionadas.
 
+No contexto da EJ, temos ``apps`` que compoe o **core** do sistema e, por isso, implementam a
+jornada básica dos usuários participante e pesquisador. Para o participante, isso representa
+as seguintes possibilidades:
 
-Django
-=======
+1. Se registrar no ambiente de participação.
+2. Acessar a URL pública de uma ou mais conversas.
+3. Votar em comentários de uma ou mais conversas.
+4. Adicionar comentários em uma ou mais conversas.
+5. Navegar nas conversas disponíveis para participação.
+6. Editar informações em seu perfil.
 
-MVT
-----
+Para o pesquisador, a jornada de participação representa o seguinte:
 
-A arquitetura padrão do Django é o MVT https://djangobook.com/mdj2-django-structure/, aonde temos as models controlando regras de negócio, as views controlando o fluxo da aplicação e os templates, que são a camada de apresentação e interação com o usuário.  Por ser uma aplicação monolítica, tudo é processado do lado do servidor e entregue para o cliente (browser).
-
-Django divide um sistema Web em módulos chamados "apps" que implementam modelos
-de banco de dados reutilizáveis, rotas e funcionalidades.
-
-Frontend
---------
-
-O frontend do EJ é implementado usando a linguagem de modelagem Jinja2 e usa
-aprimoramento progressivo para incluir estilos via CSS e comportamentos
-personalizados com JavaScript. A seguir apresenta uma breve visão geral
-das tecnologias utilizadas em cada uma dessas camadas:
-
-CSS
-    O estilo da EJ é implementado utilizando SASS e seguindo o padrão `BEM <http://getbem.com/introduction/>`_.
-    A compilação sass->css requer libsass, que é empacotado nas dependências do Python do aplicativo.
-    Existe um comando para a compilação: ``inv sass --watch``.
-
-JavaScript/TypeScript
-    EJ não adota qualquer estrutura JavaScript tradicional, mas em vez disso,
-    depende de aprimoramento progressivo para adicionar funcionalidades opcionais.
-    EJ usa Unpoly_ em conjunto com jQuery_ para fornecer a funcionalidade principal.
-    Os componentes específicos do EJ são criados usando o TypeScript e aprimoram
-    as marcas anotadas com o atributo "is-Component" com comportamentos e
-    funcionalidades extras. A compilação do TypeScript requer o node Package
-    Manager (NPM) e o Parcel_.
-
-    Localização: */lib/js/*
-
-.. _Mendeleev.css: https://www.npmjs.com/package/mendeleev.css
-.. _Unpoly: https://unpoly.com
-.. _jQuery: https://jquery.com
-.. _Parcel: https://parceljs.org
+1. Gerenciar uma ou mais conversas.
+2. Compartilhar uma ou mais conversas com seu público.
+3. Acompanhar o andamento da participação pelo dashboard das suas conversas.
+4. Modelar personas para que a plataforma gere os grupos de opinião.
+5. Analisar os resultados de uma conversa por meio do relatório de comentários e participantes.
 
 
-Aplicativos
------------
+Os apps do `core` são a "espinha dorsal" da EJ, mas cada organização que adota o projeto
+possui necessidades próprias como alterar o tema padrão, integrar a plataforma com outros sistemas
+e assim por diante. A página :ref:`Customizando a EJ` apresenta o caminho para customizar o `core` e
+adicionar novas funcionalidades à plataforma por meio do desenvolvimento de novos ``apps``.
+O `core` da EJ é composto pelos seguintes ``apps``:
 
 ``ej_conversations``
 
@@ -144,92 +143,3 @@ Aplicativos
 
     Aplicativo responsável por agrupar as conversas do perfil Analista.
 
-``ej_tools``
-
-    Aplicativo responsável por gerenciar as ferramentas de coleta e integrações da EJ com outras plataformas.
-
-``ej_signatures``
-
-    Aplicativo responsável por gerenciar os modelos de assinatura da plataforma, além de restringir
-    o uso de alguns recursos dependendo do usuário que está logado.
-
-Módulos
---------
-
-O módulo EJ não é propriamente um aplicativo, mas um pacote Python regular usado
-para coordenar aplicativos definindo configurações, funcionalidade comum e
-carregando ativos estáticos como JavaScript, CSS, imagens, temas etc. A seguir
-temos uma visão geral dos principais subpacotes e módulos:
-
-``ej.components``
-    Da mesma forma que o ``ej.roles``, este módulo define renderizadores para
-    elementos de interface do usuário reutilizáveis. A diferença entre os dois
-    módulos é que os componentes podem ter uma estrutura mais complicada e
-    podem não estar diretamente associados a algum tipo de dados Python conhecido.
-
-``ej.contrib``
-    Local para incluir migrações ad-hoc para implantações específicas. A maioria
-    dos usuários e desenvolvedores nunca deve tocar isso.
-
-``ej.fixes``
-    Monkey patch módulos de terceira parte que têm problemas conhecidos com EJ ou qualquer uma de suas dependências.
-
-``ej.components``
-    Da mesma forma que ``ej.roles``, este módulo define renderizadores para elementos reutilizáveis da IU.
-    A diferença entre os dois módulos é que os componentes podem ter uma estrutura mais complicada
-    e podem não estar diretamente associados a algum tipo de dados Python conhecido.
-
-``ej.contrib``
-    Local para incluir migrações ad-hoc para implantações específicas.
-    A maioria dos usuários e desenvolvedores *nunca* deve tocar nisso.
-
-``ej.fixes``
-    Monkey patch de módulos de terceiros que tem problemas conhecidos com a EJ
-    ou com suas dependências.
-
-``ej.forms``
-    Classes de formulário base que são usadas em outros aplicativos EJ.
-    Os formulários são derivados de django.forms.
-
-``ej.jinja2``
-    EJ usa Jinja2 como a linguagem de modelagem padrão.
-    Este módulo configura o ambiente Jinja2 e define funções e filtros globais.
-
-``ej.roles``
-    Funções que definem as `roles` do Hyperpython. Roles são mapeamentos
-    ``(type, name) -> HTML`` que definem como um certo objeto deve ser definido
-    dado um contexto ou um role. Esse módulo define vários elementos de IU
-    reutilizáveis como funções Python.
-
-``ej.routes``
-    Define algumas funções de visualização global, como a página inicial, que não possui funcionalidade vinculada a nenhum aplicativo.
-
-``ej.services``
-    Funções auxiliares para inicializar conexões com serviços externos, como
-    Banco de dados Postgres SQL e redis (se habilitado).
-
-``ej.settings``
-    Módulo de configurações do Django.
-    Define a configuração usando a estrutura de configuração do Django Boogie,
-    na qual a configuração é definida em classes reutilizáveis em vez de um módulo Python simples.
-
-``ej/templates/jinja2``
-    Contém templates globais. O template global ``base.jinja2``
-    define a estrutura base de HTML (navigation bars, meta information, etc)
-    que é compartilha na maioria das páginas do website.
-
-``ej.testing``
-    Ferramentas auxiliares usadas em testes.
-
-``ej.tests``
-    Testes globais. A maioria dos testes são implementados nas pastas dos apps.
-
-``ej.urls``
-    Mapeamento de URLs para o projeto. A maioria das URLs são incluídas no próprio
-    `` routes.py`` do aplicativo.
-
-``ej.utils``
-   Módulo de funções de utilidades.
-
-``ej.wsgi``
-    Wrapper Django para a interface WSGI.

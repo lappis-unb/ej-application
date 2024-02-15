@@ -1,0 +1,34 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/users.puml
+
+
+
+
+Person(admin, "Administrador", "Pessoa com total permissão sobre o ambiente de participação.")
+Person(researcher, "Pesquisador", "Pessoa interessada em ouvir a opinião do público.")
+Person(users, "Participantes", "Votam e adicionam comentários em uma conversa.", $sprite="users")
+
+System_Boundary(c1, "Sistema Empurrando Juntas (EJ)") {
+    Container(django, "Aplicação Web", "Gunicorn (Django)", "Permite gerenciar conversas e demais recursos relacionados ao processo de pesquisa de opinião.")
+    Container(drf, "API", "Gunicorn (Django)", "Permite consumir parte das funcionalidades da aplicação Web via uma interface REST")
+    ContainerDb(django_db, "Banco de dados relacional", "Postgresql", "Permite armazenar e recuperar registros relacionados à aplicação web")
+}
+
+System_Ext(TelegramBot, "Bot de enquetes da EJ", "Cria enquetes no Telegram a partir de conversas na EJ")
+System_Ext(MailClient, "Serviços de Email", "Cliente de email que recebe um campanha de participação em uma conversa da EJ.")
+AddRelTag("sync", $textColor=$ARROW_FONT_COLOR, $lineColor=$ARROW_COLOR, $lineStyle=DashedLine())
+
+Rel(admin, django, "Gerencia o ambiente e modera quais conversas são criadas.", "HTTPS", $tags="sync")
+Rel(researcher, django, "Gerencia uma ou mais conversas.", "HTTPS", $tags="sync")
+Rel(django, django_db, "Lê e escreve", "TCP", $tags="sync")
+Rel(drf, django_db, "Lê e escreve", "TCP", $tags="sync")
+Rel_R(users, django, "Participam a partir da página de votação.", "HTTPS", $tags="sync")
+Rel(users, MailClient, "Participam a partir do Gmail/Outlook.", "HTTPS", $tags="sync")
+Rel(users, TelegramBot, "Participam a partir de grupos e canais no Telegram.", "HTTPS", $tags="sync")
+Rel(TelegramBot, drf, "Transforma uma conversa da EJ em uma enquete do Telegram", "HTTPS", $tags="sync")
+
+SHOW_LEGEND()
+
+@enduml

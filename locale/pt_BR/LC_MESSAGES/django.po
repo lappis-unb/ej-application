@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-01 19:23-0300\n"
+"POT-Creation-Date: 2024-02-07 17:15-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1637,12 +1637,10 @@ msgid "Please reset your password"
 msgstr "Por favor reset sua senha"
 
 #: src/ej/templates/jinja2/base.jinja2:30
-#: src/ej_pencillabs/jinja2/ej_pencillabs/base.jinja2:30
 msgid "Jump to main content"
 msgstr "Pular para conteúdo principal"
 
 #: src/ej/templates/jinja2/base.jinja2:64
-#: src/ej_pencillabs/jinja2/ej_pencillabs/base.jinja2:64
 msgid "Please override the \"content\" block of your template!"
 msgstr "Por favor substitua o bloco \"content\" do seu template!"
 
@@ -2509,7 +2507,6 @@ msgid "Total conversations"
 msgstr "Conversas hospedadas"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:54
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:16
 #: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
 #: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:73
 #, fuzzy
@@ -2605,17 +2602,14 @@ msgid " Comment "
 msgstr "Comentário"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:3
-#: src/ej_pencillabs/jinja2/ej_pencillabs/conversation-detail.jinja2:3
 msgid "Conversation: \"{}\""
 msgstr "Conversa: \"{}\""
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:31
-#: src/ej_pencillabs/jinja2/ej_pencillabs/conversation-detail.jinja2:31
 msgid "Warning!"
 msgstr "Atenção!"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-detail.jinja2:32
-#: src/ej_pencillabs/jinja2/ej_pencillabs/conversation-detail.jinja2:32
 msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
@@ -3309,59 +3303,6 @@ msgstr "grupos"
 msgid "general"
 msgstr "Geral"
 
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:18
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:18
-#, fuzzy
-msgid "Create new"
-msgstr "Criar nova"
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:22
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:22
-#, fuzzy
-msgid "Public Conversations"
-msgstr "Conversas públicas"
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:23
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:23
-#, fuzzy
-msgid "My conversations"
-msgstr "Minhas Conversas"
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:24
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:24
-#, fuzzy
-msgid "My Votes"
-msgstr "Meus Votos"
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:25
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
-#, fuzzy
-msgid "My Comments"
-msgstr "Meus Comentários"
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:42
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:42
-#, fuzzy
-msgid "You have not created any conversations."
-msgstr "Você ainda não criou nenhuma conversa."
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:48
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:48
-msgid "Gerenciar!"
-msgstr ""
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:69
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
-#, fuzzy
-msgid "You haven't voted in any conversations yet."
-msgstr "Você ainda não votou em nenhuma conversa!"
-
-#: src/ej_pencillabs/jinja2/ej_pencillabs/home.jinja2:82
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:82
-#, fuzzy
-msgid "You haven't commented in any conversations yet."
-msgstr "Você ainda não comentou em nenhuma conversa!"
-
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
 msgid "Favorites"
 msgstr "Favoritos"
@@ -3442,6 +3383,50 @@ msgstr "alterar foto"
 #, fuzzy
 msgid "exclude"
 msgstr "excluir"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:18
+#, fuzzy
+msgid "Create new"
+msgstr "Criar nova"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:22
+#, fuzzy
+msgid "Public Conversations"
+msgstr "Conversas públicas"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:23
+#, fuzzy
+msgid "My conversations"
+msgstr "Minhas Conversas"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:24
+#, fuzzy
+msgid "My Votes"
+msgstr "Meus Votos"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:25
+#, fuzzy
+msgid "My Comments"
+msgstr "Meus Comentários"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:42
+#, fuzzy
+msgid "You have not created any conversations."
+msgstr "Você ainda não criou nenhuma conversa."
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:48
+msgid "Gerenciar!"
+msgstr ""
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
+#, fuzzy
+msgid "You haven't voted in any conversations yet."
+msgstr "Você ainda não votou em nenhuma conversa!"
+
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:82
+#, fuzzy
+msgid "You haven't commented in any conversations yet."
+msgstr "Você ainda não comentou em nenhuma conversa!"
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
 msgid "pending"

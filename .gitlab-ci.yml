@@ -1,14 +1,14 @@
 stages:
-    - check_code_style
-    - run_tests
-    - build_docker_images
-    - deploy_environments
+    - style
+    - tests
+    - build
+    - deploy
 
 variables:
     GITLAB_EJ_TOKEN: "gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct"
 
-check_style:
-    stage: check_code_style
+black:
+    stage: style
     image:
         name: python:3.8.18-slim-bullseye
         pull_policy: if-not-present
@@ -19,24 +19,33 @@ check_style:
     tags:
         - osf
 
-run_tests:
-    stage: run_tests
+pytest:
+    stage: tests
     image:
         name: python:3.8.18-slim-bullseye
         pull_policy: if-not-present
     before_script:
         - apt update && apt install git -y
     script:
-        - /bin/bash -c 'git clone -b $CI_COMMIT_REF_NAME https://$GITLAB_EJ_TOKEN@gitlab.com/pencillabs/ej/ej-application.git'
-        - cd ej-application
+        - cd /builds/pencillabs/ej/ej-application
         - pip install poetry
         - poetry install --only ci
         - poetry run inv test
     tags:
         - osf
 
+e2e:
+    stage: tests
+    image: cypress/base:18.16.0
+    script:
+        - cd /builds/pencillabs/ej/ej-application/e2e
+        - npm i
+        - npx cypress run --config baseUrl=https://ejplatform.pencillabs.com.br
+    tags:
+        - osf
+
 build_dev_image:
-    stage: build_docker_images
+    stage: build
     image:
         name: docker
         pull_policy: if-not-present
@@ -53,7 +62,7 @@ build_dev_image:
         - osf
 
 build_prod_image:
-    stage: build_docker_images
+    stage: build
     image:
         name: docker
         pull_policy: if-not-present
@@ -70,7 +79,7 @@ build_prod_image:
         - osf
 
 deploy_to_dev:
-    stage: deploy_environments
+    stage: deploy
     image:
         name: docker
         pull_policy: if-not-present

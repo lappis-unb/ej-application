@@ -395,6 +395,12 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         """
         return apps_custom_menu_links(self)
 
+    def can_add_comment(self, user, n_comments, max_comments):
+        """
+        check if user can add new comments to conversation
+        """
+        return n_comments >= max_comments or user.is_superuser or self.author == user
+
 
 #
 #  AUXILIARY MODELS

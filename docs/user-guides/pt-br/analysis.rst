@@ -6,7 +6,7 @@ A Empurrando Juntas possui um conjunto de visualizações para analisar os
 resultados de uma conversa. É importante ressaltar que o nível de confiabilidade
 dos resultados apresentados pela plataforma dependem do volume de opiniões
 coletadas. Quanto mais participantes votando e comentando, mais precisos
-serão os grupos de opinião formados e mais precisa será a análise dos
+serão os grupos de opinião formados e mais robusta será a análise dos
 comentários.
 
 Dashboard da conversa

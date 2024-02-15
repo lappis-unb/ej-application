@@ -54,12 +54,8 @@ tamanhos à mapear as bolhas que compõe seu público-alvo e, a partir disso, tr
    :hidden:
 
    development-guides/pt-br/architecture
-   development-guides/pt-br/dev-repository
-   development-guides/pt-br/dev-integration
+   development-guides/pt-br/customizing
    development-guides/pt-br/environment-variables
    development-guides/pt-br/translations
-   development-guides/pt-br/urls
    development-guides/pt-br/social-login
-   development-guides/pt-br/dev-style
    development-guides/pt-br/smtp
-   development-guides/pt-br/themes
