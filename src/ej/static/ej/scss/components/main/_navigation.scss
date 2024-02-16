@@ -249,27 +249,26 @@ body {
     .nav-categories{
         padding-top: 1.75rem !important;
 
-        h3{
+        h3 {
             font-size: 1rem;
             letter-spacing: 0;
         }
-        li{
+        li {
             padding-top: 0.313rem;
         }
-        a{
+        a {
             font-size: 1rem;
-            font-weight: bold;
         }
     }
 
-    .menu-padding{
-        &:first-child{
+    .menu-padding {
+        &:first-child {
             padding-top: 1.75rem;
         }
         padding: 0 1.75rem 1.75rem;
     }
 
-    .section-margin{
+    .section-margin {
         margin-top: 3.125rem;
     }
 
