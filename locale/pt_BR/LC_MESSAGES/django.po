@@ -683,10 +683,6 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:101 src/ej_signatures/views.py:25
-msgid "Participate voting and creating comments!"
-msgstr "Participe com votos e comentários!"
-
 #: src/ej_conversations/views_comments.py:32
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
@@ -1124,25 +1120,6 @@ msgstr "perfil"
 #: src/ej_profiles/views.py:50
 msgid "Password changed successfully."
 msgstr "Senha alterada com sucesso."
-
-#: src/ej_signatures/apps.py:7
-#, fuzzy
-msgid "Signatures"
-msgstr "Planos"
-
-#: src/ej_signatures/models.py:165
-msgid "Listen to community"
-msgstr "Ouça a Comunidade"
-
-#: src/ej_signatures/models.py:166
-#, fuzzy
-msgid "Listen to city"
-msgstr "Ouça a Cidade"
-
-#: src/ej_signatures/models.py:167
-#, fuzzy
-msgid "Listen to city yearly"
-msgstr "Ouça a Cidade anual"
 
 #: src/ej_tools/apps.py:7
 msgid "Tools"
@@ -2466,13 +2443,11 @@ msgstr[0] "Você só pode postar %(n)s comentário."
 msgstr[1] "Você pode postar até %(n)s comentários."
 
 #: src/ej_conversations/jinja2/ej/role/conversation-comment-form.jinja2:20
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:29
 #: src/ej_users/jinja2/ej_users/recover-password.jinja2:21
 msgid "Send"
 msgstr "Enviar"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:31
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:31
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -2483,38 +2458,32 @@ msgstr ""
 "da sua audiência."
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:38
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:38
 #, fuzzy
 msgid "Board statistics"
 msgstr "Estatísticas"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:41
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:41
 #, fuzzy
 msgid "Total votes"
 msgstr "Total de votos"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:44
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:44
 #, fuzzy
 msgid "Total participants"
 msgstr "Total de participantes"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:47
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:47
 #, fuzzy
 msgid "Total conversations"
 msgstr "Conversas hospedadas"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:54
 #: src/ej_profiles/jinja2/ej_profiles/home.jinja2:16
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:73
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:60
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:79
 #, fuzzy
 msgid "Manage!"
 msgstr "Gerenciar!"
@@ -2885,8 +2854,6 @@ msgid "Create/Edit groups"
 msgstr "Criar/Editar grupos"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:57
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:38
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:65
 msgid "Reports"
 msgstr "Relatórios"
 
@@ -3520,167 +3487,6 @@ msgstr ""
 #, fuzzy
 msgid "Starts"
 msgstr "Iniciar"
-
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:53
-#, fuzzy
-msgid "Signature model"
-msgstr "Modelo de assinatura"
-
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:59
-#, fuzzy
-msgid ""
-"In the current signature, you can create <span\n"
-"                     class=\"text-accent bold\">unlimited</span> "
-"conversations."
-msgstr ""
-"Na sua assinatura atual, você pode criar <span\n"
-" class=\"text-accent bold\">conversas ilimitadas</span>."
-
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:64
-#, fuzzy, python-format
-msgid ""
-" In the current signature, you can create <span class=\"text-accent bold\">"
-"%(conversations_limit)s</span> conversations."
-msgstr ""
-"Na sua assinatura atual, você pode criar <span\n"
-" class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
-
-#: src/ej_signatures/jinja2/ej_signatures/board-conversations-list.jinja2:66
-#, fuzzy
-msgid "Request upgrade."
-msgstr "Solicite upgrade."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:11
-#, fuzzy
-msgid "Your plan is"
-msgstr "Você está no plano"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:13
-msgid "free"
-msgstr "gratuito"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:19
-#, fuzzy
-msgid "Custom Plan"
-msgstr "Customizado"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:23
-msgid ""
-"Send us a budget request in order to use all EJ resources. We will reach you "
-"in the next 24 hours."
-msgstr ""
-"Nos envie uma solicitação de orçamento para utilizar todos os recursos da EJ."
-"<br>Nós entraremos em contato em no máximo 24 horas."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:28
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:52
-msgid "Plan"
-msgstr "Plano"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:31
-msgid ""
-"A free usage plan from EJ. The idea is to allow the user to experience the "
-"platform, create a conversation, collect comments and votes and track "
-"reports."
-msgstr ""
-"Nosso plano de uso gratuito. Te permite experimentar nossos recursos de "
-"criação de conversas, algumas ferramentas de coleta e relatórios."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:34
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:60
-msgid "RESOURCES"
-msgstr "RECURSOS"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:36
-#, fuzzy
-msgid "Three conversation creation limit"
-msgstr "Limite de criação de <b>três conversas</b>"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:37
-msgid "Creation limit of five thousand votes"
-msgstr "Limite de criação de <b>cinco mil votos</b>"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:39
-msgid "Access to multiple collect channels"
-msgstr "Acesso as ferramentas de coleta para Telegram e Web."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:45
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:73
-msgid "This is already your plan"
-msgstr "Este já é o seu plano"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:52
-#, fuzzy
-msgid "Listen to City yearly"
-msgstr "Ouça a Cidade anual"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:56
-msgid ""
-"A plan billed yearly that will be aimed for organizations that wants to runs "
-"conversations without voting limit."
-msgstr ""
-" Um plano cobrado anualmente, voltado para organizações que desejam realizar "
-"coletas sem limite de votação."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:62
-#, fuzzy
-msgid "Unlimited conversations"
-msgstr "Criação de  conversas ilimitadas"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:63
-#, fuzzy
-msgid "Unlimited votes"
-msgstr "Votos ilimitados nas conversas"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:64
-#, fuzzy
-msgid "Telegram, email and site integrations"
-msgstr "Integração para coletas no Telegram, email e site institucional."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:66
-msgid "Clustering and persona creation"
-msgstr "Clusterização e criação de personas"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:75
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:5
-msgid "Request budget"
-msgstr "Requisite um orçamento"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:14
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:15
-#, fuzzy
-msgid "Email"
-msgstr "Email"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:18
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:19
-msgid "Phone"
-msgstr "Telefone"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:22
-#, fuzzy
-msgid "Desired signature"
-msgstr "Assinatura desejada"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:25
-#, fuzzy
-msgid "Custom"
-msgstr "Customizado"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:27
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:28
-msgid "For what purpose will you use EJ?"
-msgstr "Para qual finalidade você vai usar a EJ?"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:40
-#, fuzzy
-msgid "Your request has been sent"
-msgstr "Obrigado pelo interesse na plataforma, sua solicitação foi enviada."
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:41
-#, fuzzy
-msgid "We will contact you soon"
-msgstr "Entraremos em contato nas próximas 24 horas."
 
 #: src/ej_tools/jinja2/ej_tools/card_tools.jinja2:22
 #: src/ej_tools/jinja2/ej_tools/index.jinja2:27
