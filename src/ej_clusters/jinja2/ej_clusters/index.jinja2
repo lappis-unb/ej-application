@@ -6,9 +6,8 @@
 
 {% block content %}
 <section>
-    {% include 'ej_dataviz/includes/header.jinja2' %}
     <div class="content-grid">
-        <h1 class="text-accent">{% trans %}Opinion groups{% endtrans %}</h1>
+        <h1 class="text-accent header-space">{% trans %}Opinion groups{% endtrans %}</h1>
         {% if clusters %}
             <p class="margin-y2 helptext">
                 {% trans %}We use votes to classify different users according to their opinions. Users who vote similarly tend to be in the same group.{% endtrans %}

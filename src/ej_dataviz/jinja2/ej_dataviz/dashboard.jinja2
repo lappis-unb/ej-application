@@ -5,37 +5,34 @@
 
 
 {% block content %}
-    <div class="report-container">
-        <div class="dashboard-balloon__container">
-            {% include 'ej_dataviz/includes/header.jinja2' %}
-        </div>
-{% block report %}
-    <section class="conversation-dashboard content-grid">
-        {% with voting_statistics = conversation.statistics().get('votes') %}
-            {% include 'ej_dataviz/report/includes/voting.jinja2' %}
-        {% endwith %}
-        {% with participants_statistics = conversation.statistics().get('participants') %}
-            {% include 'ej_dataviz/report/includes/participants.jinja2' %}
-        {% endwith %}
+    <div class="report-container header-space">
+    {% block report %}
+        <section class="conversation-dashboard content-grid">
+            {% with voting_statistics = conversation.statistics().get('votes') %}
+                {% include 'ej_dataviz/report/includes/voting.jinja2' %}
+            {% endwith %}
+            {% with participants_statistics = conversation.statistics().get('participants') %}
+                {% include 'ej_dataviz/report/includes/participants.jinja2' %}
+            {% endwith %}
 
-        <div class="charts-section center-grid">
-            {% include 'ej_dataviz/report/includes/time-chart.jinja2' %}
-            {% include 'ej_dataviz/report/includes/channels-chart.jinja2' %}
-        </div>
+            <div class="charts-section center-grid">
+                {% include 'ej_dataviz/report/includes/time-chart.jinja2' %}
+                {% include 'ej_dataviz/report/includes/channels-chart.jinja2' %}
+            </div>
 
-        {% include 'ej_dataviz/report/includes/clusters.jinja2' %}
+            {% include 'ej_dataviz/report/includes/clusters.jinja2' %}
 
-        <div class="scatter-section flex wrap center-grid">
-            {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
-        </div>
-        {% with comments_statistics = conversation.statistics().get('comments') %}
-            {% include 'ej_dataviz/report/includes/comments.jinja2' %}
-            {% include 'ej_dataviz/report/includes/comment-participants.jinja2' %}
-        {% endwith %}
-        {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}
+            <div class="scatter-section flex wrap center-grid">
+                {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+            </div>
+            {% with comments_statistics = conversation.statistics().get('comments') %}
+                {% include 'ej_dataviz/report/includes/comments.jinja2' %}
+                {% include 'ej_dataviz/report/includes/comment-participants.jinja2' %}
+            {% endwith %}
+            {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}
 
-    </section>
+        </section>
 
-{% endblock %}
+    {% endblock %}
     </div>
 {% endblock %}
