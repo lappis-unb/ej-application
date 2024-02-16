@@ -123,5 +123,8 @@ src/*/static/*/css/*.css
 src/*/static/*/js/*.js
 src/*/static/*/.parcel-cache
 
-src/ej_pencillabs
 e2e/node_modules
+
+# Third party apps
+src/ej_pencillabs
+src/ej_signatures

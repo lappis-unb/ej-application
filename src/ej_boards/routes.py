@@ -10,7 +10,6 @@ from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from ej_conversations.urls.conversations import urlpatterns as conversation_urlpatterns, conversation_url
 from ej_clusters.urls.clusters import urlpatterns as cluster_urlpatterns
 from ej_dataviz.urls import urlpatterns as dataviz_urlpatterns
-from ej_signatures.urls import urlpatterns as signatures_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
 
@@ -87,5 +86,4 @@ def board_base(request, board):
 patched_register_app_routes(urlpatterns.urls, conversation_tools_urlpatterns, "conversation-tools")
 patched_register_app_routes(urlpatterns.urls, conversation_urlpatterns, "conversation")
 patched_register_app_routes(urlpatterns.urls, cluster_urlpatterns, "cluster")
-patched_register_app_routes(urlpatterns.urls, signatures_urlpatterns, "signatures", "<slug:board_slug>/")
 patched_register_app_routes(urlpatterns.urls, dataviz_urlpatterns, "dataviz")
