@@ -128,3 +128,4 @@ e2e/node_modules
 # Third party apps
 src/ej_pencillabs
 src/ej_signatures
+src/ej_activation
