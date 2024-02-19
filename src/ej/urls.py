@@ -119,8 +119,9 @@ def get_urlpatterns():
         path("conversations/", include("ej_clusters.urls.clusters", namespace="cluster")),
         path("stereotypes/", include("ej_clusters.urls.stereotypes", namespace="stereotypes")),
         #
-        #  Allauth
-        path("accounts/", include("allauth.urls")),
+        #  Documentation in development mode
+        re_path(r"^docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
+        re_path(r"^docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
         #
         #  Admin
         *(
@@ -128,6 +129,12 @@ def get_urlpatterns():
             if apps.is_installed("django.contrib.admin")
             else ()
         ),
+        #
+        # Boards URLs
+        path("", include("ej_boards.urls", namespace="boards")),
+        #
+        #  Allauth
+        path("accounts/", include("allauth.urls")),
         #
         #  REST API
         path("api/v1/", include(api_router.urls)),
@@ -140,13 +147,6 @@ def get_urlpatterns():
         # Static files for the dev server
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
         *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
-        #
-        #  Documentation in development mode
-        re_path(r"^docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
-        re_path(r"^docs/(?P<path>.*)$", serve, {"document_root": "build/docs/"}),
-        #
-        #  Boards
-        *with_app("ej_boards", "", namespace="boards"),
         *get_apps_dynamic_urls(),
     ]
 
@@ -190,13 +190,6 @@ def fixes():
             rest_api.get_resource_info(user)
         except ImproperlyConfigured:
             rest_api(["username"])(user)
-
-
-def with_app(app, url, routes="routes", namespace=None):
-    if apps.is_installed(app):
-        return [path(url, include(f"{app}.{routes}", namespace=namespace))]
-    else:
-        return []
 
 
 services.start_services(settings)
