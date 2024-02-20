@@ -1,7 +1,0 @@
-<button type="button" class="is-clear"
-        hx-post="{{url('ej_activation:comments', **{ "board_slug": segment_filter.conversation.board.slug, "slug": segment_filter.conversation.slug, "conversation_id": segment_filter.conversation.id, "pk": segment_filter.id})}}"
-        name="comment"
-        value="{{comment.id}},agree" hx-target="this">
-            <i class="fa fa-check"></i>
-            {{_("Agree")}}
-</button>

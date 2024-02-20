@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-07 17:15-0300\n"
+"POT-Creation-Date: 2024-02-16 19:04-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -83,16 +83,6 @@ msgstr "Não faz parte da EJ ainda?"
 msgid "Welcome!"
 msgstr "Boas vindas!"
 
-#: src/ej_activation/apps.py:21
-#, fuzzy
-msgid "Activation"
-msgstr "Ativação"
-
-#: src/ej_activation/apps.py:32
-#, fuzzy
-msgid "Public segmentation"
-msgstr "Segmentação do público"
-
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:51
 msgid "Boards"
 msgstr "Murais"
@@ -160,7 +150,7 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:68
+#: src/ej_boards/routes.py:67
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
@@ -682,6 +672,11 @@ msgstr "Conversa removida dos favoritos."
 #: src/ej_conversations/validators.py:7
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
+
+#: src/ej_conversations/views.py:103
+#, fuzzy
+msgid "Participate voting and creating comments!"
+msgstr "Participe com votos e comentários!"
 
 #: src/ej_conversations/views_comments.py:32
 msgid "Your vote has been computed :-)"
@@ -1772,86 +1767,12 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
-#: src/ej_activation/jinja2/ej_activation/detail.jinja2:14
-msgid ""
-"Creates segments from conversation participants. A segment is a group of "
-"users that match filter criterias."
-msgstr ""
-"Crie segmentos a partir dos participantes da conversa. Um segmento é um "
-"grupo de usuários que atendem a determinados critérios."
-
-#: src/ej_activation/jinja2/ej_activation/detail.jinja2:24
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:12
-#, fuzzy
-msgid "Choose your audience"
-msgstr "Escolha seu público"
-
-#: src/ej_activation/jinja2/ej_activation/detail.jinja2:27
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:15
-msgid "Fill below"
-msgstr "Preencha abaixo"
-
-#: src/ej_activation/jinja2/ej_activation/detail.jinja2:39
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:27
-msgid "Review and exports"
-msgstr "Revise e exporte"
-
-#: src/ej_activation/jinja2/ej_activation/detail.jinja2:42
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:30
-#, fuzzy
-msgid "Your details here"
-msgstr "Detalhes do segmento"
-
-#: src/ej_activation/jinja2/ej_activation/index.jinja2:16
-#, fuzzy
-msgid "Segment"
-msgstr "Segmentação"
-
-#: src/ej_activation/jinja2/ej_activation/index.jinja2:21
-#, fuzzy
-msgid "New"
-msgstr "novo"
-
-#: src/ej_activation/jinja2/ej_activation/includes/clusters-frame.jinja2:2
-#, fuzzy
-msgid "Select one or more clusters"
-msgstr "Selecione um ou mais grupos"
-
-#: src/ej_activation/jinja2/ej_activation/includes/clusters-frame.jinja2:3
-msgid "Filter participants clusterized on the selected groups."
-msgstr "Filtre participantes a partir dos grupos em que foram inseridos."
-
-#: src/ej_activation/jinja2/ej_activation/includes/clusters-frame.jinja2:10
-#, fuzzy
-msgid "There are no clusters on this conversation."
-msgstr "Não há grupos para esta conversa."
-
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:1
-msgid "Select voting"
-msgstr "Selecione como os participantes votaram."
-
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:2
-msgid "Filter participants based on how they voted."
-msgstr "Filtre participantes a partir de como eles votaram nos comentários."
-
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:58
-#, fuzzy
-msgid "first"
-msgstr "Primeiro"
-
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:59
-#, fuzzy
-msgid "previous"
-msgstr "Anterior"
-
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "Showing"
 msgstr "Mostrando"
 
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-progress.jinja2:8
@@ -1859,52 +1780,19 @@ msgstr "Mostrando"
 msgid "of"
 msgstr "de"
 
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:63
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 #, fuzzy
 msgid "entries"
 msgstr "entradas"
 
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:67
-msgid "next"
-msgstr "próximo"
-
-#: src/ej_activation/jinja2/ej_activation/includes/comments-frame.jinja2:68
-msgid "last"
-msgstr "último"
-
-#: src/ej_activation/jinja2/ej_activation/includes/engagement-frame.jinja2:2
-#, fuzzy
-msgid "Select participation level"
-msgstr "Selecione o nível de participação"
-
-#: src/ej_activation/jinja2/ej_activation/includes/engagement-frame.jinja2:3
-msgid ""
-"Filter participants with participation level equal or superior from the "
-"informed percentage."
-msgstr ""
-"Filtre participantes com nível de participação igual ou superior à "
-"porcentagem informada."
-
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:36
-msgid "Review contacts"
-msgstr "Revisar contatos"
-
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:36
 #: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:16
 #, fuzzy
 msgid "users"
 msgstr "usuários"
 
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:51
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:8
 msgid "see all"
 msgstr "ver todos"
-
-#: src/ej_activation/jinja2/ej_activation/includes/results-frame.jinja2:60
-#, fuzzy
-msgid "Exports"
-msgstr "Exportar"
 
 #: src/ej_admin/jinja2/ej_admin/environment.jinja2:10
 #, fuzzy
@@ -2097,11 +1985,11 @@ msgstr "Gerenciar murais"
 msgid "New board"
 msgstr "Novo mural"
 
-#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:9
+#: src/ej_clusters/jinja2/ej_clusters/edit.jinja2:8
 msgid "Configure opinion groups"
 msgstr "Configurar grupos de opinião"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:14
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:13
 #, fuzzy
 msgid ""
 "We use votes to classify different users according to their opinions. Users "
@@ -2110,52 +1998,52 @@ msgstr ""
 "Usamos os votos para classificar usuários de acordo com suas opiniões. "
 "Usuários que votam de forma parecida, tendem a estar no mesmo grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:16
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:15
 #, python-format
 msgid "You belong to group <strong>%(user_group)s</strong>, for instance."
 msgstr "Você pertence ao grupo <strong>%(user_group)s</strong>, por exemplo."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:18
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:17
 msgid "We could not indentify your opinion group yet. Keep Voting!"
 msgstr ""
 "Ainda não conseguimos identificar seu grupo de opinião. Continue votando!"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:42
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:41
 msgid "Admin actions"
 msgstr "Ações de administração"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:45
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:44
 msgid "Force clusterization"
 msgstr "Forçar agrupamento"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:51
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:50
 msgid "Could not determine the opinion groups for this conversation."
 msgstr "Não foi possível determinar os grupos de opinião para esta conversa."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:53
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:52
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:27
 #, fuzzy
 msgid "You can edit the clusterization options for this conversation "
 msgstr "Você pode editar as opções de clusterização para esta conversa"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:72
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:71
 #, python-format
 msgid "Typical comments cor cluster <strong>%(cluster)s</strong>."
 msgstr "Comentários típicos do grupo <strong>%(cluster)s</strong>."
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:74
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:73
 msgid "Positive comments"
 msgstr "Comentários positivos"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:75
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:74
 msgid "No positive comments in cluster"
 msgstr "Nenhum comentário positivo no grupo"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:79
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:78
 msgid "Negative comments"
 msgstr "Comentários negativos"
 
-#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:80
+#: src/ej_clusters/jinja2/ej_clusters/index.jinja2:79
 msgid "No negative comments in cluster"
 msgstr "Nenhum comentário negativo no grupo"
 
@@ -2587,7 +2475,7 @@ msgid "Edit conversation"
 msgstr "Editar conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:7
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:6
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-card.jinja2:2
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:2
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
@@ -2596,7 +2484,7 @@ msgstr "Editar conversa"
 msgid "Comments"
 msgstr "Comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:11
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:10
 msgid ""
 "Here you can moderate the comments and add new ones. Those that have not yet "
 "been approved or rejected are in the \"Pending\" Tab"
@@ -2604,79 +2492,79 @@ msgstr ""
 "Aqui você pode moderar os comentários ou acrescentar novos. Os que ainda não "
 "foram aprovados nem rejeitados estão na aba \"Esperando\"."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:19
 #, fuzzy
 msgid "Comments Saved"
 msgstr "Comentários salvos"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:22
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:30
 msgid "Close"
 msgstr "Fechar"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:29
 #, fuzzy
 msgid "Comment excluded"
 msgstr "Comentário Excluído"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:37
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:52
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:67
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:82
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:36
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:51
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:66
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:81
 #, fuzzy
 msgid "Are you sure about this action?"
 msgstr "Você tem certeza dessa ação?"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:38
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:37
 msgid "If the comment has votes, they will be lost."
 msgstr "Caso o comentário tenha votos, eles serão perdidos."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:40
 #, fuzzy
 msgid "Yes, I want to erase the comment"
 msgstr "Sim, eu quero excluir o comentário"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:44
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:59
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:74
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:88
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:58
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:73
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:87
 msgid "No, I want get back"
 msgstr "Não, quero voltar"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:53
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:52
 msgid "Modified comments will appear on the Reproved tab."
 msgstr "Os comentários modificados aparecerão na aba Rejeitado."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:56
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:55
 #, fuzzy
 msgid "Yes, I want to disapprove the comments"
 msgstr "sim, quero reprovar o(s) comentário(s)"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:68
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:67
 msgid "Modified comments will appear on the Approved tab."
 msgstr "Os comentários modificados aparecerão na aba Aprovado."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:71
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:70
 #, fuzzy
 msgid "Yes, I want to approve the comments"
 msgstr "sim, quero aprovar o(s) comentário(s)"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:85
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:84
 #, fuzzy
 msgid "Yes, I want to change the comments"
 msgstr "Sim, eu quero alterar o(s) comentário(s)"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:97
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:96
 #: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:42
 #, fuzzy
 msgid "Add"
 msgstr "Adicionar"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:154
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:153
 msgid "Reject"
 msgstr "rejeitar"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:161
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:160
 msgid "Approve"
 msgstr "aprovar"
 
@@ -2869,17 +2757,17 @@ msgstr "Relatório de comentários"
 msgid "Participants report"
 msgstr "Relatório de participantes"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:103
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:104
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:33
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:104
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:105
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:35
 msgid "Tour"
 msgstr "Tour"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:105
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:106
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:36
 msgid "Documentation"
 msgstr "Documentação"
@@ -5203,10 +5091,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ "conversation,"
 #~ msgstr ""
 #~ "no html do seu site e permitirá que os usuários participem das conversas"
-
-#, fuzzy
-#~ msgid "voting and adding comments."
-#~ msgstr "Participe com votos e comentários!"
 
 #~ msgid "and add comments from within your personal site."
 #~ msgstr "e adicionem comentários a partir de seu site pessoal."
