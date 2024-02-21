@@ -1,7 +1,6 @@
 import re
 
 from django.contrib.auth.models import AnonymousUser
-from django.http import HttpResponseServerError
 from django.shortcuts import reverse
 from django.test import Client
 from ej_boards.models import Board
@@ -162,6 +161,13 @@ class TestConversationDetail(ConversationSetup):
         client = Client()
         client.force_login(user)
 
+        conversation_detail_url = reverse(
+            "boards:conversation-detail", kwargs=first_conversation.get_url_kwargs()
+        )
+
+        response = client.get(conversation_detail_url)
+        assert response.context["comment"] == first_conversation.comments[0]
+
         conversation_comment_url = reverse(
             "boards:conversation-comment", kwargs=first_conversation.get_url_kwargs()
         )
@@ -171,6 +177,10 @@ class TestConversationDetail(ConversationSetup):
         )
 
         assert Comment.objects.filter(author=user)[0].content == "test comment"
+
+        # assert that after adding a comment, the current comment not changes
+        response = client.get(conversation_detail_url)
+        assert response.context["comment"] == first_conversation.comments[0]
 
     def test_user_post_invalid_comment(self, first_conversation):
         user = User.objects.create_user("user@server.com", "password")

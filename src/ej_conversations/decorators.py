@@ -49,7 +49,7 @@ def user_can_post_anonymously(func):
 
     def wrapper(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
-        request.user = User.creates_from_request_session(conversation, request)
+        request.user = User.get_or_create_from_session(conversation, request)
         redirect_url = ""
         conversation_url = reverse("boards:conversation-detail", kwargs=conversation.get_url_kwargs())
         if conversation.reaches_anonymous_particiption_limit(request.user):
