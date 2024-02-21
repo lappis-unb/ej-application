@@ -102,7 +102,7 @@ class ConversationCommonView:
             "user_boards": user_boards,
             "privacy_policy": self.get_privacy_policy_content(),
             "current_page": "voting",
-            "form": forms.CommentForm(conversation=conversation, request=self.request),
+            "form": forms.CommentForm(conversation=conversation),
             **self.ctx,
             **kwargs,
         }
@@ -185,6 +185,8 @@ class ConversationWelcomeView(DetailView):
 
 @method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationCommentView(ConversationCommonView, DetailView):
+    template_name = "ej_conversations/comments/add-comment.jinja2"
+
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         conversation = context["conversation"]
@@ -192,7 +194,7 @@ class ConversationCommentView(ConversationCommonView, DetailView):
         context["comment"] = conversation.next_comment(user, random=False)
         return render(
             request,
-            "ej_conversations/comments/add-comment.jinja2",
+            self.template_name,
             context,
         )
 
