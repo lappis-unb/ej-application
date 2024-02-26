@@ -34,9 +34,9 @@
             {% if conversation.can_add_comment(request.user, n_comments, max_comments) %}
                 <div class="modal__buttons">
                     <button class="modal__buttons--white" type="button"
-                        hx-get="{{ url('boards:conversation-vote', **conversation.get_url_kwargs()) }}"
-                        hx-target="#voting-card"
-                        hx-swap="innerHTML">
+                        hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
+                        hx-target="body"
+                        hx-swap="outerHTML">
                         {{ _('Return') }}
                     </button>
                     <button class="modal__buttons--blue" type="submit">
@@ -54,7 +54,7 @@
                     <div class="modal__buttons">
                         <button class="modal__buttons--white" type="button"
                             hx-get="{{ url('boards:conversation-detail', **conversation.get_url_kwargs()) }}"
-                            hx-target="#voting-card"
+                            hx-target="body"
                             hx-params="comment-addition-cancel"
                             hx-swap="outerHTML">
                             {{ _('Cancel') }}

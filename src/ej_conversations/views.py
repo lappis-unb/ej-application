@@ -27,7 +27,6 @@ from ej_users.models import User
 
 from . import forms
 from .decorators import (
-    create_session_key,
     redirect_to_conversation_detail,
     user_can_post_anonymously,
 )
