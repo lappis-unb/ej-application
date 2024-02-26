@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-16 19:04-0300\n"
+"POT-Creation-Date: 2024-02-22 19:57-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -150,10 +150,6 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:67
-msgid "You cannot change this value"
-msgstr "Você não pode mudar este valor"
-
 #: src/ej_boards/validators.py:9
 msgid "Invalid slug."
 msgstr "Identificador inválido."
@@ -161,6 +157,10 @@ msgstr "Identificador inválido."
 #: src/ej_boards/validators.py:11
 msgid "Slug cannot contain a backslash character."
 msgstr "O identificador não pode conter uma barra."
+
+#: src/ej_boards/views.py:65
+msgid "You cannot change this value"
+msgstr "Você não pode mudar este valor"
 
 #: src/ej_clusters/admin.py:28
 msgid "Force clusterization (slow)"
@@ -673,7 +673,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:103
+#: src/ej_conversations/views.py:168
 #, fuzzy
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
@@ -1767,33 +1767,6 @@ msgstr "Mais informações"
 msgid "Execution environment"
 msgstr "Ambiente de execução"
 
-#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
-#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "Showing"
-msgstr "Mostrando"
-
-#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
-#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-progress.jinja2:8
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-msgid "of"
-msgstr "de"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
-#, fuzzy
-msgid "entries"
-msgstr "entradas"
-
-#: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:16
-#, fuzzy
-msgid "users"
-msgstr "usuários"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:8
-msgid "see all"
-msgstr "ver todos"
-
 #: src/ej_admin/jinja2/ej_admin/environment.jinja2:10
 #, fuzzy
 msgid "Latest boards"
@@ -1895,10 +1868,23 @@ msgstr "conversas"
 
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "Showing"
+msgstr "Mostrando"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:34
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
 msgid "to"
 msgstr "a"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-progress.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "of"
+msgstr "de"
 
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:6
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:5
@@ -1920,6 +1906,11 @@ msgstr "Próximo"
 #, fuzzy
 msgid "boards"
 msgstr "murais"
+
+#: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:16
+#, fuzzy
+msgid "users"
+msgstr "usuários"
 
 #: src/ej_boards/jinja2/ej_boards/board-create.jinja2:5
 msgid "Create board"
@@ -2601,6 +2592,11 @@ msgstr "Dê a sua opinião aqui"
 msgid "Comments added (Max. "
 msgstr "Comentários adicionados (Máx. "
 
+#: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:28
+#, fuzzy
+msgid "Add your opinion to the question: "
+msgstr "Adicione sua opinião sobre a pergunta: "
+
 #: src/ej_conversations/jinja2/ej_conversations/comments/add-comment.jinja2:31
 #, fuzzy
 msgid "Characters remaining)"
@@ -2910,6 +2906,10 @@ msgstr "Ordena de forma decrescente"
 msgid "Groups report"
 msgstr "Relatório de grupos"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:8
+msgid "see all"
+msgstr "ver todos"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:19
 #, fuzzy
 msgid "The cluster has no comments"
@@ -3157,6 +3157,11 @@ msgstr "grupos"
 #, fuzzy
 msgid "general"
 msgstr "Geral"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+#, fuzzy
+msgid "entries"
+msgstr "entradas"
 
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:7
 msgid "Favorites"

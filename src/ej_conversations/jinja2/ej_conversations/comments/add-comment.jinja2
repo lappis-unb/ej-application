@@ -25,7 +25,7 @@
                     <span class="voting-card__label">{{n_comments}} {{_("Comments added (Max. ")}} {{max_comments}})</span>
                 </div>
 
-                <textarea name="content" id="id_content" maxlength="256" required></textarea>
+                <textarea name="content" id="id_content" maxlength="256" placeholder="{{_('Add your opinion to the question: ') + conversation.text}}" required></textarea>
                 {{ form.content.errors }}
                 <p class="voting-card__label left no-margin">
                     (<span id="maxLenght">256</span><span> {{_("Characters remaining)")}}</span>
