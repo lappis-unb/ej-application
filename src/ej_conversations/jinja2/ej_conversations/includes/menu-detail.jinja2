@@ -86,16 +86,17 @@
         {% endif %}
     </ul>
 
-    <hr class="nav-divider">
-
-    {% for section in conversation.custom_apps_menu_links() %}
-    <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{section["title"]}}</h3>
-    <ul class="participant-menu__item">
-        {% for link in section["links"] %}
-            {{ menu_item(current_page, link["current_page"], link["a"], link["text"]) }}
+    {% if conversation.custom_apps_menu_links() %}
+        {% for section in conversation.custom_apps_menu_links() %}
+            <hr class="nav-divider">
+            <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{section["title"]}}</h3>
+            <ul class="participant-menu__item">
+                    {% for link in section["links"] %}
+                        {{ menu_item(current_page, link["current_page"], link["a"], link["text"]) }}
+                    {% endfor %}
+            </ul>
         {% endfor %}
-    {% endfor %}
-    </ul>
+    {% endif %}
 
 
     <hr class="nav-divider">

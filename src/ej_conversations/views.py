@@ -27,7 +27,6 @@ from ej_users.models import User
 
 from . import forms
 from .decorators import (
-    create_session_key,
     redirect_to_conversation_detail,
     user_can_post_anonymously,
 )
@@ -41,6 +40,71 @@ from .utils import (
 )
 
 log = getLogger("ej")
+
+
+class ConversationCommonView:
+    """
+    Implements common behaviors for some ej_conversations views.
+    """
+
+    queryset = Conversation.objects.all()
+    form_class = CommentForm
+    model = Conversation
+    ctx = {}
+
+    def get_comment(self, conversation: Conversation, user):
+        """
+        returns a comment to vote based on self.request.method.
+
+        if self.request.method == 'GET', returns always the same unvoted comment.
+        if self.request.method == 'POST', returns a random unvoted comment.
+        """
+        if self.request.method == "GET":
+            # on "GET" requests, returns always the same unvoted comment
+            return conversation.next_comment(user, random=False)
+        return conversation.next_comment(user, random=True)
+
+    def get_statistics(self, conversation: Conversation, user: User):
+        if not user.is_anonymous:
+            n_comments = user.comments.filter(conversation=conversation).count()
+            n_user_final_votes = conversation.current_comment_count(user)
+            user_boards = Board.objects.filter(owner=user)
+            return [n_comments, n_user_final_votes, user_boards]
+        else:
+            return [0, 0, []]
+
+    def get_privacy_policy_content(self):
+        try:
+            return FlatPage.objects.get(url="/privacy-policy/").content
+        except FlatPage.DoesNotExist:
+            return ""
+
+    def get_context_data(self, *args, **kwargs):
+        conversation: Conversation = self.get_object()
+        user = User.get_or_create_from_session(conversation, self.request)
+        comment = self.get_comment(conversation, user)
+        max_comments = max_comments_per_conversation(conversation, user)
+        conversation.set_request(self.request)
+        n_comments, n_user_final_votes, user_boards = self.get_statistics(conversation, user)
+
+        return {
+            "conversation": conversation,
+            "comment": comment,
+            "menu_links": conversation_admin_menu_links(conversation, user),
+            "comment_form": self.form_class(conversation=conversation),
+            "user_is_author": conversation.author == user,
+            "user_progress_percentage": conversation.user_progress_percentage(user),
+            "n_comments": n_comments,
+            "max_comments": max_comments,
+            "n_user_final_votes": n_user_final_votes,
+            "apps_menu_links": apps_custom_menu_links(conversation),
+            "user_boards": user_boards,
+            "privacy_policy": self.get_privacy_policy_content(),
+            "current_page": "voting",
+            "form": forms.CommentForm(conversation=conversation),
+            **self.ctx,
+            **kwargs,
+        }
 
 
 class ConversationView(ListView):
@@ -118,72 +182,25 @@ class ConversationWelcomeView(DetailView):
         return super().get(request)
 
 
-class ConversationCommonView:
-    """
-    ConversationCommonView implements common behaviors for some ej_conversations views.
-    This class must be reused on actual ej_conversations views.
-    """
-
-    queryset = Conversation.objects.all()
-    form_class = CommentForm
-    model = Conversation
-    ctx = {}
-
-    @create_session_key
-    def get_context_data(self, *args, **kwargs):
-        conversation = self.get_object()
-        user = self.request.user
-        max_comments = max_comments_per_conversation(conversation, user)
-        conversation.set_request(self.request)
-
-        try:
-            privacy_policy = FlatPage.objects.get(url="/privacy-policy/").content
-        except FlatPage.DoesNotExist:
-            privacy_policy = ""
-
-        if not user.is_anonymous:
-            n_comments = user.comments.filter(conversation=conversation).count()
-            n_user_final_votes = conversation.current_comment_count(user)
-            user_boards = Board.objects.filter(owner=user)
-        else:
-            n_comments = 0
-            n_user_final_votes = 0
-            user_boards = []
-
-        return {
-            "conversation": conversation,
-            "comment": conversation.next_comment_with_id(user, None),
-            "menu_links": conversation_admin_menu_links(conversation, user),
-            "comment_form": self.form_class(conversation=conversation),
-            "user_is_author": conversation.author == user,
-            "user_progress_percentage": conversation.user_progress_percentage(user),
-            "n_comments": n_comments,
-            "max_comments": max_comments,
-            "n_user_final_votes": n_user_final_votes,
-            "apps_menu_links": apps_custom_menu_links(conversation),
-            "user_boards": user_boards,
-            "privacy_policy": privacy_policy,
-            "current_page": "voting",
-            "form": forms.CommentForm(conversation=conversation, request=self.request),
-            **self.ctx,
-            **kwargs,
-        }
-
-
 @method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationCommentView(ConversationCommonView, DetailView):
+    template_name = "ej_conversations/comments/add-comment.jinja2"
+
     def get(self, request, *args, **kwargs):
-        conversation = self.get_object()
+        context = self.get_context_data()
+        conversation = context["conversation"]
+        user = User.get_or_create_from_session(conversation, self.request)
+        context["comment"] = conversation.next_comment(user, random=False)
         return render(
             request,
-            "ej_conversations/comments/add-comment.jinja2",
-            self.get_context_data(form=forms.CommentForm(conversation=conversation, request=request)),
+            self.template_name,
+            context,
         )
 
     @user_can_post_anonymously
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
-        request.user = User.creates_from_request_session(conversation, request)
+        request.user = User.get_or_create_from_session(conversation, request)
         self.ctx = handle_detail_comment(request, conversation)
 
         return render(
@@ -206,9 +223,9 @@ class ConversationFavoriteView(ConversationCommonView, DetailView):
     template_name = "ej_conversations/conversation-detail.jinja2"
 
     @user_can_post_anonymously
-    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
-        conversation = self.get_object()
-        request.user = User.creates_from_request_session(conversation, request)
+    def post(self, request, *args, **kwargs):
+        conversation: Conversation = self.get_object()
+        request.user = User.get_or_create_from_session(conversation, request)
         self.ctx = handle_detail_favorite(request, conversation)
         return render(request, self.template_name, self.get_context_data())
 
@@ -219,16 +236,15 @@ class ConversationVoteView(ConversationCommonView, DetailView):
     model = Conversation
     ctx = {}
 
-    @user_can_post_anonymously
-    def get(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         conversation = self.get_object()
-        request.user = User.creates_from_request_session(conversation, request)
+        request.user = User.get_or_create_from_session(conversation, request)
         return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
 
     @user_can_post_anonymously
-    def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         conversation = self.get_object()
-        request.user = User.creates_from_request_session(conversation, request)
+        request.user = User.get_or_create_from_session(conversation, request)
         self.ctx = handle_detail_vote(request)
         return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
 

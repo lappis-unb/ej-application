@@ -330,17 +330,23 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         log.info("new comment: %s" % comment)
         return comment
 
-    def next_comment(self, user, default=NOT_GIVEN):
+    def next_comment(self, user, random=True):
         """
         Returns a random comment that user didn't vote yet.
 
         If default value is not given, raises a Comment.DoesNotExit exception
         if no comments are available for user.
+
+        :param random: when False, next_comment will return the same comment.
+        :type random: bool
         """
-        comment = rules.compute("ej.next_comment", self, user)
-        if comment:
-            return comment
-        return None
+        approved_comments = self.approved_comments
+        if not user or user.is_anonymous:
+            return approved_comments.first()
+        if random:
+            comment = rules.compute("ej.next_comment", self, user)
+            return comment or None
+        return approved_comments.exclude(votes__author=user).first()
 
     def next_comment_with_id(self, user, comment_id=None):
         """
