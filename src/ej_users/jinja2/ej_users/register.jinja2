@@ -3,70 +3,72 @@
 
 {% block form_data %}
 
-    <form method="post" class="register-form__grid">
-        <div class="register-form__title">
-            <h1 class="text-accent" aria-hidden="true">{{ _("Register new user") }}</h1>
-            <img class="register-form__image" src="{{ static('/img/login/login.svg') }}" style="left: 1rem" alt="">
-        </div>
-        {{ csrf_input }}
+    <div class="content-grid">
+        <form method="post" class="register-form-container">
+            <div class="register-form__title">
+                <h1 class="text-accent" aria-hidden="true">{{ _("Register new user") }}</h1>
+                <img class="register-form__image" src="{{ static('/img/login/login.svg') }}" style="left: 1rem" alt="">
+            </div>
+            {{ csrf_input }}
 
-        <div class="register-form__grid--first-column register-form__input--margin">
-            <label class="register-form__label">{{ form.name.label }}</label>
-            {{ form.name }}
-        </div>
-        {% if form.email.errors %}
-            <div class="register-form__grid--second-column register-form__grid--second-column--email input-error">
-                <label class="register-form__label">{{ form.email.help_text }}</label>
-                {{ form.email }}
-                {{ form.email.errors }}
+            <div class="register-form-container--first-column register-form__input--margin">
+                <label class="register-form__label">{{ form.name.label }}</label>
+                {{ form.name }}
             </div>
-        {% else %}
-            <div class="register-form__grid--second-column register-form__grid--second-column--email">
-                <label class="register-form__label">{{ form.email.help_text }}</label>
-                {{ form.email }}
-            </div>
-        {% endif %}
-
-        {% if form.password.errors%}
-            <div class="register-form__grid--first-column register-form__grid--first-column--password input-error">
-                <label class="register-form__label">{{ form.password.label }}</label>
-                {{ form.password }}
-                {{ form.password.errors }}
-            </div>
-            <div class="register-form__grid--second-column register-form__input--margin input-error">
-                <label class="register-form__label">{{ form.password_confirm.label }}</label>
-                {{ form.password_confirm }}
-            </div>
-        {% else %}
-            <div class="register-form__grid--first-column register-form__grid--first-column--password">
-                <label class="register-form__label">{{ form.password.label }}</label>
-                {{ form.password }}
-            </div>
-            <div class="register-form__grid--second-column register-form__input--margin">
-                <label class="register-form__label">{{ form.password_confirm.label }}</label>
-                {{ form.password_confirm }}
-            </div>
-        {% endif %}
-
-        <div class="register-form__grid--full-width">
-            <label class="register-form__label register-form__label--margin">{{ form.agree_with_terms.label }}</label>
-            {{ form.agree_with_terms }}
-        </div>
-
-        <div class="register-form__grid--full-width">
-            <label class="register-form__label register-form__label--margin">{{ form.agree_with_privacy_policy.label }}</label>
-            {{ form.agree_with_privacy_policy }}
-        </div>
-
-        <div class="register-form__grid--second-column register-form__grid--align-end register-form__register-buttons">
-            {% if social_buttons|default(false) %}
-                {{ social_js }}
-                {% include 'ej_users/includes/social-buttons.jinja2' %}
+            {% if form.email.errors %}
+                <div class="register-form-container--second-column input-error">
+                    <label class="register-form__label">{{ form.email.help_text }}</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+            {% else %}
+                <div class="register-form-container--second-column">
+                    <label class="register-form__label">{{ form.email.help_text }}</label>
+                    {{ form.email }}
+                </div>
             {% endif %}
-            <div class="register-form__grid--second-column register-form__grid--align-end">
-                <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary register-form__submit-button">
+
+            {% if form.password.errors%}
+                <div class="register-form-container--first-column input-error">
+                    <label class="register-form__label">{{ form.password.label }}</label>
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div>
+                <div class="register-form-container--second-column input-error">
+                    <label class="register-form__label">{{ form.password_confirm.label }}</label>
+                    {{ form.password_confirm }}
+                </div>
+            {% else %}
+                <div class="register-form-container--first-column register-form__input--margin">
+                    <label class="register-form__label">{{ form.password.label }}</label>
+                    {{ form.password }}
+                </div>
+                <div class="register-form-container--second-column">
+                    <label class="register-form__label">{{ form.password_confirm.label }}</label>
+                    {{ form.password_confirm }}
+                </div>
+            {% endif %}
+
+            <div class="register-form-container--full-width">
+                <label class="register-form__label register-form__label--margin">{{ form.agree_with_terms.label }}</label>
+                {{ form.agree_with_terms }}
             </div>
-        </div>
-    </form>
+
+            <div class="register-form-container--full-width">
+                <label class="register-form__label register-form__label--margin">{{ form.agree_with_privacy_policy.label }}</label>
+                {{ form.agree_with_privacy_policy }}
+            </div>
+
+            <div class="register-form-container--second-column register-form-container--align-end register-form__register-buttons">
+                {% if social_buttons|default(false) %}
+                    {{ social_js }}
+                    {% include 'ej_users/includes/social-buttons.jinja2' %}
+                {% endif %}
+                <div class="register-form-container--second-column register-form-container--align-end">
+                    <input type="submit" name="submit" value="{{ _('Register') }}" class="width-full is-primary register-form__submit-button">
+                </div>
+            </div>
+        </form>
+    </div>
 	<script src="/static/js/vote-from-template.js"></script>
 {% endblock %}
