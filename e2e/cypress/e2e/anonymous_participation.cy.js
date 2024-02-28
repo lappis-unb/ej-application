@@ -39,7 +39,7 @@ describe('Voting as anonymous user', () => {
         cy.intercept(`/cypressmailcom/conversations/${conversation_id}/avancos-da-ia/comment/vote`).as('vote3')
         cy.get('.voting-card__voting-form__choices--disagree').click()
         cy.wait('@vote3').then(() => {
-          cy.get('h1').contains('Registre-se para continuar')
+          cy.get('h1').contains('Registre-se novo usuário')
         })
       })
     })
