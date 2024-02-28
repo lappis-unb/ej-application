@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-22 19:57-0300\n"
+"POT-Creation-Date: 2024-02-27 23:47-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -673,7 +673,7 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:168
+#: src/ej_conversations/views.py:167
 #, fuzzy
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
@@ -2921,7 +2921,7 @@ msgid "Your conversation does not have groups."
 msgstr "Sua conversa ainda não possui grupos definidos."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/export-data.jinja2:16
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:9
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:8
 #, fuzzy
 msgid "Export"
 msgstr "Exportar"
@@ -3070,7 +3070,7 @@ msgstr "votação no período"
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting-modal-export.jinja2:11
 msgid "or"
 msgstr "ou"
 
@@ -4104,12 +4104,12 @@ msgstr ""
 "Insira seu endereço de e-mail abaixo, e nós vamos lhe enviar uma mensagem "
 "com instruções para recriar sua senha"
 
-#: src/ej_users/jinja2/ej_users/register.jinja2:8
+#: src/ej_users/jinja2/ej_users/register.jinja2:9
 msgid "Register new user"
-msgstr "Registre novo usuário"
+msgstr "Registre para continuar"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
-#: src/ej_users/jinja2/ej_users/register.jinja2:67
+#: src/ej_users/jinja2/ej_users/register.jinja2:68
 msgid "Register"
 msgstr "Registrar"
 
