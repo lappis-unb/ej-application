@@ -4106,7 +4106,7 @@ msgstr ""
 
 #: src/ej_users/jinja2/ej_users/register.jinja2:9
 msgid "Register new user"
-msgstr "Registre para continuar"
+msgstr "Registre-se para continuar"
 
 #: src/ej_users/jinja2/ej_users/includes/menu.jinja2:5
 #: src/ej_users/jinja2/ej_users/register.jinja2:68
