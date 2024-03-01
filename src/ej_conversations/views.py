@@ -23,6 +23,7 @@ from ej.decorators import (
 )
 from ej_boards.models import Board
 from ej_conversations.rules import max_comments_per_conversation
+from ej_tools.utils import get_host_with_schema
 from ej_users.models import User
 
 from . import forms
@@ -181,6 +182,11 @@ class ConversationWelcomeView(DetailView):
     def get(self, request, *args, **kwargs):
         return super().get(request)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["host"] = get_host_with_schema(self.request)
+        return context
+
 
 @method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationCommentView(ConversationCommonView, DetailView):
@@ -216,6 +222,9 @@ class ConversationDetailView(ConversationCommonView, DetailView):
     model = Conversation
     template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
+
+    def get_context_data(self, *args, **kwargs):
+        return {"host": get_host_with_schema(self.request), **super().get_context_data(**kwargs)}
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")

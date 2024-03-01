@@ -1,6 +1,13 @@
 {% extends 'base.jinja2' %}
 {% set hide_menu = true %}
 {% set main_class = '' %}
+{% from "ej_conversations/includes/metatags.jinja2" import adds_conversation_metatags %}
+
+
+{% block meta %}
+    {{ super() }}
+    {{ adds_conversation_metatags(conversation, host, "EJ") }}
+{% endblock %}
 
 {% block main %}
     <{{ main_tag }} id="main-content" tabindex=0>
