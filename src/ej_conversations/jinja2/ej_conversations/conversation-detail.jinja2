@@ -3,6 +3,12 @@
 {% set page_title = _('Conversation: "{}"').format(conversation.text) %}
 {% set aria_flowto = 'comment-card' %}
 {% set body_class = 'body theme-' + conversation.board.palette %}
+{% from "ej_conversations/includes/metatags.jinja2" import adds_conversation_metatags %}
+
+{% block meta %}
+    {{ super() }}
+    {{ adds_conversation_metatags(conversation, host, "EJ") }}
+{% endblock %}
 
 {% if request.user.is_anonymous %}
     {% set hide_menu = true %}
@@ -15,12 +21,6 @@
         {% endif %}
     {% endblock %}
 {% endif %}
-
-{% block metaOG %}
-    <meta name="description" property="og:title" content="{{ conversation.title }}">
-    <meta property="og:description" content="{{ conversation.text }}">
-    <meta name="twitter:title" content="{{ conversation.title }}">
-{% endblock %}
 
 {% block main %}
     <{{ main_tag }} id="main-content" tabindex=0 class="{{ '' if request.user.is_anonymous else "main-container"  }}">
