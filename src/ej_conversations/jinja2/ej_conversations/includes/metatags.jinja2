@@ -1,0 +1,10 @@
+{% macro adds_conversation_metatags(conversation, host, site_name) %}
+    <meta property="og:title" content="{{ conversation.title }}" />
+    <meta property="og:site_name" content="{{ site_name }}"/>
+    <meta property="og:description" content="{{ conversation.text }}" />
+    {% if host is defined %}
+        <meta property="og:image" itemprop="image" content="{{host}}{{ static('img/logo/crop-icon-48.png') }}"/>
+    {% endif %}
+    <meta property="og:type" content="website" />
+{% endmacro %}
+
