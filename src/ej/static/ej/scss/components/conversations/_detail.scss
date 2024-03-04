@@ -106,6 +106,14 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         margin-bottom: revert;
         margin-top: -0.8rem;
     }
+
+    label {
+        margin-bottom: unset !important;
+    }
+
+    input {
+        margin: 0.375rem 0 !important;
+    }
 }
 
 .comment-form {
