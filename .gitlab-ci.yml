@@ -25,7 +25,7 @@ pytest:
         name: python:3.8.18-slim-bullseye
         pull_policy: if-not-present
     before_script:
-        - apt update && apt install git -y
+        - apt update && apt install git libpq-dev gcc  -y
     script:
         - cd /builds/pencillabs/ej/ej-application
         - pip install poetry
@@ -37,6 +37,7 @@ pytest:
 
 e2e:
     stage: tests
+    when: manual
     image: cypress/base:18.16.0
     script:
         - cd /builds/pencillabs/ej/ej-application/e2e

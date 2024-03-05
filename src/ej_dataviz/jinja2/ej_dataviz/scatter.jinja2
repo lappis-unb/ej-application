@@ -1,4 +1,4 @@
-{% extends 'ej_dataviz/report/base.jinja2' %}
+{% extends 'ej_dataviz/reports/base.jinja2' %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 {% set main_class = 'report-container measure-wide margin-xauto' %}
 {% set main_class = "report-container" %}
@@ -7,7 +7,7 @@
 {% block report %}
     <section class="conversation-dashboard" >
         <div id="" class="conversation-dashboard scatter-section flex wrap">
-            {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+            {% include 'ej_dataviz/dashboard/scatter.jinja2' %}
         </div>
     </section>
 {% endblock %}

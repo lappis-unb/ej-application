@@ -3,12 +3,9 @@ from logging import getLogger
 from django.core.exceptions import ValidationError
 from django.http import Http404
 from django.utils.translation import gettext_lazy as _
-from hyperpython import a
 from sidekick import import_later
 
 from ej.components.builtins import toast
-from django.forms.utils import ErrorList
-from django.core.exceptions import ValidationError
 
 log = getLogger("ej")
 models = import_later(".models", package=__package__)
@@ -38,21 +35,6 @@ def check_promoted(conversation, request):
     if not conversation.is_promoted or conversation.is_hidden:
         raise Http404
     return conversation
-
-
-def conversation_admin_menu_links(conversation, user):
-    """
-    Return administrative links to the conversation menu.
-    """
-
-    menu_links = []
-    if user.has_perm("ej.can_edit_conversation", conversation):
-        url = conversation.patch_url("conversation:edit")
-        menu_links.append(a(_("Edit"), href=url))
-    if user.has_perm("ej.can_moderate_conversation", conversation):
-        url = conversation.patch_url("conversation:moderate")
-        menu_links.append(a(_("Manage Comments"), href=url))
-    return menu_links
 
 
 def votes_counter(comment, choice=None):

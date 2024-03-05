@@ -111,6 +111,7 @@ colorama = "^0.4.6"
 sphinx = "^1.8"
 sphinx-rtd-theme = "^0.5.2"
 toml = "^0.10.0"
+psycopg2 = "==2.8.6"
 
 [tool.black]
 line-length = 108  # Strict maximum of 120

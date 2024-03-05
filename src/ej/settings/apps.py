@@ -39,6 +39,7 @@ class InstalledAppsConf(Base, EjOptions):
         "django.contrib.auth",
         "django.contrib.messages",
         "django.contrib.sites",
+        "django.contrib.postgres",
         "constance",
         "constance.backends.database",
         "anymail",

@@ -61,7 +61,7 @@
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
                     <li>
                         <div id="comments-report" class="comments-item">
-                            <a href=" {{ url('boards:dataviz-comments_report',  **conversation.get_url_kwargs()) }}">
+                            <a href=" {{ url('boards:dataviz-comments',  **conversation.get_url_kwargs()) }}">
                                 {{ _('Comments report') }}
                             </a>
                         </div>
@@ -86,17 +86,15 @@
         {% endif %}
     </ul>
 
-    {% if conversation.custom_apps_menu_links() %}
-        {% for section in conversation.custom_apps_menu_links() %}
-            <hr class="nav-divider">
-            <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{section["title"]}}</h3>
-            <ul class="participant-menu__item">
-                    {% for link in section["links"] %}
-                        {{ menu_item(current_page, link["current_page"], link["a"], link["text"]) }}
-                    {% endfor %}
-            </ul>
-        {% endfor %}
-    {% endif %}
+    {% for section in conversation.get_apps_links() %}
+        <hr class="nav-divider">
+        <h3 class="participant-menu__item participant-menu__item--column-2 participant-menu__item--margin">{{section["title"]}}</h3>
+        <ul class="participant-menu__item">
+                {% for link in section["links"] %}
+                    {{ menu_item(current_page, link["current_page"], link["a"], link["text"]) }}
+                {% endfor %}
+        </ul>
+    {% endfor %}
 
 
     <hr class="nav-divider">

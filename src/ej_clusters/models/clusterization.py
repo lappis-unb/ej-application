@@ -1,19 +1,19 @@
 import json
 from logging import getLogger
-from django.urls import reverse
-from django.db.models import Count, F
-from django.utils.translation import gettext as __, gettext_lazy as _
 
 from boogie import models, rules
 from boogie.fields import EnumField
+from django.db.models import Count, F
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 from sidekick import delegate_to, lazy, placeholder as this
 
+from ..enums import ClusterStatus
+from ..utils import cluster_shapes, use_transaction
 from .querysets import ClusterizationManager
 from .stereotype import Stereotype
 from .stereotype_vote import StereotypeVote
-from ..enums import ClusterStatus
-from ..utils import use_transaction, cluster_shapes
 
 NOT_GIVEN = object()
 log = getLogger("ej")

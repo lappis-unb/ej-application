@@ -6,7 +6,50 @@ app_name = "ej_dataviz"
 conversation_url = f"<int:conversation_id>/<slug:slug>/"
 report_url = f"<int:conversation_id>/<slug:slug>/report/"
 
-urlpatterns = [
+reports_urlpatterns = [
+    path(
+        report_url + "comments/",
+        views_report.CommentReportDetailView.as_view(),
+        name="comments",
+    ),
+    path(
+        report_url + "comments/filter",
+        views_report.CommentReportFilterView.as_view(),
+        name="comments-filter",
+    ),
+    path(
+        report_url + "users/",
+        views_report.UserReportDetailView.as_view(),
+        name="users",
+    ),
+]
+
+dataviz_urlpatterns = [
+    path(
+        report_url + "votes-over-time/",
+        views_dataviz.votes_over_time,
+        name="votes_over_time",
+    ),
+    path(
+        report_url + "data/votes.<fmt>",
+        views_dataviz.votes_data,
+        name="votes_data",
+    ),
+    path(
+        report_url + "data/cluster-<int:cluster_id>/votes.<fmt>",
+        views_dataviz.votes_data_cluster,
+        name="votes_data_cluster",
+    ),
+    path(
+        report_url + "data/users.<fmt>",
+        views_dataviz.users_data,
+        name="users_data",
+    ),
+    path(
+        report_url + "data/comments.<fmt>",
+        views_dataviz.comments_data,
+        name="comments_data",
+    ),
     path(
         conversation_url + "dashboard/",
         views_dataviz.index,
@@ -32,46 +75,6 @@ urlpatterns = [
         views_dataviz.words,
         name="words",
     ),
-    # reports URLs
-    #
-    path(
-        report_url + "comments-report/",
-        views_report.comments_report,
-        name="comments_report",
-    ),
-    path(
-        report_url + "comments-report/comments-pagination/",
-        views_report.comments_report_pagination,
-        name="comments_report_pagination",
-    ),
-    path(
-        report_url + "votes-over-time/",
-        views_report.votes_over_time,
-        name="votes_over_time",
-    ),
-    path(
-        report_url + "users/",
-        views_report.users,
-        name="users",
-    ),
-    path(
-        report_url + "data/votes.<fmt>",
-        views_report.votes_data,
-        name="votes_data",
-    ),
-    path(
-        report_url + "data/cluster-<int:cluster_id>/votes.<fmt>",
-        views_report.votes_data_cluster,
-        name="votes_data_cluster",
-    ),
-    path(
-        report_url + "data/users.<fmt>",
-        views_report.users_data,
-        name="users_data",
-    ),
-    path(
-        report_url + "data/comments.<fmt>",
-        views_report.comments_data,
-        name="comments_data",
-    ),
 ]
+
+urlpatterns = [*dataviz_urlpatterns, *reports_urlpatterns]
