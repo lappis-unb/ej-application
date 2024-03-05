@@ -1,31 +1,25 @@
-import pytest
-import json
 import datetime
-from django.urls import reverse
+import json
+
 from django.test import RequestFactory
 from django.test import Client
-from ej_clusters.enums import ClusterStatus
-from ej_clusters.models.cluster import Cluster
-from ej_clusters.models.stereotype import Stereotype
-from ej_clusters.mommy_recipes import ClusterRecipes
-from ej_conversations.models.conversation import Conversation
+from django.urls import reverse
+import pytest
 
 from ej.testing import UrlTester
-from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_users.models import User
+from ej_clusters.enums import ClusterStatus
+from ej_clusters.models.cluster import Cluster
 from ej_clusters.models.clusterization import Clusterization
-from .examples import general_comments, general_and_cluster_comments, cluster_comments
-from ej_dataviz.utils import (
-    conversation_has_stereotypes,
-    get_cluster_main_comments,
-    get_comments_dataframe,
-    get_cluster_comments_df,
-    filter_comments_by_group,
-    get_clusters,
-    search_comments_df,
-    sort_comments_df,
-    OrderByOptions,
+from ej_clusters.models.stereotype import Stereotype
+from ej_clusters.mommy_recipes import ClusterRecipes
+from ej_conversations.mommy_recipes import ConversationRecipes
+from ej_dataviz.models import (
+    CommentsReportClustersFilter,
+    CommentsReportOrderByFilter,
+    CommentsReportSearchFilter,
 )
+from ej_dataviz.utils import conversation_has_stereotypes, get_comments_dataframe
+from ej_users.models import User
 
 BASE_URL = "/api/v1"
 
@@ -33,7 +27,7 @@ BASE_URL = "/api/v1"
 class TestRoutes(ConversationRecipes, UrlTester):
     admin_urls = [
         "/conversations/1/conversation/report/users/",
-        "/conversations/1/conversation/report/comments-report/",
+        "/conversations/1/conversation/report/comments/",
         "/conversations/1/conversation/dashboard/",
     ]
 
@@ -204,31 +198,6 @@ class TestReportRoutes(ClusterRecipes):
             in response.content.decode()
         )
 
-    def test_get_cluster_main_comments(self, conversation_with_comments):
-        clusterization = Clusterization.objects.create(
-            conversation=conversation_with_comments, cluster_status=ClusterStatus.ACTIVE
-        )
-        cluster = Cluster.objects.create(name="name", clusterization=clusterization)
-        clusters_main_comments = get_cluster_main_comments(cluster)
-
-        convergence_level = clusters_main_comments["lower_convergence"]["convergence_level"]
-        greater_agree = clusters_main_comments["greater_agree"]
-        greater_disagree = clusters_main_comments["greater_disagree"]
-
-        assert "lower_convergence" in clusters_main_comments
-        assert "greater_agree" in clusters_main_comments
-        assert "greater_disagree" in clusters_main_comments
-        assert "id" in clusters_main_comments
-        assert "cluster_name" in clusters_main_comments
-
-        assert round(convergence_level, 1) == 33.3
-
-        assert round(greater_agree["agree_level"], 1) == 100.0
-        assert round(greater_agree["disagree_level"], 1) == 0.0
-
-        assert round(greater_disagree["agree_level"], 1) == 0.0
-        assert round(greater_disagree["disagree_level"], 1) == 100.0
-
     def test_get_comments_dataframe(self, conversation_with_comments):
         comments_df = get_comments_dataframe(conversation_with_comments.comments, "")
         assert comments_df.iloc[[0]].get("group").item() == ""
@@ -243,7 +212,8 @@ class TestReportRoutes(ClusterRecipes):
         )
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
 
-        comments_df = get_cluster_comments_df(cluster, cluster.name)
+        clusters_filter = CommentsReportClustersFilter([cluster.id], conversation_with_comments)
+        comments_df = clusters_filter.filter()
 
         assert comments_df.iloc[[0]].get("group").item() == cluster.name
         assert comments_df.iloc[[1]].get("group").item() == cluster.name
@@ -255,43 +225,31 @@ class TestReportRoutes(ClusterRecipes):
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_comments, cluster_status=ClusterStatus.ACTIVE
         )
-        cluster = Cluster.objects.create(name="name", clusterization=clusterization)
-
-        comments_df = get_comments_dataframe(conversation_with_comments.comments, "")
-        clusters = get_clusters(conversation_with_comments)
-
-        filtered_comments_df = filter_comments_by_group(comments_df, clusters, [])
-        assert len(filtered_comments_df.index) == 0
-
-        filtered_comments_df = filter_comments_by_group(comments_df, clusters, ["general"])
+        clusters_filter = CommentsReportClustersFilter([], conversation_with_comments)
+        filtered_comments_df = clusters_filter.filter()
         assert filtered_comments_df.iloc[[0]].get("group").item() == ""
         assert filtered_comments_df.iloc[[1]].get("group").item() == ""
         assert filtered_comments_df.iloc[[2]].get("group").item() == ""
         assert filtered_comments_df.iloc[[3]].get("group").item() == ""
         assert len(filtered_comments_df.index) == 4
 
-        filtered_comments_df = filter_comments_by_group(comments_df, clusters, [cluster.name])
+        cluster = Cluster.objects.create(name="name", clusterization=clusterization)
+        clusters_filter = CommentsReportClustersFilter([cluster.id], conversation_with_comments)
+        filtered_comments_df = clusters_filter.filter()
         assert filtered_comments_df.iloc[[0]].get("group").item() == cluster.name
         assert filtered_comments_df.iloc[[1]].get("group").item() == cluster.name
         assert filtered_comments_df.iloc[[2]].get("group").item() == cluster.name
         assert filtered_comments_df.iloc[[3]].get("group").item() == cluster.name
         assert len(filtered_comments_df.index) == 4
 
-        filtered_comments_df = filter_comments_by_group(comments_df, clusters, ["general", cluster.name])
-        assert filtered_comments_df.iloc[[0]].get("group").item() == ""
-        assert filtered_comments_df.iloc[[1]].get("group").item() == ""
-        assert filtered_comments_df.iloc[[2]].get("group").item() == ""
-        assert filtered_comments_df.iloc[[3]].get("group").item() == ""
-        assert filtered_comments_df.iloc[[4]].get("group").item() == cluster.name
-        assert filtered_comments_df.iloc[[5]].get("group").item() == cluster.name
-        assert filtered_comments_df.iloc[[6]].get("group").item() == cluster.name
-        assert filtered_comments_df.iloc[[7]].get("group").item() == cluster.name
-        assert len(filtered_comments_df.index) == 8
-
     def test_sort_comments_dataframe(self, conversation_with_comments):
-        comments_df = get_comments_dataframe(conversation_with_comments.comments, "")
+        clusters_filter = CommentsReportClustersFilter([], conversation_with_comments)
+        comments_df = clusters_filter.filter()
 
-        sorted_comments_df = sort_comments_df(comments_df, sort_by=OrderByOptions.AGREEMENT)
+        orderby_filter = CommentsReportOrderByFilter(
+            "agree", conversation_with_comments.comments, comments_df
+        )
+        sorted_comments_df = orderby_filter.filter()
         assert sorted_comments_df.iloc[[0]].get("content").item() == "aa"
         assert round(sorted_comments_df.iloc[[0]].get("agree").item(), 1) == 100.0
         assert sorted_comments_df.iloc[[1]].get("content").item() == "aaa"
@@ -301,7 +259,10 @@ class TestReportRoutes(ClusterRecipes):
         assert sorted_comments_df.iloc[[3]].get("content").item() == "test"
         assert round(sorted_comments_df.iloc[[3]].get("agree").item(), 1) == 0.0
 
-        sorted_comments_df = sort_comments_df(comments_df, sort_by=OrderByOptions.DISAGREEMENT)
+        orderby_filter = CommentsReportOrderByFilter(
+            "disagree", conversation_with_comments.comments, comments_df
+        )
+        sorted_comments_df = orderby_filter.filter()
         assert sorted_comments_df.iloc[[0]].get("content").item() == "aaaa"
         assert round(sorted_comments_df.iloc[[0]].get("disagree").item(), 1) == 100.0
         assert sorted_comments_df.iloc[[1]].get("content").item() == "test"
@@ -311,175 +272,31 @@ class TestReportRoutes(ClusterRecipes):
         assert sorted_comments_df.iloc[[3]].get("content").item() == "aa"
         assert round(sorted_comments_df.iloc[[3]].get("disagree").item(), 1) == 0.0
 
-        sorted_comments_df = sort_comments_df(
-            comments_df, sort_by=OrderByOptions.PARTICIPATION, sort_order="asc"
-        )
-        assert sorted_comments_df.iloc[[0]].get("content").item() == "test"
-        assert round(sorted_comments_df.iloc[[0]].get("participation").item(), 1) == 33.3
-        assert sorted_comments_df.iloc[[1]].get("content").item() == "aa"
-        assert round(sorted_comments_df.iloc[[1]].get("participation").item(), 1) == 100.0
-        assert sorted_comments_df.iloc[[2]].get("content").item() == "aaa"
-        assert round(sorted_comments_df.iloc[[2]].get("participation").item(), 1) == 100.0
-        assert sorted_comments_df.iloc[[3]].get("content").item() == "aaaa"
-        assert round(sorted_comments_df.iloc[[3]].get("participation").item(), 1) == 100.0
-
-        sorted_comments_df = sort_comments_df(
-            comments_df, sort_by=OrderByOptions.CONVERGENCE, sort_order="asc"
-        )
-        assert sorted_comments_df.iloc[[0]].get("content").item() == "aaa"
-        assert round(sorted_comments_df.iloc[[0]].get("convergence").item(), 1) == 33.3
-        assert sorted_comments_df.iloc[[1]].get("content").item() == "aa"
-        assert round(sorted_comments_df.iloc[[1]].get("convergence").item(), 1) == 100.0
-        assert sorted_comments_df.iloc[[2]].get("content").item() == "aaaa"
-        assert round(sorted_comments_df.iloc[[2]].get("convergence").item(), 1) == 100.0
-        assert sorted_comments_df.iloc[[3]].get("content").item() == "test"
-        assert round(sorted_comments_df.iloc[[3]].get("convergence").item(), 1) == 100.0
-
     def test_search_string_comments_dataframe(self, conversation_with_comments):
-        comments_df = get_comments_dataframe(conversation_with_comments.comments, "")
-        filtered_comments_df = search_comments_df(comments_df, "aa")
+        clusters_filter = CommentsReportClustersFilter([], conversation_with_comments)
+        comments_df = clusters_filter.filter()
+
+        search_filter = CommentsReportSearchFilter("aa", conversation_with_comments.comments, comments_df)
+        filtered_comments_df = search_filter.filter()
         assert len(filtered_comments_df.index) == 3
-        filtered_comments_df = search_comments_df(comments_df, "aaa")
+        search_filter = CommentsReportSearchFilter("aaa", conversation_with_comments.comments, comments_df)
+        filtered_comments_df = search_filter.filter()
         assert len(filtered_comments_df.index) == 2
-        filtered_comments_df = search_comments_df(comments_df, "t")
+        search_filter = CommentsReportSearchFilter("t", conversation_with_comments.comments, comments_df)
+        filtered_comments_df = search_filter.filter()
         assert len(filtered_comments_df.index) == 1
-
-    def test_cards_per_page(self, conversation_with_comments, logged_client):
-        conv = conversation_with_comments
-        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
-        url = f"{base_url}?cardsPerPage=1"
-
-        response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        paginator = response.context["paginator"]
-        [comment.pop("created") for comment in comments]
-        assert comments == [
-            {
-                "content": "aa",
-                "author": "author",
-                "agree": 100.0,
-                "disagree": 0.0,
-                "skipped": 0.0,
-                "convergence": 100.0,
-                "participation": 100.0,
-                "group": "",
-                "id": 0,
-            }
-        ]
-        assert paginator.num_pages == 4
-
-        url = f"{base_url}?cardsPerPage=2"
-        response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        paginator = response.context["paginator"]
-        [comment.pop("created") for comment in comments]
-        assert comments == [
-            {
-                "content": "aa",
-                "author": "author",
-                "agree": 100.0,
-                "disagree": 0.0,
-                "skipped": 0.0,
-                "convergence": 100.0,
-                "participation": 100.0,
-                "group": "",
-                "id": 0,
-            },
-            {
-                "content": "aaa",
-                "author": "author",
-                "agree": 33.33333333333333,
-                "disagree": 66.66666666666666,
-                "skipped": 0.0,
-                "convergence": 33.33333333333333,
-                "participation": 100.0,
-                "group": "",
-                "id": 1,
-            },
-        ]
-        assert paginator.num_pages == 2
-
-    def test_get_general_comments(self, conversation_with_comments, logged_client):
-        conv = conversation_with_comments
-        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
-        response = logged_client.get(base_url)
-        comments = list(response.context["comments"])
-        [comment.pop("created") for comment in comments]
-        assert comments == general_comments
-
-        url = f"{base_url}?clusterFilters=general"
-        response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        [comment.pop("created") for comment in comments]
-        assert comments == general_comments
-
-    def test_get_general_and_cluster_comments(self, conversation_with_comments, logged_client):
-        conv = conversation_with_comments
-        clusterization = Clusterization.objects.create(
-            conversation=conv, cluster_status=ClusterStatus.ACTIVE
-        )
-        cluster = Cluster.objects.create(name="name", clusterization=clusterization)
-
-        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
-        url = f"{base_url}?clusterFilters=general,{cluster.name}&cardsPerPage=12"
-        response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        [comment.pop("created") for comment in comments]
-        assert comments == general_and_cluster_comments
-
-    def test_get_cluster_comments(self, conversation_with_comments, logged_client):
-        conv = conversation_with_comments
-        clusterization = Clusterization.objects.create(
-            conversation=conv, cluster_status=ClusterStatus.ACTIVE
-        )
-        cluster = Cluster.objects.create(name="name", clusterization=clusterization)
-
-        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
-        url = f"{base_url}?clusterFilters={cluster.name}"
-        response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        [comment.pop("created") for comment in comments]
-        assert comments == cluster_comments
 
     def test_get_page(self, conversation_with_comments, logged_client):
         conv = conversation_with_comments
-        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
-        url = f"{base_url}?cardsPerPage=1&page=1"
+        base_url = reverse("boards:dataviz-comments", kwargs=conv.get_url_kwargs())
+        url = f"{base_url}?page=1"
 
         response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        [comment.pop("created") for comment in comments]
-        assert comments == [
-            {
-                "content": "aa",
-                "author": "author",
-                "agree": 100.0,
-                "disagree": 0.0,
-                "skipped": 0.0,
-                "convergence": 100.0,
-                "participation": 100.0,
-                "group": "",
-                "id": 0,
-            }
-        ]
-
-        url = f"{base_url}?cardsPerPage=1&page=4"
-        response = logged_client.get(url)
-        comments = list(response.context["comments"])
-        [comment.pop("created") for comment in comments]
-        assert comments == [
-            {
-                "content": "test",
-                "author": "author",
-                "agree": 0.0,
-                "disagree": 100.0,
-                "skipped": 0.0,
-                "convergence": 100.0,
-                "participation": 33.33333333333333,
-                "group": "",
-                "id": 3,
-            }
-        ]
+        comments = list(response.context["page"])
+        assert conversation_with_comments.comments.all()[0].content == comments[0][0]
+        assert conversation_with_comments.comments.all()[1].content == comments[1][0]
+        assert conversation_with_comments.comments.all()[2].content == comments[2][0]
+        assert conversation_with_comments.comments.all()[3].content == comments[3][0]
 
     def test_conversation_has_stereotypes(self, cluster_db, stereotype_vote):
         cluster_db.stereotypes.add(stereotype_vote.author)

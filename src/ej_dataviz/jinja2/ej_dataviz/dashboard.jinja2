@@ -1,7 +1,7 @@
 {% extends 'base.jinja2' %}
 {% set main_class = 'report-container measure-wide margin-xauto' %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
-{% from "ej_dataviz/report/export-data.jinja2" import export_modal %}
+{% from "ej_dataviz/reports/includes/export-data.jinja2" import export_modal %}
 
 
 {% block content %}
@@ -9,27 +9,27 @@
     {% block report %}
         <section class="conversation-dashboard content-grid">
             {% with voting_statistics = conversation.statistics().get('votes') %}
-                {% include 'ej_dataviz/report/includes/voting.jinja2' %}
+                {% include 'ej_dataviz/dashboard/voting.jinja2' %}
             {% endwith %}
             {% with participants_statistics = conversation.statistics().get('participants') %}
-                {% include 'ej_dataviz/report/includes/participants.jinja2' %}
+                {% include 'ej_dataviz/dashboard/participants.jinja2' %}
             {% endwith %}
 
             <div class="charts-section center-grid">
-                {% include 'ej_dataviz/report/includes/time-chart.jinja2' %}
-                {% include 'ej_dataviz/report/includes/channels-chart.jinja2' %}
+                {% include 'ej_dataviz/dashboard/time-chart.jinja2' %}
+                {% include 'ej_dataviz/dashboard/channels-chart.jinja2' %}
             </div>
 
-            {% include 'ej_dataviz/report/includes/clusters.jinja2' %}
+            {% include 'ej_dataviz/dashboard/clusters.jinja2' %}
 
             <div class="scatter-section flex wrap center-grid">
-                {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+                {% include 'ej_dataviz/dashboard/scatter.jinja2' %}
             </div>
             {% with comments_statistics = conversation.statistics().get('comments') %}
-                {% include 'ej_dataviz/report/includes/comments.jinja2' %}
-                {% include 'ej_dataviz/report/includes/comment-participants.jinja2' %}
+                {% include 'ej_dataviz/dashboard/comments.jinja2' %}
+                {% include 'ej_dataviz/dashboard/comment-participants.jinja2' %}
             {% endwith %}
-            {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}
+            {% include 'ej_dataviz/dashboard/word-cloud-card.jinja2' %}
 
         </section>
 

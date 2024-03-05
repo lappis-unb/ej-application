@@ -2,8 +2,7 @@ from datetime import datetime
 import re
 
 from autoslug import AutoSlugField
-from boogie import models
-from boogie import rules
+from boogie import models, rules
 from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -11,15 +10,15 @@ from django.core.exceptions import ValidationError
 from django.db.models.functions import Length
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from ej.components.menu import apps_custom_menu_links, register_menu
-from ej.utils.functional import deprecate_lazy
-from ej.utils.url import SafeUrl
-from ej_boards.models import Board
-from hyperpython import a
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, placeholder as this, property as property
 from taggit.managers import TaggableManager
 from taggit.models import TaggedItemBase
+
+from ej.components.menu import CustomizeMenuMixin
+from ej.utils.functional import deprecate_lazy
+from ej.utils.url import SafeUrl
+from ej_boards.models import Board
 
 from ..enums import Choice
 from ..signals import comment_moderated
@@ -27,8 +26,8 @@ from ..utils import normalize_status
 from .comment import Comment
 from .conversation_queryset import ConversationQuerySet, log
 from .favorites import HasFavoriteMixin
-from .util import make_clean
 from .util import (
+    make_clean,
     statistics,
     statistics_for_user,
     vote_count,
@@ -39,7 +38,7 @@ from .vote import Vote
 NOT_GIVEN = object()
 
 
-class Conversation(HasFavoriteMixin, TimeStampedModel):
+class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
     """
     A topic of conversation.
     """
@@ -393,13 +392,6 @@ class Conversation(HasFavoriteMixin, TimeStampedModel):
         if self.n_approved_comments == n_user_final_votes:
             return n_user_final_votes
         return n_user_final_votes + 1
-
-    def custom_apps_menu_links(self):
-        """
-        returns a list of links to include on conversation menu.
-        Other apps can define menu links to be injected on conversation menu.
-        """
-        return apps_custom_menu_links(self)
 
     def can_add_comment(self, user, n_comments, max_comments):
         """

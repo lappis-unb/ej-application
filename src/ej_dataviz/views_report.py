@@ -1,218 +1,145 @@
-from functools import lru_cache
-import datetime
-from pprint import pprint
-
-from django.http import JsonResponse
-from django.contrib.auth import get_user_model
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.utils.text import slugify
-from django.utils.translation import gettext as _, gettext_lazy
-from sidekick import import_later
 from django.core.paginator import Paginator
+from django.views.generic import DetailView
+from sidekick import import_later
+from django.utils.translation import gettext_lazy as _
 
+from ej.decorators import can_access_dataviz_class_view
 from ej_conversations.models import Conversation
-from ej_clusters.models.clusterization import Clusterization
-from ej_conversations.utils import check_promoted
-from .utils import (
-    add_id_column,
-    filter_comments_by_group,
-    get_page,
-    get_cluster_names,
-    get_comments_dataframe,
-    sort_comments_df,
-    search_comments_df,
-    get_cluster_main_comments,
-    get_clusters,
-    get_cluster_or_404,
-    export_data,
-    get_user_data,
-    comments_data_common,
-    vote_data_common,
-    OrderByOptions,
+from ej_dataviz.models import (
+    CommentsReportClustersFilter,
+    CommentsReportOrderByFilter,
+    CommentsReportSearchFilter,
 )
 
-from ej.decorators import can_access_dataviz, can_view_report_details
+from .utils import get_clusters, get_comments_dataframe
 
 pd = import_later("pandas")
 
 
-@can_access_dataviz
-def comments_report(request, conversation_id, **kwargs):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
-    clusters = get_clusters(conversation)
-    clusters_main_comments = [get_cluster_main_comments(cluster) for cluster in clusters]
+class CommentReportBaseView(DetailView):
+    """
+    Implements common behaviors for ej_dataviz views.
+    """
 
-    return render(
-        request,
-        "ej_dataviz/report/comments-report.jinja2",
-        {
-            "conversation": conversation,
-            "clusters": get_clusters(conversation),
-            "clusters_main_comments": clusters_main_comments,
-            "can_view_detail": can_view_detail,
-            "type_data": "comments-data",
-            "groups": get_cluster_names(clusters),
-        },
-    )
+    template_name = "ej_dataviz/reports/includes/comments/table.jinja2"
+    model = Conversation
 
+    @can_access_dataviz_class_view
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
 
-@can_access_dataviz
-def comments_report_pagination(request, conversation_id, **kwargs):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    clusters = get_clusters(conversation)
+    def paginate_comments(
+        self,
+        conversation: Conversation,
+        comments_df=pd.DataFrame(),
+        page_number: int = 1,
+        page_size: int = 10,
+    ):
+        """
+        creates a Django Paginator instance using conversation comments as list of items.
 
-    page = request.GET.get("page", 1)
-    cards_per_page = request.GET.get("cardsPerPage", 6)
-    order_by = request.GET.get("orderBy", OrderByOptions.AGREEMENT)
-    sort_order = request.GET.get("sort", "desc")
-    cluster_filters = request.GET.get("clusterFilters", ["general"])
-    search_string = request.GET.get("searchString", "")
+        :param page_number: a integer with the Paginator page.
+        :param conversation: a Conversation instance
+        """
+        if not isinstance(comments_df, pd.DataFrame):
+            comments_df = get_comments_dataframe(conversation.comments, "")
+        comments = comments_df.values
+        if len(comments) > 0:
+            paginator = Paginator(comments, page_size)
+            return paginator.get_page(page_number)
+        return Paginator(comments, 1).page(1)
 
-    comments_df = get_comments_dataframe(conversation.comments, "")
-    comments_df = filter_comments_by_group(comments_df, clusters, cluster_filters)
+    def paginate_users(self, conversation: Conversation, users_df=pd.DataFrame(), page_number: int = 1):
+        """
+        creates a Django Paginator instance using conversation comments as list of items.
 
-    if search_string:
-        comments_df = search_comments_df(comments_df, search_string)
-
-    sorted_comments_df = sort_comments_df(comments_df, order_by, sort_order)
-    add_id_column(sorted_comments_df)
-
-    comments_dict = sorted_comments_df.to_dict(orient="records")
-
-    paginator = Paginator(comments_dict, cards_per_page)
-    comments = get_page(paginator, page)
-
-    return render(
-        request,
-        "ej_dataviz/report/includes/comment_report/comments-section.jinja2",
-        {
-            "comments": comments,
-            "current_page": comments.number,
-            "paginator": paginator,
-        },
-    )
+        :param page_number: a integer with the Paginator page.
+        :param conversation: a Conversation instance
+        """
+        if not isinstance(users_df, pd.DataFrame):
+            users_df = self.get_user_dataframe(conversation.comments)
+        users = users_df.values
+        # TODO: Fix the page number calculation
+        if len(users) > 0:
+            paginator = Paginator(users, 10)
+            return paginator.get_page(page_number)
+        return Paginator(users, 1).page(1)
 
 
-@can_access_dataviz
-def votes_over_time(request, conversation_id, **kwargs):
-    from django.utils.timezone import make_aware
+class CommentReportFilterView(CommentReportBaseView):
+    """
+    Returns conversation comments based on filter params.
+    """
 
-    conversation = Conversation.objects.get(pk=conversation_id)
-    start_date = request.GET.get("startDate")
-    end_date = request.GET.get("endDate")
-    if start_date and end_date:
-        start_date = make_aware(datetime.datetime.fromisoformat(start_date))  # convert js naive date
-        end_date = make_aware(datetime.datetime.fromisoformat(end_date))  # # convert js naive date
-    else:
-        return JsonResponse({"error": "end date and start date should be passed as a parameter."})
+    model = Conversation
+    template_name = "ej_dataviz/reports/includes/comments/table.jinja2"
 
-    if start_date > end_date:
-        return JsonResponse({"error": "end date must be gratter then start date."})
-
-    try:
-        votes = conversation.time_interval_votes(start_date, end_date)
-        return JsonResponse({"data": list(votes)})
-    except Exception as e:
-        print("Could not generate D3js data")
-        print(e)
-        return JsonResponse({})
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        conversation = context["object"]
+        search_text = self.request.GET.get("search")
+        order_by = self.request.GET.get("order-by")
+        cluster_ids = self.request.GET.getlist("clusters")
+        comments_df = CommentsReportClustersFilter(cluster_ids, conversation).filter()
+        comments_df = CommentsReportSearchFilter(search_text, conversation.comments, comments_df).filter()
+        comments_df = CommentsReportOrderByFilter(order_by, conversation.comments, comments_df).filter()
+        context["page"] = self.paginate_comments(
+            conversation, comments_df, self.request.GET.get("page") or 1
+        )
+        return context
 
 
-@can_access_dataviz
-def users(request, conversation_id, **kwargs):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    check_promoted(conversation, request)
-    can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
+class CommentReportDetailView(CommentReportBaseView):
+    """
+    Returns comment report page.
+    """
 
-    return render(
-        request,
-        "ej_dataviz/report/users.jinja2",
-        {
-            "conversation": conversation,
-            "type_data": "users-data",
-            "can_view_detail": can_view_detail,
-        },
-    )
+    template_name = "ej_dataviz/reports/comments.jinja2"
 
-
-# ==============================================================================
-# Votes raw data
-# ------------------------------------------------------------------------------
-@can_view_report_details
-def votes_data(request, conversation_id, fmt, **kwargs):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    filename = conversation.slug + "-votes"
-    votes = conversation.votes
-    return vote_data_common(votes, filename, fmt)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        conversation = context["object"]
+        clusters = get_clusters(conversation)
+        context["clusters"] = clusters
+        context["page"] = self.paginate_comments(
+            conversation, None, page_number=self.request.GET.get("page") or 1
+        )
+        return context
 
 
-# FIXME: why is <model:cluster> not working?
-# adjust conversation_download_data() after fixing this bug
-@can_view_report_details
-def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
-    if not request.user.has_perm("ej.can_view_report_detail", conversation):
-        return JsonResponse({"error": "You don't have permission to view this data."})
-    cluster = get_cluster_or_404(cluster_id, conversation)
-    filename = conversation.slug + f"-{slugify(cluster.name)}-votes"
-    return vote_data_common(cluster.votes.all(), filename, fmt)
+class UserReportDetailView(CommentReportBaseView):
+    """
+    Returns user report page.
+    """
 
+    template_name = "ej_dataviz/reports/users.jinja2"
+    model = Conversation
 
-# ==============================================================================
-# Comments raw data
-# ------------------------------------------------------------------------------
-@can_access_dataviz
-def comments_data(request, conversation_id, fmt, **kwargs):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    comments = conversation.comments
-    clusters = Clusterization.objects.filter(conversation=conversation).last().clusters
-    votes = conversation.votes
-    filename = conversation.slug + "-comments"
-    return comments_data_common(comments, votes, filename, fmt, clusters)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        conversation = context["object"]
+        users_df = self.get_user_dataframe(conversation)
+        clusters = get_clusters(conversation)
+        context["clusters"] = clusters
+        context["page"] = self.paginate_users(conversation, users_df, self.request.GET.get("page") or 1)
+        return context
 
+    def get_user_dataframe(self, conversation: Conversation, page_number: int = 1):
+        """
+        creates a Django Paginator instance using conversation comments as list of items.
 
-# ==============================================================================
-# Users raw data
-# ------------------------------------------------------------------------------
-@can_access_dataviz
-def users_data(request, conversation_id, fmt, **kwargs):
-    conversation = Conversation.objects.get(pk=conversation_id)
-    filename = conversation.slug + "-users"
-    df = get_user_data(conversation)
-    try:
-        clusters = conversation.clusterization.clusters.all()
-    except AttributeError:
-        pass
-    else:
-        # Retrieve non empty clusters.
-        data = clusters.values_list("users__id", "name", "id")
-        data = filter(lambda x: x[0], data)
-        extra = pd.DataFrame(data, columns=["user", "cluster", "cluster_id"])
-        extra.index = extra.pop("user")
-        df[["cluster", "cluster_id"]] = extra
-        df["cluster_id"] = df.cluster_id.fillna(-1).astype(int)
-    return export_data(df, fmt, filename)
-
-
-@lru_cache(1)
-def get_translation_map():
-    _ = gettext_lazy
-    return {
-        "agree": _("agree"),
-        "author": _("author"),
-        "author_id": _("author_id"),
-        "choice": _("choice"),
-        "cluster": _("cluster"),
-        "cluster_id": _("cluster_id"),
-        "comment": _("comment"),
-        "comment_id": _("comment_id"),
-        "convergence": _("convergence"),
-        "disagree": _("disagree"),
-        "email": _("email"),
-        "id": _("id"),
-        "name": _("name"),
-        "participation": _("participation"),
-        "skipped": _("skipped"),
-        "channel": _("channel"),
-    }
+        :param page_number: a integer with the Paginator page.
+        :param conversation: a Conversation instance
+        """
+        users_df = conversation.users.statistics_summary_dataframe(
+            normalization=100, convergence=False, conversation=conversation
+        )
+        users_df.insert(
+            0,
+            _("participant"),
+            users_df[["email"]].agg("\n".join, axis=1),
+            True,
+        )
+        users_df.drop(["email", "name", _("Phone number")], inplace=True, axis=1)
+        users_df = users_df.sort_values("agree", ascending=False)
+        return users_df

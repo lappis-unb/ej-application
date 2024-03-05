@@ -1,0 +1,61 @@
+<div id="comments-table-container">
+    <table  id="users-table" class="display cell-border">
+        <thead>
+            <tr>
+                <th>{{_("User")}}</th>
+                <th><i class="fa fa-check" title={{_("Agree")}}></i></th>
+                <th><i class="fa fa-times" title={{_("Disagree")}}></i></th>
+                <th><i class="fa fa-arrow-right" title={{_("Skipped")}}></i></th>
+                <th>
+                    <i class="fas fa-users" title={{_("Participation index")}}></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in page %}
+                <tr>
+                    <td>
+                        <div class="comment-report__comment">
+                            <div>{{user[0]}}</div>
+                            <div>{{user[1]}}</div>
+                            {% if user|length > 7 %}
+                                <div>{{user[7]}}</div>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="comment-report__percentages">{{"%s%%"|format(user[2]|round)}}</td>
+                    <td class="comment-report__percentages">{{"%s%%"|format(user[3]|round)}}</td>
+                    <td class="comment-report__percentages">{{"%s%%"|format(user[4]|round)}}</td>
+                    <td class="comment-report__percentages">{{"%s%%"|format(user[5]|round)}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+
+        $(document).ready( function () {
+            let dataTableOptions = {
+                bInfo: false,
+                ordering: false,
+                destroy: true,
+                paging: false,
+                searching: false,
+                responsive: true,
+                columns: [
+                    { data: '{{_("Comment")}}', className: 'desktop' },
+                    { data: '{{_("Agree")}}', className: 'desktop' },
+                    { data: '{{_("Disagree")}}', className: 'desktop' },
+                    { data: '{{_("Skipped")}}', className: 'desktop' },
+                    { data: '{{_("Convergence")}}', className: 'desktop' },
+                ]
+            }
+            if(window["usersTable"]) {
+                dataTableOptions["destroy"] = true;
+                $('#users-table').DataTable(dataTableOptions);
+            } else {
+                window["usersTable"] = $('#users-table').DataTable(dataTableOptions);
+            }
+        });
+    </script>
+</div>

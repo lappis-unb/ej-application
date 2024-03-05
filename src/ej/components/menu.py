@@ -1,33 +1,33 @@
 from collections import defaultdict
 
 from django.utils.translation import gettext_lazy as _
-from hyperpython import nav, Block, a, div, h3
-from hyperpython.components import hyperlink, html_list, fa_icon
+from hyperpython import Block, a, div, h3, nav
+from hyperpython.components import fa_icon, html_list, hyperlink
 
-from ej.components.functional import thunk, split_with
-from ..roles import link
+from ej.components.functional import split_with, thunk
 
 
-def apps_custom_menu_links(conversation):
-    """
-    Returns a list of links to customize conversation page menu.
-    To add a custom link to EJ menu, the Django App must have
-    EJ_CUSTOM_MENU = true and implements the customize_menu method.
+class CustomizeMenuMixin:
+    def get_apps_links(self):
+        """
+        Returns a list of links to customize conversation page menu.
+        To add a custom link to EJ menu, the Django App must have
+        EJ_CUSTOM_MENU = true and implements the customize_menu method.
 
-    apps_custom_menu_links should be used insted of page_menu, because
-    of hyperpython legacy dependency.
-    """
-    from django.apps import apps
+        CustomizeMenuMixin should be used insted of page_menu, because
+        of hyperpython legacy dependency.
+        """
+        from django.apps import apps
 
-    apps_links = []
-    for config in apps.app_configs:
-        try:
-            getattr(apps.app_configs[config], "customize_menu")
-            app_menu = apps.app_configs[config].customize_menu(conversation)
-            apps_links.append(app_menu)
-        except Exception as e:
-            pass
-    return apps_links
+        apps_links = []
+        for config in apps.app_configs:
+            try:
+                getattr(apps.app_configs[config], "customize_menu")
+                app_menu = apps.app_configs[config].customize_menu(self)
+                apps_links.append(app_menu)
+            except Exception as e:
+                pass
+        return apps_links
 
 
 def page_menu(*items, request=None, caller=None, **kwargs):

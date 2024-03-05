@@ -83,6 +83,27 @@ def is_superuser(view_func):
     return wrapper_func
 
 
+def can_access_dataviz_class_view(view_func):
+    def wrapper_func(self, request, *args, **kwargs):
+        try:
+            conversation_id = kwargs.get("conversation_id")
+            conversation = Conversation.objects.get(id=conversation_id)
+        except AttributeError:
+            return redirect("auth:login")
+
+        is_superuser = request.user.is_staff or request.user.is_superuser
+        is_author = request.user.id == conversation.author_id
+        is_promoted = conversation.is_promoted and request.user.has_perm(
+            "ej_conversations.can_publish_promoted"
+        )
+
+        if is_superuser or is_author or is_promoted:
+            return view_func(self, request, *args, **kwargs)
+        return redirect("auth:login")
+
+    return wrapper_func
+
+
 def can_access_dataviz(view_func):
     def wrapper_func(request, *args, **kwargs):
         try:
