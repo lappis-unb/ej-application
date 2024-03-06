@@ -46,6 +46,11 @@ urlpatterns = [
         name="detail",
     ),
     path(
+        f"{conversation_url}/content",
+        views.ConversationDetailContentView.as_view(),
+        name="detail-content",
+    ),
+    path(
         f"{conversation_url}/comment/",
         views.ConversationCommentView.as_view(),
         name="comment",

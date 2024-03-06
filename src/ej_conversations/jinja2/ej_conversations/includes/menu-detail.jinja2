@@ -2,13 +2,6 @@
 
 <nav title="{{ _('Conversation') }}" aria-labelledby="menu-conversation">
     <ul class="nav-header menu-padding">
-        <li id="board-name">
-            <a href="{{ url('boards:conversation-list', board_slug=conversation.board.slug) }}">
-                <i class="fa fa-arrow-circle-left"></i>
-                <span>{{ conversation.board }}</span>
-            </a>
-        </li>
-
         <li class="menu-item">
             <a href={{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}><span>{{ conversation.title }}</span></a>
         </li>

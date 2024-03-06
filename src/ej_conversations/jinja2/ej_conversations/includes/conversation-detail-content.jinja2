@@ -1,0 +1,13 @@
+{% if conversation.is_hidden %}
+<div class="content-grid content-grid--padding">
+    <div class="color-negative margin-3 pad-x3 pad-y2 rounded-3 center">
+        <h2>{{ _('Warning!') }}</h2>
+        <p>{% trans %}This conversation is hidden.{% endtrans %}
+    </div>
+</div>
+{% else %}
+    {% include 'ej_conversations/includes/conversation-detail-header.jinja2' %}
+    <div class="content-grid">
+        {% include 'ej_conversations/comments/card.jinja2' %}
+    </div>
+{% endif %}
