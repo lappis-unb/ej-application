@@ -213,6 +213,17 @@ class ConversationCommentView(ConversationCommonView, DetailView):
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")
+class ConversationDetailContentView(ConversationCommonView, DetailView):
+    form_class = CommentForm
+    model = Conversation
+    template_name = "ej_conversations/includes/conversation-detail-content.jinja2"
+    ctx = {}
+
+    def get_context_data(self, *args, **kwargs):
+        return {"host": get_host_with_schema(self.request), **super().get_context_data(**kwargs)}
+
+
+@method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(ConversationCommonView, DetailView):
     form_class = CommentForm
     model = Conversation

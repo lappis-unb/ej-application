@@ -81,7 +81,7 @@ def page_menu(*items, request=None, caller=None, **kwargs):
 
 def menu_from_sections(sections):
     # add role="menu" in the future?
-    return div(*sections, class_="page-menu", id="page-menu", is_component=True)
+    return div(*sections, class_="page-menu", id="page-menu", is_menu="", is_component=True)
 
 
 def menu_section(name, links, **kwargs):
