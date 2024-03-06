@@ -50,6 +50,7 @@ class MainHeader extends Component {
     this.isMenuOpen = false;
     $(".page-menu").attr("is-open", null);
     $(".page-menu").attr("is-menu", "");
+    $("html").removeClass("page-menu--disable-overflow");
     if (!this.isProfileOpen) this.removeOverlay();
   }
 
