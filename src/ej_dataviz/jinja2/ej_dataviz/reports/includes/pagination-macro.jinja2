@@ -1,0 +1,79 @@
+{% macro pagination(page, items) %}
+<div class="margin-y3 pagination">
+    <div class="pagination__info">
+        <span>
+            {% trans  %}Showing{% endtrans %}&nbsp;{{page|length}}&nbsp;{{items}}&nbsp;{{_('of')}}&nbsp;{{page.paginator.count}}
+        </span>
+    </div>
+    <div class="pagination__pages">
+        <span class="step-links">
+            {% if page.has_previous %}
+                {% if page.number > 1 %}
+                    <a onclick="setPage('first')">&laquo; {{_("first")}}</a>
+                    <a onclick="setPage('previous')">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            <span class="current">
+                {{_("Page")}} {{ page.number }} {{_("of")}} {{ page.paginator.num_pages }}
+            </span>
+
+            {% if page.has_next() %}
+                <a onclick="setPage('next')">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            {% endif %}
+            <a onclick="setPage('last')">{{_("last")}} &raquo;</a>
+        </span>
+        <input name="page" id="page" value={{page.number}} type="hidden">
+    </div>
+</div>
+<script>
+
+    // set page to 1 when ordering or cluster field changes.
+    // This is a common behavior for web pages with filters and pagination.
+    function resetPageOnFilter() {
+        $("#comment-filters-form").on(
+            {
+                orderChanged: function() {
+                    let pageInput = $("#page");
+                    pageInput[0].value = 1;
+                },
+                clustersChanged: function() {
+                    let pageInput = $("#page");
+                    pageInput[0].value = 1;
+                }
+            }
+        )
+    }
+
+    // setNextPage is necessary to avoid calling paginator methods on each HTMX request.
+    function setPage(step) {
+        let pageValue = 1;
+
+        switch (step) {
+        case 'last':
+            pageValue = "{{page.paginator.num_pages}}";
+            break;
+        case 'next':
+            pageValue = "{{page.next_page_number() if page.has_next() else page.number}}";
+            break;
+        case 'previous':
+            pageValue = "{{page.previous_page_number() if page.number > 1 else 1}}";
+            break;
+        default:
+            pageValue = 1;
+        }
+
+        let pageInput = $("#page");
+        pageInput[0].value = pageValue;
+        htmx.trigger('#comment-filters-form', 'pageChanged');
+    }
+
+    $(document).ready(function() {
+        resetPageOnFilter();
+    })
+</script>
+{% endmacro %}

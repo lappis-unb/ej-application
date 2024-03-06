@@ -1,0 +1,67 @@
+{% from "ej_dataviz/reports/includes/pagination-macro.jinja2" import pagination %}
+
+<div id="comments-table-container">
+    <div id="datatables-container">
+        <table id="comments-table" class="display cell-border">
+            <thead>
+                <tr>
+                    <th>{{_("Comment content")}}</th>
+                    <th><i class="fa fa-check" title={{_("Agree")}}></i></th>
+                    <th><i class="fa fa-times" title={{_("Disagree")}}></i></th>
+                    <th><i class="fa fa-arrow-right" title={{_("Skipped")}}></i></th>
+                    <th>
+                        <i class="fas fa-users" title={{_("Participation index")}}></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in page %}
+                    <tr>
+                        <td>
+                            <div class="comment-report__comment">
+                                <div>{{comment[0]}}</div>
+                                <div>{{comment[1]}}</div>
+                                {% if comment|length > 7 %}
+                                    <div>{{comment[7]}}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="comment-report__percentages">{{"%s%%"|format(comment[2]|round)}}</td>
+                        <td class="comment-report__percentages">{{"%s%%"|format(comment[3]|round)}}</td>
+                        <td class="comment-report__percentages">{{"%s%%"|format(comment[4]|round)}}</td>
+                        <td class="comment-report__percentages">{{"%s%%"|format(comment[5]|round)}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {{ pagination(page, _("comments")) }}
+
+    <script>
+
+        $(document).ready( function () {
+            let dataTableOptions = {
+                bInfo: false,
+                ordering: false,
+                destroy: true,
+                paging: false,
+                searching: false,
+                responsive: true,
+                columns: [
+                    { data: '{{_("Comment")}}', className: 'desktop' },
+                    { data: '{{_("Agree")}}', className: 'desktop' },
+                    { data: '{{_("Disagree")}}', className: 'desktop' },
+                    { data: '{{_("Skipped")}}', className: 'desktop' },
+                    { data: '{{_("Convergence")}}', className: 'desktop' },
+                ]
+            }
+            if(window["commentsTable"]) {
+                dataTableOptions["destroy"] = true;
+                $('#comments-table').DataTable(dataTableOptions);
+            } else {
+                window["commentsTable"] = $('#comments-table').DataTable(dataTableOptions);
+            }
+        });
+    </script>
+</div>

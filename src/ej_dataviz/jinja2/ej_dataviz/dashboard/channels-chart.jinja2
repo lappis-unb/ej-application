@@ -38,15 +38,15 @@
             .attr("id", 'pizza-chart')
             .attr("width", width)
             .attr("height", height)
-        
+
         const pie = d3.pie()
             .sort(null)
             .value(d => d.value)
-        
+
         const arc = d3.arc()
             .innerRadius(0)
             .outerRadius(Math.min(width, height) / 3 - 1)
-        
+
         const arcLabel = d3.arc().innerRadius(Math.min(width, height) / 3 * 0.8).outerRadius(Math.min(width, height) / 3 * 0.8);
 
         const arcs = pie(data);
@@ -101,7 +101,7 @@
         if (selectedButton == voteButton) {
             notSelected = partButton;
             setData({{statistics.channel_votes|safe}});
-        } 
+        }
         else {
             notSelected = voteButton;
             setData({{statistics.channel_participants|safe}});

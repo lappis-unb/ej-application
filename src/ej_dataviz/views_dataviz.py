@@ -1,27 +1,36 @@
 from collections import defaultdict
+import datetime
+from functools import lru_cache
 from logging import getLogger
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.utils.translation import gettext_lazy as _
-from ej.decorators import can_access_dataviz
+from django.utils.text import slugify
+from django.utils.translation import gettext as _, gettext_lazy as _
+from sidekick import import_later
+
+from ej.decorators import can_access_dataviz, can_view_report_details
 from ej_clusters.models.clusterization import Clusterization
 from ej_conversations.models import Conversation
 from ej_conversations.utils import check_promoted
 from ej_dataviz.models import ToolsLinksHelper
 from ej_tools.utils import get_host_with_schema
-from sidekick import import_later
 
 from .constants import *
 from .utils import (
     clusters,
+    comments_data_common,
     conversation_has_stereotypes,
     create_stereotype_coords,
+    export_data,
     format_echarts_option,
+    get_cluster_or_404,
     get_dashboard_biggest_cluster,
     get_stop_words,
+    get_user_data,
+    vote_data_common,
 )
 
 log = getLogger("ej")
@@ -159,3 +168,108 @@ def words(request, conversation_id, **kwargs):
     wc = wordcloud.WordCloud(stopwords=get_stop_words(), regexp=regexp)
     cloud = sorted(wc.process_text(data).items(), key=lambda x: -x[1])[:50]
     return JsonResponse({"cloud": cloud})
+
+
+@can_access_dataviz
+def votes_over_time(request, conversation_id, **kwargs):
+    from django.utils.timezone import make_aware
+
+    conversation = Conversation.objects.get(pk=conversation_id)
+    start_date = request.GET.get("startDate")
+    end_date = request.GET.get("endDate")
+    if start_date and end_date:
+        start_date = make_aware(datetime.datetime.fromisoformat(start_date))  # convert js naive date
+        end_date = make_aware(datetime.datetime.fromisoformat(end_date))  # # convert js naive date
+    else:
+        return JsonResponse({"error": "end date and start date should be passed as a parameter."})
+
+    if start_date > end_date:
+        return JsonResponse({"error": "end date must be gratter then start date."})
+
+    try:
+        votes = conversation.time_interval_votes(start_date, end_date)
+        return JsonResponse({"data": list(votes)})
+    except Exception as e:
+        print("Could not generate D3js data")
+        print(e)
+        return JsonResponse({})
+
+
+# ==============================================================================
+# Votes raw data
+# ------------------------------------------------------------------------------
+@can_view_report_details
+def votes_data(request, conversation_id, fmt, **kwargs):
+    conversation = Conversation.objects.get(pk=conversation_id)
+    filename = conversation.slug + "-votes"
+    votes = conversation.votes
+    return vote_data_common(votes, filename, fmt)
+
+
+# FIXME: why is <model:cluster> not working?
+# adjust conversation_download_data() after fixing this bug
+@can_view_report_details
+def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
+    if not request.user.has_perm("ej.can_view_report_detail", conversation):
+        return JsonResponse({"error": "You don't have permission to view this data."})
+    cluster = get_cluster_or_404(cluster_id, conversation)
+    filename = conversation.slug + f"-{slugify(cluster.name)}-votes"
+    return vote_data_common(cluster.votes.all(), filename, fmt)
+
+
+# ==============================================================================
+# Comments raw data
+# ------------------------------------------------------------------------------
+@can_access_dataviz
+def comments_data(request, conversation_id, fmt, **kwargs):
+    conversation = Conversation.objects.get(pk=conversation_id)
+    comments = conversation.comments
+    clusters = Clusterization.objects.filter(conversation=conversation).last().clusters
+    votes = conversation.votes
+    filename = conversation.slug + "-comments"
+    return comments_data_common(comments, votes, filename, fmt, clusters)
+
+
+# ==============================================================================
+# Users raw data
+# ------------------------------------------------------------------------------
+@can_access_dataviz
+def users_data(request, conversation_id, fmt, **kwargs):
+    conversation = Conversation.objects.get(pk=conversation_id)
+    filename = conversation.slug + "-users"
+    df = get_user_data(conversation)
+    try:
+        clusters = conversation.clusterization.clusters.all()
+    except AttributeError:
+        pass
+    else:
+        # Retrieve non empty clusters.
+        data = clusters.values_list("users__id", "name", "id")
+        data = filter(lambda x: x[0], data)
+        extra = pd.DataFrame(data, columns=["user", "cluster", "cluster_id"])
+        extra.index = extra.pop("user")
+        df[["cluster", "cluster_id"]] = extra
+        df["cluster_id"] = df.cluster_id.fillna(-1).astype(int)
+    return export_data(df, fmt, filename)
+
+
+@lru_cache(1)
+def get_translation_map():
+    return {
+        "agree": _("agree"),
+        "author": _("author"),
+        "author_id": _("author_id"),
+        "choice": _("choice"),
+        "cluster": _("cluster"),
+        "cluster_id": _("cluster_id"),
+        "comment": _("comment"),
+        "comment_id": _("comment_id"),
+        "convergence": _("convergence"),
+        "disagree": _("disagree"),
+        "email": _("email"),
+        "id": _("id"),
+        "name": _("name"),
+        "participation": _("participation"),
+        "skipped": _("skipped"),
+        "channel": _("channel"),
+    }

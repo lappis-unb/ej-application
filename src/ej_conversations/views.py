@@ -13,7 +13,6 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
-from ej.components.menu import apps_custom_menu_links
 from ej.decorators import (
     can_acess_list_view,
     can_edit_conversation,
@@ -34,7 +33,6 @@ from .decorators import (
 from .forms import CommentForm, ConversationForm
 from .models import Comment, Conversation
 from .utils import (
-    conversation_admin_menu_links,
     handle_detail_comment,
     handle_detail_favorite,
     handle_detail_vote,
@@ -91,14 +89,12 @@ class ConversationCommonView:
         return {
             "conversation": conversation,
             "comment": comment,
-            "menu_links": conversation_admin_menu_links(conversation, user),
             "comment_form": self.form_class(conversation=conversation),
             "user_is_author": conversation.author == user,
             "user_progress_percentage": conversation.user_progress_percentage(user),
             "n_comments": n_comments,
             "max_comments": max_comments,
             "n_user_final_votes": n_user_final_votes,
-            "apps_menu_links": apps_custom_menu_links(conversation),
             "user_boards": user_boards,
             "privacy_policy": self.get_privacy_policy_content(),
             "current_page": "voting",
@@ -217,6 +213,17 @@ class ConversationCommentView(ConversationCommonView, DetailView):
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")
+class ConversationDetailContentView(ConversationCommonView, DetailView):
+    form_class = CommentForm
+    model = Conversation
+    template_name = "ej_conversations/includes/conversation-detail-content.jinja2"
+    ctx = {}
+
+    def get_context_data(self, *args, **kwargs):
+        return {"host": get_host_with_schema(self.request), **super().get_context_data(**kwargs)}
+
+
+@method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(ConversationCommonView, DetailView):
     form_class = CommentForm
     model = Conversation
@@ -327,7 +334,6 @@ class ConversationEditView(UpdateView):
         return {
             "conversation": conversation,
             "form": self.form_class(request=self.request, instance=conversation),
-            "menu_links": conversation_admin_menu_links(conversation, user),
             "can_publish": user.has_perm("ej_conversations.can_publish_promoted"),
             "board": conversation.board,
         }
@@ -365,7 +371,6 @@ class ConversationModerateView(UpdateView):
             "pending": pending,
             "rejected": rejected,
             "created": created_comments,
-            "menu_links": conversation_admin_menu_links(conversation, self.request.user),
             "comment_saved": False,
             "current_page": "moderate",
         }
@@ -406,8 +411,6 @@ class NewCommentView(UpdateView):
             "pending": pending,
             "rejected": rejected,
             "created": created_comments,
-            "menu_links": conversation_admin_menu_links(conversation, self.request.user),
-            "apps_menu_links": apps_custom_menu_links(conversation),
             "comment_saved": True,
         }
 

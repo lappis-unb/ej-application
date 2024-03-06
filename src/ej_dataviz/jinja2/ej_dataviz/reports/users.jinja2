@@ -1,0 +1,33 @@
+{% extends 'ej_dataviz/reports/base.jinja2' %}
+{% from "ej_dataviz/reports/includes/export-data.jinja2" import export_modal %}
+{% from "ej_dataviz/reports/includes/pagination-macro.jinja2" import pagination %}
+{% set conversation = object %}
+
+{% block report %}
+<section>
+        <h1 class="text-accent">{{_('Users report')}}</h1>
+
+        <div class="margin-y3 comment-report">
+            <div class="comment-report__comments" id="comments">
+                {% include 'ej_dataviz/reports/includes/users/table.jinja2' %}
+            </div>
+            {{ pagination(page, _("users")) }}
+        </div>
+</section>
+
+<script>
+    function showFilters() {
+        $("#filters").removeClass("hide");
+        $("#filters-tab").removeClass("comment-report__tabs--disabled");
+        $("#comments").addClass("hide");
+        $("#comments-tab").addClass("comment-report__tabs--disabled");
+    }
+
+    function showComments() {
+        $("#filters").addClass("hide");
+        $("#filters-tab").addClass("comment-report__tabs--disabled");
+        $("#comments").removeClass("hide");
+        $("#comments-tab").removeClass("comment-report__tabs--disabled");
+    }
+</script>
+{% endblock %}
