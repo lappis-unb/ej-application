@@ -128,8 +128,6 @@ def js(ctx, theme=env("EJ_THEME"), watch=False, minify=False, app_name=None):
     try:
         ctx.run(f"rm -rf {app_static_root}/js")
         os.chdir(f"{app_static_root}/ts")
-        print(os.getcwd())
-        print(build_cmd)
         ctx.run(build_cmd)
         if minify:
             base = f"{app_static_root}/js"

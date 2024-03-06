@@ -249,7 +249,3 @@ $mendeleev-config: map-merge-deep(
     ));
 
 @import '../node_modules/mendeleev.css/src/mendeleev';
-// Manually import Datatables style files because Packer does not load then by default.
-// https://datatables.net/forums/discussion/32542/datatables-and-webpack
-@import "../node_modules/datatables.net-dt/css/dataTables.dataTables.css";
-@import "../node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css";
