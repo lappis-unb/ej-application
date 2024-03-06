@@ -55,7 +55,7 @@
   align-items: center;
   justify-content: start;
   column-gap: 2rem;
-  padding: 2.5rem 0;
+  padding-bottom: 2.5rem;
 
   &__photo {
       position: relative;
@@ -191,8 +191,8 @@
   &__current-password {
     grid-area: 1 / 1 / 1 / 1;
     input[type='password'] {margin: -1.125rem 0 0rem 0;}
-  } 
-  
+  }
+
   &__new-password {
     grid-area: 2 / 1 / 2 / 2;
     input[type='password'] {margin: -1.125rem 0 0rem 0;}
