@@ -90,7 +90,9 @@ class Conf(
             "rest_framework.authentication.TokenAuthentication",
             "rest_framework.authentication.SessionAuthentication",
         ),
-        "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
+        "DEFAULT_PERMISSION_CLASSES": (
+            "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        ),
         "DEFAULT_RENDERER_CLASSES": (
             "rest_framework.renderers.JSONRenderer",
             "rest_framework.renderers.BrowsableAPIRenderer",
@@ -117,7 +119,9 @@ class Conf(
 
     # django-cors-headers
     CORS_ALLOWED_ORIGINS = (
-        [] if not os.getenv("CORS_ALLOWED_ORIGINS") else os.getenv("CORS_ALLOWED_ORIGINS").split(",")
+        []
+        if not os.getenv("CORS_ALLOWED_ORIGINS")
+        else os.getenv("CORS_ALLOWED_ORIGINS").split(",")
     )
 
     CSRF_TRUSTED_ORIGINS = (
@@ -127,7 +131,9 @@ class Conf(
     )
 
     ALLOWED_HOSTS = (
-        ["*"] if not os.getenv("DJANGO_ALLOWED_HOSTS") else os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
+        ["*"]
+        if not os.getenv("DJANGO_ALLOWED_HOSTS")
+        else os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
     )
 
     REST_AUTH_REGISTER_SERIALIZERS = {

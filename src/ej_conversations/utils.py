@@ -18,7 +18,9 @@ forms = import_later(".forms", package=__package__)
 
 
 def request_comes_from_ej_bot(request):
-    return request_promoted_conversations(request) and (request.GET.get("participation_source") == "bot")
+    return request_promoted_conversations(request) and (
+        request.GET.get("participation_source") == "bot"
+    )
 
 
 def request_promoted_conversations(request):

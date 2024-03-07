@@ -85,7 +85,10 @@ class TestAdministration(ConversationRecipes):
 
     def test_get_searched_users_by_conversations_count(self, logged_admin, admin_user):
         base_url = "/administration/searched-users/"
-        url = base_url + "?page=1&numEntries=6&orderBy=conversations-count&sort=desc&searchString="
+        url = (
+            base_url
+            + "?page=1&numEntries=6&orderBy=conversations-count&sort=desc&searchString="
+        )
 
         user = User.objects.create_user("user1@email.br", "password")
         board = Board.objects.create(slug="board1", owner=user, description="board")
@@ -110,7 +113,10 @@ class TestAdministration(ConversationRecipes):
 
     def test_get_searched_users_by_comments_count(self, logged_admin, admin_user):
         base_url = "/administration/searched-users/"
-        url = base_url + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
+        url = (
+            base_url
+            + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
+        )
 
         user = User.objects.create_user("user1@email.br", "password")
         board = Board.objects.create(slug="board1", owner=user, description="board")
@@ -142,7 +148,9 @@ class TestAdministration(ConversationRecipes):
         conversation_1.create_comment(user, "ad2", status="approved", check_limits=False)
 
         conversation_2 = create_conversation("foo2", "conv2", user_2, board=board_2)
-        conversation_2.create_comment(user_2, "ad3", status="approved", check_limits=False)
+        conversation_2.create_comment(
+            user_2, "ad3", status="approved", check_limits=False
+        )
 
         create_conversation("foo3", "conv3", user_2, board=board_2)
 
@@ -156,7 +164,10 @@ class TestAdministration(ConversationRecipes):
         assert searched_boards[3].slug == admin_user.boards.first().slug
 
         # search by total conversation
-        url = base_url + "?page=1&numEntries=6&orderBy=conversations-count&sort=desc&searchString="
+        url = (
+            base_url
+            + "?page=1&numEntries=6&orderBy=conversations-count&sort=desc&searchString="
+        )
         response = logged_admin.get(url)
         searched_boards = response.context["page_object"]
 
@@ -171,7 +182,10 @@ class TestAdministration(ConversationRecipes):
         assert searched_boards[3].conversations.count() == 0
 
         # search by total comments
-        url = base_url + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
+        url = (
+            base_url
+            + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
+        )
         response = logged_admin.get(url)
         searched_boards = response.context["page_object"]
 
@@ -197,7 +211,9 @@ class TestAdministration(ConversationRecipes):
         conversation_2 = create_conversation("foo2", "conv2", user, board=board)
         conversation_2.create_comment(user, "ad3", status="approved", check_limits=False)
 
-        board_2 = Board.objects.create(slug="board2", owner=admin_user, description="board")
+        board_2 = Board.objects.create(
+            slug="board2", owner=admin_user, description="board"
+        )
         create_conversation("foo3", "conv3", user, board=board_2)
 
         # search by date
@@ -210,7 +226,10 @@ class TestAdministration(ConversationRecipes):
         assert searched_conversations[2].title == "conv1"
 
         # search by total comments
-        url = base_url + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
+        url = (
+            base_url
+            + "?page=1&numEntries=6&orderBy=comments-count&sort=desc&searchString="
+        )
         response = logged_admin.get(url)
         searched_conversations = response.context["page_object"]
         assert len(searched_conversations) == 3

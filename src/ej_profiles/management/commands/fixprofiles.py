@@ -12,7 +12,9 @@ class Command(BaseCommand):
     log = lambda self, *args, **kwargs: print(*args, **kwargs)
 
     def handle(self, *args, **options):
-        for profile in models.Profile.objects.values("id", "gender", "race", "state", "user__email"):
+        for profile in models.Profile.objects.values(
+            "id", "gender", "race", "state", "user__email"
+        ):
             fix_profile(profile, self.log)
 
 

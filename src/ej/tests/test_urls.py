@@ -51,7 +51,10 @@ class TestAuthorCrawl(TestUserCrawl):
     user = "author"
     conversation_actions = []
     conversation_url = "/board-slug/conversations/1/conversation/"
-    must_visit = (*TestUserCrawl.must_visit, *[conversation_url + x for x in conversation_actions])
+    must_visit = (
+        *TestUserCrawl.must_visit,
+        *[conversation_url + x for x in conversation_actions],
+    )
 
 
 class TestAdminCrawl(TestAuthorCrawl):

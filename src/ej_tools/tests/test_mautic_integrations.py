@@ -33,7 +33,13 @@ def conversation_mautic_mock(conversation):
 
 
 class MockRequests:
-    def __init__(self, get_status_code, post_status_code, get_response='{"total": 0}', post_response=None):
+    def __init__(
+        self,
+        get_status_code,
+        post_status_code,
+        get_response='{"total": 0}',
+        post_response=None,
+    ):
         self.get_code = get_status_code
         self.post_code = post_status_code
         self.mock_requests = mock_requests
@@ -57,7 +63,9 @@ class TestMauticConversationForm(ConversationRecipes):
 
     def test_mautic_conversation_invalid_url_form(self, db, mk_conversation):
         conversation = mk_conversation()
-        form = MauticConversationForm({"url": "invalidurl"}, initial={"conversation": conversation})
+        form = MauticConversationForm(
+            {"url": "invalidurl"}, initial={"conversation": conversation}
+        )
 
         assert not form.is_valid()
         assert _("Enter a valid URL.") == form.errors["url"][0]
@@ -80,7 +88,10 @@ class TestMauticConversationForm(ConversationRecipes):
 
 
 class TestConversationMauticModel:
-    @patch("ej_tools.models.requests", MockRequests(SUCCESS_CODE, CREATED_CODE, '{"total": 0}'))
+    @patch(
+        "ej_tools.models.requests",
+        MockRequests(SUCCESS_CODE, CREATED_CODE, '{"total": 0}'),
+    )
     def test_create_new_valid_contact_on_mautic(self, db, mk_conversation):
         conversation = mk_conversation()
         conversation_mautic_attributes = conversation_mautic_mock(conversation)

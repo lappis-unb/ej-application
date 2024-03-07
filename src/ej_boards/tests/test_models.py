@@ -16,7 +16,9 @@ class TestBoardModel(ConversationRecipes):
 
     def test_get_board_palette_from_conversation(self, mk_conversation, mk_user):
         user = mk_user(email="someuser@mail.com")
-        board = Board.objects.create(slug="board1", owner=user, palette="Orange", description="board")
+        board = Board.objects.create(
+            slug="board1", owner=user, palette="Orange", description="board"
+        )
         conversation = create_conversation("foo", "conv1", user, board=board)
         assert conversation.board.palette == "Orange"
 
@@ -47,7 +49,9 @@ class TestBoardModel(ConversationRecipes):
         assert conversation in board2.conversations
         assert conversation not in board1.conversations
 
-    def test_conversation_should_raise_integrity_error_if_there_is_no_board(self, mk_user):
+    def test_conversation_should_raise_integrity_error_if_there_is_no_board(
+        self, mk_user
+    ):
         user = mk_user(email="someuser@mail.com")
         with pytest.raises(IntegrityError):
             conversation = Conversation(text="foo", title="conv1", author=user)
@@ -69,8 +73,12 @@ class TestBoardModel(ConversationRecipes):
         conversation1 = create_conversation("foo", "conv1", user, board=board)
         conversation2 = create_conversation("bar", "conv2", user, board=board)
 
-        comment = conversation1.create_comment(user, "ad", status="approved", check_limits=False)
-        comment2 = conversation2.create_comment(user, "ad2", status="approved", check_limits=False)
+        comment = conversation1.create_comment(
+            user, "ad", status="approved", check_limits=False
+        )
+        comment2 = conversation2.create_comment(
+            user, "ad2", status="approved", check_limits=False
+        )
 
         comment.vote(user, Choice.AGREE)
         comment.vote(user2, Choice.AGREE)

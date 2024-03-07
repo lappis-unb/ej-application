@@ -70,7 +70,9 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         if anonymous_user_query.exists():
             try:
                 anonymous_user = anonymous_user_query.first()
-                self._convert_anonymous_participation_to_regular_user(anonymous_user, user)
+                self._convert_anonymous_participation_to_regular_user(
+                    anonymous_user, user
+                )
                 log.info(f"anonymous user participation converted to {email} user")
             except Exception as e:
                 log.error(f"Could not find anonymous user. Error: {e}")

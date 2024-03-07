@@ -36,10 +36,14 @@ def index(request):
 @permission_required("ej.can_access_environment_management")
 def recent_boards(request):
     page = int(request.GET.get("page", PAGINATOR_START_PAGE))
-    board_is_active = True if request.GET.get("boardIsActive", "true") == "true" else False
+    board_is_active = (
+        True if request.GET.get("boardIsActive", "true") == "true" else False
+    )
 
     if board_is_active:
-        recent_boards = Board.objects.filter(conversation__gte=1).distinct().order_by("-created")
+        recent_boards = (
+            Board.objects.filter(conversation__gte=1).distinct().order_by("-created")
+        )
     else:
         recent_boards = Board.objects.order_by("-created")
 

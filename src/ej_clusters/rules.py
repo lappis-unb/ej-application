@@ -61,9 +61,15 @@ def can_activate_clusterization(obj):
     if clusterization is None:
         return False
 
-    filled_comments = clusterization.comments.annotate(count=Count("votes")).filter(count__gte=10).count()
+    filled_comments = (
+        clusterization.comments.annotate(count=Count("votes"))
+        .filter(count__gte=10)
+        .count()
+    )
     filled_clusters = (
-        clusterization.clusters.annotate(count=Count("stereotypes")).filter(count__gte=10).count()
+        clusterization.clusters.annotate(count=Count("stereotypes"))
+        .filter(count__gte=10)
+        .count()
     )
     return filled_comments >= 10 and filled_clusters >= 10
 
@@ -76,7 +82,9 @@ def requires_update(self):
     if self.cluster_status == ClusterStatus.PENDING_DATA:
         rule = rules.get_rule("ej.conversation_can_start_clusterization")
         if not rule.test(self):
-            log.info(f"[clusters] {conversation}: not enough data to start clusterization")
+            log.info(
+                f"[clusters] {conversation}: not enough data to start clusterization"
+            )
             return False
     elif self.cluster_status == ClusterStatus.DISABLED:
         return False

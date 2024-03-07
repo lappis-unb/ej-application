@@ -19,7 +19,14 @@ def db(ctx, migrate_only=False):
 
 @task
 def db_fake(
-    ctx, users=True, conversations=True, admin=True, user=True, safe=False, theme=None, clusters=True
+    ctx,
+    users=True,
+    conversations=True,
+    admin=True,
+    user=True,
+    safe=False,
+    theme=None,
+    clusters=True,
 ):
     """
     Adds fake data to the database

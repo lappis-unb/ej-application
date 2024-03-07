@@ -5,7 +5,12 @@ import pandas as pd
 
 from ej_conversations.models import Conversation
 
-from .utils import add_group_column, get_cluster_or_404, get_clusters, get_comments_dataframe
+from .utils import (
+    add_group_column,
+    get_cluster_or_404,
+    get_clusters,
+    get_comments_dataframe,
+)
 
 
 class CommentsReportClustersFilter:
@@ -69,7 +74,8 @@ class ToolsLinksHelper:
     @staticmethod
     def get_bot_link(host):
         return (
-            ToolsLinksHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host) or "https://t.me/DudaLocalBot?start="
+            ToolsLinksHelper.AVAILABLE_ENVIRONMENT_MAPPING.get(host)
+            or "https://t.me/DudaLocalBot?start="
         )
 
 

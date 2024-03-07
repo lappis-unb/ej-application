@@ -25,7 +25,9 @@ def docker_up(ctx, dry_run=False, d=False):
     """
     do = runner(ctx, dry_run, pty=True)
     file = "docker/docker-compose.yml"
-    compose = f"{COMPOSE_BINARY} -f {file} up -d" if d else f"{COMPOSE_BINARY} -f {file} up"
+    compose = (
+        f"{COMPOSE_BINARY} -f {file} up -d" if d else f"{COMPOSE_BINARY} -f {file} up"
+    )
     do(compose)
 
 
@@ -50,7 +52,9 @@ def docker_exec(ctx, command, dry_run=False, build=False):
     Executes a command inside EJ web server container;
     """
     do = runner(ctx, dry_run, pty=True)
-    do(f"docker exec --user=root -it  server /bin/bash -c 'source /root/.bashrc && {command}'")
+    do(
+        f"docker exec --user=root -it  server /bin/bash -c 'source /root/.bashrc && {command}'"
+    )
 
 
 @task

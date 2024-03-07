@@ -11,7 +11,9 @@ from ..mixins import ClusterizationBaseMixin
 pd = import_later("pandas")
 np = import_later("numpy")
 impute = import_later("sklearn.impute")
-clusterization_pipeline = import_later("..math:clusterization_pipeline", package=__package__)
+clusterization_pipeline = import_later(
+    "..math:clusterization_pipeline", package=__package__
+)
 models = import_later(".models", package=__package__)
 log = getLogger("ej")
 
@@ -66,7 +68,9 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         Return a query set of (cluster, comment, choice) items from the given
         conversation.
         """
-        return conversation.votes.values_list("comment__conversation_id", "comment_id", "choice")
+        return conversation.votes.values_list(
+            "comment__conversation_id", "comment_id", "choice"
+        )
 
     def votes_dataframe(self, conversation):
         """
@@ -256,13 +260,19 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         # Find labels and associate them with cluster labels
         labels = [cluster_ids[i] for i in pipeline.fit_predict(votes_data)]
         user_labels = labels[:-n_clusters]
-        user_labels = pd.DataFrame([list(user_votes.index), user_labels], index=["user", "label"]).T
+        user_labels = pd.DataFrame(
+            [list(user_votes.index), user_labels], index=["user", "label"]
+        ).T
         stereotype_labels = labels[len(user_labels) :]
 
-        return self._save_clusterization(pipeline, cluster_ids, stereotype_labels, user_labels, commit)
+        return self._save_clusterization(
+            pipeline, cluster_ids, stereotype_labels, user_labels, commit
+        )
 
     def _cluster_votes(self, cluster_ids, votes):
-        comments = Comment.objects.filter(id__in=votes.values_list("comment_id", flat=True))
+        comments = Comment.objects.filter(
+            id__in=votes.values_list("comment_id", flat=True)
+        )
         stereotype_votes = self.stereotype_votes(comments).votes_table("zero")
         stereotype_ids = self.dataframe("id", "stereotypes__id", index=None)
 
@@ -275,7 +285,9 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
             # clusters
             if (mean_votes == 0).all():
                 clusterization = self.get(id=cluster_id).clusterization
-                log.warning(f"[clusters] cluster {cluster_id} of {clusterization} is empty!")
+                log.warning(
+                    f"[clusters] cluster {cluster_id} of {clusterization} is empty!"
+                )
                 mean_votes.values[:] = np.random.uniform(-1, 1, size=len(mean_votes))
 
             mean_votes.name = cluster_id
@@ -298,7 +310,9 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
             user_ids = user[user.label == expected_id].user.values
             result[expected_id] = user_ids
             if commit:
-                m2m_objects.extend(m2m(cluster_id=expected_id, user_id=uid) for uid in user_ids)
+                m2m_objects.extend(
+                    m2m(cluster_id=expected_id, user_id=uid) for uid in user_ids
+                )
 
         if commit:
             m2m.objects.filter(cluster__in=cluster_ids).delete()
@@ -317,7 +331,9 @@ class ClusterQuerySet(ClusterizationBaseMixin, QuerySet):
         )
 
         if votes.shape[0]:
-            votes = votes.pivot_table(values="choice", index=["author", "cluster"], columns="comment")
+            votes = votes.pivot_table(
+                values="choice", index=["author", "cluster"], columns="comment"
+            )
         else:
             raise ValueError("no votes found")
 

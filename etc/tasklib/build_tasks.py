@@ -71,7 +71,9 @@ def docs(ctx, orm=False):
             "ej_tools",
         ]:
             print_green(f"Making ORM graph for {app}")
-            manage(ctx, "graph_models", app, env={}, output=f"docs/dev-docs/orm/{app}.svg")
+            manage(
+                ctx, "graph_models", app, env={}, output=f"docs/dev-docs/orm/{app}.svg"
+            )
     else:
         print_yellow("call inv docs --orm to update ORM graphs")
 
@@ -102,7 +104,10 @@ def i18n(ctx, compile=False, edit=False, lang="pt_BR", keep_pot=False):
         ctx.run("pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .")
 
         print_green("Join Django + Jinja translation files")
-        ctx.run("msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot", pty=True)
+        ctx.run(
+            "msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot",
+            pty=True,
+        )
         ctx.run(r"""sed -i '/"Language: \\n"/d' locale/join.pot""", pty=True)
 
         print_green(f"Update locale {lang} with Jinja2 messages")

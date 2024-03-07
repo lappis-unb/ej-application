@@ -51,7 +51,9 @@ def user_can_post_anonymously(func):
         conversation = self.get_object()
         request.user = User.get_or_create_from_session(conversation, request)
         redirect_url = ""
-        conversation_url = reverse("boards:conversation-detail", kwargs=conversation.get_url_kwargs())
+        conversation_url = reverse(
+            "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
+        )
         if conversation.reaches_anonymous_particiption_limit(request.user):
             redirect_url = f"/register/?sessionKey={request.session.session_key}&next={conversation_url}"
         elif request.user.is_anonymous:

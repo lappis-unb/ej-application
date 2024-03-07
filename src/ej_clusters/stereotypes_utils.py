@@ -11,7 +11,9 @@ def stereotype_vote_information(
         stereotype_votes = clusterization.stereotype_votes.filter(author=stereotype)
 
         if order_option:
-            stereotype_votes = order_stereotype_votes_by(stereotype_votes, order_option, order_direction)
+            stereotype_votes = order_stereotype_votes_by(
+                stereotype_votes, order_option, order_direction
+            )
 
         voted = set(vote.comment for vote in stereotype_votes)
         stereotype.non_voted_comments = [x for x in comments if x not in voted]

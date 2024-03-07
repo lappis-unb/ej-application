@@ -14,7 +14,9 @@ def can_edit_conversation(view_func):
 
         if request.user.id == conversation.author_id:
             return view_func(request, *args, **kwargs)
-        elif conversation.is_promoted and request.user.has_perm("ej_conversations.can_publish_promoted"):
+        elif conversation.is_promoted and request.user.has_perm(
+            "ej_conversations.can_publish_promoted"
+        ):
             return view_func(request, *args, **kwargs)
         return redirect("auth:login")
 
@@ -36,7 +38,11 @@ def can_access_tool_page(view_func):
             conversation = Conversation.objects.get(id=conversation_id)
         except AttributeError:
             return redirect("auth:login")
-        if request.user.is_staff or request.user.is_superuser or conversation.author.id == request.user.id:
+        if (
+            request.user.is_staff
+            or request.user.is_superuser
+            or conversation.author.id == request.user.id
+        ):
             return view_func(request, *args, **kwargs)
         return redirect("auth:login")
 

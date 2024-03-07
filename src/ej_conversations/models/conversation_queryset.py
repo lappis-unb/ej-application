@@ -60,7 +60,9 @@ class ConversationQuerySet(ConversationMixin, WordCloudQuerySet):
         # Count comments
         if kwargs.pop("n_comments", False):
             annotations[prefix + "n_comments"] = Count(
-                "comments", filter=Q(comments__status=Comment.STATUS.approved), distinct=True
+                "comments",
+                filter=Q(comments__status=Comment.STATUS.approved),
+                distinct=True,
             )
 
         # Count favorites

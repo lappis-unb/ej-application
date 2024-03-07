@@ -81,7 +81,9 @@ def page_menu(*items, request=None, caller=None, **kwargs):
 
 def menu_from_sections(sections):
     # add role="menu" in the future?
-    return div(*sections, class_="page-menu", id="page-menu", is_menu="", is_component=True)
+    return div(
+        *sections, class_="page-menu", id="page-menu", is_menu="", is_component=True
+    )
 
 
 def menu_section(name, links, **kwargs):
@@ -156,8 +158,16 @@ page_menu.ACCESSIBILITY = thunk(
     lambda: menu_section(
         _("Accessibility"),
         [
-            a([fa_icon("text-height"), _("Toggle Font Size")], href="#", is_element="toggleFontSize"),
-            a([fa_icon("adjust"), _("Toggle Contrast")], href="#", is_element="toggleContrast"),
+            a(
+                [fa_icon("text-height"), _("Toggle Font Size")],
+                href="#",
+                is_element="toggleFontSize",
+            ),
+            a(
+                [fa_icon("adjust"), _("Toggle Contrast")],
+                href="#",
+                is_element="toggleContrast",
+            ),
         ],
     )
 )
@@ -170,4 +180,6 @@ page_menu.links = menu_links
 page_menu.register = register_menu
 
 #: Create entire sections from links
-page_menu.section = lambda title, ref, request, *args: menu_section(title, menu_links(ref))
+page_menu.section = lambda title, ref, request, *args: menu_section(
+    title, menu_links(ref)
+)

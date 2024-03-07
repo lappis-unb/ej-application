@@ -68,7 +68,9 @@ def check_board(board):
     def check_function(conversation, request):
         if not board.has_conversation(conversation):
             raise Http404
-        if conversation.is_hidden and not request.user.has_perm("ej.can_edit_conversation", conversation):
+        if conversation.is_hidden and not request.user.has_perm(
+            "ej.can_edit_conversation", conversation
+        ):
             raise Http404
         conversation.board = board
         return conversation
@@ -117,9 +119,13 @@ def apply_user_filters(order_by, sort, search_string):
     sort_order = "-" if sort == "desc" else ""
 
     if order_by == OrderByOptions.CONVERSATION:
-        searched_users = User.objects.annotate(count=Count("conversations")).order_by(f"{sort_order}count")
+        searched_users = User.objects.annotate(count=Count("conversations")).order_by(
+            f"{sort_order}count"
+        )
     elif order_by == OrderByOptions.COMMENT:
-        searched_users = User.objects.annotate(count=Count("comments")).order_by(f"{sort_order}count")
+        searched_users = User.objects.annotate(count=Count("comments")).order_by(
+            f"{sort_order}count"
+        )
     else:
         searched_users = User.objects.order_by(f"{sort_order}date_joined")
 
@@ -140,9 +146,9 @@ def apply_conversation_filters(order_by, sort, search_string):
     sort_order = "-" if sort == "desc" else ""
 
     if order_by == OrderByOptions.COMMENT:
-        searched_conversations = Conversation.objects.annotate(count=Count("comments")).order_by(
-            f"{sort_order}count"
-        )
+        searched_conversations = Conversation.objects.annotate(
+            count=Count("comments")
+        ).order_by(f"{sort_order}count")
     else:
         searched_conversations = Conversation.objects.order_by(f"{sort_order}created")
 
@@ -162,11 +168,13 @@ def apply_board_filters(order_by, sort, search_string):
     sort_order = "-" if sort == "desc" else ""
 
     if order_by == OrderByOptions.CONVERSATION:
-        searched_boards = Board.objects.annotate(count=Count("conversation")).order_by(f"{sort_order}count")
-    elif order_by == OrderByOptions.COMMENT:
-        searched_boards = Board.objects.annotate(count=Count("conversation__comments")).order_by(
+        searched_boards = Board.objects.annotate(count=Count("conversation")).order_by(
             f"{sort_order}count"
         )
+    elif order_by == OrderByOptions.COMMENT:
+        searched_boards = Board.objects.annotate(
+            count=Count("conversation__comments")
+        ).order_by(f"{sort_order}count")
     else:
         searched_boards = Board.objects.order_by(f"{sort_order}created")
 

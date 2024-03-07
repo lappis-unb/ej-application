@@ -114,7 +114,15 @@ GROUP_DESCRIPTIONS = {
     "race": lambda x: None if x is None else Race(x).description,
 }
 
-EXPOSED_PROFILE_FIELDS = ("race", "gender", "age", "occupation", "education", "country", "state")
+EXPOSED_PROFILE_FIELDS = (
+    "race",
+    "gender",
+    "age",
+    "occupation",
+    "education",
+    "country",
+    "state",
+)
 
 # Reference: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 NORMALIZE_LANGUAGES = {

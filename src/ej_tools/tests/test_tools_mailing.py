@@ -8,7 +8,10 @@ from ej_tools.forms import MailingToolForm
 
 class TestTemplateGenerator(ConversationRecipes):
     def setup_method(self, method):
-        self.REQUEST_META = {"HTTP_X_FORWARDED_PROTO": "http", "HTTP_HOST": "ejplatform.local"}
+        self.REQUEST_META = {
+            "HTTP_X_FORWARDED_PROTO": "http",
+            "HTTP_HOST": "ejplatform.local",
+        }
         self.REQUEST_POST = {"custom-domain": "http://ejplatform.local"}
 
     def test_generate_vote_url_with_mautic(self, mk_user, conversation_db):
@@ -16,7 +19,9 @@ class TestTemplateGenerator(ConversationRecipes):
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
         user = mk_user(email="test@domain.com")
-        comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        comment_1 = conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form_data = {"template_type": "mautic"}
         email_tag = MarketingTool.generate_email_tag(form_data["template_type"])
         generator = TemplateGenerator(conversation_db, request, form_data)
@@ -39,7 +44,9 @@ class TestTemplateGenerator(ConversationRecipes):
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
         user = mk_user(email="test@domain.com")
-        comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        comment_1 = conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form_data = {"template_type": "mailchimp"}
         email_tag = MarketingTool.generate_email_tag(form_data["template_type"])
         generator = TemplateGenerator(conversation_db, request, form_data)
@@ -61,7 +68,9 @@ class TestTemplateGenerator(ConversationRecipes):
         with raises(ValueError):
             MarketingTool.generate_email_tag("invalid")
 
-    def test_generate_vote_url_with_board_using_mailchimp(self, mk_board, mk_conversation, mk_user):
+    def test_generate_vote_url_with_board_using_mailchimp(
+        self, mk_board, mk_conversation, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
@@ -84,7 +93,9 @@ class TestTemplateGenerator(ConversationRecipes):
 
         assert vote_url == expected_url
 
-    def test_generate_vote_url_with_board_using_mailchimp(self, mk_board, mk_conversation, mk_user):
+    def test_generate_vote_url_with_board_using_mailchimp(
+        self, mk_board, mk_conversation, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
@@ -107,7 +118,9 @@ class TestTemplateGenerator(ConversationRecipes):
 
         assert vote_url == expected_url
 
-    def test_apply_default_palette_on_mail_template(self, mk_conversation, mk_board, mk_user):
+    def test_apply_default_palette_on_mail_template(
+        self, mk_conversation, mk_board, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         conversation = mk_conversation()
@@ -119,12 +132,20 @@ class TestTemplateGenerator(ConversationRecipes):
         arrow = "border-top: 28px solid {} !important;".format("#C4F2F4")
         dark = "color: {} !important; background-color: {};".format("#C4F2F4", "#30BFD3")
         light = "color: {}; background-color: {};".format("#30BFD3", "#C4F2F4")
-        expected_palette = {"arrow": arrow, "dark": dark, "light": light, "light-h1": "", "dark-h1": ""}
+        expected_palette = {
+            "arrow": arrow,
+            "dark": dark,
+            "light": light,
+            "light-h1": "",
+            "dark-h1": "",
+        }
 
         palette = generator._get_palette_css()
         assert palette == expected_palette
 
-    def test_apply_mautic_in_case_template_type_is_not_specified(self, mk_conversation, mk_board, mk_user):
+    def test_apply_mautic_in_case_template_type_is_not_specified(
+        self, mk_conversation, mk_board, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         conversation = mk_conversation()
@@ -137,7 +158,9 @@ class TestTemplateGenerator(ConversationRecipes):
         assert generator1.template_type == "mautic"
         assert generator2.template_type == "mautic"
 
-    def test_apply_board_palette_on_campaign_template(self, mk_board, mk_conversation, mk_user):
+    def test_apply_board_palette_on_campaign_template(
+        self, mk_board, mk_conversation, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         conversation = mk_conversation()
@@ -150,7 +173,9 @@ class TestTemplateGenerator(ConversationRecipes):
         assert generator1.template_type == "mautic"
         assert generator2.template_type == "mautic"
 
-    def test_apply_board_palette_on_campaign_template(self, mk_board, mk_conversation, mk_user):
+    def test_apply_board_palette_on_campaign_template(
+        self, mk_board, mk_conversation, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         board = mk_board(palette="orange")
@@ -163,12 +188,20 @@ class TestTemplateGenerator(ConversationRecipes):
         arrow = "border-top: 28px solid {} !important;".format("#FFE1CA")
         dark = "color: {} !important; background-color: {};".format("#FFE1CA", "#F5700A")
         light = "color: {}; background-color: {};".format("#F5700A", "#FFE1CA")
-        expected_palette = {"arrow": arrow, "dark": dark, "light": light, "light-h1": "", "dark-h1": ""}
+        expected_palette = {
+            "arrow": arrow,
+            "dark": dark,
+            "light": light,
+            "light-h1": "",
+            "dark-h1": "",
+        }
 
         palette = generator._get_palette_css()
         assert palette == expected_palette
 
-    def test_apply_campaign_palette_on_mail_template(self, mk_board, mk_conversation, mk_user):
+    def test_apply_campaign_palette_on_mail_template(
+        self, mk_board, mk_conversation, mk_user
+    ):
         request = mock.Mock()
         request.META = self.REQUEST_META
         board = mk_board(palette="campaign")
@@ -183,7 +216,9 @@ class TestTemplateGenerator(ConversationRecipes):
         dark = "color: {} !important; background-color: {}; border-radius: unset;".format(
             "#332f82", "#1c9dd9"
         )
-        light = "color: {}; background-color: {}; border-radius: unset;".format("#1c9dd9", "#332f82")
+        light = "color: {}; background-color: {}; border-radius: unset;".format(
+            "#1c9dd9", "#332f82"
+        )
         expected_palette = {
             "arrow": arrow,
             "dark": dark,
@@ -200,7 +235,9 @@ class TestTemplateGenerator(ConversationRecipes):
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
         user = mk_user(email="test@domain.com")
-        comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        comment_1 = conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form_data = {"template_type": "mautic", "custom_comment": comment_1}
         generator = TemplateGenerator(conversation_db, request, form_data)
         assert generator.comment.content == comment_1.content
@@ -213,10 +250,14 @@ class TestTemplateGenerator(ConversationRecipes):
         request.POST = self.REQUEST_POST
         new_title = "Text of the new title"
         user = mk_user(email="test@domain.com")
-        conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form_data = {"template_type": "mautic", "custom_title": new_title}
         generator = TemplateGenerator(conversation_db, request, form_data)
-        assert generator.comment.content == conversation_db.approved_comments.last().content
+        assert (
+            generator.comment.content == conversation_db.approved_comments.last().content
+        )
         assert generator.comment == conversation_db.approved_comments.last()
         assert generator.conversation.text == new_title
 
@@ -224,25 +265,43 @@ class TestTemplateGenerator(ConversationRecipes):
 class TestMailingToolForm(ConversationRecipes):
     def test_conversation_component_valid_mautic_form(self, conversation_db, mk_user):
         user = mk_user(email="test@domain.com")
-        conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form = MailingToolForm(
-            {"template_type": "mautic", "theme": "default", "custom_title": None, "custom_comment": None},
+            {
+                "template_type": "mautic",
+                "theme": "default",
+                "custom_title": None,
+                "custom_comment": None,
+            },
             conversation_id=conversation_db.id,
         )
         assert form.is_valid()
 
     def test_conversation_component_valid_mautic_form(self, conversation_db, mk_user):
         user = mk_user(email="test@domain.com")
-        conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form = MailingToolForm(
-            {"template_type": "mailchimp", "theme": "icd", "custom_title": None, "custom_comment": None},
+            {
+                "template_type": "mailchimp",
+                "theme": "icd",
+                "custom_title": None,
+                "custom_comment": None,
+            },
             conversation_id=conversation_db.id,
         )
         assert form.is_valid()
 
-    def test_conversation_component_valid_custom_attributes(self, conversation_db, mk_user):
+    def test_conversation_component_valid_custom_attributes(
+        self, conversation_db, mk_user
+    ):
         user = mk_user(email="test@domain.com")
-        comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        comment_1 = conversation_db.create_comment(
+            user, "comment 1", status="approved", check_limits=False
+        )
         form = MailingToolForm(
             {
                 "template_type": "mailchimp",

@@ -65,7 +65,11 @@ class BoardEditView(UpdateView):
         form.fields["slug"].help_text = _("You cannot change this value")
         form.fields["slug"].disabled = True
 
-        return {"form": form, "board": board, "user_boards": Board.objects.filter(owner=self.request.user)}
+        return {
+            "form": form,
+            "board": board,
+            "user_boards": Board.objects.filter(owner=self.request.user),
+        }
 
     def get_object(self) -> Board:
         board_slug = self.kwargs["board_slug"]

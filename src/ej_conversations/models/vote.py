@@ -41,7 +41,9 @@ class Vote(models.Model):
     A single vote cast for a comment.
     """
 
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="votes", on_delete=models.PROTECT)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="votes", on_delete=models.PROTECT
+    )
     comment = models.ForeignKey("Comment", related_name="votes", on_delete=models.CASCADE)
     choice = EnumField(Choice, _("Choice"), help_text=_("Agree, disagree or skip"))
     created = models.DateTimeField(_("Created at"), auto_now_add=True)

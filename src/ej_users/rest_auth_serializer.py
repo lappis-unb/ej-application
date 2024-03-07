@@ -53,7 +53,9 @@ class RegistrationSerializer(serializers.Serializer):
         metadata = request.data.get("metadata")
         if metadata:
             MetaData.objects.create(
-                analytics_id=metadata.get("analytics_id"), mautic_id=metadata.get("mautic_id"), user=user
+                analytics_id=metadata.get("analytics_id"),
+                mautic_id=metadata.get("mautic_id"),
+                user=user,
             )
 
     def validate_email(self, email):

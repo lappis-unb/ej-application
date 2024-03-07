@@ -28,7 +28,9 @@ class ClusterSerializer(BaseApiSerializer):
     def get_links(self, obj):
         return {
             "clusterization": reverse(
-                "v1-clusterizations-detail", args=[obj.id], request=self.context["request"]
+                "v1-clusterizations-detail",
+                args=[obj.id],
+                request=self.context["request"],
             ),
         }
 
@@ -37,12 +39,20 @@ class ClusterSerializer(BaseApiSerializer):
 
     def get_positive_comments(self, cluster):
         top5_positive_comments = cluster.separate_comments()[0][0:5]
-        return list(map(lambda comment: dict([(comment.agree, comment.content)]), top5_positive_comments))
+        return list(
+            map(
+                lambda comment: dict([(comment.agree, comment.content)]),
+                top5_positive_comments,
+            )
+        )
 
     def get_negative_comments(self, cluster):
         top5_negative_comments = cluster.separate_comments()[1][0:5]
         return list(
-            map(lambda comment: dict([(comment.disagree, comment.content)]), top5_negative_comments)
+            map(
+                lambda comment: dict([(comment.disagree, comment.content)]),
+                top5_negative_comments,
+            )
         )
 
 
@@ -56,18 +66,30 @@ class ClusterizationSerializer(BaseApiSerializer):
 
     def get_links(self, obj):
         return {
-            "self": reverse("v1-clusterizations-detail", args=[obj.id], request=self.context["request"]),
+            "self": reverse(
+                "v1-clusterizations-detail",
+                args=[obj.id],
+                request=self.context["request"],
+            ),
             "clusters": reverse(
-                "v1-clusterizations-clusters", args=[obj.id], request=self.context["request"]
+                "v1-clusterizations-clusters",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "affinities": reverse(
-                "v1-clusterizations-affinities", args=[obj.id], request=self.context["request"]
+                "v1-clusterizations-affinities",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "stereotypes": reverse(
-                "v1-clusterizations-stereotypes", args=[obj.id], request=self.context["request"]
+                "v1-clusterizations-stereotypes",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "conversation": reverse(
-                "v1-conversations-detail", args=[obj.conversation.id], request=self.context["request"]
+                "v1-conversations-detail",
+                args=[obj.conversation.id],
+                request=self.context["request"],
             ),
         }
 
@@ -82,5 +104,7 @@ class StereotypeSerializer(BaseApiSerializer):
 
     def get_links(self, obj):
         return {
-            "owner": reverse("v1-users-detail", args=[obj.owner.id], request=self.context["request"]),
+            "owner": reverse(
+                "v1-users-detail", args=[obj.owner.id], request=self.context["request"]
+            ),
         }

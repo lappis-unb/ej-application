@@ -54,16 +54,22 @@ class RemoveAccountView(FormView):
         if form.is_valid_post():
             user = request.user
             if form.cleaned_data["confirm"] is False:
-                form.add_error("confirm", _("You must confirm that you want to remove your account."))
+                form.add_error(
+                    "confirm", _("You must confirm that you want to remove your account.")
+                )
             elif form.cleaned_data["email"] != user.email:
                 form.add_error("email", _("Wrong e-mail address"))
             elif user.is_superuser:
                 form.add_error(None, _("Cannot remove superuser accounts"))
             else:
                 models.remove_account(user)
-                self.farewell_message = _("We are sorry to see you go :(<br><br>Good luck in your journey.")
+                self.farewell_message = _(
+                    "We are sorry to see you go :(<br><br>Good luck in your journey."
+                )
                 log.info(f"User {request.user} removed their EJ account.")
-        return render(request, "account/remove-account.jinja2", self.get_context_data(form=form))
+        return render(
+            request, "account/remove-account.jinja2", self.get_context_data(form=form)
+        )
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         form = self.kwargs.get("form", forms.RemoveAccountForm(request=self.request))

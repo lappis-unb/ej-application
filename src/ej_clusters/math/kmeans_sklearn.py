@@ -109,4 +109,6 @@ class StereotypeKMeans(KMeans):
         X = self._check_test_data(X)  # noqa: N806
         labels = self.predict(X)
         transform = (lambda x: x * x) if squared else (lambda x: x)
-        return -vq(X, labels, self.cluster_centers_, distance=self.distance, transform=transform)
+        return -vq(
+            X, labels, self.cluster_centers_, distance=self.distance, transform=transform
+        )

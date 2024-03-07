@@ -49,7 +49,9 @@ class CommentReportBaseView(DetailView):
             return paginator.get_page(page_number)
         return Paginator(comments, 1).page(1)
 
-    def paginate_users(self, conversation: Conversation, users_df=pd.DataFrame(), page_number: int = 1):
+    def paginate_users(
+        self, conversation: Conversation, users_df=pd.DataFrame(), page_number: int = 1
+    ):
         """
         creates a Django Paginator instance using conversation comments as list of items.
 
@@ -81,8 +83,12 @@ class CommentReportFilterView(CommentReportBaseView):
         order_by = self.request.GET.get("order-by")
         cluster_ids = self.request.GET.getlist("clusters")
         comments_df = CommentsReportClustersFilter(cluster_ids, conversation).filter()
-        comments_df = CommentsReportSearchFilter(search_text, conversation.comments, comments_df).filter()
-        comments_df = CommentsReportOrderByFilter(order_by, conversation.comments, comments_df).filter()
+        comments_df = CommentsReportSearchFilter(
+            search_text, conversation.comments, comments_df
+        ).filter()
+        comments_df = CommentsReportOrderByFilter(
+            order_by, conversation.comments, comments_df
+        ).filter()
         context["page"] = self.paginate_comments(
             conversation, comments_df, self.request.GET.get("page") or 1
         )
@@ -121,7 +127,9 @@ class UserReportDetailView(CommentReportBaseView):
         users_df = self.get_user_dataframe(conversation)
         clusters = get_clusters(conversation)
         context["clusters"] = clusters
-        context["page"] = self.paginate_users(conversation, users_df, self.request.GET.get("page") or 1)
+        context["page"] = self.paginate_users(
+            conversation, users_df, self.request.GET.get("page") or 1
+        )
         return context
 
     def get_user_dataframe(self, conversation: Conversation, page_number: int = 1):

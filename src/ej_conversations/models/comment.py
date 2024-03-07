@@ -24,12 +24,22 @@ class Comment(StatusModel, TimeStampedModel):
     """
 
     STATUS = Choices(
-        ("pending", _("awaiting moderation")), ("approved", _("approved")), ("rejected", _("rejected"))
+        ("pending", _("awaiting moderation")),
+        ("approved", _("approved")),
+        ("rejected", _("rejected")),
     )
-    STATUS_MAP = {"pending": STATUS.pending, "approved": STATUS.approved, "rejected": STATUS.rejected}
+    STATUS_MAP = {
+        "pending": STATUS.pending,
+        "approved": STATUS.approved,
+        "rejected": STATUS.rejected,
+    }
 
-    conversation = models.ForeignKey("Conversation", related_name="comments", on_delete=models.CASCADE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE)
+    conversation = models.ForeignKey(
+        "Conversation", related_name="comments", on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE
+    )
     content = models.TextField(
         _("Content"),
         max_length=252,
@@ -42,7 +52,10 @@ class Comment(StatusModel, TimeStampedModel):
     rejection_reason_text = models.TextField(
         _("Rejection reason (free-form)"),
         blank=True,
-        help_text=_("You must provide a reason to reject a comment. Users will receive " "this feedback."),
+        help_text=_(
+            "You must provide a reason to reject a comment. Users will receive "
+            "this feedback."
+        ),
     )
     moderator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -65,10 +78,18 @@ class Comment(StatusModel, TimeStampedModel):
     # Annotations
     #
     author_name = lazy(lambda self: self.author.name, name="author_name")
-    missing_votes = lazy(lambda self: self.conversation.users.count() - self.n_votes, name="missing_votes")
-    agree_count = lazy(lambda self: votes_counter(self, choice=Choice.AGREE), name="agree_count")
-    skip_count = lazy(lambda self: votes_counter(self, choice=Choice.SKIP), name="skip_count")
-    disagree_count = lazy(lambda self: votes_counter(self, choice=Choice.DISAGREE), name="disagree_count")
+    missing_votes = lazy(
+        lambda self: self.conversation.users.count() - self.n_votes, name="missing_votes"
+    )
+    agree_count = lazy(
+        lambda self: votes_counter(self, choice=Choice.AGREE), name="agree_count"
+    )
+    skip_count = lazy(
+        lambda self: votes_counter(self, choice=Choice.SKIP), name="skip_count"
+    )
+    disagree_count = lazy(
+        lambda self: votes_counter(self, choice=Choice.DISAGREE), name="disagree_count"
+    )
     n_votes = lazy(lambda self: votes_counter(self), name="n_votes")
 
     @property
@@ -95,7 +116,9 @@ class Comment(StatusModel, TimeStampedModel):
     def clean(self):
         super().clean()
         if self.status == self.STATUS.rejected and not self.has_rejection_explanation:
-            raise ValidationError({"rejection_reason": _("Must give a reason to reject a comment")})
+            raise ValidationError(
+                {"rejection_reason": _("Must give a reason to reject a comment")}
+            )
 
     def vote(self, author, choice, channel="ej", commit=True):
         """
@@ -175,13 +198,15 @@ class Comment(StatusModel, TimeStampedModel):
                 agree_ratio=self.agree_count / (self.n_votes + e),
                 disagree_ratio=self.disagree_count / (self.n_votes + e),
                 skip_ratio=self.skip_count / (self.n_votes + e),
-                missing_ratio=self.missing_votes / (self.missing_votes + self.n_votes + e),
+                missing_ratio=self.missing_votes
+                / (self.missing_votes + self.n_votes + e),
             )
         return stats
 
     def comment_url(self):
         return reverse(
-            "comments:detail", kwargs={"comment_id": self.id, "hex_hash": self.comment_url_hash()}
+            "comments:detail",
+            kwargs={"comment_id": self.id, "hex_hash": self.comment_url_hash()},
         )
 
     def comment_url_hash(self):

@@ -43,7 +43,8 @@ STATE_CHOICES = getattr(settings, "EJ_PROFILE_STATE_CHOICES", {})
 STATE_CHOICES_MAP = dict(STATE_CHOICES)
 if not STATE_CHOICES:
     raise ImproperlyConfigured(
-        "You must define the environment variable EJ_PROFILE_STATE_CHOICES in " "your Django settings."
+        "You must define the environment variable EJ_PROFILE_STATE_CHOICES in "
+        "your Django settings."
     )
 
 # Those are profile field name translations that should be captured by gettext.

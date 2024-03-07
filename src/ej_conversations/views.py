@@ -84,7 +84,9 @@ class ConversationCommonView:
         comment = self.get_comment(conversation, user)
         max_comments = max_comments_per_conversation(conversation, user)
         conversation.set_request(self.request)
-        n_comments, n_user_final_votes, user_boards = self.get_statistics(conversation, user)
+        n_comments, n_user_final_votes, user_boards = self.get_statistics(
+            conversation, user
+        )
 
         return {
             "conversation": conversation,
@@ -108,7 +110,14 @@ class ConversationView(ListView):
     def get_queryset(self) -> QuerySet[Any]:
         user = self.request.user
         board_slug = self.kwargs.get("board_slug", None)
-        annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
+        annotations = (
+            "n_votes",
+            "n_comments",
+            "n_user_votes",
+            "first_tag",
+            "n_favorites",
+            "author_name",
+        )
 
         if board_slug:
             board = Board.objects.get(slug=board_slug)
@@ -142,7 +151,14 @@ class BoardConversationsView(ConversationView):
     def get_queryset(self) -> QuerySet[Any]:
         user = self.request.user
         board_slug = self.kwargs.get("board_slug", None)
-        annotations = ("n_votes", "n_comments", "n_user_votes", "first_tag", "n_favorites", "author_name")
+        annotations = (
+            "n_votes",
+            "n_comments",
+            "n_user_votes",
+            "first_tag",
+            "n_favorites",
+            "author_name",
+        )
 
         if board_slug:
             board = Board.objects.get(slug=board_slug)
@@ -220,7 +236,10 @@ class ConversationDetailContentView(ConversationCommonView, DetailView):
     ctx = {}
 
     def get_context_data(self, *args, **kwargs):
-        return {"host": get_host_with_schema(self.request), **super().get_context_data(**kwargs)}
+        return {
+            "host": get_host_with_schema(self.request),
+            **super().get_context_data(**kwargs),
+        }
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")
@@ -231,7 +250,10 @@ class ConversationDetailView(ConversationCommonView, DetailView):
     ctx = {}
 
     def get_context_data(self, *args, **kwargs):
-        return {"host": get_host_with_schema(self.request), **super().get_context_data(**kwargs)}
+        return {
+            "host": get_host_with_schema(self.request),
+            **super().get_context_data(**kwargs),
+        }
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")
@@ -255,14 +277,18 @@ class ConversationVoteView(ConversationCommonView, DetailView):
     def get(self, request, *args, **kwargs):
         conversation = self.get_object()
         request.user = User.get_or_create_from_session(conversation, request)
-        return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
+        return render(
+            request, "ej_conversations/comments/card.jinja2", self.get_context_data()
+        )
 
     @user_can_post_anonymously
     def post(self, request, *args, **kwargs):
         conversation = self.get_object()
         request.user = User.get_or_create_from_session(conversation, request)
         self.ctx = handle_detail_vote(request)
-        return render(request, "ej_conversations/comments/card.jinja2", self.get_context_data())
+        return render(
+            request, "ej_conversations/comments/card.jinja2", self.get_context_data()
+        )
 
 
 @method_decorator([login_required, can_acess_list_view], name="dispatch")
@@ -278,9 +304,17 @@ class ConversationCreateView(CreateView):
             with transaction.atomic():
                 conversation = form.save_comments(self.request.user, **kwargs)
 
-            return redirect(reverse("boards:conversation-detail", kwargs=conversation.get_url_kwargs()))
+            return redirect(
+                reverse(
+                    "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
+                )
+            )
 
-        return render(request, "ej_conversations/conversation-create.jinja2", self.get_context_data())
+        return render(
+            request,
+            "ej_conversations/conversation-create.jinja2",
+            self.get_context_data(),
+        )
 
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -325,7 +359,9 @@ class ConversationEditView(UpdateView):
         elif conversation.is_promoted:
             return conversation.get_absolute_url()
         else:
-            return reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
+            return reverse(
+                "boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()
+            )
 
     def get_context_data(self, **kwargs: Any):
         conversation = self.get_object()
@@ -339,7 +375,9 @@ class ConversationEditView(UpdateView):
         }
 
 
-@method_decorator([login_required, can_edit_conversation, can_moderate_conversation], name="dispatch")
+@method_decorator(
+    [login_required, can_edit_conversation, can_moderate_conversation], name="dispatch"
+)
 class ConversationModerateView(UpdateView):
     model = Conversation
     template_name = "ej_conversations/conversation-moderate.jinja2"
@@ -350,20 +388,30 @@ class ConversationModerateView(UpdateView):
         for status in [self.status.approved, self.status.pending, self.status.rejected]:
             if status in payload:
                 comments_ids = payload.getlist(status)
-                Comment.objects.filter(id__in=comments_ids).update(status=Comment.STATUS_MAP[status])
+                Comment.objects.filter(id__in=comments_ids).update(
+                    status=Comment.STATUS_MAP[status]
+                )
 
         return render(request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
         conversation = self.get_object()
 
-        comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
+        comments = conversation.comments.annotate(
+            annotation_author_name=F("author__name")
+        )
         approved, pending, rejected = [
             comments.filter(status=_status).order_by("-created")
-            for _status in [self.status.approved, self.status.pending, self.status.rejected]
+            for _status in [
+                self.status.approved,
+                self.status.pending,
+                self.status.rejected,
+            ]
         ]
 
-        created_comments = comments.filter(author=conversation.author).order_by("-created")
+        created_comments = comments.filter(author=conversation.author).order_by(
+            "-created"
+        )
 
         return {
             "conversation": conversation,
@@ -376,7 +424,9 @@ class ConversationModerateView(UpdateView):
         }
 
 
-@method_decorator([login_required, can_edit_conversation, can_moderate_conversation], name="dispatch")
+@method_decorator(
+    [login_required, can_edit_conversation, can_moderate_conversation], name="dispatch"
+)
 class NewCommentView(UpdateView):
     model = Conversation
     template_name = "ej_conversations/conversation-moderate.jinja2"
@@ -398,12 +448,16 @@ class NewCommentView(UpdateView):
         conversation = self.get_object()
 
         status = Comment.STATUS
-        comments = conversation.comments.annotate(annotation_author_name=F("author__name"))
+        comments = conversation.comments.annotate(
+            annotation_author_name=F("author__name")
+        )
         approved, pending, rejected = [
             comments.filter(status=_status)
             for _status in [status.approved, status.pending, status.rejected]
         ]
-        created_comments = comments.filter(author=conversation.author).order_by("-created")
+        created_comments = comments.filter(author=conversation.author).order_by(
+            "-created"
+        )
 
         return {
             "conversation": conversation,

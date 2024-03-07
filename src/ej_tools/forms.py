@@ -45,12 +45,16 @@ class CustomImageInputWidget(forms.FileInput):
 
 class OpinionComponentForm(forms.ModelForm):
     background_image = forms.ImageField(
-        widget=CustomImageInputWidget(attrs={"id": "background_input", "title": _("Background")})
+        widget=CustomImageInputWidget(
+            attrs={"id": "background_input", "title": _("Background")}
+        )
     )
     logo_image = forms.ImageField(
         widget=CustomImageInputWidget(attrs={"id": "logo_input", "title": _("Logo")})
     )
-    conversation = forms.ModelChoiceField(widget=forms.HiddenInput(), queryset=Conversation.objects.all())
+    conversation = forms.ModelChoiceField(
+        widget=forms.HiddenInput(), queryset=Conversation.objects.all()
+    )
 
     class Meta:
         model = OpinionComponent
@@ -65,7 +69,10 @@ class MailingToolForm(forms.Form):
         widget=CustomTemplateChoiceWidget(attrs=MailingTool.MAILING_TOOLTIP_TEXTS),
     )
     theme = forms.ChoiceField(
-        label=_("Theme"), choices=MailingTool.THEME_CHOICES, required=False, widget=PaletteWidget
+        label=_("Theme"),
+        choices=MailingTool.THEME_CHOICES,
+        required=False,
+        widget=PaletteWidget,
     )
     is_custom_domain = forms.BooleanField(
         required=False, label=_("Redirect user to a custom domain (optional)")
@@ -74,13 +81,17 @@ class MailingToolForm(forms.Form):
         required=False, label=_("Adds a custom title to the template (optional).")
     )
     custom_comment = forms.ModelChoiceField(
-        queryset=None, required=False, label=_("selects a specific comment for user to vote (optional).")
+        queryset=None,
+        required=False,
+        label=_("selects a specific comment for user to vote (optional)."),
     )
 
     def __init__(self, *args, **kwargs):
         conversation_id = kwargs.pop("conversation_id")
         super(MailingToolForm, self).__init__(*args, **kwargs)
-        self.fields["custom_comment"].queryset = Comment.objects.filter(conversation=conversation_id)
+        self.fields["custom_comment"].queryset = Comment.objects.filter(
+            conversation=conversation_id
+        )
 
 
 class RasaConversationForm(EjModelForm):
@@ -94,9 +105,13 @@ class RasaConversationForm(EjModelForm):
         if domain == None:
             return self.cleaned_data["domain"]
         if domain.conversation == self.cleaned_data["conversation"]:
-            raise ValidationError(_("Rasa conversation with this Conversation and Domain already exists."))
+            raise ValidationError(
+                _("Rasa conversation with this Conversation and Domain already exists.")
+            )
         raise ValidationError(
-            _("Site already integrated with conversation %(conversation)s, try another url."),
+            _(
+                "Site already integrated with conversation %(conversation)s, try another url."
+            ),
             params={"conversation": domain.conversation},
         )
 

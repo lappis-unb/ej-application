@@ -5,7 +5,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from ej.viewsets import RestAPIBaseViewSet
 from .utils import cluster_shapes
-from ej_clusters.serializers import ClusterizationSerializer, ClusterSerializer, StereotypeSerializer
+from ej_clusters.serializers import (
+    ClusterizationSerializer,
+    ClusterSerializer,
+    StereotypeSerializer,
+)
 from ej.permissions import IsOwner, IsSuperUser
 from rest_framework.permissions import IsAdminUser
 

@@ -18,7 +18,10 @@ def random_clusterization(shape, n_comments, alpha=DEFAULT_ALPHA, missing=0.5):
     First argument is either a list of cluster sizes.
     """
     # Fake data
-    results = [random_cluster(n_users, n_comments, missing=missing, alpha=alpha) for n_users in shape]
+    results = [
+        random_cluster(n_users, n_comments, missing=missing, alpha=alpha)
+        for n_users in shape
+    ]
     votes = np.vstack([v for v, _ in results])
     centroids = np.vstack([c for _, c in results])
     return votes, centroids
@@ -158,7 +161,9 @@ def reduce_dimensionality(votes, method="pca", **kwargs):
     return data, pipeline
 
 
-def show_votes(votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs):
+def show_votes(
+    votes, method="pca", display=True, title=None, labels=None, legend=None, **kwargs
+):
     """
     Show votes dataset in a 2D plot.
     """

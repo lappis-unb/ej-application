@@ -23,7 +23,9 @@ def user(db):
 
 @pytest.fixture
 def conversation(db, user):
-    conversation_object = create_conversation(text="test", title="title", author=user, is_promoted=True)
+    conversation_object = create_conversation(
+        text="test", title="title", author=user, is_promoted=True
+    )
     yield conversation_object
     conversation_object.delete()
 

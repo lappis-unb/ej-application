@@ -51,7 +51,9 @@ def index(request, conversation_id, **kwargs):
     clusterization = Clusterization.objects.filter(conversation=conversation)
     host = get_host_with_schema(request)
     names = getattr(settings, "EJ_PROFILE_FIELD_NAMES", {})
-    biggest_cluster_data = get_dashboard_biggest_cluster(request, conversation, clusterization)
+    biggest_cluster_data = get_dashboard_biggest_cluster(
+        request, conversation, clusterization
+    )
 
     render_context = {
         "conversation": conversation,
@@ -99,7 +101,9 @@ def scatter_pca_json(request, conversation_id, **kwargs):
 
     df = conversation.votes.votes_table("mean")
     if df.shape[0] <= 3 or df.shape[1] <= 3:
-        return JsonResponse({"error": "InsufficientData", "message": _("Not enough data")})
+        return JsonResponse(
+            {"error": "InsufficientData", "message": _("Not enough data")}
+        )
     pca = PCA(2)
     data = pca.fit_transform(df.values)
     data = pd.DataFrame(data, index=df.index, columns=["x", "y"])
@@ -139,11 +143,15 @@ def scatter_group(request, conversation_id, groupby, **kwargs):
     conversation = Conversation.objects.get(id=conversation_id)
 
     if groupby not in VALID_GROUP_BY:
-        return JsonResponse({"error": "AttributeError", "message": "invalid groupby parameter"})
+        return JsonResponse(
+            {"error": "AttributeError", "message": "invalid groupby parameter"}
+        )
     param = VALID_GROUP_BY[groupby]
 
     # Process raw data to form clusters
-    data_pairs = User.objects.filter(votes__comment__conversation=conversation).values_list("id", param)
+    data_pairs = User.objects.filter(
+        votes__comment__conversation=conversation
+    ).values_list("id", param)
 
     data = defaultdict(list)
     for user, value in data_pairs:
@@ -178,10 +186,16 @@ def votes_over_time(request, conversation_id, **kwargs):
     start_date = request.GET.get("startDate")
     end_date = request.GET.get("endDate")
     if start_date and end_date:
-        start_date = make_aware(datetime.datetime.fromisoformat(start_date))  # convert js naive date
-        end_date = make_aware(datetime.datetime.fromisoformat(end_date))  # # convert js naive date
+        start_date = make_aware(
+            datetime.datetime.fromisoformat(start_date)
+        )  # convert js naive date
+        end_date = make_aware(
+            datetime.datetime.fromisoformat(end_date)
+        )  # # convert js naive date
     else:
-        return JsonResponse({"error": "end date and start date should be passed as a parameter."})
+        return JsonResponse(
+            {"error": "end date and start date should be passed as a parameter."}
+        )
 
     if start_date > end_date:
         return JsonResponse({"error": "end date must be gratter then start date."})
