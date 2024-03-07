@@ -124,7 +124,7 @@ def js(ctx, theme=env("EJ_THEME"), watch=False, minify=False, app_name=None):
     build_cmd = "npm run watch" if watch else "npm run build"
     cwd = os.getcwd()
     app_root = f"{directory}/src/{app_name}"
-    app_static_root = f"{app_root}/static/{theme}"
+    app_static_root = f"{app_root}/static/{app_name}"
     try:
         ctx.run(f"rm -rf {app_static_root}/js")
         os.chdir(f"{app_static_root}/ts")

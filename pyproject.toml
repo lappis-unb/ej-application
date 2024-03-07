@@ -114,8 +114,8 @@ toml = "^0.10.0"
 psycopg2 = "==2.8.6"
 
 [tool.black]
-line-length = 108  # Strict maximum of 120
-target_version = ['py36']
+line-length = 90
+target_version = ['py38']
 exclude = '''
 /(
     \.git

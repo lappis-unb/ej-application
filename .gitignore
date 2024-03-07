@@ -119,8 +119,8 @@ cc-test-reporter
 
 .local.vimrc
 
-src/*/static/*/css/*.css
-src/*/static/*/js/*.js
+src/*/static/*/css/
+src/*/static/*/js/
 src/*/static/*/.parcel-cache
 
 e2e/node_modules
