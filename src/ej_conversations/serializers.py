@@ -32,48 +32,72 @@ class ConversationSerializer(BaseApiSerializer):
 
     def get_links(self, obj):
         links = {
-            "self": reverse("v1-conversations-detail", args=[obj.id], request=self.context["request"]),
-            "vote-dataset": reverse(
-                "v1-conversations-vote-dataset", args=[obj.id], request=self.context["request"]
+            "self": reverse(
+                "v1-conversations-detail", args=[obj.id], request=self.context["request"]
             ),
-            "votes": reverse("v1-conversations-votes", args=[obj.id], request=self.context["request"]),
+            "vote-dataset": reverse(
+                "v1-conversations-vote-dataset",
+                args=[obj.id],
+                request=self.context["request"],
+            ),
+            "votes": reverse(
+                "v1-conversations-votes", args=[obj.id], request=self.context["request"]
+            ),
             "user-statistics": reverse(
-                "v1-conversations-user-statistics", args=[obj.id], request=self.context["request"]
+                "v1-conversations-user-statistics",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "approved-comments": reverse(
-                "v1-conversations-approved-comments", args=[obj.id], request=self.context["request"]
+                "v1-conversations-approved-comments",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "user-comments": reverse(
-                "v1-conversations-user-comments", args=[obj.id], request=self.context["request"]
+                "v1-conversations-user-comments",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "user-pending-comments": reverse(
-                "v1-conversations-user-pending-comments", args=[obj.id], request=self.context["request"]
+                "v1-conversations-user-pending-comments",
+                args=[obj.id],
+                request=self.context["request"],
             ),
             "random-comment": reverse(
-                "v1-conversations-random-comment", args=[obj.id], request=self.context["request"]
+                "v1-conversations-random-comment",
+                args=[obj.id],
+                request=self.context["request"],
             ),
         }
         links["clusterization"] = (
             reverse(
-                "v1-clusterizations-detail", args=[obj.clusterization.id], request=self.context["request"]
+                "v1-clusterizations-detail",
+                args=[obj.clusterization.id],
+                request=self.context["request"],
             )
             if hasattr(obj, "clusterization")
             else None
         )
         links["author"] = (
-            reverse("v1-users-detail", args=[obj.author.id], request=self.context["request"])
+            reverse(
+                "v1-users-detail", args=[obj.author.id], request=self.context["request"]
+            )
             if hasattr(obj, "author")
             else None
         )
         links["board"] = (
-            reverse("v1-boards-detail", args=[obj.board.id], request=self.context["request"])
+            reverse(
+                "v1-boards-detail", args=[obj.board.id], request=self.context["request"]
+            )
             if hasattr(obj, "board")
             else None
         )
         return links
 
     def get_instance(self, request, validated_data):
-        author = User.objects.get(id=request.data.get("author"))  # TODO: pegar o request.user?
+        author = User.objects.get(
+            id=request.data.get("author")
+        )  # TODO: pegar o request.user?
         board = Board.objects.get(id=request.data.get("board"))
         validated_data["author"] = author
         validated_data["board"] = board
@@ -97,7 +121,9 @@ class ParticipantConversationSerializer(BaseApiSerializer):
         fields = ["card"]
 
     def get_card(self, obj):
-        return conversation_card(obj, request=self.context["request"], button_text=_("Participate"))
+        return conversation_card(
+            obj, request=self.context["request"], button_text=_("Participate")
+        )
 
 
 class CommentSerializer(BaseApiSerializer):
@@ -105,11 +131,20 @@ class CommentSerializer(BaseApiSerializer):
 
     class Meta:
         model = Comment
-        fields = ["links", "content", "status", "created", "rejection_reason", "rejection_reason_text"]
+        fields = [
+            "links",
+            "content",
+            "status",
+            "created",
+            "rejection_reason",
+            "rejection_reason_text",
+        ]
 
     def get_links(self, obj):
         return {
-            "self": reverse("v1-comments-detail", args=[obj.id], request=self.context["request"]),
+            "self": reverse(
+                "v1-comments-detail", args=[obj.id], request=self.context["request"]
+            ),
         }
 
     def get_instance(self, request, validated_data):
@@ -149,9 +184,13 @@ class VoteSerializer(BaseApiSerializer):
 
     def get_links(self, obj):
         return {
-            "self": reverse("v1-votes-detail", args=[obj.id], request=self.context["request"]),
+            "self": reverse(
+                "v1-votes-detail", args=[obj.id], request=self.context["request"]
+            ),
             "comment": reverse(
-                "v1-comments-detail", args=[obj.comment.id], request=self.context["request"]
+                "v1-comments-detail",
+                args=[obj.comment.id],
+                request=self.context["request"],
             ),
         }
 

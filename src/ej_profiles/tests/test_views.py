@@ -63,7 +63,12 @@ class TestEditProfile:
     def test_user_logged_edit_profile_picture(self, logged_client):
         avatar = create_image("avatar.png")
         avatar_file = SimpleUploadedFile("front.png", avatar.getvalue())
-        form_data = {"name": "Maurice", "profile_photo": avatar_file, "gender": 0, "race": 0}
+        form_data = {
+            "name": "Maurice",
+            "profile_photo": avatar_file,
+            "gender": 0,
+            "race": 0,
+        }
 
         response = logged_client.post("/profile/edit/", form_data)
         assert response.status_code == 302 and response.url == "/profile/"
@@ -109,7 +114,10 @@ class TestEditProfile:
         for attr in ["gender", "race"]:
             assert getattr(user.profile, attr).value == form_data[attr]
             inf_fields.remove(attr)
-        assert user.profile.birth_date == datetime.strptime(form_data["birth_date"], "%Y-%m-%d").date()
+        assert (
+            user.profile.birth_date
+            == datetime.strptime(form_data["birth_date"], "%Y-%m-%d").date()
+        )
         inf_fields.remove("birth_date")
 
         blacklist = settings.EJ_PROFILE_EXCLUDE_FIELDS

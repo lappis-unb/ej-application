@@ -30,7 +30,10 @@ class TestIntegrationsUtils(ConversationRecipes):
         assert host == "http://ejplatform.local"
 
     def test_extracting_host_and_https_from_request(self):
-        REQUEST_META = {"HTTP_X_FORWARDED_PROTO": "https", "HTTP_HOST": "ejplatform.local2"}
+        REQUEST_META = {
+            "HTTP_X_FORWARDED_PROTO": "https",
+            "HTTP_HOST": "ejplatform.local2",
+        }
         request = mock.Mock()
         request.META = REQUEST_META
         host = get_host_with_schema(request)

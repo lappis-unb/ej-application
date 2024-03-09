@@ -2,7 +2,10 @@ from django.urls import path
 
 from ej_boards.utils import patched_register_app_routes
 from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
-from ej_conversations.urls.conversations import urlpatterns as conversation_urlpatterns, conversation_url
+from ej_conversations.urls.conversations import (
+    urlpatterns as conversation_urlpatterns,
+    conversation_url,
+)
 from ej_clusters.urls.clusters import urlpatterns as cluster_urlpatterns
 from ej_dataviz.urls import urlpatterns as dataviz_urlpatterns
 from . import views
@@ -35,7 +38,9 @@ urlpatterns = [
 
 #   When app uses django views, we use patched_register_app_routes
 #
-patched_register_app_routes(urlpatterns, conversation_tools_urlpatterns, "conversation-tools")
+patched_register_app_routes(
+    urlpatterns, conversation_tools_urlpatterns, "conversation-tools"
+)
 patched_register_app_routes(urlpatterns, conversation_urlpatterns, "conversation")
 patched_register_app_routes(urlpatterns, cluster_urlpatterns, "cluster")
 patched_register_app_routes(urlpatterns, dataviz_urlpatterns, "dataviz")

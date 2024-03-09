@@ -45,11 +45,15 @@ class TestRoutes(UrlTester, ConversationRecipes):
         board_1 = Board.objects.create(slug="board1", owner=user, description="board")
         board_2 = Board.objects.create(slug="board2", owner=root_db, description="board2")
 
-        base_url = reverse("boards:conversation-update-favorite-boards", args=[board_1.slug])
+        base_url = reverse(
+            "boards:conversation-update-favorite-boards", args=[board_1.slug]
+        )
         url = f"{base_url}?updateOption=add"
         admin_client.get(url)
 
-        base_url = reverse("boards:conversation-update-favorite-boards", args=[board_2.slug])
+        base_url = reverse(
+            "boards:conversation-update-favorite-boards", args=[board_2.slug]
+        )
         url = f"{base_url}?updateOption=add"
         admin_client.get(url)
 
@@ -67,11 +71,15 @@ class TestRoutes(UrlTester, ConversationRecipes):
 
         assert root_db.favorite_boards.count() == 2
 
-        base_url = reverse("boards:conversation-update-favorite-boards", args=[board_1.slug])
+        base_url = reverse(
+            "boards:conversation-update-favorite-boards", args=[board_1.slug]
+        )
         url = f"{base_url}?updateOption=remove"
         admin_client.get(url)
 
-        base_url = reverse("boards:conversation-update-favorite-boards", args=[board_2.slug])
+        base_url = reverse(
+            "boards:conversation-update-favorite-boards", args=[board_2.slug]
+        )
         url = f"{base_url}?updateOption=remove"
         admin_client.get(url)
 

@@ -41,7 +41,9 @@ class Profile(models.Model):
     biography = models.TextField(_("Biography"), blank=True)
     occupation = models.CharField(_("Occupation"), blank=True, max_length=50)
     political_activity = models.TextField(_("Political activity"), blank=True)
-    profile_photo = models.ImageField(_("Profile Photo"), blank=True, null=True, upload_to="profile_images")
+    profile_photo = models.ImageField(
+        _("Profile Photo"), blank=True, null=True, upload_to="profile_images"
+    )
     phone_number = models.CharField(_("Phone number"), blank=True, max_length=11)
     completed_tour = models.BooleanField(default=False, blank=True, null=True)
     filtered_home_tag = models.BooleanField(default=False, blank=True, null=True)
@@ -98,7 +100,8 @@ class Profile(models.Model):
         return bool(
             self.profile_photo
             or (
-                apps.is_installed("allauth.socialaccount") and SocialAccount.objects.filter(user_id=self.id)
+                apps.is_installed("allauth.socialaccount")
+                and SocialAccount.objects.filter(user_id=self.id)
             )
         )
 
@@ -228,7 +231,6 @@ class Profile(models.Model):
         ).distinct("tag")
 
     def get_contributions_data(self):
-
         # Fetch all conversations the user created
         created = self.user.conversations.cache_annotations(
             "first_tag", "n_user_votes", "n_comments", user=self.user
@@ -252,16 +254,11 @@ class Profile(models.Model):
             conversation.annotation_total_votes = total_votes[conversation.id]
 
         # Now we get the favorite conversations from user
-        favorites = Conversation.objects.filter(favorites__user=self.user).cache_annotations(
-            "first_tag", "n_user_votes", "n_comments", user=self.user
-        )
+        favorites = Conversation.objects.filter(
+            favorites__user=self.user
+        ).cache_annotations("first_tag", "n_user_votes", "n_comments", user=self.user)
 
-        # Comments
-        comments = self.user.comments.select_related("conversation").annotate(
-            skip_count=Count("votes", filter=Q(votes__choice=0)),
-            agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
-            disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
-        )
+        comments = self.user.comments
         groups = toolz.groupby(lambda x: x.status, comments)
         approved = groups.get(Comment.STATUS.approved, ())
         rejected = groups.get(Comment.STATUS.rejected, ())

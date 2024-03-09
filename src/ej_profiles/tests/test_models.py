@@ -44,7 +44,8 @@ class TestProfile(ConversationRecipes):
         )
 
     @pytest.mark.skipif(
-        settings.EJ_THEME not in ("default", None), reason="Do not work if theme modify profile fields"
+        settings.EJ_THEME not in ("default", None),
+        reason="Do not work if theme modify profile fields",
     )
     def test_profile_invariants(self, db, profile):
         profile.user.save()
@@ -103,8 +104,12 @@ class TestProfile(ConversationRecipes):
     def test_participated_on_promoted_conversation_vote(self, db, user, other_user):
         user.save()
         other_user.save()
-        conversation = create_conversation("this is the text", "this is the title", user, is_promoted=True)
-        comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
+        conversation = create_conversation(
+            "this is the text", "this is the title", user, is_promoted=True
+        )
+        comment = Comment.objects.create(
+            author=user, content="just a comment", conversation=conversation
+        )
         Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
 
         profile = other_user.get_profile()
@@ -116,7 +121,9 @@ class TestProfile(ConversationRecipes):
         user.save()
         other_user.save()
         conversation = create_conversation("this is the text", "this is the title", user)
-        comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
+        comment = Comment.objects.create(
+            author=user, content="just a comment", conversation=conversation
+        )
         Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
 
         profile = other_user.get_profile()
@@ -127,8 +134,12 @@ class TestProfile(ConversationRecipes):
     def test_participated_promoted_conversation_comment(self, db, user, other_user):
         user.save()
         other_user.save()
-        conversation = create_conversation("this is the text", "this is the title", user, is_promoted=True)
-        Comment.objects.create(author=other_user, content="just a comment", conversation=conversation)
+        conversation = create_conversation(
+            "this is the text", "this is the title", user, is_promoted=True
+        )
+        Comment.objects.create(
+            author=other_user, content="just a comment", conversation=conversation
+        )
 
         profile = other_user.get_profile()
         retrieved_conversation = profile.participated_public_conversations().first()
@@ -139,7 +150,9 @@ class TestProfile(ConversationRecipes):
         user.save()
         other_user.save()
         conversation = create_conversation("this is the text", "this is the title", user)
-        Comment.objects.create(author=other_user, content="just a comment", conversation=conversation)
+        Comment.objects.create(
+            author=other_user, content="just a comment", conversation=conversation
+        )
 
         profile = other_user.get_profile()
         retrieved_conversation = profile.participated_public_conversations().first()
@@ -149,15 +162,21 @@ class TestProfile(ConversationRecipes):
     def test_participated_conversation_comment_vote(self, db, user, other_user):
         user.save()
         other_user.save()
-        conversation = create_conversation("this is the text", "this is the title", user, is_promoted=True)
-        comment = Comment.objects.create(author=user, content="just a comment", conversation=conversation)
+        conversation = create_conversation(
+            "this is the text", "this is the title", user, is_promoted=True
+        )
+        comment = Comment.objects.create(
+            author=user, content="just a comment", conversation=conversation
+        )
         Vote.objects.create(author=other_user, comment=comment, choice=Choice.AGREE)
 
         other_conversation = create_conversation(
             "this is another text", "this is another title", user, is_promoted=True
         )
         Comment.objects.create(
-            author=other_user, content="just another comment", conversation=other_conversation
+            author=other_user,
+            content="just another comment",
+            conversation=other_conversation,
         )
         profile = other_user.get_profile()
         retrieved_conversations = profile.participated_public_conversations()

@@ -46,7 +46,13 @@ def lint(ctx, python=True, js=True):
         print("NOT IMPLEMENTED")
 
 
-@task(help={"verbose": "Detailed error messages", "lf": "Run only the last failed tests"})
+@task(
+    help={
+        "verbose": "Detailed error messages",
+        "lf": "Run only the last failed tests",
+        "path": "Informs a single test file",
+    }
+)
 def test(ctx, verbose=False, lf=False, cov=False, path=""):
     """
     Run all unittests.

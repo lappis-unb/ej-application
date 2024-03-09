@@ -16,12 +16,16 @@ ConversationRecipes.update_globals(globals())
 class TestRasaConversation(ConversationRecipes):
     def test_creation_rasa_conversation(self, db, mk_conversation):
         conversation = mk_conversation()
-        rasa_conversation = RasaConversation.objects.create(conversation=conversation, domain=TEST_DOMAIN)
+        rasa_conversation = RasaConversation.objects.create(
+            conversation=conversation, domain=TEST_DOMAIN
+        )
         assert rasa_conversation.id is not None
 
     def test_creation_duplicated_rasa_conversation(self, db, mk_conversation):
         conversation = mk_conversation()
-        rasa_conversation = RasaConversation.objects.create(conversation=conversation, domain=TEST_DOMAIN)
+        rasa_conversation = RasaConversation.objects.create(
+            conversation=conversation, domain=TEST_DOMAIN
+        )
         assert rasa_conversation.id is not None
         with pytest.raises(IntegrityError):
             RasaConversation.objects.create(conversation=conversation, domain=TEST_DOMAIN)
@@ -30,7 +34,9 @@ class TestRasaConversation(ConversationRecipes):
 class TestRasaConversationForm(ConversationRecipes):
     def test_rasa_conversation_valid_form(self, db, mk_conversation):
         conversation = mk_conversation()
-        form = RasaConversationForm({"domain": "http://another.com", "conversation": conversation.id})
+        form = RasaConversationForm(
+            {"domain": "http://another.com", "conversation": conversation.id}
+        )
         assert form.is_valid()
 
     def test_rasa_conversation_invalid_form(self, db, mk_conversation):
@@ -42,19 +48,25 @@ class TestRasaConversationForm(ConversationRecipes):
     def test_rasa_conversation_form_exists(self, db, mk_conversation):
         conversation = mk_conversation()
         RasaConversation.objects.create(conversation=conversation, domain=TEST_DOMAIN)
-        form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation.id})
+        form = RasaConversationForm(
+            {"domain": TEST_DOMAIN, "conversation": conversation.id}
+        )
         assert not form.is_valid()
         assert (
             _("Rasa conversation with this Conversation and Domain already exists.")
             == form.errors["domain"][0]
         )
 
-    def test_rasa_conversation_form_domain_already_in_use(self, db, mk_conversation, mk_user):
+    def test_rasa_conversation_form_domain_already_in_use(
+        self, db, mk_conversation, mk_user
+    ):
         conversation1 = mk_conversation()
         user = mk_user(email="test@domain.com")
         conversation2 = mk_conversation(author=user)
         RasaConversation.objects.create(conversation=conversation1, domain=TEST_DOMAIN)
-        form = RasaConversationForm({"domain": TEST_DOMAIN, "conversation": conversation2.id})
+        form = RasaConversationForm(
+            {"domain": TEST_DOMAIN, "conversation": conversation2.id}
+        )
         assert (
             _("Site already integrated with conversation Conversation, try another url.")
             == form.errors["domain"][0]
@@ -62,14 +74,29 @@ class TestRasaConversationForm(ConversationRecipes):
 
     def test_rasa_conversation_invalid_number_of_domains(self, db, mk_conversation):
         conversation = mk_conversation()
-        RasaConversation.objects.create(conversation=conversation, domain="https://domain1.com.br/")
-        RasaConversation.objects.create(conversation=conversation, domain="https://domain2.com.br/")
-        RasaConversation.objects.create(conversation=conversation, domain="https://domain3.com.br/")
-        RasaConversation.objects.create(conversation=conversation, domain="https://domain4.com.br/")
-        RasaConversation.objects.create(conversation=conversation, domain="https://domain5.com.br/")
-        form = RasaConversationForm({"domain": "https://domain6.com.br/", "conversation": conversation.id})
+        RasaConversation.objects.create(
+            conversation=conversation, domain="https://domain1.com.br/"
+        )
+        RasaConversation.objects.create(
+            conversation=conversation, domain="https://domain2.com.br/"
+        )
+        RasaConversation.objects.create(
+            conversation=conversation, domain="https://domain3.com.br/"
+        )
+        RasaConversation.objects.create(
+            conversation=conversation, domain="https://domain4.com.br/"
+        )
+        RasaConversation.objects.create(
+            conversation=conversation, domain="https://domain5.com.br/"
+        )
+        form = RasaConversationForm(
+            {"domain": "https://domain6.com.br/", "conversation": conversation.id}
+        )
         assert not form.is_valid()
-        assert _("a conversation can have a maximum of five domains") == form.errors["__all__"][0]
+        assert (
+            _("a conversation can have a maximum of five domains")
+            == form.errors["__all__"][0]
+        )
 
 
 class TestRasaConversationFormRoute(ConversationRecipes):
@@ -86,7 +113,9 @@ class TestRasaConversationFormRoute(ConversationRecipes):
         )
 
         assert response.status_code == 200
-        assert RasaConversation.objects.filter(conversation=conversation, domain=TEST_DOMAIN).exists()
+        assert RasaConversation.objects.filter(
+            conversation=conversation, domain=TEST_DOMAIN
+        ).exists()
 
     def test_post_rasa_conversation_invalid_form(self, conversation_db):
         conversation = conversation_db
@@ -106,8 +135,12 @@ class TestRasaConversationFormRoute(ConversationRecipes):
             conversation=conversation, domain=invalid_domain
         ).exists()
 
-    def test_access_to_rasa_conversation_invalid_permission_form(self, rf, user_client, conversation_db):
-        response = user_client.get(conversation_db.get_absolute_url() + "tools/chatbot/webchat")
+    def test_access_to_rasa_conversation_invalid_permission_form(
+        self, rf, user_client, conversation_db
+    ):
+        response = user_client.get(
+            conversation_db.get_absolute_url() + "tools/chatbot/webchat"
+        )
 
         assert response.status_code == 302
         assert response.url == f"/login/"

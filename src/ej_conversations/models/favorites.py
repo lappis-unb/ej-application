@@ -8,9 +8,13 @@ class FavoriteConversation(models.Model):
     M2M relation from users to conversations.
     """
 
-    conversation = models.ForeignKey("Conversation", on_delete=models.CASCADE, related_name="favorites")
+    conversation = models.ForeignKey(
+        "Conversation", on_delete=models.CASCADE, related_name="favorites"
+    )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="favorite_conversations"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="favorite_conversations",
     )
 
 

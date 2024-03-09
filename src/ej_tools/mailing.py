@@ -49,7 +49,9 @@ class TemplateGenerator:
         self.set_custom_values()
 
     def set_custom_values(self):
-        self.conversation.text = self.form_data.get("custom_title") or self.conversation.text
+        self.conversation.text = (
+            self.form_data.get("custom_title") or self.conversation.text
+        )
         self.comment = self.form_data.get("custom_comment") or self.comment
 
     def get_template(self):
@@ -98,12 +100,21 @@ class TemplateGenerator:
                 board_slug = self.conversation.board.slug
                 url = "{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign{}"
                 return url.format(
-                    self.vote_domain, board_slug, conversation_id, conversation_slug, comment_id, email_tag
+                    self.vote_domain,
+                    board_slug,
+                    conversation_id,
+                    conversation_slug,
+                    comment_id,
+                    email_tag,
                 )
             except:
                 url = "{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign{}"
                 return url.format(
-                    self.vote_domain, conversation_id, conversation_slug, comment_id, email_tag
+                    self.vote_domain,
+                    conversation_id,
+                    conversation_slug,
+                    comment_id,
+                    email_tag,
                 )
         else:
             url = "{}/?cid={}&comment_id={}&action=vote&origin=campaign{}"
@@ -144,8 +155,12 @@ class BaseCssGenerator:
     def css(self):
         colors = self.INLINE_PALETTES[self.palette]
         palette_style = {}
-        palette_style["light"] = "color: {}; background-color: {};".format(colors[0], colors[1])
-        palette_style["dark"] = "color: {} !important; background-color: {};".format(colors[1], colors[0])
+        palette_style["light"] = "color: {}; background-color: {};".format(
+            colors[0], colors[1]
+        )
+        palette_style["dark"] = "color: {} !important; background-color: {};".format(
+            colors[1], colors[0]
+        )
         palette_style["arrow"] = "border-top: 28px solid {} !important;".format(colors[1])
         palette_style["light-h1"] = ""
         palette_style["dark-h1"] = ""
@@ -160,8 +175,12 @@ class CampaignCssGenerator:
     def css(self):
         colors = self.INLINE_PALETTES[self.palette]
         palette_style = {}
-        palette_style["light"] = "color: {}; background-color: {};".format(colors[0], colors[1])
-        palette_style["dark"] = "color: {} !important; background-color: {};".format(colors[1], colors[0])
+        palette_style["light"] = "color: {}; background-color: {};".format(
+            colors[0], colors[1]
+        )
+        palette_style["dark"] = "color: {} !important; background-color: {};".format(
+            colors[1], colors[0]
+        )
         palette_style["arrow"] = "border-top: 28px solid {} !important;".format(colors[1])
         border_style = " border-radius: unset;"
         palette_style["light-h1"] = "color: #ffffff !important;"

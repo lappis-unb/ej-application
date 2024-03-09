@@ -35,4 +35,7 @@ class Head(BaseHead):
         )
 
     def favicon_tags(self):
-        return [*super().favicon_tags(), meta(name="image", content=static("img/logo/logo.svg"))]
+        return [
+            *super().favicon_tags(),
+            meta(name="image", content=static("img/logo/logo.svg")),
+        ]

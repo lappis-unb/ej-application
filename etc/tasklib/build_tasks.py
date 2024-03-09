@@ -71,7 +71,9 @@ def docs(ctx, orm=False):
             "ej_tools",
         ]:
             print_green(f"Making ORM graph for {app}")
-            manage(ctx, "graph_models", app, env={}, output=f"docs/dev-docs/orm/{app}.svg")
+            manage(
+                ctx, "graph_models", app, env={}, output=f"docs/dev-docs/orm/{app}.svg"
+            )
     else:
         print_yellow("call inv docs --orm to update ORM graphs")
 
@@ -102,7 +104,10 @@ def i18n(ctx, compile=False, edit=False, lang="pt_BR", keep_pot=False):
         ctx.run("pybabel extract -F etc/babel.cfg -o locale/jinja2.pot .")
 
         print_green("Join Django + Jinja translation files")
-        ctx.run("msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot", pty=True)
+        ctx.run(
+            "msgcat locale/django.pot locale/jinja2.pot --use-first -o locale/join.pot",
+            pty=True,
+        )
         ctx.run(r"""sed -i '/"Language: \\n"/d' locale/join.pot""", pty=True)
 
         print_green(f"Update locale {lang} with Jinja2 messages")
@@ -124,7 +129,7 @@ def js(ctx, theme=env("EJ_THEME"), watch=False, minify=False, app_name=None):
     build_cmd = "npm run watch" if watch else "npm run build"
     cwd = os.getcwd()
     app_root = f"{directory}/src/{app_name}"
-    app_static_root = f"{app_root}/static/{theme}"
+    app_static_root = f"{app_root}/static/{app_name}"
     try:
         ctx.run(f"rm -rf {app_static_root}/js")
         os.chdir(f"{app_static_root}/ts")

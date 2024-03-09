@@ -10,7 +10,9 @@ from .. import models
 
 
 @with_template(models.Conversation, role="balloon")
-def conversation_balloon(conversation, request=None, actions=None, is_favorite=False, **kwargs):
+def conversation_balloon(
+    conversation, request=None, actions=None, is_favorite=False, **kwargs
+):
     """
     Render details of a conversation inside a conversation balloon.
     """
@@ -35,7 +37,9 @@ def conversation_balloon(conversation, request=None, actions=None, is_favorite=F
 
 
 @with_template(models.Conversation, role="card")
-def conversation_card(conversation, url=None, request=None, text=None, hidden=None, button_text=""):
+def conversation_card(
+    conversation, url=None, request=None, text=None, hidden=None, button_text=""
+):
     """
     Render a round card representing a conversation in a list.
     """
@@ -61,7 +65,9 @@ def conversation_card(conversation, url=None, request=None, text=None, hidden=No
 
 
 @with_template(models.Conversation, role="comment-form")
-def conversation_comment_form(conversation, request=None, content=None, user=None, form=None, target=None):
+def conversation_comment_form(
+    conversation, request=None, content=None, user=None, form=None, target=None
+):
     """
     Render comment form for conversation.
     """
@@ -70,7 +76,10 @@ def conversation_comment_form(conversation, request=None, content=None, user=Non
     if not user.is_authenticated:
         conversation_url = conversation.get_absolute_url()
         login = reverse("auth:login")
-        return {"user": None, "login_anchor": a(_("login"), href=f"{login}?next={conversation_url}")}
+        return {
+            "user": None,
+            "login_anchor": a(_("login"), href=f"{login}?next={conversation_url}"),
+        }
 
     # Check if user still have comments left
     n_comments = rules.compute("ej.remaining_comments", conversation, user)
@@ -97,11 +106,13 @@ def conversation_create_comment(conversation, request=None, **kwargs):
     if request and request.user.is_anonymous:
         n_comments, n_moderation = [0, 0]
     else:
-        n_comments, n_moderation = [conversation.n_user_total_comments, conversation.n_pending_comments]
+        n_comments, n_moderation = [
+            conversation.n_user_total_comments,
+            conversation.n_pending_comments,
+        ]
 
     fn = rules.get_value("ej.max_comments_per_conversation")
-    user = getattr(request, "user", None)
-    max_comments = fn(conversation, user)
+    max_comments = fn()
 
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
     comments_count = _("{n} of {m} comments").format(n=n_comments, m=max_comments)

@@ -58,14 +58,18 @@ class CommentViewSet(RestAPIBaseViewSet):
 
         if status:
             queryset = queryset.filter(status__in=status)
-        serializer = CommentSummarySerializer(queryset, many=True, context={"request": request})
+        serializer = CommentSummarySerializer(
+            queryset, many=True, context={"request": request}
+        )
         return serializer
 
 
 class VoteViewSet(RestAPIBaseViewSet):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
-    permission_classes = (IsAuthenticatedCreationView | IsAuthor | IsSuperUser | IsAdminUser,)
+    permission_classes = (
+        IsAuthenticatedCreationView | IsAuthor | IsSuperUser | IsAdminUser,
+    )
 
     def list(self, request):
         if request.user.is_superuser:
@@ -102,16 +106,24 @@ class ConversationViewSet(RestAPIBaseViewSet):
 
         if is_author:
             return Response(
-                self.filter_conversation_by_current_user(request, queryset, tags, text_contains)
+                self.filter_conversation_by_current_user(
+                    request, queryset, tags, text_contains
+                )
             )
 
         if tags:
             return Response(
-                self.filter_conversation_by_tag(request, is_promoted_queryset, tags, text_contains)
+                self.filter_conversation_by_tag(
+                    request, is_promoted_queryset, tags, text_contains
+                )
             )
 
         if is_promoted:
-            return Response(self.get_promoted_conversations(request, is_promoted_queryset, text_contains))
+            return Response(
+                self.get_promoted_conversations(
+                    request, is_promoted_queryset, text_contains
+                )
+            )
 
         if not request.user.is_superuser:
             queryset = is_promoted_queryset
@@ -132,7 +144,9 @@ class ConversationViewSet(RestAPIBaseViewSet):
         if request.GET.get("startDate") and request.GET.get("endDate"):
             start_date = datetime.fromisoformat(request.GET.get("startDate"))
             end_date = datetime.fromisoformat(request.GET.get("endDate"))
-            votes = conversation.votes.filter(created__gte=start_date, created__lte=end_date)
+            votes = conversation.votes.filter(
+                created__gte=start_date, created__lte=end_date
+            )
         votes_dataframe = votes_as_dataframe(votes)
         votes_dataframe.reset_index(inplace=True)
         votes_dataframe_as_json = votes_dataframe.to_json(orient="records")
@@ -188,19 +202,25 @@ class ConversationViewSet(RestAPIBaseViewSet):
         serializer = CommentSerializer(comment, context={"request": request})
         return Response(serializer.data)
 
-    def filter_conversation_by_tag(self, request, is_promoted_queryset, tags, text_contains):
+    def filter_conversation_by_tag(
+        self, request, is_promoted_queryset, tags, text_contains
+    ):
         request.user.profile.filtered_home_tag = True
         request.user.profile.save()
         queryset = is_promoted_queryset.filter(tags__name__in=tags).distinct()
 
         if text_contains:
             queryset = queryset.filter(text__icontains=text_contains)
-        serializer = ParticipantConversationSerializer(queryset, many=True, context={"request": request})
+        serializer = ParticipantConversationSerializer(
+            queryset, many=True, context={"request": request}
+        )
         return serializer.data
 
     def get_promoted_conversations(self, request, is_promoted_queryset, text_contains):
         if text_contains:
-            is_promoted_queryset = is_promoted_queryset.filter(text__icontains=text_contains)
+            is_promoted_queryset = is_promoted_queryset.filter(
+                text__icontains=text_contains
+            )
         serializer = ParticipantConversationSerializer(
             is_promoted_queryset, many=True, context={"request": request}
         )
@@ -213,7 +233,9 @@ class ConversationViewSet(RestAPIBaseViewSet):
 
         if text_contains:
             queryset = queryset.filter(text__icontains=text_contains)
-        serializer = ParticipantConversationSerializer(queryset, many=True, context={"request": request})
+        serializer = ParticipantConversationSerializer(
+            queryset, many=True, context={"request": request}
+        )
         return serializer.data
 
 

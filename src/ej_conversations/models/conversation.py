@@ -10,15 +10,14 @@ from django.core.exceptions import ValidationError
 from django.db.models.functions import Length
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from model_utils.models import TimeStampedModel
-from sidekick import lazy, placeholder as this, property as property
-from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
-
 from ej.components.menu import CustomizeMenuMixin
 from ej.utils.functional import deprecate_lazy
 from ej.utils.url import SafeUrl
 from ej_boards.models import Board
+from model_utils.models import TimeStampedModel
+from sidekick import lazy, placeholder as this, property as property
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 
 from ..enums import Choice
 from ..signals import comment_moderated
@@ -58,7 +57,9 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="conversations",
-        help_text=_("Only the author and administrative staff can edit this conversation."),
+        help_text=_(
+            "Only the author and administrative staff can edit this conversation."
+        ),
     )
     moderators = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -71,13 +72,16 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
     is_promoted = models.BooleanField(
         _("Promote conversation?"),
         default=False,
-        help_text=_("Promoted conversations appears in the main /conversations/ " "endpoint."),
+        help_text=_(
+            "Promoted conversations appears in the main /conversations/ " "endpoint."
+        ),
     )
     is_hidden = models.BooleanField(
         _("Hide conversation?"),
         default=False,
         help_text=_(
-            "Hidden conversations does not appears in boards or in the main /conversations/ " "endpoint."
+            "Hidden conversations does not appears in boards or in the main /conversations/ "
+            "endpoint."
         ),
     )
     anonymous_votes_limit = models.IntegerField(
@@ -110,7 +114,9 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
 
     @property
     def users(self):
-        return get_user_model().objects.filter(votes__comment__conversation=self).distinct()
+        return (
+            get_user_model().objects.filter(votes__comment__conversation=self).distinct()
+        )
 
     # Comment managers
     def _filter_comments(*args):
@@ -122,7 +128,9 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
     rejected_comments = _filter_comments("rejected")
     pending_comments = _filter_comments("pending")
     poll_comments = property(
-        this.approved_comments.annotate(text_len=Length("content")).filter(text_len__lt=101)
+        this.approved_comments.annotate(text_len=Length("content")).filter(
+            text_len__lt=101
+        )
     )
     del _filter_comments
 
@@ -144,7 +152,8 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
 
     # Statistics
     n_comments = deprecate_lazy(
-        this.n_approved_comments, "Conversation.n_comments was deprecated in favor of .n_approved_comments."
+        this.n_approved_comments,
+        "Conversation.n_comments was deprecated in favor of .n_approved_comments.",
     )
     n_approved_comments = lazy(this.approved_comments.count())
     n_pending_comments = lazy(this.pending_comments.count())
@@ -161,9 +170,15 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
     user_comments = property(this.comments.filter(author=this.for_user))
     user_votes = property(this.votes.filter(author=this.for_user))
     n_user_total_comments = lazy(this.user_comments.count())
-    n_user_comments = lazy(this.user_comments.filter(status=Comment.STATUS.approved).count())
-    n_user_rejected_comments = lazy(this.user_comments.filter(status=Comment.STATUS.rejected).count())
-    n_user_pending_comments = lazy(this.user_comments.filter(status=Comment.STATUS.pending).count())
+    n_user_comments = lazy(
+        this.user_comments.filter(status=Comment.STATUS.approved).count()
+    )
+    n_user_rejected_comments = lazy(
+        this.user_comments.filter(status=Comment.STATUS.rejected).count()
+    )
+    n_user_pending_comments = lazy(
+        this.user_comments.filter(status=Comment.STATUS.pending).count()
+    )
     n_user_votes = lazy(this.user_votes.count())
     n_user_final_votes = lazy(this.user_votes.exclude(choice=Choice.SKIP).count())
     is_user_favorite = lazy(this.is_favorite(this.for_user))
@@ -215,7 +230,10 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
             user = request_or_user.user
             request = request_or_user
 
-        if self.__dict__.get("for_user", user) != user or self.__dict__.get("request", request) != request:
+        if (
+            self.__dict__.get("for_user", user) != user
+            or self.__dict__.get("request", request) != request
+        ):
             raise ValueError("user/request already set in conversation!")
 
         self.for_user = user
@@ -228,8 +246,14 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
 
     def clean(self):
         can_edit = "ej.can_edit_conversation"
-        if self.is_promoted and self.author_id is not None and not self.author.has_perm(can_edit, self):
-            raise ValidationError(_("User does not have permission to create a promoted " "conversation."))
+        if (
+            self.is_promoted
+            and self.author_id is not None
+            and not self.author.has_perm(can_edit, self)
+        ):
+            raise ValidationError(
+                _("User does not have permission to create a promoted " "conversation.")
+            )
 
     def get_absolute_url(self, board=None):
         if board is None:
@@ -276,7 +300,11 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
         raise ValidationError("Board should not be None")
 
     def get_url_kwargs(self):
-        return {"conversation_id": self.id, "slug": self.slug, "board_slug": self.board.slug}
+        return {
+            "conversation_id": self.id,
+            "slug": self.slug,
+            "board_slug": self.board.slug,
+        }
 
     def votes_for_user(self, user):
         """
@@ -286,7 +314,9 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
             return Vote.objects.none()
         return self.votes.filter(author=user)
 
-    def create_comment(self, author, content, commit=True, *, status=None, check_limits=True, **kwargs):
+    def create_comment(
+        self, author, content, commit=True, *, status=None, check_limits=True, **kwargs
+    ):
         """
         Create a new comment object for the given user.
 
@@ -299,7 +329,8 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
 
         # Convert status, if necessary
         if status is None and (
-            author.id == self.author.id or author.has_perm("ej.can_edit_conversation", self)
+            author.id == self.author.id
+            or author.has_perm("ej.can_edit_conversation", self)
         ):
             kwargs["status"] = Comment.STATUS.approved
 
@@ -310,11 +341,6 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
         if check_limits and not author.has_perm("ej.can_comment", self):
             log.info("failed attempt to create comment by %s" % author)
             raise PermissionError("user cannot comment on conversation.")
-
-        # Check if comment is created with rejected status
-        if status == Comment.STATUS.rejected:
-            msg = _("automatically rejected")
-            kwargs.setdefault("rejection_reason", msg)
 
         kwargs.update(author=author, content=content.strip())
         comment = make_clean(Comment, commit, conversation=self, **kwargs)
@@ -357,7 +383,9 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
 
         if comment_id:
             try:
-                return self.approved_comments.exclude(votes__author=user).get(id=comment_id)
+                return self.approved_comments.exclude(votes__author=user).get(
+                    id=comment_id
+                )
             except Exception as e:
                 pass
         return self.next_comment(user)
@@ -367,7 +395,9 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
         reaches_anonymous_particiption_limit checks if anonymous user reaches the
         limit for anonymous participation.
         """
-        user_is_anonymous = user.is_anonymous or re.match(r"^anonymoususer-.*", user.email)
+        user_is_anonymous = user.is_anonymous or re.match(
+            r"^anonymoususer-.*", user.email
+        )
         return (
             user_is_anonymous
             and self.anonymous_votes_limit
@@ -393,11 +423,18 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
             return n_user_final_votes
         return n_user_final_votes + 1
 
-    def can_add_comment(self, user, n_comments, max_comments):
+    def user_can_add_comment(self, user, user_comments: int):
         """
         check if user can add new comments to conversation
+
+        :param user_comments: number of comments created by user
+        :param max_comments: max comments allowed per user
         """
-        return n_comments >= max_comments or user.is_superuser or self.author == user
+        return (
+            user_comments < rules.compute("ej.max_comments_per_conversation")
+            or user.is_superuser
+            or self.author == user
+        )
 
 
 #

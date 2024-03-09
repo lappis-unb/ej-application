@@ -49,7 +49,9 @@ def link_attrs(href="#", target=None, **kwargs):
 
 def link_kwargs(href="#", action=NOT_GIVEN, args=(), **kwargs):
     kwargs = {
-        "href": _normalize_href(href, kwargs.pop("url_args", None), kwargs.pop("query", None)),
+        "href": _normalize_href(
+            href, kwargs.pop("url_args", None), kwargs.pop("query", None)
+        ),
         "class": _normalize_class(kwargs),
         "up-instant": kwargs.pop("instant", True),
         "up-restore-scroll": kwargs.pop("scroll", False),
@@ -159,7 +161,9 @@ def span_icon(text, icon=None, icon_description=None, **kwargs):
     href can be given towraps content inside an <a> tag.
     """
     text = "" if text is None else str(text)
-    kwargs["children"] = [_icon(icon, icon_description=icon_description), text] if icon else [text]
+    kwargs["children"] = (
+        [_icon(icon, icon_description=icon_description), text] if icon else [text]
+    )
     return a_or_span(**kwargs).add_class("span-icon")
 
 
@@ -201,7 +205,9 @@ def progress_bar(*args, **kwargs):
         n, total = args
         pc = round(100 * (n + e) / (total + e))
         text = kwargs.pop("text", "")
-        aria_msg = _("Your progress: {n} of {total} {text}").format(n=n, total=total, text=text)
+        aria_msg = _("Your progress: {n} of {total} {text}").format(
+            n=n, total=total, text=text
+        )
 
     # Build children
     children = [
@@ -218,7 +224,9 @@ def progress_bar(*args, **kwargs):
     extended_text = kwargs.pop("extended_text", "/")
     if total is not None:
         children.append(
-            div([strong(n), extended_text, total, text], aria_hidden="true").add_class("progress-bar__text")
+            div([strong(n), extended_text, total, text], aria_hidden="true").add_class(
+                "progress-bar__text"
+            )
         )
 
     # Return
@@ -244,7 +252,8 @@ def popup(title, content, action=None, **kwargs):
         [
             icon("times-circle", class_="popup__close", is_component="popup:close"),
             div(
-                [h1([title], class_="title"), p(content), action and div(action)], class_="popup__contents"
+                [h1([title], class_="title"), p(content), action and div(action)],
+                class_="popup__contents",
             ),
         ],
         **kwargs,
@@ -266,9 +275,9 @@ def toast(icon, title, description=None, **kwargs):
     body = [h1(title)]
     if description:
         body.append(p(description))
-    return div([_icon(icon, class_="toast__icon"), div(body, class_="toast__content")], **kwargs).add_class(
-        "toast"
-    )
+    return div(
+        [_icon(icon, class_="toast__icon"), div(body, class_="toast__content")], **kwargs
+    ).add_class("toast")
 
 
 def description(items, **kwargs):

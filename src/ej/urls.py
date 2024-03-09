@@ -25,12 +25,18 @@ from rest_framework.routers import DefaultRouter
 unregister_admin.unregister_apps()
 
 api_router = DefaultRouter()
-api_router.register(r"rasa-conversations", RasaConversationViewSet, basename="v1-rasa-conversations")
-api_router.register(r"opinion-component", OpinionComponentViewSet, basename="v1-opinion-component")
+api_router.register(
+    r"rasa-conversations", RasaConversationViewSet, basename="v1-rasa-conversations"
+)
+api_router.register(
+    r"opinion-component", OpinionComponentViewSet, basename="v1-opinion-component"
+)
 api_router.register(r"conversations", ConversationViewSet, basename="v1-conversations")
 api_router.register(r"comments", CommentViewSet, basename="v1-comments")
 api_router.register(r"votes", VoteViewSet, basename="v1-votes")
-api_router.register(r"clusterizations", ClusterizationViewSet, basename="v1-clusterizations")
+api_router.register(
+    r"clusterizations", ClusterizationViewSet, basename="v1-clusterizations"
+)
 api_router.register(r"profiles", ProfileViewSet, basename="v1-profiles")
 api_router.register(r"boards", BoardViewSet, basename="v1-boards")
 api_router.register(r"users", UsersViewSet, basename="v1-users")
@@ -102,9 +108,13 @@ def get_urlpatterns():
         #  Conversations and other EJ-specific routes
         path(
             "conversations/",
-            include("ej_conversations.urls.public_conversations", namespace="conversation"),
+            include(
+                "ej_conversations.urls.public_conversations", namespace="conversation"
+            ),
         ),
-        path("comments/", include("ej_conversations.urls.comments", namespace="comments")),
+        path(
+            "comments/", include("ej_conversations.urls.comments", namespace="comments")
+        ),
         #
         #  Profile URLS
         path("profile/", include("ej_profiles.urls", namespace="profile")),
@@ -117,7 +127,10 @@ def get_urlpatterns():
         #
         #  Global stereotype and cluster management
         path("conversations/", include("ej_clusters.urls.clusters", namespace="cluster")),
-        path("stereotypes/", include("ej_clusters.urls.stereotypes", namespace="stereotypes")),
+        path(
+            "stereotypes/",
+            include("ej_clusters.urls.stereotypes", namespace="stereotypes"),
+        ),
         #
         #  Documentation in development mode
         re_path(r"^docs/$", serve, {"document_root": "build/docs", "path": "index.html"}),
@@ -155,7 +168,9 @@ def get_urlpatterns():
         patterns.extend(
             [
                 path(
-                    "error/400/", default_views.bad_request, kwargs={"exception": Exception("Bad Request!")}
+                    "error/400/",
+                    default_views.bad_request,
+                    kwargs={"exception": Exception("Bad Request!")},
                 ),
                 path(
                     "error/403/",

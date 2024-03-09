@@ -60,7 +60,10 @@ def get_cluster_or_404(cluster_id, conversation=None):
     Return cluster and checks if cluster belongs to conversation
     """
     cluster = get_object_or_404(Cluster, id=cluster_id)
-    if conversation is not None and cluster.clusterization.conversation_id != conversation.id:
+    if (
+        conversation is not None
+        and cluster.clusterization.conversation_id != conversation.id
+    ):
         raise Http404
     return cluster
 
@@ -178,7 +181,9 @@ def votes_as_dataframe(votes):
         "conversation_id",
         "choice",
     )
-    votes_timestamps = list(map(lambda x: x[0].timestamp(), list(votes.values_list("created"))))
+    votes_timestamps = list(
+        map(lambda x: x[0].timestamp(), list(votes.values_list("created")))
+    )
     df["created"] = votes_timestamps
     df.choice = list(map({-1: "disagree", 1: "agree", 0: "skip"}.get, df["choice"]))
     return df
@@ -214,11 +219,15 @@ def get_biggest_cluster(clusterization):
     return None
 
 
-def create_stereotype_coords(conversation, table, comments: list, transformer: Callable, kwargs: dict):
+def create_stereotype_coords(
+    conversation, table, comments: list, transformer: Callable, kwargs: dict
+):
     if apps.is_installed("ej_clusters") and getattr(conversation, "clusterization", None):
         from ej_clusters.models import Stereotype
 
-        labels = conversation.clusterization.clusters.all().dataframe("name", index="users")
+        labels = conversation.clusterization.clusters.all().dataframe(
+            "name", index="users"
+        )
         if labels.shape != (0, 0):
             table["cluster"] = labels.loc[labels.index.values != None]
             table["cluster"].fillna(__("*Unknown*"), inplace=True)
@@ -245,12 +254,15 @@ def create_stereotype_coords(conversation, table, comments: list, transformer: C
                 }
 
 
-def format_echarts_option(data, user_coords, stereotype_coords, extra_fields: list, labels=None):
+def format_echarts_option(
+    data, user_coords, stereotype_coords, extra_fields: list, labels=None
+):
     """
     Format option JSON for echarts.
     """
     visual_map = [
-        {"dimension": n, **FIELD_DATA[f]["visual_map"]} for n, f in enumerate(extra_fields[1:], 3)
+        {"dimension": n, **FIELD_DATA[f]["visual_map"]}
+        for n, f in enumerate(extra_fields[1:], 3)
     ]
     if labels is not None:
         clusters = [*pd.unique(labels.values.flat), _("*Unknown*")]
@@ -323,11 +335,12 @@ def get_biggest_cluster_data(cluster, cluster_as_dataframe):
     import math
 
     try:
-        positive_comment_content = cluster_as_dataframe.sort_values("agree", ascending=False).iloc[0][
-            "comment"
-        ]
+        positive_comment_content = cluster_as_dataframe.sort_values(
+            "agree", ascending=False
+        ).iloc[0]["comment"]
         positive_comment_percent = math.trunc(
-            cluster_as_dataframe.sort_values("agree", ascending=False).iloc[0]["agree"] * 100
+            cluster_as_dataframe.sort_values("agree", ascending=False).iloc[0]["agree"]
+            * 100
         )
         return {
             "name": cluster.name,
@@ -342,7 +355,9 @@ def get_biggest_cluster_data(cluster, cluster_as_dataframe):
 def get_dashboard_biggest_cluster(request, conversation, clusterization):
     biggest_cluster = get_biggest_cluster(clusterization)
     if biggest_cluster:
-        biggest_cluster_df = comments_data_cluster(request, conversation, None, biggest_cluster.id)
+        biggest_cluster_df = comments_data_cluster(
+            request, conversation, None, biggest_cluster.id
+        )
         return get_biggest_cluster_data(biggest_cluster, biggest_cluster_df)
     return {}
 

@@ -83,7 +83,9 @@ def kmeans_stereotypes(data, stereotypes, max_iter=20, distance=None, aggregator
     return labels, centroids
 
 
-def kmeans_run(data, k: int, max_iter=10, init_centroids=None, distance=None, aggregator=None):
+def kmeans_run(
+    data, k: int, max_iter=10, init_centroids=None, distance=None, aggregator=None
+):
     """
     Compute a single k-means run with at most max_iter iterations.
 

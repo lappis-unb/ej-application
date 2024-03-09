@@ -5,7 +5,15 @@ from invoke import task
 
 from .base import set_theme, manage, directory
 
-__all__ = ["clean_migrations", "collect", "gunicorn", "manage_", "notebook", "run", "shell"]
+__all__ = [
+    "clean_migrations",
+    "collect",
+    "gunicorn",
+    "manage_",
+    "notebook",
+    "run",
+    "shell",
+]
 
 
 @task
@@ -27,20 +35,30 @@ def clean_migrations(_ctx, all=False, yes=False):
                 migrations.remove("__pycache__")
             if all:
                 remove_files.extend(
-                    [f"{migrations_path}{f}" for f in migrations if all_migration.fullmatch(f)]
+                    [
+                        f"{migrations_path}{f}"
+                        for f in migrations
+                        if all_migration.fullmatch(f)
+                    ]
                 )
             elif sorted(migrations) == ["__init__.py", "0001_initial.py"]:
                 remove_files.append(f"{migrations_path}/0001_initial.py")
             else:
                 remove_files.extend(
-                    [f"{migrations_path}/{f}" for f in migrations if auto_migration.fullmatch(f)]
+                    [
+                        f"{migrations_path}/{f}"
+                        for f in migrations
+                        if auto_migration.fullmatch(f)
+                    ]
                 )
 
     print("Listing auto migrations")
     for file in remove_files:
         print(f"* {file}")
     if all:
-        print("REMOVING ALL MIGRATIONS IS DANGEROUS AND SHOULD ONLY BE " "USED IN TESTING")
+        print(
+            "REMOVING ALL MIGRATIONS IS DANGEROUS AND SHOULD ONLY BE " "USED IN TESTING"
+        )
     if yes or input("Remove those files? (y/N)").lower() == "y":
         for file in remove_files:
             os.remove(file)
@@ -78,11 +96,16 @@ def collect(ctx, theme=None):
                 fd.write(open(from_path).read())
 
     # collectstatic will watch static files from settings/paths.py
-    manage(ctx, "collectstatic --i node_modules -i *.json -i *.scss -i scss -i *.ts -i ts --noinput")
+    manage(
+        ctx,
+        "collectstatic --i node_modules -i *.json -i *.scss -i scss -i *.ts -i ts --noinput",
+    )
 
 
 @task
-def gunicorn(_ctx, debug=None, environment="production", port=8000, workers=0, theme=None):
+def gunicorn(
+    _ctx, debug=None, environment="production", port=8000, workers=0, theme=None
+):
     """
     Run application using gunicorn for production deploys.
 

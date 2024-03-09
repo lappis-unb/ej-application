@@ -12,7 +12,9 @@ from .stereotype_vote import StereotypeVote
 
 pd = import_later("pandas")
 np = import_later("numpy")
-clusterization_pipeline = import_later("..math:clusterization_pipeline", package=__package__)
+clusterization_pipeline = import_later(
+    "..math:clusterization_pipeline", package=__package__
+)
 
 
 class Cluster(TimeStampedModel):
@@ -20,7 +22,9 @@ class Cluster(TimeStampedModel):
     Represents an opinion group.
     """
 
-    clusterization = models.ForeignKey("Clusterization", on_delete=models.CASCADE, related_name="clusters")
+    clusterization = models.ForeignKey(
+        "Clusterization", on_delete=models.CASCADE, related_name="clusters"
+    )
     name = models.CharField(_("Name"), max_length=64)
     description = models.TextField(
         _("Description"), blank=True, help_text=_("How was this cluster conceived?")
@@ -37,7 +41,9 @@ class Cluster(TimeStampedModel):
 
     @property
     def stereotype_votes(self):
-        return self.clusterization.stereotype_votes.filter(author__in=self.stereotypes.all())
+        return self.clusterization.stereotype_votes.filter(
+            author__in=self.stereotypes.all()
+        )
 
     n_votes = lazy(this.votes.count())
     n_users = lazy(this.users.count())
@@ -46,7 +52,9 @@ class Cluster(TimeStampedModel):
 
     def __str__(self):
         msg = _('{name} ("{conversation}" conversation, {n} users)')
-        return msg.format(name=self.name, conversation=self.conversation, n=self.users.count())
+        return msg.format(
+            name=self.name, conversation=self.conversation, n=self.users.count()
+        )
 
     def get_absolute_url(self):
         args = {
@@ -61,9 +69,9 @@ class Cluster(TimeStampedModel):
         Return the mean stereotype for cluster.
         """
         stereotypes = self.stereotypes.all()
-        votes = StereotypeVote.objects.filter(author__in=Subquery(stereotypes.values("id"))).values_list(
-            "comment", "choice"
-        )
+        votes = StereotypeVote.objects.filter(
+            author__in=Subquery(stereotypes.values("id"))
+        ).values_list("comment", "choice")
         df = pd.DataFrame(list(votes), columns=["comment", "choice"])
         if len(df) == 0:
             return pd.DataFrame([], columns=["choice"])
@@ -91,7 +99,9 @@ class Cluster(TimeStampedModel):
         total = n_agree + n_disagree + (table == 0).sum() + tol
 
         d_agree = dict(((n_agree[n_agree >= n_disagree] + tol) / total).dropna().items())
-        d_disagree = dict(((n_disagree[n_disagree > n_agree] + tol) / total).dropna().items())
+        d_disagree = dict(
+            ((n_disagree[n_disagree > n_agree] + tol) / total).dropna().items()
+        )
 
         agree = []
         disagree = []

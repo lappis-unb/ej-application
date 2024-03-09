@@ -131,7 +131,10 @@ class TestGetViews:
 
     def test_random_comment_with_id_endpoint(self, comments):
         comment = comments[1]
-        path = BASE_URL + f"/conversations/{comment.conversation.id}/random-comment/?id={comment.id}"
+        path = (
+            BASE_URL
+            + f"/conversations/{comment.conversation.id}/random-comment/?id={comment.id}"
+        )
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data
         assert data["content"] == comment.content
@@ -148,7 +151,8 @@ class TestGetViews:
         api.post(voting_path, post_data)
 
         comment_path = (
-            BASE_URL + f"/conversations/{comment.conversation.id}/random-comment/?id={comment.id}"
+            BASE_URL
+            + f"/conversations/{comment.conversation.id}/random-comment/?id={comment.id}"
         )
         data = api.get(comment_path, format="json").data
         # random-comment route should never return an voted comment, even if id is present.
@@ -161,7 +165,10 @@ class TestGetViews:
         assert "card" in data[0]
 
     def test_search_conversation(self, conversation):
-        path = BASE_URL + f"/conversations/?is_promoted=true&text_contains={conversation.text}"
+        path = (
+            BASE_URL
+            + f"/conversations/?is_promoted=true&text_contains={conversation.text}"
+        )
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})
         data = api.get(path, format="json").data
         assert "card" in data[0]
@@ -201,7 +208,9 @@ class TestGetViews:
         assert type(data) == list
         assert data[0].get("id") == VOTES[0].get("id")
         assert data[0].get("content") == VOTES[0].get("content")
-        assert data[0].get("author__metadata__mautic_id") == VOTES[0].get("author__metadata__mautic_id")
+        assert data[0].get("author__metadata__mautic_id") == VOTES[0].get(
+            "author__metadata__mautic_id"
+        )
         assert data[0].get("author__metadata__analytics_id") == VOTES[0].get(
             "author__metadata__analytics_id"
         )
@@ -214,9 +223,14 @@ class TestApiRoutes:
 
     def test_post_conversation(self, api, user):
         path = BASE_URL + f"/conversations/"
-        board = Board.objects.create(slug="board1", title="My Board", owner=user, description="board")
+        board = Board.objects.create(
+            slug="board1", title="My Board", owner=user, description="board"
+        )
         post_data = dict(
-            title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id, board=board.id
+            title=CONVERSATION["title"],
+            text=CONVERSATION["text"],
+            author=user.id,
+            board=board.id,
         )
 
         # Non authenticated user
@@ -231,9 +245,14 @@ class TestApiRoutes:
 
     def test_delete_conversation(self, user):
         path = BASE_URL + f"/conversations/"
-        board = Board.objects.create(slug="board1", title="My Board", owner=user, description="board")
+        board = Board.objects.create(
+            slug="board1", title="My Board", owner=user, description="board"
+        )
         post_data = dict(
-            title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id, board=board.id
+            title=CONVERSATION["title"],
+            text=CONVERSATION["text"],
+            author=user.id,
+            board=board.id,
         )
 
         # Authenticated user
@@ -247,9 +266,14 @@ class TestApiRoutes:
 
     def test_update_conversation(self, user):
         path = BASE_URL + f"/conversations/"
-        board = Board.objects.create(slug="board1", title="My Board", owner=user, description="board")
+        board = Board.objects.create(
+            slug="board1", title="My Board", owner=user, description="board"
+        )
         post_data = dict(
-            title=CONVERSATION["title"], text=CONVERSATION["text"], author=user.id, board=board.id
+            title=CONVERSATION["title"],
+            text=CONVERSATION["text"],
+            author=user.id,
+            board=board.id,
         )
 
         # Authenticated user
@@ -292,7 +316,9 @@ class TestApiRoutes:
 
         # Check if endpoint matches...
         comment = Comment.objects.first()
-        auth_token = api.post(BASE_URL + "/login/", {"email": "email@server.com", "password": "password"})
+        auth_token = api.post(
+            BASE_URL + "/login/", {"email": "email@server.com", "password": "password"}
+        )
         data = api.client.get(
             comments_path + f"{comment.id}/",
             {},
@@ -537,7 +563,9 @@ class TestConversartionStatistics(ConversationRecipes):
         assert vote_count_result == 0
 
         user = mk_user(email="user@domain.com")
-        comment = conversation.create_comment(user, "aa", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user, "aa", status="approved", check_limits=False
+        )
         comment.vote(user, "agree")
         vote_count_result = vote_count(conversation)
         assert vote_count_result == 1
@@ -548,13 +576,17 @@ class TestConversartionStatistics(ConversationRecipes):
         vote_count_result = vote_count(conversation, Choice.AGREE)
         assert vote_count_result == 0
 
-        comment = conversation.create_comment(user, "aa", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user, "aa", status="approved", check_limits=False
+        )
         comment.vote(user, "agree")
         vote_count_result = vote_count(conversation, Choice.AGREE)
         assert vote_count_result == 1
 
         other = mk_user(email="other@domain.com")
-        comment = conversation.create_comment(user, "ab", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user, "ab", status="approved", check_limits=False
+        )
         comment.vote(other, "disagree")
         vote_count_result = vote_count(conversation, Choice.AGREE)
         assert vote_count_result == 1
@@ -565,7 +597,9 @@ class TestConversartionStatistics(ConversationRecipes):
         vote_count_result = vote_count(conversation, Choice.DISAGREE)
         assert vote_count_result == 0
 
-        comment = conversation.create_comment(user, "ac", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user, "ac", status="approved", check_limits=False
+        )
         comment.vote(user, "disagree")
         vote_count_result = vote_count(conversation, Choice.DISAGREE)
         assert vote_count_result == 1
@@ -576,7 +610,9 @@ class TestConversartionStatistics(ConversationRecipes):
         vote_count_result = vote_count(conversation, Choice.SKIP)
         assert vote_count_result == 0
 
-        comment = conversation.create_comment(user, "ad", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user, "ad", status="approved", check_limits=False
+        )
         comment.vote(user, "skip")
         vote_count_result = vote_count(conversation, Choice.SKIP)
         assert vote_count_result == 1
@@ -635,9 +671,15 @@ class TestConversartionStatistics(ConversationRecipes):
         user1 = mk_user(email="user1@domain.com")
         user2 = mk_user(email="user2@domain.com")
         user3 = mk_user(email="user3@domain.com")
-        comment = conversation.create_comment(user1, "ad", status="approved", check_limits=False)
-        comment2 = conversation.create_comment(user1, "ad2", status="approved", check_limits=False)
-        comment3 = conversation.create_comment(user2, "ad3", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user1, "ad", status="approved", check_limits=False
+        )
+        comment2 = conversation.create_comment(
+            user1, "ad2", status="approved", check_limits=False
+        )
+        comment3 = conversation.create_comment(
+            user2, "ad3", status="approved", check_limits=False
+        )
 
         vote = comment.vote(user1, Choice.AGREE)
         vote.channel = VoteChannels.TELEGRAM
@@ -681,9 +723,15 @@ class TestConversartionStatistics(ConversationRecipes):
         user2 = mk_user(email="user2@domain.com")
         user3 = mk_user(email="user3@domain.com")
 
-        comment = conversation.create_comment(user1, "ad", status="approved", check_limits=False)
-        comment2 = conversation.create_comment(user1, "ad2", status="approved", check_limits=False)
-        comment3 = conversation.create_comment(user2, "ad3", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            user1, "ad", status="approved", check_limits=False
+        )
+        comment2 = conversation.create_comment(
+            user1, "ad2", status="approved", check_limits=False
+        )
+        comment3 = conversation.create_comment(
+            user2, "ad3", status="approved", check_limits=False
+        )
 
         # 3 participantes pelo telegram
         vote = comment.vote(user1, Choice.AGREE)

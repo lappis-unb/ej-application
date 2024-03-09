@@ -12,7 +12,7 @@ from .models import Comment, Conversation
 # Global values and configurations
 #
 @rules.register_value("ej.max_comments_per_conversation")
-def max_comments_per_conversation(conversation, user):
+def max_comments_per_conversation():
     """
     Limit the number of comments in a single conversation
     """
@@ -56,7 +56,9 @@ def next_comment(conversation, user):
     """
     if user.is_authenticated:
         # Non voted user-created comments
-        comments = conversation.approved_comments.filter(author=user).exclude(votes__author=user)
+        comments = conversation.approved_comments.filter(author=user).exclude(
+            votes__author=user
+        )
         size = comments.count()
         if size:
             return comments[randrange(0, size)]
@@ -68,7 +70,9 @@ def next_comment(conversation, user):
             pass
 
         # Comments the user has skip
-        comments = conversation.approved_comments.filter(votes__author=user, votes__choice=Choice.SKIP)
+        comments = conversation.approved_comments.filter(
+            votes__author=user, votes__choice=Choice.SKIP
+        )
         size = comments.count()
         if size:
             return comments[randrange(0, size)]
@@ -87,7 +91,7 @@ def remaining_comments(conversation, user):
         return 0
 
     fn = rules.get_value("ej.max_comments_per_conversation")
-    max_comments = fn(conversation, user)
+    max_comments = fn()
     minimum = 1 if user.has_perm("ej.can_edit_conversation", conversation) else 0
     comments = user.comments.filter(conversation=conversation).count()
     return max(max_comments - comments, minimum)
@@ -100,7 +104,9 @@ def comments_under_moderation(conversation, user):
     """
     if user.id is None:
         return 0
-    return user.comments.filter(conversation=conversation, status=Comment.STATUS.pending).count()
+    return user.comments.filter(
+        conversation=conversation, status=Comment.STATUS.pending
+    ).count()
 
 
 @rules.register_value("ej.comments_made")
@@ -170,7 +176,9 @@ def can_edit_conversation(user, conversation):
     """
     if user.id == conversation.author_id:
         return True
-    elif conversation.is_promoted and user.has_perm("ej_conversations.can_publish_promoted"):
+    elif conversation.is_promoted and user.has_perm(
+        "ej_conversations.can_publish_promoted"
+    ):
         return True
     return False
 
@@ -215,4 +223,8 @@ def can_access_tools_page(user, conversation):
 
 @rules.register_perm("ej.can_access_all_conversations")
 def can_access_all_conversations(user):
-    return user.is_staff or user.is_superuser or user.has_perm("ej_conversations.can_publish_promoted")
+    return (
+        user.is_staff
+        or user.is_superuser
+        or user.has_perm("ej_conversations.can_publish_promoted")
+    )

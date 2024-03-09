@@ -17,7 +17,9 @@ DEFAULT_FORMATS = {"csv": "CSV", "json": "JSON"}
 
 
 @with_template(models.Conversation, role="download-data")
-def conversation_download_data(conversation, *, which, formats=None, cluster=None, **url_kwargs):
+def conversation_download_data(
+    conversation, *, which, formats=None, cluster=None, **url_kwargs
+):
     if ":" not in which:
         which = f"boards:dataviz-{which}"
         if cluster is not None:

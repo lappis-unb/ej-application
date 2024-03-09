@@ -39,7 +39,9 @@ class RasaConversation(models.Model):
     @property
     def reached_max_number_of_domains(self):
         try:
-            num_domains = RasaConversation.objects.filter(conversation=self.conversation).count()
+            num_domains = RasaConversation.objects.filter(
+                conversation=self.conversation
+            ).count()
             return num_domains >= MAX_CONVERSATION_DOMAINS
         except Exception as e:
             return False
@@ -75,8 +77,12 @@ class OpinionComponent(models.Model):
     background_image = models.ImageField(
         upload_to="opinion_component/background/", validators=[validate_file_size]
     )
-    logo_image = models.ImageField(upload_to="opinion_component/logo/", validators=[validate_file_size])
-    conversation = models.OneToOneField("ej_conversations.Conversation", on_delete=models.CASCADE)
+    logo_image = models.ImageField(
+        upload_to="opinion_component/logo/", validators=[validate_file_size]
+    )
+    conversation = models.OneToOneField(
+        "ej_conversations.Conversation", on_delete=models.CASCADE
+    )
     final_voting_message = RichTextField()
 
     def get_upload_url(self, request, filename: str) -> str:
@@ -108,7 +114,9 @@ class ConversationMautic(models.Model):
     client_secret = models.CharField(_("Client Secret"), max_length=200)
     access_token = models.CharField(_("Mautic Access Token"), max_length=200, blank=True)
     refresh_token = models.CharField(_("Refresh Token"), max_length=200, blank=True)
-    url = models.URLField(_("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic."))
+    url = models.URLField(
+        _("Mautic URL"), max_length=255, help_text=_("Generated Url from Mautic.")
+    )
     conversation = models.ForeignKey(
         "ej_conversations.Conversation",
         on_delete=models.CASCADE,
@@ -142,10 +150,13 @@ class MauticOauth2Service:
 
     def __init__(self, ej_server_url, conversation_mautic):
         self.conversation_mautic = conversation_mautic
-        self.redirect_uri = ej_server_url + self.conversation_mautic.conversation.patch_url(
-            "conversation-tools:mautic"
+        self.redirect_uri = (
+            ej_server_url
+            + self.conversation_mautic.conversation.patch_url("conversation-tools:mautic")
         )
-        self.oauth2_authorization_url = self.conversation_mautic.url + "/oauth/v2/authorize"
+        self.oauth2_authorization_url = (
+            self.conversation_mautic.url + "/oauth/v2/authorize"
+        )
         self.oauth2_token_url = self.conversation_mautic.url + "/oauth/v2/token"
 
     def build_body_params(self, complementary_params={}, grant_type="authorization_code"):
@@ -203,7 +214,9 @@ class MauticOauth2Service:
                 result = json.loads(response.text)
             except:
                 raise ValidationError(_("Couldn't generate tokens."))
-            self.conversation_mautic.save_oauth2_tokens(result["access_token"], result["refresh_token"])
+            self.conversation_mautic.save_oauth2_tokens(
+                result["access_token"], result["refresh_token"]
+            )
         else:
             return None
 
@@ -229,12 +242,16 @@ class MauticOauth2Service:
 
 
 class MauticClient:
-    CONTACT_SEARCH_COMMAND = "?where%5B0%5D%5Bcol%5D=phone&where%5B0%5D%5Bexpr%5D=eq&where%5B0%5D%5Bval%5D="
+    CONTACT_SEARCH_COMMAND = (
+        "?where%5B0%5D%5Bcol%5D=phone&where%5B0%5D%5Bexpr%5D=eq&where%5B0%5D%5Bval%5D="
+    )
     API_CONTACT_ENDPOINT = "/api/contacts"
 
     def __init__(self, conversation_mautic):
         self.conversation_mautic = conversation_mautic
-        self.create_contact_url = conversation_mautic.url + MauticClient.API_CONTACT_ENDPOINT + "/new"
+        self.create_contact_url = (
+            conversation_mautic.url + MauticClient.API_CONTACT_ENDPOINT + "/new"
+        )
 
     def api_headers_with_authorization(self):
         default_headers = {
@@ -270,7 +287,9 @@ class MauticClient:
                 )
             except Exception as e:
                 raise ValidationError(
-                    _("There was an error connection to mautic server, please check your url.")
+                    _(
+                        "There was an error connection to mautic server, please check your url."
+                    )
                 )
 
             if response.status_code == 401:

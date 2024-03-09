@@ -25,13 +25,17 @@ urlpatterns = [
     path(
         f"{account_url}change-password/",
         login_required(
-            allauth.PasswordChangeView.as_view(success_url=reverse_lazy("account:change-password"))
+            allauth.PasswordChangeView.as_view(
+                success_url=reverse_lazy("account:change-password")
+            )
         ),
         name="change-password",
     ),
     path(
         f"{account_url}manage-email/",
-        login_required(allauth.EmailView.as_view(success_url=reverse_lazy("account:manage-email"))),
+        login_required(
+            allauth.EmailView.as_view(success_url=reverse_lazy("account:manage-email"))
+        ),
         name="manage-email",
     ),
 ]

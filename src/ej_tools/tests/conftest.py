@@ -5,7 +5,10 @@ from django.core.files import File
 from ej_conversations.tests.conftest import *
 from ej_tools.models import OpinionComponent
 
-SOME_FILE = settings.BASE_DIR / "src/ej/static/ej/assets/img/tools/opinion-component-default-background.jpg"
+SOME_FILE = (
+    settings.BASE_DIR
+    / "src/ej/static/ej/assets/img/tools/opinion-component-default-background.jpg"
+)
 
 
 @pytest.fixture

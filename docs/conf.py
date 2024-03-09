@@ -62,5 +62,13 @@ man_pages = [("index", "ej", "EJ Documentation", ["""EJ Team"""], 1)]
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ("index", "ej", "EJ Documentation", "EJ Team", "EJ", "Social participation platform", "Miscellaneous"),
+    (
+        "index",
+        "ej",
+        "EJ Documentation",
+        "EJ Team",
+        "EJ",
+        "Social participation platform",
+        "Miscellaneous",
+    ),
 ]

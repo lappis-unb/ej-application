@@ -36,10 +36,14 @@ class ConversationRecipes(BoardRecipes):
         data = super().get_data(request)
         conversation = self.conversation.make(author=data.author, board=data.board)
         comments = [
-            self.comment.make(author=data.author, conversation=conversation, content="comment-author"),
+            self.comment.make(
+                author=data.author, conversation=conversation, content="comment-author"
+            ),
             self.comment.make(author=data.user, conversation=conversation),
         ]
-        votes = [self.vote.make(comment=comment, author=data.user) for comment in comments]
+        votes = [
+            self.vote.make(comment=comment, author=data.user) for comment in comments
+        ]
         return record(data, conversation=conversation, comments=comments, votes=votes)
 
 

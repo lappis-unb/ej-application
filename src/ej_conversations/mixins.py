@@ -124,17 +124,23 @@ class UserMixin(ConversationMixin):
         if votes is None and comments is None:
             votes = db.votes.filter(author__in=self, comment__conversation=conversation)
         if votes is None:
-            votes = comments.votes().filter(author__in=self, comment__conversation=conversation)
+            votes = comments.votes().filter(
+                author__in=self, comment__conversation=conversation
+            )
 
         votes = votes.dataframe("comment", "author", "choice")
-        stats = user_statistics(votes, participation=participation, convergence=convergence, ratios=True)
+        stats = user_statistics(
+            votes, participation=participation, convergence=convergence, ratios=True
+        )
         stats *= normalization
 
         # Extend fields with additional data
         extend_full_fields = [EXTEND_FIELDS.get(x, x) for x in extend_fields]
 
         transforms = {
-            x: EXTEND_FIELDS_VERBOSE.get(x, x) for x in extend_fields if x in EXTEND_FIELDS_VERBOSE
+            x: EXTEND_FIELDS_VERBOSE.get(x, x)
+            for x in extend_fields
+            if x in EXTEND_FIELDS_VERBOSE
         }
 
         # Save extended dataframe
@@ -158,7 +164,9 @@ class UserMixin(ConversationMixin):
 
         # Add phone number to data
         phone_numbers = [
-            user.profile.phone_number if user.profile.phone_number else str(_("No phone number"))
+            user.profile.phone_number
+            if user.profile.phone_number
+            else str(_("No phone number"))
             for user in self
         ]
 
@@ -166,7 +174,9 @@ class UserMixin(ConversationMixin):
         date_joined = []
         for user in self:
             date_joined.append(user.date_joined)
-            users_conversation_cluster = user.clusters.filter(clusterization__conversation=conversation)
+            users_conversation_cluster = user.clusters.filter(
+                clusterization__conversation=conversation
+            )
             if users_conversation_cluster.exists():
                 groups.append(users_conversation_cluster.first().name)
             else:
@@ -207,7 +217,9 @@ def patch_user_class():
         from django.contrib.auth.models import User, UserManager
 
         if get_user_model() is User:
-            UserManager._queryset_class = type("UserQueryset", (UserMixin, UserManager._queryset_class), {})
+            UserManager._queryset_class = type(
+                "UserQueryset", (UserMixin, UserManager._queryset_class), {}
+            )
             return
         else:
             raise ImproperlyConfigured(

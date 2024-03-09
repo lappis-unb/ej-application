@@ -95,12 +95,18 @@ class RegisterView(CreateView):
             if not agree_with_terms:
                 form.add_error(None, _("You must agree with EJ terms before register"))
                 log.info(f"invalid login attempt: {email}")
-                return render(request, self.template_name, self.get_context_data(form=form))
+                return render(
+                    request, self.template_name, self.get_context_data(form=form)
+                )
 
             if not agree_with_privacy_policy:
-                form.add_error(None, _("You must agree with EJ privacy policy before register"))
+                form.add_error(
+                    None, _("You must agree with EJ privacy policy before register")
+                )
                 log.info(f"invalid login attempt: {email}")
-                return render(request, self.template_name, self.get_context_data(form=form))
+                return render(
+                    request, self.template_name, self.get_context_data(form=form)
+                )
 
             try:
                 user = self.create_user(
@@ -111,9 +117,13 @@ class RegisterView(CreateView):
                     agree_with_terms=agree_with_terms,
                     agree_with_privacy_policy=agree_with_privacy_policy,
                 )
-                authenticated_user = auth.authenticate(request, email=user.email, password=password)
+                authenticated_user = auth.authenticate(
+                    request, email=user.email, password=password
+                )
                 auth.login(request, authenticated_user)
-                self.next_url = request.GET.get("next", authenticated_user.profile.default_url())
+                self.next_url = request.GET.get(
+                    "next", authenticated_user.profile.default_url()
+                )
                 response = redirect(self.next_url)
                 response.set_cookie("show_welcome_window", "true")
                 return response
@@ -127,7 +137,9 @@ class RegisterView(CreateView):
         session_key = request.GET.get("sessionKey")
         try:
             if session_key:
-                user = User.objects.create_user_from_session(session_key, email, password, **extra_fields)
+                user = User.objects.create_user_from_session(
+                    session_key, email, password, **extra_fields
+                )
             else:
                 user = User.objects.create_user(email, password, **extra_fields)
 
@@ -174,7 +186,9 @@ class RecoverPasswordView(FormView):
             from_email = f"{settings.DEFAULT_FROM_NAME} <{from_email}>"
         path = reverse("auth:recover-password-token", kwargs={"token": token.url})
         template = get_template("ej_users/recover-password-message.jinja2")
-        email_body = template.render({"url": self.raw_url(request, path)}, request=request)
+        email_body = template.render(
+            {"url": self.raw_url(request, path)}, request=request
+        )
         send_mail(
             subject=_("Please reset your password"),
             message=email_body,
@@ -200,7 +214,9 @@ class RecoverPasswordView(FormView):
 class RecoverPasswordToken(FormView):
     template_name = "ej_users/recover-password-token.jinja2"
 
-    def post(self, request: HttpRequest, token: str, *args: str, **kwargs: Any) -> HttpResponse:
+    def post(
+        self, request: HttpRequest, token: str, *args: str, **kwargs: Any
+    ) -> HttpResponse:
         reset_token = self.get_reset_token()
         user = reset_token.user
         form = forms.PasswordForm(request=request)
@@ -213,7 +229,9 @@ class RecoverPasswordToken(FormView):
             return redirect(self.get_next_url())
 
         return render(
-            request, self.template_name, self.get_context_data(reset_token=reset_token, form=form)
+            request,
+            self.template_name,
+            self.get_context_data(reset_token=reset_token, form=form),
         )
 
     def get_next_url(self):

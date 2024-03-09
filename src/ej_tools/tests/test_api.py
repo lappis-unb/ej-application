@@ -16,10 +16,15 @@ class TestOpinionComponentViewSet:
 
     def test_request_configuration(self, db, client, custom_request, opinion_component):
         api = APIClient()
-        background_image_url = opinion_component.get_upload_url(custom_request, "background_image")
+        background_image_url = opinion_component.get_upload_url(
+            custom_request, "background_image"
+        )
         logo_image_url = opinion_component.get_upload_url(custom_request, "logo_image")
         final_voting_message = opinion_component.final_voting_message
-        endpoint = reverse("v1-opinion-component-detail", kwargs={"pk": opinion_component.conversation.id})
+        endpoint = reverse(
+            "v1-opinion-component-detail",
+            kwargs={"pk": opinion_component.conversation.id},
+        )
         response = api.get(endpoint)
         response_data = response.json()
         assert response.status_code == 200

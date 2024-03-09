@@ -47,7 +47,9 @@ class ProfileForm(EjModelForm):
 
     class Meta:
         model = models.Profile
-        fields = [field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS]
+        fields = [
+            field for field in EDITABLE_FIELDS if field not in EXCLUDE_EDITABLE_FIELDS
+        ]
         widgets = {
             # DateInput seems to not convert data in the database to a proper
             # value. Dates already saved on the database are removed because

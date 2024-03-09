@@ -60,7 +60,10 @@ def environment(autoescape=True, **options):
         **FUNCTIONS,
     )
     env.filters.update(
-        markdown=lambda x: Markup(markdown(x)), pc=format_percent, salt=salt, **hyperpython.jinja2.filters
+        markdown=lambda x: Markup(markdown(x)),
+        pc=format_percent,
+        salt=salt,
+        **hyperpython.jinja2.filters,
     )
     env.install_gettext_translations(translation, newstyle=True)
     return env

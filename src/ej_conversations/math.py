@@ -49,7 +49,9 @@ def comment_statistics(
     table.index.name = "comment"
     if participation:
         participation = len(votes[author].unique())
-    return _statistics(table, convergence=convergence, participation=participation, ratios=ratios)
+    return _statistics(
+        table, convergence=convergence, participation=participation, ratios=ratios
+    )
 
 
 def user_statistics(
@@ -69,7 +71,9 @@ def user_statistics(
     table.index.name = "user"
     if participation:
         participation = len(votes[comment].unique())
-    return _statistics(table, convergence=convergence, participation=participation, ratios=ratios)
+    return _statistics(
+        table, convergence=convergence, participation=participation, ratios=ratios
+    )
 
 
 def _make_table(votes, row, col, choice):
@@ -122,7 +126,9 @@ def compute_convergence(df, agree="agree", disagree="disagree"):
     return abs(df[agree] - df[disagree]) / (df[agree] + df[disagree] + e)
 
 
-def compute_participation(df, n_users, agree="agree", disagree="disagree", skipped="skipped"):
+def compute_participation(
+    df, n_users, agree="agree", disagree="disagree", skipped="skipped"
+):
     """
     Compute the participation ratio column from the total number of users and a
     dataframe that have 'agree', 'disagree' and 'skipped' columns.

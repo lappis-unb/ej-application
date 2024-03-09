@@ -84,7 +84,9 @@ class OpinionComponentView(UpdateView):
 
     def get_object(self, queryset=None):
         try:
-            opinion_component = OpinionComponent.objects.get(conversation=self.conversation)
+            opinion_component = OpinionComponent.objects.get(
+                conversation=self.conversation
+            )
         except OpinionComponent.DoesNotExist:
             opinion_component = None
         return opinion_component
@@ -110,9 +112,13 @@ class OpinionComponentView(UpdateView):
             if self.opinion_component_form.is_valid():
                 self.opinion_component_form.save()
             else:
-                return render(request, self.template_name, self.get_context_data(**kwargs))
+                return render(
+                    request, self.template_name, self.get_context_data(**kwargs)
+                )
 
-        return redirect(self.conversation.patch_url("conversation-tools:opinion-component-preview"))
+        return redirect(
+            self.conversation.patch_url("conversation-tools:opinion-component-preview")
+        )
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         opinion_component = self.get_object()
@@ -178,23 +184,31 @@ def webchat(request, board_slug, conversation_id, slug):
 
     user_can_add = user_can_add_new_domain(request.user, conversation)
     host = get_host_with_schema(request)
-    webchat_preview_url = host + conversation.patch_url("conversation-tools:webchat-preview")
+    webchat_preview_url = host + conversation.patch_url(
+        "conversation-tools:webchat-preview"
+    )
 
     if "webchat-preview" in request.POST:
-        RasaConversation.objects.get_or_create(conversation=conversation, domain=webchat_preview_url)
+        RasaConversation.objects.get_or_create(
+            conversation=conversation, domain=webchat_preview_url
+        )
         return redirect(conversation.patch_url("conversation-tools:webchat-preview"))
 
     if request.method == "POST":
         form = RasaConversationForm(request.POST)
         if not user_can_add:
-            raise PermissionError("user is not allowed to create conversation rasa connections")
+            raise PermissionError(
+                "user is not allowed to create conversation rasa connections"
+            )
         if form.is_valid():
             form.save()
             form = RasaConversationForm()
     else:
         form = RasaConversationForm()
 
-    conversation_rasa_connections = RasaConversation.objects.filter(conversation=conversation)
+    conversation_rasa_connections = RasaConversation.objects.filter(
+        conversation=conversation
+    )
     context = {
         "conversation": conversation,
         "conversation_rasa_connections": conversation_rasa_connections,
@@ -221,12 +235,20 @@ def delete_connection(request, board_slug, conversation_id, slug, connection_id)
     rasa_connection = RasaConversation.objects.get(id=connection_id)
     conversation = Conversation.objects.get(id=conversation_id)
 
-    if user.is_staff or user.is_superuser or rasa_connection.conversation.author.id == user.id:
+    if (
+        user.is_staff
+        or user.is_superuser
+        or rasa_connection.conversation.author.id == user.id
+    ):
         rasa_connection.delete()
     elif rasa_connection.conversation.author.id != user.id:
-        raise PermissionError("cannot delete conversation rasa connections from another user")
+        raise PermissionError(
+            "cannot delete conversation rasa connections from another user"
+        )
     else:
-        raise PermissionError("user is not allowed to delete conversation rasa connections")
+        raise PermissionError(
+            "user is not allowed to delete conversation rasa connections"
+        )
 
     return redirect(conversation.patch_url("conversation-tools:webchat"))
 
@@ -255,15 +277,21 @@ def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
         if form.is_valid():
             conversation_mautic = form.save()
             try:
-                return MauticClient.redirect_to_mautic_oauth2(https_ej_server, conversation_mautic)
+                return MauticClient.redirect_to_mautic_oauth2(
+                    https_ej_server, conversation_mautic
+                )
             except Exception as e:
                 conversation_mautic.delete()
                 error_message = e.message
 
     if request.method == "GET" and request.GET.get("code"):
         try:
-            conversation_mautic = ConversationMautic.objects.get(conversation_id=conversation.id)
-            save_oauth2_tokens(https_ej_server, conversation_mautic, request.GET.get("code"))
+            conversation_mautic = ConversationMautic.objects.get(
+                conversation_id=conversation.id
+            )
+            save_oauth2_tokens(
+                https_ej_server, conversation_mautic, request.GET.get("code")
+            )
         except Exception as e:
             conversation_mautic.delete()
             error_message = e.message
@@ -279,7 +307,9 @@ def mautic(request, board_slug, conversation_id, slug, oauth2_code=None):
 
 
 @can_access_tool_page
-def delete_mautic_connection(request, board_slug, conversation_id, slug, mautic_connection_id):
+def delete_mautic_connection(
+    request, board_slug, conversation_id, slug, mautic_connection_id
+):
     conversation = Conversation.objects.get(id=conversation_id)
     mautic_connection = ConversationMautic.objects.get(conversation_id=conversation_id)
     mautic_connection.delete()

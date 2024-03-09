@@ -15,7 +15,9 @@ class StereotypeListView(ListView):
     template_name = "ej_clusters/stereotypes/list.jinja2"
 
     def get_queryset(self):
-        return self.request.user.stereotypes.prefetch_related("clusters__clusterization__conversation")
+        return self.request.user.stereotypes.prefetch_related(
+            "clusters__clusterization__conversation"
+        )
 
     def get_context_data(self, **kwargs):
         qs = self.get_queryset()
@@ -68,5 +70,7 @@ class StereotypeEditView(UpdateView):
 
     def get_context_data(self, **kwargs):
         stereotype = self.get_object()
-        form = self.kwargs.get("form", self.form_class(request=self.request, instance=stereotype))
+        form = self.kwargs.get(
+            "form", self.form_class(request=self.request, instance=stereotype)
+        )
         return {"form": form, "stereotype": stereotype}

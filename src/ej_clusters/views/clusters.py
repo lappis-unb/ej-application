@@ -48,7 +48,8 @@ class ClustersIndexView(ListView):
         return {
             "conversation": conversation,
             "groups": {
-                cluster.name: f"#cluster-{cluster.id}" for cluster in json_shape_user_group["clusters"]
+                cluster.name: f"#cluster-{cluster.id}"
+                for cluster in json_shape_user_group["clusters"]
             },
             "has_edit_perm": can_edit,
             "edit_link": a(
@@ -74,7 +75,10 @@ class ClustersEditView(UpdateView):
         super().setup(request, *args, **kwargs)
         conversation_id = kwargs["conversation_id"]
         self.conversation = get_object_or_404(Conversation, id=conversation_id)
-        self.post_actions = {"delete": self.handle_delete_cluster, "edit": self.handle_edit_cluster}
+        self.post_actions = {
+            "delete": self.handle_delete_cluster,
+            "edit": self.handle_edit_cluster,
+        }
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         new_cluster_form = forms.ClusterFormNew(user=self.conversation.author)
@@ -103,7 +107,9 @@ class ClustersEditView(UpdateView):
         return self.handle_new_cluster()
 
     def handle_new_cluster(self):
-        new_cluster_form = forms.ClusterFormNew(request=self.request, user=self.conversation.author)
+        new_cluster_form = forms.ClusterFormNew(
+            request=self.request, user=self.conversation.author
+        )
         context_args = {"new_cluster_form": new_cluster_form}
 
         if new_cluster_form.is_valid():
@@ -128,9 +134,15 @@ class ClustersEditView(UpdateView):
 
         if cluster.form.is_valid():
             cluster = cluster.form.save()
-            cluster.form = forms.ClusterForm(instance=cluster, user=self.conversation.author)
+            cluster.form = forms.ClusterForm(
+                instance=cluster, user=self.conversation.author
+            )
 
-        return render(self.request, self.template_name, self.get_context_data(selected_cluster=cluster))
+        return render(
+            self.request,
+            self.template_name,
+            self.get_context_data(selected_cluster=cluster),
+        )
 
     def get_queryset(self):
         clusterization = getattr(self.conversation, "clusterization", None)
@@ -145,7 +157,11 @@ class ClustersEditView(UpdateView):
         )
 
     def get_context_data(
-        self, new_cluster_form=None, selected_cluster=None, show_modal=False, **kwargs: Any
+        self,
+        new_cluster_form=None,
+        selected_cluster=None,
+        show_modal=False,
+        **kwargs: Any,
     ) -> Dict[str, Any]:
         return {
             "conversation": self.conversation,
@@ -172,7 +188,11 @@ class StereotypeVotesView(ListView):
             return render(
                 request,
                 self.template_name,
-                {"conversation": self.conversation, "groups": None, "current_page": "stereotypes"},
+                {
+                    "conversation": self.conversation,
+                    "groups": None,
+                    "current_page": "stereotypes",
+                },
             )
         return super().dispatch(request, *args, **kwargs)
 
@@ -184,7 +204,10 @@ class StereotypeVotesView(ListView):
             raise PermissionError
 
         if "update" in data:
-            action_object_id, action_object_choice = StereotypeVote.parse_choice_from_action(data["update"])
+            (
+                action_object_id,
+                action_object_choice,
+            ) = StereotypeVote.parse_choice_from_action(data["update"])
             vote = StereotypeVote.objects.get(pk=action_object_id)
 
             if action_object_choice == "delete":
@@ -218,7 +241,9 @@ class StereotypeVotesView(ListView):
 class StereotypeVotesOrdenationView(TemplateView):
     template_name = "ej_clusters/stereotype-votes/stereotype-given-votes.jinja2"
 
-    def get(self, request: HttpRequest, conversation_id, *args: Any, **kwargs: Any) -> HttpResponse:
+    def get(
+        self, request: HttpRequest, conversation_id, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
         stereotype_id = request.GET.get("stereotypeId")
         conversation = Conversation.objects.get(id=conversation_id)
 
@@ -232,7 +257,11 @@ class StereotypeVotesOrdenationView(TemplateView):
                 "ej_clusters/stereotype-votes/stereotype-given-votes.jinja2",
                 {
                     "stereotype": stereotype_vote_information(
-                        stereotype, clusterization, conversation, order_votes_by_choice, sort_order
+                        stereotype,
+                        clusterization,
+                        conversation,
+                        order_votes_by_choice,
+                        sort_order,
                     ),
                 },
             )
@@ -243,7 +272,9 @@ class StereotypeVotesOrdenationView(TemplateView):
 
 @method_decorator([login_required, can_edit_conversation], name="dispatch")
 class StereotypeVotesCreateView(CreateView):
-    def get(self, request: HttpRequest, conversation_id, *args: str, **kwargs: Any) -> HttpResponse:
+    def get(
+        self, request: HttpRequest, conversation_id, *args: str, **kwargs: Any
+    ) -> HttpResponse:
         conversation = Conversation.objects.get(id=conversation_id)
         kwargs = conversation.get_url_kwargs()
         return redirect(reverse("boards:cluster-stereotype_votes", kwargs=kwargs))
@@ -260,15 +291,23 @@ class StereotypeVotesCreateView(CreateView):
 
 @method_decorator([login_required, can_edit_conversation], name="dispatch")
 class CtrlView(TemplateView):
-    def get(self, request: HttpRequest, conversation_id, *args: Any, **kwargs: Any) -> HttpResponse:
-        return redirect(reverse("boards:cluster-index", kwargs=self.get_kwargs(conversation_id)))
+    def get(
+        self, request: HttpRequest, conversation_id, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
+        return redirect(
+            reverse("boards:cluster-index", kwargs=self.get_kwargs(conversation_id))
+        )
 
-    def post(self, request: HttpRequest, conversation_id, *args: Any, **kwargs: Any) -> HttpResponse:
+    def post(
+        self, request: HttpRequest, conversation_id, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
         conversation = Conversation.objects.get(id=conversation_id)
         check_promoted(conversation, request)
         if request.POST["action"] == "force-clusterization":
             conversation.clusterization.update_clusterization(force=True)
-        return redirect(reverse("boards:cluster-index", kwargs=self.get_kwargs(conversation_id)))
+        return redirect(
+            reverse("boards:cluster-index", kwargs=self.get_kwargs(conversation_id))
+        )
 
     def get_kwargs(self, conversation_id):
         conversation = Conversation.objects.get(id=conversation_id)

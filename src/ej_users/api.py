@@ -31,7 +31,9 @@ class UserAuthViewSet(viewsets.ViewSet):
 
         token, created = Token.objects.get_or_create(user=user)
         if not token:
-            return Response({"error": _("It was not possible to generate token.")}, status=500)
+            return Response(
+                {"error": _("It was not possible to generate token.")}, status=500
+            )
 
         return Response(
             {"token": token.key},
@@ -54,7 +56,12 @@ class UsersViewSet(viewsets.ModelViewSet):
         token = Token.objects.create(user=user)
         self.check_user_metadata(user, request)
         self.check_profile(user, request)
-        response = {"id": user.id, "name": user.name, "email": user.email, "token": token.key}
+        response = {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "token": token.key,
+        }
         return Response(response)
 
     def check_profile(self, user, request):
@@ -73,13 +80,18 @@ class UsersViewSet(viewsets.ModelViewSet):
         metadata = request.data.get("metadata")
         if metadata:
             MetaData.objects.create(
-                analytics_id=metadata.get("analytics_id"), mautic_id=metadata.get("mautic_id"), user=user
+                analytics_id=metadata.get("analytics_id"),
+                mautic_id=metadata.get("mautic_id"),
+                user=user,
             )
 
     def get_permissions(self):
         try:
             # return permission_classes depending on `action`
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
+            return [
+                permission()
+                for permission in self.permission_classes_by_action[self.action]
+            ]
         except KeyError:
             # action is not set return default permission_classes
             return [permission() for permission in self.permission_classes]

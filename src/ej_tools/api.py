@@ -21,7 +21,9 @@ class OpinionComponentViewSet(viewsets.ViewSet):
         try:
             conversation = Conversation.objects.get(id=pk)
             opinion_component = OpinionComponent.objects.get(conversation=conversation)
-            serializer = OpinionComponentSerializer(opinion_component, context={"request": request})
+            serializer = OpinionComponentSerializer(
+                opinion_component, context={"request": request}
+            )
             return Response(serializer.data)
         except Exception:
             return Response(OpinionComponentSerializer.get_empty_data(request))

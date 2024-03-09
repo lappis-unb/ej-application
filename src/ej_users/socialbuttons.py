@@ -40,7 +40,9 @@ def register_button(provider_id, fa_class=None, query=None):
         providers_classes = providers.registry.get_class_list()
 
         try:
-            Provider = list(filter(lambda provider: provider.id == provider_id, providers_classes))[0]
+            Provider = list(
+                filter(lambda provider: provider.id == provider_id, providers_classes)
+            )[0]
             app = SocialApp.objects.get(provider=provider_id)
             provider = Provider(request, app)
             url = provider.get_login_url(

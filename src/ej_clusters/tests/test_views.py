@@ -39,7 +39,9 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         conversation.save()
         return conversation
 
-    def test_get_stereotype_vote_page_without_stereotypes(self, conversation_with_board, user_db, rf):
+    def test_get_stereotype_vote_page_without_stereotypes(
+        self, conversation_with_board, user_db, rf
+    ):
         Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
@@ -59,7 +61,9 @@ class TestStereotypeVoteRoute(ClusterRecipes):
 
         assert response.status_code == 200
 
-    def test_get_stereotypes_of_conversation_without_clusters(self, conversation_with_board, user_db, rf):
+    def test_get_stereotypes_of_conversation_without_clusters(
+        self, conversation_with_board, user_db, rf
+    ):
         client = Client()
         client.force_login(user_db)
 
@@ -75,7 +79,9 @@ class TestStereotypeVoteRoute(ClusterRecipes):
 
         assert response.status_code == 200
 
-    def test_get_stereotype_vote_page_with_one_stereotype(self, conversation_with_board, user_db, rf):
+    def test_get_stereotype_vote_page_with_one_stereotype(
+        self, conversation_with_board, user_db, rf
+    ):
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
@@ -98,14 +104,18 @@ class TestStereotypeVoteRoute(ClusterRecipes):
 
         assert response.status_code == 200
 
-    def test_get_stereotype_vote_page_with_stereotypes_selected(self, conversation_with_board, user_db, rf):
+    def test_get_stereotype_vote_page_with_stereotypes_selected(
+        self, conversation_with_board, user_db, rf
+    ):
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
 
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=user_db)
-        second_stereotype, _ = Stereotype.objects.get_or_create(name="second stereotype", owner=user_db)
+        second_stereotype, _ = Stereotype.objects.get_or_create(
+            name="second stereotype", owner=user_db
+        )
         cluster.stereotypes.add(stereotype)
         cluster.stereotypes.add(second_stereotype)
 
@@ -159,7 +169,9 @@ class TestStereotypeVoteRoute(ClusterRecipes):
 
         assert response.status_code == 200
 
-    def test_post_delete_stereotype_vote_page_with_stereotypes(self, conversation_with_board, user_db, rf):
+    def test_post_delete_stereotype_vote_page_with_stereotypes(
+        self, conversation_with_board, user_db, rf
+    ):
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
@@ -193,11 +205,15 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         assert response.status_code == 200
 
     def test_auxiliar_parse_choice_from_action(self):
-        response_id, response_choice = StereotypeVote.parse_choice_from_action("delete-id")
+        response_id, response_choice = StereotypeVote.parse_choice_from_action(
+            "delete-id"
+        )
         assert response_id == "id"
         assert response_choice == "delete"
 
-    def test_auxiliar_order_by_stereotype_vote_choice(self, conversation_with_board, user_db):
+    def test_auxiliar_order_by_stereotype_vote_choice(
+        self, conversation_with_board, user_db
+    ):
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )
@@ -224,11 +240,15 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         )
 
         steoreotype_votes_list = clusterization.stereotype_votes.filter(author=stereotype)
-        return_with_agree_first = order_stereotype_votes_by(steoreotype_votes_list, 1, "-")
+        return_with_agree_first = order_stereotype_votes_by(
+            steoreotype_votes_list, 1, "-"
+        )
         assert return_with_agree_first.first() == stereotype_vote_agree
         assert return_with_agree_first.last() == stereotype_vote_disagree
 
-        return_with_disagree_first = order_stereotype_votes_by(steoreotype_votes_list, -1, "-")
+        return_with_disagree_first = order_stereotype_votes_by(
+            steoreotype_votes_list, -1, "-"
+        )
         assert return_with_disagree_first.first() == stereotype_vote_disagree
         assert return_with_disagree_first.last() == stereotype_vote_agree
 
@@ -236,7 +256,9 @@ class TestStereotypeVoteRoute(ClusterRecipes):
         assert return_with_skip_first.first() == stereotype_vote_skip
         assert return_with_skip_first.last() == stereotype_vote_disagree
 
-    def test_auxiliar_post_create_stereotype_vote(self, conversation_with_board, user_db, rf):
+    def test_auxiliar_post_create_stereotype_vote(
+        self, conversation_with_board, user_db, rf
+    ):
         clusterization = Clusterization.objects.create(
             conversation=conversation_with_board, cluster_status=ClusterStatus.ACTIVE
         )

@@ -93,7 +93,9 @@ def statistics(conversation, cache=True):
             webchat=Count("channel", filter=Q(channel=VoteChannels.RASA_WEBCHAT)),
             telegram=Count("channel", filter=Q(channel=VoteChannels.TELEGRAM)),
             whatsapp=Count("channel", filter=Q(channel=VoteChannels.WHATSAPP)),
-            opinion_component=Count("channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)),
+            opinion_component=Count(
+                "channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)
+            ),
             unknown=Count("channel", filter=Q(channel=VoteChannels.UNKNOWN)),
             ej=Count("channel", filter=Q(channel=VoteChannels.EJ)),
         ),
@@ -132,12 +134,16 @@ def statistics_for_user(conversation, user):
     """
     Get information about user.
     """
-    approved_comments_count = conversation.comments.filter(status=Comment.STATUS.approved).count()
+    approved_comments_count = conversation.comments.filter(
+        status=Comment.STATUS.approved
+    ).count()
     given_votes = (
         0
         if user.id is None
         else (
-            models.Vote.objects.filter(comment__conversation_id=conversation.id, author=user)
+            models.Vote.objects.filter(
+                comment__conversation_id=conversation.id, author=user
+            )
             .exclude(choice=0)
             .count()
         )
@@ -159,7 +165,8 @@ def set_date_range(start_date, end_date):
     """
     date_range = end_date - start_date
     initial_values = [
-        {"date": start_date + datetime.timedelta(days=i), "value": 0} for i in range(date_range.days + 1)
+        {"date": start_date + datetime.timedelta(days=i), "value": 0}
+        for i in range(date_range.days + 1)
     ]
     return initial_values
 

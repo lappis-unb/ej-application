@@ -17,7 +17,12 @@ def create_conversation(
         board = User.create_user_default_board(author)
 
     conversation = Conversation(
-        text=text, title=title, author=author, board=board, is_promoted=is_promoted, **kwargs
+        text=text,
+        title=title,
+        author=author,
+        board=board,
+        is_promoted=is_promoted,
+        **kwargs,
     )
     conversation.clean()
     if commit:

@@ -25,7 +25,9 @@ class Clusterization(TimeStampedModel):
     """
 
     conversation = models.OneToOneField(
-        "ej_conversations.Conversation", on_delete=models.CASCADE, related_name="clusterization"
+        "ej_conversations.Conversation",
+        on_delete=models.CASCADE,
+        related_name="clusterization",
     )
     cluster_status = EnumField(ClusterStatus, default=ClusterStatus.PENDING_DATA)
     comments = delegate_to("conversation")
@@ -92,7 +94,9 @@ class Clusterization(TimeStampedModel):
                 self.save()
 
     def get_stereotypes(self):
-        return {stereotype.name: str(stereotype.id) for stereotype in self.stereotypes.all()} or None
+        return {
+            stereotype.name: str(stereotype.id) for stereotype in self.stereotypes.all()
+        } or None
 
     @staticmethod
     def get_default_shape_data():
@@ -117,8 +121,12 @@ class Clusterization(TimeStampedModel):
             exc_name = exc.__class__.__name__
             log.error(f"Error found during clusterization: {exc} ({exc_name})")
             clusters = ()
-            shapes_json = {"shapes": [{"name": _("Error"), "size": 0, "intersections": [[0.0]]}]}
+            shapes_json = {
+                "shapes": [{"name": _("Error"), "size": 0, "intersections": [[0.0]]}]
+            }
         else:
-            user_group = self.clusters.filter(users=user).values_list("name", flat=True).first()
+            user_group = (
+                self.clusters.filter(users=user).values_list("name", flat=True).first()
+            )
 
         return {"json_data": shapes_json, "user_group": user_group, "clusters": clusters}

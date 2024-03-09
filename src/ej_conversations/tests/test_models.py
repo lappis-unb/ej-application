@@ -1,11 +1,9 @@
-import pytest
 from django.core.exceptions import ValidationError
-
 from ej_conversations import create_conversation
-from ej_conversations.enums import Choice
-from ej_conversations.models import Vote
+from ej_conversations.enums import Choice, RejectionReason
+from ej_conversations.models import Vote, Comment
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_users.models import User
+import pytest
 
 ConversationRecipes.update_globals(globals())
 
@@ -20,7 +18,13 @@ class TestConversation(ConversationRecipes):
             mk_comment(other, "aa", status="approved", check_limits=False),
             mk_comment(user, "bb", status="approved", check_limits=False),
             mk_comment(other, "cc", status="pending", check_limits=False),
-            mk_comment(other, "dd", status="rejected", check_limits=False),
+            mk_comment(
+                other,
+                "dd",
+                status="rejected",
+                check_limits=False,
+                rejection_reason=RejectionReason.OFFENSIVE_LANGUAGE,
+            ),
         ]
 
         cmt = conversation.next_comment(user)
@@ -35,13 +39,6 @@ class TestConversation(ConversationRecipes):
         conversation = create_conversation("what?", "test", user_db)
         assert conversation.id is not None
         assert conversation.author == user_db
-
-    def test_can_get_conversations_by_board_url(self, api, db):
-        user = User.objects.create_user("name@server.com", "123")
-        user.board_name = "name"
-        user.save()
-        board_url = "/" + user.board_name + "/"
-        assert api.get(board_url, raw=True).status_code == 200
 
     def test_mark_conversation_favorite(self, mk_conversation, mk_user):
         user = mk_user()
@@ -70,7 +67,7 @@ class TestVote:
             comment_db.vote(user_db, "agree")
 
     def test_create_agree_vote_happy_paths(self, comment_db, mk_user):
-        vote1 = comment_db.vote(mk_user(email="user1@domain.com"), "agree")
+        vote1 = comment_db.vote(mk_user(email="user1@domain.com"), Choice.AGREE)
         assert comment_db.agree_count == 1
         assert comment_db.n_votes == 1
         vote2 = comment_db.vote(mk_user(email="user2@domain.com"), Choice.AGREE)
@@ -99,3 +96,15 @@ class TestVote:
         assert comment_db.skip_count == 2
         assert comment_db.n_votes == 2
         assert vote1.choice == vote2.choice
+
+    def test_user_can_add_comment(self, mk_conversation, mk_user):
+        conversation = mk_conversation()
+        mk_comment = conversation.create_comment
+        participant = mk_user(email="user1@domain.com")
+        mk_comment(participant, "foo", status="approved", check_limits=False)
+        n_comments = participant.comments.filter(conversation=conversation).count()
+        assert conversation.user_can_add_comment(participant, n_comments)
+
+        mk_comment(participant, "bla", status="approved", check_limits=False)
+        n_comments = participant.comments.filter(conversation=conversation).count()
+        assert not conversation.user_can_add_comment(participant, n_comments)

@@ -23,7 +23,9 @@ class TestOpinionComponent(ConversationRecipes):
         file_obj.seek(0)
         return File(file_obj, name=name)
 
-    def test_custom_conversation_component_without_mandatory_fields(self, conversation_db):
+    def test_custom_conversation_component_without_mandatory_fields(
+        self, conversation_db
+    ):
         client = Client()
         client.force_login(conversation_db.author)
 

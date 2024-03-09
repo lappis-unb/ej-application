@@ -37,7 +37,11 @@ class InfoDjangoSettingsView(DetailView):
         return render(request, self.template_name, self.get_context_data())
 
     def get_context_data(self, **kwargs):
-        data = [(name, pformat(getattr(settings, name))) for name in dir(settings) if name.isupper()]
+        data = [
+            (name, pformat(getattr(settings, name)))
+            for name in dir(settings)
+            if name.isupper()
+        ]
         return {"settings_data": sorted(data)}
 
 

@@ -76,7 +76,9 @@ class TestReportRoutes(ClusterRecipes):
         conversation.board = board
         conversation.save()
 
-        comment = conversation.create_comment(author_db, "aa", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            author_db, "aa", status="approved", check_limits=False
+        )
         comment.vote(user1, "agree")
         comment.vote(user2, "agree")
         comment.vote(user3, "disagree")
@@ -94,10 +96,18 @@ class TestReportRoutes(ClusterRecipes):
         conversation.board = board
         conversation.save()
 
-        comment = conversation.create_comment(author_db, "aa", status="approved", check_limits=False)
-        comment2 = conversation.create_comment(author_db, "aaa", status="approved", check_limits=False)
-        comment3 = conversation.create_comment(author_db, "aaaa", status="approved", check_limits=False)
-        comment4 = conversation.create_comment(author_db, "test", status="approved", check_limits=False)
+        comment = conversation.create_comment(
+            author_db, "aa", status="approved", check_limits=False
+        )
+        comment2 = conversation.create_comment(
+            author_db, "aaa", status="approved", check_limits=False
+        )
+        comment3 = conversation.create_comment(
+            author_db, "aaaa", status="approved", check_limits=False
+        )
+        comment4 = conversation.create_comment(
+            author_db, "test", status="approved", check_limits=False
+        )
 
         comment.vote(user1, "agree")
         comment.vote(user2, "agree")
@@ -115,11 +125,15 @@ class TestReportRoutes(ClusterRecipes):
         conversation.save()
         return conversation
 
-    def test_should_get_count_of_votes_in_a_period_of_time(self, conversation_with_votes, logged_client):
+    def test_should_get_count_of_votes_in_a_period_of_time(
+        self, conversation_with_votes, logged_client
+    ):
         conversation = conversation_with_votes
         today = datetime.datetime.now().date()  # 2022-04-04
         one_week_ago = today - datetime.timedelta(days=7)
-        url = reverse("boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs())
+        url = reverse(
+            "boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs()
+        )
         url = url + f"?startDate={one_week_ago}&endDate={today}"
         response = logged_client.get(url)
         data = json.loads(response.content)["data"]
@@ -147,19 +161,27 @@ class TestReportRoutes(ClusterRecipes):
         conversation.board = board
         conversation.save()
 
-        url = reverse("boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs())
+        url = reverse(
+            "boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs()
+        )
         url = url + f"?startDate=2021-10-13&endDate=2021-10-06"
         response = logged_client.get(url)
-        assert json.loads(response.content) == {"error": "end date must be gratter then start date."}
+        assert json.loads(response.content) == {
+            "error": "end date must be gratter then start date."
+        }
 
-    def test_missing_params_should_return_error(self, conversation, board, author_db, logged_client):
+    def test_missing_params_should_return_error(
+        self, conversation, board, author_db, logged_client
+    ):
         conversation.author = author_db
         board.owner = author_db
         board.save()
         conversation.board = board
         conversation.save()
 
-        base_url = reverse("boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs())
+        base_url = reverse(
+            "boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs()
+        )
         response = logged_client.get(base_url)
         assert json.loads(response.content) == {
             "error": "end date and start date should be passed as a parameter."
@@ -177,7 +199,9 @@ class TestReportRoutes(ClusterRecipes):
             "error": "end date and start date should be passed as a parameter."
         }
 
-    def test_conversation_has_stereotypes(self, conversation, board, author_db, logged_client):
+    def test_conversation_has_stereotypes(
+        self, conversation, board, author_db, logged_client
+    ):
         conversation.author = author_db
         board.owner = author_db
         board.save()
@@ -212,7 +236,9 @@ class TestReportRoutes(ClusterRecipes):
         )
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
 
-        clusters_filter = CommentsReportClustersFilter([cluster.id], conversation_with_comments)
+        clusters_filter = CommentsReportClustersFilter(
+            [cluster.id], conversation_with_comments
+        )
         comments_df = clusters_filter.filter()
 
         assert comments_df.iloc[[0]].get("group").item() == cluster.name
@@ -234,7 +260,9 @@ class TestReportRoutes(ClusterRecipes):
         assert len(filtered_comments_df.index) == 4
 
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
-        clusters_filter = CommentsReportClustersFilter([cluster.id], conversation_with_comments)
+        clusters_filter = CommentsReportClustersFilter(
+            [cluster.id], conversation_with_comments
+        )
         filtered_comments_df = clusters_filter.filter()
         assert filtered_comments_df.iloc[[0]].get("group").item() == cluster.name
         assert filtered_comments_df.iloc[[1]].get("group").item() == cluster.name
@@ -276,13 +304,19 @@ class TestReportRoutes(ClusterRecipes):
         clusters_filter = CommentsReportClustersFilter([], conversation_with_comments)
         comments_df = clusters_filter.filter()
 
-        search_filter = CommentsReportSearchFilter("aa", conversation_with_comments.comments, comments_df)
+        search_filter = CommentsReportSearchFilter(
+            "aa", conversation_with_comments.comments, comments_df
+        )
         filtered_comments_df = search_filter.filter()
         assert len(filtered_comments_df.index) == 3
-        search_filter = CommentsReportSearchFilter("aaa", conversation_with_comments.comments, comments_df)
+        search_filter = CommentsReportSearchFilter(
+            "aaa", conversation_with_comments.comments, comments_df
+        )
         filtered_comments_df = search_filter.filter()
         assert len(filtered_comments_df.index) == 2
-        search_filter = CommentsReportSearchFilter("t", conversation_with_comments.comments, comments_df)
+        search_filter = CommentsReportSearchFilter(
+            "t", conversation_with_comments.comments, comments_df
+        )
         filtered_comments_df = search_filter.filter()
         assert len(filtered_comments_df.index) == 1
 
@@ -302,10 +336,14 @@ class TestReportRoutes(ClusterRecipes):
         cluster_db.stereotypes.add(stereotype_vote.author)
         cluster_db.users.add(cluster_db.clusterization.conversation.author)
         cluster_db.save()
-        clusterization = Clusterization.objects.filter(conversation=cluster_db.conversation)
+        clusterization = Clusterization.objects.filter(
+            conversation=cluster_db.conversation
+        )
         assert conversation_has_stereotypes(clusterization)
 
-    def test_get_dashboard_with_clusters(self, cluster_db, stereotype_vote, comment, vote, logged_client):
+    def test_get_dashboard_with_clusters(
+        self, cluster_db, stereotype_vote, comment, vote, logged_client
+    ):
         """
         EJ has several recipes for create objects for testing.
         cluster_db creates objects based on ej_clusters/mommy_recipes.py and testing/fixture_class.py.
@@ -320,14 +358,18 @@ class TestReportRoutes(ClusterRecipes):
         )
         comment.vote(conversation.author, "agree")
         comment.save()
-        dashboard_url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
+        dashboard_url = reverse(
+            "boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()
+        )
         response = logged_client.get(dashboard_url)
         assert response.status_code == 200
         assert response.context["biggest_cluster_data"].get("name") == "cluster"
         assert response.context["biggest_cluster_data"].get("content") == comment.content
         assert response.context["biggest_cluster_data"].get("percentage")
 
-    def test_get_dashboard_without_clusters(self, cluster_db, stereotype_vote, logged_client):
+    def test_get_dashboard_without_clusters(
+        self, cluster_db, stereotype_vote, logged_client
+    ):
         """
         EJ has several recipes for creating objects for testing.
         cluster_db creates objects based on ej_clusters/mommy_recipes.py and testing/fixture_class.py.
@@ -337,7 +379,9 @@ class TestReportRoutes(ClusterRecipes):
         cluster_db.users.add(cluster_db.clusterization.conversation.author)
         cluster_db.save()
         conversation = cluster_db.conversation
-        dashboard_url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
+        dashboard_url = reverse(
+            "boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()
+        )
         response = logged_client.get(dashboard_url)
         assert response.status_code == 200
         assert response.context["biggest_cluster_data"] == {}
