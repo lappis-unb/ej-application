@@ -231,7 +231,6 @@ class Profile(models.Model):
         ).distinct("tag")
 
     def get_contributions_data(self):
-
         # Fetch all conversations the user created
         created = self.user.conversations.cache_annotations(
             "first_tag", "n_user_votes", "n_comments", user=self.user
@@ -259,12 +258,7 @@ class Profile(models.Model):
             favorites__user=self.user
         ).cache_annotations("first_tag", "n_user_votes", "n_comments", user=self.user)
 
-        # Comments
-        comments = self.user.comments.select_related("conversation").annotate(
-            skip_count=Count("votes", filter=Q(votes__choice=0)),
-            agree_count=Count("votes", filter=Q(votes__choice__gt=0)),
-            disagree_count=Count("votes", filter=Q(votes__choice__lt=0)),
-        )
+        comments = self.user.comments
         groups = toolz.groupby(lambda x: x.status, comments)
         approved = groups.get(Comment.STATUS.approved, ())
         rejected = groups.get(Comment.STATUS.rejected, ())

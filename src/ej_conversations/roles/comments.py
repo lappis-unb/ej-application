@@ -99,7 +99,7 @@ def comment_summary(comment: Comment, **kwargs):
 
     return {
         "created": comment.created,
-        "comment_url": comment.comment_url(),
+        "comment_url": comment.conversation.get_absolute_url(),
         "text": comment.content,
         "status": Comment.STATUS[comment.status],
         "status_icon": status_icon.get(comment.status),
