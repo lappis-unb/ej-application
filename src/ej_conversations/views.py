@@ -26,17 +26,10 @@ from ej_tools.utils import get_host_with_schema
 from ej_users.models import User
 
 from . import forms
-from .decorators import (
-    redirect_to_conversation_detail,
-    user_can_post_anonymously,
-)
+from .decorators import redirect_to_conversation_detail, user_can_post_anonymously
 from .forms import CommentForm, ConversationForm
 from .models import Comment, Conversation
-from .utils import (
-    handle_detail_comment,
-    handle_detail_favorite,
-    handle_detail_vote,
-)
+from .utils import handle_detail_comment, handle_detail_favorite, handle_detail_vote
 
 log = getLogger("ej")
 
@@ -82,7 +75,7 @@ class ConversationCommonView:
         conversation: Conversation = self.get_object()
         user = User.get_or_create_from_session(conversation, self.request)
         comment = self.get_comment(conversation, user)
-        max_comments = max_comments_per_conversation(conversation, user)
+        max_comments = max_comments_per_conversation()
         conversation.set_request(self.request)
         n_comments, n_user_final_votes, user_boards = self.get_statistics(
             conversation, user

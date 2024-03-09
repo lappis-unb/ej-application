@@ -10,15 +10,14 @@ from django.core.exceptions import ValidationError
 from django.db.models.functions import Length
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from model_utils.models import TimeStampedModel
-from sidekick import lazy, placeholder as this, property as property
-from taggit.managers import TaggableManager
-from taggit.models import TaggedItemBase
-
 from ej.components.menu import CustomizeMenuMixin
 from ej.utils.functional import deprecate_lazy
 from ej.utils.url import SafeUrl
 from ej_boards.models import Board
+from model_utils.models import TimeStampedModel
+from sidekick import lazy, placeholder as this, property as property
+from taggit.managers import TaggableManager
+from taggit.models import TaggedItemBase
 
 from ..enums import Choice
 from ..signals import comment_moderated
@@ -343,11 +342,6 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
             log.info("failed attempt to create comment by %s" % author)
             raise PermissionError("user cannot comment on conversation.")
 
-        # Check if comment is created with rejected status
-        if status == Comment.STATUS.rejected:
-            msg = _("automatically rejected")
-            kwargs.setdefault("rejection_reason", msg)
-
         kwargs.update(author=author, content=content.strip())
         comment = make_clean(Comment, commit, conversation=self, **kwargs)
         if comment.status == comment.STATUS.approved and author != self.author:
@@ -429,11 +423,18 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
             return n_user_final_votes
         return n_user_final_votes + 1
 
-    def can_add_comment(self, user, n_comments, max_comments):
+    def user_can_add_comment(self, user, user_comments: int):
         """
         check if user can add new comments to conversation
+
+        :param user_comments: number of comments created by user
+        :param max_comments: max comments allowed per user
         """
-        return n_comments >= max_comments or user.is_superuser or self.author == user
+        return (
+            user_comments < rules.compute("ej.max_comments_per_conversation")
+            or user.is_superuser
+            or self.author == user
+        )
 
 
 #

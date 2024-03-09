@@ -12,7 +12,7 @@ from .models import Comment, Conversation
 # Global values and configurations
 #
 @rules.register_value("ej.max_comments_per_conversation")
-def max_comments_per_conversation(conversation, user):
+def max_comments_per_conversation():
     """
     Limit the number of comments in a single conversation
     """
@@ -91,7 +91,7 @@ def remaining_comments(conversation, user):
         return 0
 
     fn = rules.get_value("ej.max_comments_per_conversation")
-    max_comments = fn(conversation, user)
+    max_comments = fn()
     minimum = 1 if user.has_perm("ej.can_edit_conversation", conversation) else 0
     comments = user.comments.filter(conversation=conversation).count()
     return max(max_comments - comments, minimum)

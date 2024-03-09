@@ -112,8 +112,7 @@ def conversation_create_comment(conversation, request=None, **kwargs):
         ]
 
     fn = rules.get_value("ej.max_comments_per_conversation")
-    user = getattr(request, "user", None)
-    max_comments = fn(conversation, user)
+    max_comments = fn()
 
     moderation_msg = _("{n} awaiting moderation").format(n=n_moderation)
     comments_count = _("{n} of {m} comments").format(n=n_comments, m=max_comments)
