@@ -33,3 +33,20 @@
     transform: rotate(360deg);
   }
 }
+
+.upload-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  
+  .remove, .view {
+    text-transform: uppercase;
+  }
+  .remove {
+    color: #FF3E72;
+    
+  }
+  .view {
+    color: #777777;
+  }
+}

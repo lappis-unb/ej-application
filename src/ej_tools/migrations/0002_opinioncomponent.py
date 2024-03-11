@@ -3,7 +3,7 @@
 import ckeditor.fields
 from django.db import migrations, models
 import django.db.models.deletion
-import ej_tools.models
+from ej_conversations.validators import validate_file_size
 
 
 class Migration(migrations.Migration):
@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             name='OpinionComponent',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('background_image', models.ImageField(upload_to='opinion_component/background/', validators=[ej_tools.models.OpinionComponent.validate_file_size])),
-                ('logo_image', models.ImageField(upload_to='opinion_component/logo/', validators=[ej_tools.models.OpinionComponent.validate_file_size])),
+                ('background_image', models.ImageField(upload_to='opinion_component/background/', validators=[validate_file_size])),
+                ('logo_image', models.ImageField(upload_to='opinion_component/logo/', validators=[validate_file_size])),
                 ('final_voting_message', ckeditor.fields.RichTextField()),
                 ('conversation', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='ej_conversations.conversation')),
             ],

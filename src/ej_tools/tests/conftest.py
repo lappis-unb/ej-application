@@ -18,6 +18,5 @@ def opinion_component(db, conversation):
     instance.final_voting_message = "texto final de votação"
     with open(str(SOME_FILE), "rb") as _file:
         instance.logo_image.save("logo.jpg", File(_file))
-        instance.background_image.save("bg.jpg", File(_file))
     instance.save()
     return instance

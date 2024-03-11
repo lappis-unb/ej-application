@@ -40,28 +40,8 @@
 								{{ csrf_input }}
 								{{ opinion_component_form.conversation.as_hidden() }}
 								<div class="form-component__drop_box">
-									{% if "background_image" in opinion_component_form.errors %}
-										{{ opinion_component_form.errors["background_image"] }}
-									{% endif %}
-									{% if background_url %}
-										<span class="form-component__image">Imagem atual:</span>
-										<span class="form-component__image-name">{{background_url}}</span>
-									{% else %}
-										<span class="form-component__image hide">Imagem atual:</span>
-										<span class="form-component__image-name"></span>
-									{% endif %}
-									{{opinion_component_form.background_image}}
-								</div>
-								<div class="form-component__drop_box">
 									{% if "logo_image" in opinion_component_form.errors %}
 										{{ opinion_component_form.errors["logo_image"] }}
-									{% endif %}
-									{% if logo_url %}
-										<span class="form-component__image">Imagem atual:</span>
-										<span class="form-component__image-name">{{logo_url}}</span>
-									{% else %}
-										<span class="form-component__image hide">Imagem atual:</span>
-										<span class="form-component__image-name"></span>
 									{% endif %}
 									{{opinion_component_form.logo_image}}
 								</div>

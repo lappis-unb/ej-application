@@ -14,6 +14,7 @@ from ej.components.menu import CustomizeMenuMixin
 from ej.utils.functional import deprecate_lazy
 from ej.utils.url import SafeUrl
 from ej_boards.models import Board
+from ..validators import validate_file_size
 from model_utils.models import TimeStampedModel
 from sidekick import lazy, placeholder as this, property as property
 from taggit.managers import TaggableManager
@@ -50,7 +51,7 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
     text = models.TextField(
         _("Question"),
         help_text=_(
-            "What do you want to know about participants? The conversation question will be the starting point for collecting opinions. "
+            "What do you want to know from participants? The question is the central part of the conversation, from there you can create more specific comments."
         ),
     )
     author = models.ForeignKey(
@@ -87,10 +88,18 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
     anonymous_votes_limit = models.IntegerField(
         default=0,
         help_text=_("Configures how many anonymous votes participants can give."),
-        verbose_name=_("Anonymous votes"),
+        verbose_name=_("Number of anonymous votes"),
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+    background_image = models.ImageField(
+        upload_to="conversations/background/",
+        blank=True,
+        null=True,
+        verbose_name=_("Background image"),
+        validators=[validate_file_size],
+    )
 
     objects = ConversationQuerySet.as_manager()
     tags = TaggableManager(through="ConversationTag", blank=True)
@@ -435,6 +444,13 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
             or user.is_superuser
             or self.author == user
         )
+
+    def get_background_image_url(self, host):
+        background_image_url = self.background_image
+
+        if background_image_url:
+            return f"{host}/media/{background_image_url}"
+        return None
 
 
 #

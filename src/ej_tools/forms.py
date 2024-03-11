@@ -3,6 +3,7 @@ from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
 
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Q
 
 from ej_boards.forms import PaletteWidget
@@ -34,21 +35,19 @@ class CustomTemplateChoiceWidget(forms.RadioSelect):
         return self.renderer.render(context)
 
 
-class CustomImageInputWidget(forms.FileInput):
+class CustomImageInputWidget(forms.ClearableFileInput):
     template_name = "ej_tools/includes/image-input.jinja2"
     renderer = get_template(template_name)
 
     def render(self, name, value, attrs=None, renderer=None):
         context = self.get_context(name, value, attrs)
+        context["widget"]["value"] = value
+        if value:
+            context["is_valid_image"] = hasattr(value, "url")
         return self.renderer.render(context)
 
 
 class OpinionComponentForm(forms.ModelForm):
-    background_image = forms.ImageField(
-        widget=CustomImageInputWidget(
-            attrs={"id": "background_input", "title": _("Background")}
-        )
-    )
     logo_image = forms.ImageField(
         widget=CustomImageInputWidget(attrs={"id": "logo_input", "title": _("Logo")})
     )
