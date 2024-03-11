@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from requests import Request
 from django.conf import settings
 
+from ej_conversations.validators import validate_file_size
 from src.ej_tools.utils import get_host_with_schema
 from .constants import MAX_CONVERSATION_DOMAINS
 from .utils import prepare_host_with_https
@@ -58,25 +59,8 @@ class OpinionComponent(models.Model):
     configure the EJ opinion web component
     """
 
-    def validate_file_size(value):
-        """
-        Validates image size in form to be less than 5MB.
-        This method is above the class attributes as it was
-        not possible to access the validator if it is below.
-        """
-
-        filesize = value.size
-
-        if filesize > OpinionComponent.FIVE_MB:
-            raise ValidationError(_("The maximum file size must be 5MB"))
-        else:
-            return value
-
     FIVE_MB = 5242880
 
-    background_image = models.ImageField(
-        upload_to="opinion_component/background/", validators=[validate_file_size]
-    )
     logo_image = models.ImageField(
         upload_to="opinion_component/logo/", validators=[validate_file_size]
     )
@@ -95,14 +79,6 @@ class OpinionComponent(models.Model):
             host = get_host_with_schema(request)
             return f"{host}{settings.MEDIA_URL}{upload.name}"
         return ""
-
-    def default_bg_img_url(request):
-        """
-        default_background_image_url returns the absolute path to default bg image.
-        """
-        host = get_host_with_schema(request)
-        default_bg = "img/tools/opinion-component-default-background.jpg"
-        return f"{host}{settings.STATIC_URL}{default_bg}"
 
 
 class ConversationMautic(models.Model):

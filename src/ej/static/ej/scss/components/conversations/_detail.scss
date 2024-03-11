@@ -22,21 +22,20 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
 .conversation-balloon {
     @extend .center;
-    margin-bottom: .75rem;
+
+    .content-grid {
+        grid-template-columns: minmax(4%, auto) minmax(auto, 1400px) minmax(14%, auto);
+    }
 
     article {
         @include themed('background', light);
 
         text-align: left;
-        // border-radius: 0 0 $component-border-radius $component-border-radius;
 
-        span {
-            @include themed('color');
-            font-family: "Work Sans", sans-serif;
-
-            i {
-                margin-left: 0;
-            }
+        #add-more-comments {
+            margin-bottom: 3.375rem;
+            color: $color-accent !important;
+            text-transform: initial;
         }
     }
     h1 {
@@ -59,7 +58,6 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         background: $color-white;
         border-radius: 0.375rem;
         height: 2rem;
-        line-height: 2rem;
         max-width: 100%;
         min-width: 9em;
     }
@@ -69,6 +67,35 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
     textarea::placeholder {
         @extend legend;
+    }
+
+    &__tags {
+        margin-top: 1.5rem;
+        label {
+            margin-bottom: 0;
+        }
+    }
+
+    &__title {
+        label {
+            margin-bottom: .5rem;
+        }
+        input {
+            margin-bottom: 0;
+        }
+    }
+
+    &__question {
+        margin-bottom: 0;
+    }
+
+    .helptext {
+        width: 85%; 
+        margin-top: 1rem;
+    }
+
+    .errorlist {
+        margin-top: 0.875rem;
     }
 }
 
@@ -85,7 +112,9 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
 .conversation-form {
     width: 100%;
-    @include utilities('pad-y3 pad-x3');
+    margin-top: 3.188rem;
+    display: grid;
+    grid-template-columns: minmax(4%, auto) minmax(auto, 1400px) minmax(14%, auto);
 
     &__h3 {
         font-size: 1.5rem;
@@ -95,16 +124,46 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
         font-size: 1.125rem;
         font-weight: 700;
         text-transform: uppercase;
+        margin-bottom: 0;
     }
     &__duration {
         display: flex;
-        gap: 1rem;
+        gap: 2.75rem;
         flex-wrap: wrap;
+        input {margin-bottom: 0;}
     }
 
-    .errorlist {
-        margin-bottom: revert;
-        margin-top: -0.8rem;
+    &__welcome {
+        &__text {
+            margin-top: 0.375rem;
+        }
+        margin-top: 1.75rem;
+        .django-ckeditor-widget {
+            width: 100%;
+        }
+    }
+
+    label {
+        margin-top: 1rem;
+    }
+
+    .helptext {
+        width: 85%; 
+        margin-top: 1rem;
+    }
+
+    .block {
+        input[type="number"] {
+            margin: 0.375rem 0 0.688rem 0;
+        }
+    }
+
+    &__create-button {
+        float: right;
+
+        .is-primary.button {
+            padding: 0 3.375rem;
+        }
     }
 
     label {
@@ -495,5 +554,19 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
 
     .body {
         margin: unset !important;
+    }
+
+    .conversation-form {
+        grid-template-columns: 3% auto 3%;
+        padding: 1.5rem;
+        &__create-button {
+            text-align: center;
+            float: none;
+        }
+    }
+    .conversation-balloon {
+        .content-grid {
+            grid-template-columns: minmax(4%, auto) minmax(auto, 1400px) minmax(4%, auto);
+        }
     }
 }

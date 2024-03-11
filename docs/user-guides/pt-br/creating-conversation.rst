@@ -50,6 +50,20 @@ Duração da conversa
 Define o período em que a conversa ficará disponível para participação. Após a data final,
 a URL da conversa continua acessível mas um aviso de "conversa oculta" será apresentado.
 
+Banner customizado
+*******************
+
+Permite que o criador da conversa escolha uma imagem para ser apresentada no banner da conversa,
+afim de contextualizar o tema a ser pesquisado.
+
+.. figure:: ../images/background-image-input.png
+   :align: center
+
+Esta imagem fica disposta no cabeçalho da tela de votação.
+
+.. figure:: ../images/custom-banner.png
+   :align: center
+
 Mensagem de boas vindas
 ************************
 

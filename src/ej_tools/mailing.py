@@ -40,10 +40,8 @@ class TemplateGenerator:
         try:
             custom_images = OpinionComponent.objects.get(conversation=conversation)
             host = get_host_with_schema(request)
-            self.background_image_url = f"{host}/media/{custom_images.background_image}"
             self.logo_image_url = f"{host}/media/{custom_images.logo_image}"
         except OpinionComponent.DoesNotExist:
-            self.background_image_url = None
             self.logo_image_url = None
 
         self.set_custom_values()
@@ -85,7 +83,6 @@ class TemplateGenerator:
             votes_conversation=self.conversation.n_votes,
             host=host,
             logo_image_url=self.logo_image_url,
-            background_image_url=self.background_image_url,
         )
 
     def _get_voting_url(self):

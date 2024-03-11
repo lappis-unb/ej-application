@@ -1,14 +1,26 @@
 <div class="conversation-balloon">
     <article class="content-grid content-grid--padding">
         {% if create_mode %}
-            <h1 class="text-accent">{{_("Create Conversation")}}</h1>
+            <h1 class="text-accent">{{_("Basic settings")}}</h1>
         {% else %}
             <h1 class="text-accent">{{_("Edit Conversation")}}</h1>
         {% endif %}
         <p class="helptext">
-            {{_("This informations will be visible for conversation participants.")}}
+            {{_("Required fields:")}}
         </p>
-        <label>{{ _('Question') }}{{ form.text }}</label>
-        <label>{{ form.tags.label }}{{ form.tags }}</label>
+        <label class="conversation-balloon__question">
+            {{ _('Question') }}{{ form.text }}
+        </label>
+        <div class="conversation-balloon__title">
+            <label>{{ form.title.label }}{{ form.title }}</label>
+        </div>
+        <legend>{{ form.title.help_text }}</legend>
+        {{ form.title.errors }}
+        {{ form.non_field_errors() }}
+        <div class="conversation-balloon__tags">
+            <label>{{ form.tags.label }}{{ form.tags }}</label>
+        </div>
+
+        {% include 'ej_conversations/includes/comments-form.jinja2' %}
     </article>
 </div>

@@ -1,33 +1,47 @@
-<section class="content-grid conversation-header" id="conversation-detail-header">
-	<div class="conversation-header-grid ">
-        <div class="conversation-header-content">
-            <div class="conversation-header__label">{{ _('Conversation') }}</div>
-            <div class="conversation-header__text">{{ conversation.text }}</div>
-        </div>
-        <div class="conversation-header__buttons">
-            {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
-            <div class="conversation-dashboard conversation-header-btn"
-                onclick="window.location.href='{{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}'">
-                    <div>
-                        <i class="fas fa-chart-line"></i>
+{% if background_image_url %}
+    <div class="banner" style="background-image: url('{{background_image_url}}')">
+        <div class="conversation-header__gradient"></div>
+        <section class="content-grid conversation-header" id="conversation-detail-header">
+            <div class="conversation-header-grid">
+                <div class="conversation-header-content">
+                    <div class="conversation-header__label">{{ _('Conversation') }}</div>
+                    <div class="conversation-header__text conversation-header__text--white">
+                        {{ conversation.text }}
                     </div>
                 </div>
-            {% endif %}
+{% else %}
+    <div class="conversation-header--default-img">
+        <section class="content-grid conversation-header" id="conversation-detail-header">
+            <div class="conversation-header-grid">
+                    <div class="conversation-header-content">
+                        <div class="conversation-header__label">{{ _('Conversation') }}</div>
+                        <div class="conversation-header__text">{{ conversation.text }}</div>
+                    </div>
+{% endif %}
+                <div class="conversation-header__buttons">
+                    {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
+                    <div class="conversation-dashboard conversation-header-btn"
+                        onclick="window.location.href='{{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}'">
+                            <div>
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                    {% endif %}
 
-            <div class="conversation-share conversation-header-btn" onclick="copyToClipboard()">
-                <div>
-                    <i class="fas fa-link"></i>
+                    <div class="conversation-share conversation-header-btn" onclick="copyToClipboard()">
+                        <div>
+                            <i class="fas fa-link"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-	</div>
-    <dialog class="toast toast--hide" id="share-conversation-dialog-confirmation">
-        <div class="toast__content">
-            <span>{{_("Link copied to clipboard")}}</span>
-        </div>
-    </dialog>
-</section>
-
+            <dialog class="toast toast--hide" id="share-conversation-dialog-confirmation">
+                <div class="toast__content">
+                    <span>{{_("Link copied to clipboard")}}</span>
+                </div>
+            </dialog>
+        </section>
+    </div>
 <script>
     function copyToClipboard() {
         navigator.clipboard.writeText(`${window.location.href}welcome`).then(() => {
