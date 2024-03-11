@@ -1,6 +1,7 @@
 .banner {
     background-position: center;
     height: 225px;
+    position: relative;
 }
 
 .conversation-header {
@@ -27,6 +28,10 @@
         display: grid;
         grid-template-rows: 4.875rem auto 2rem;
         position: relative;
+
+        @media (max-width: 600px) {
+            grid-template-rows: 3rem auto 2rem;
+        }
     }
 
     &-content {
@@ -39,7 +44,7 @@
     }
 
     &__gradient, &--default-img {
-        width: 100%; 
+        width: 100%;
         background-size: cover;
     }
 
@@ -66,14 +71,71 @@
         &--white {
             color: $color-white;
         }
-    } 
+    }
 
-    &__buttons {
+    &__pipe {
+        color: $color-brand;
+    }
+
+    &__numbers {
         position: absolute;
         top: 2.5rem;
         right: 4rem;
         display: flex;
         gap: 1rem;
+        height: 2.625rem;
+        background-color: $color-white;
+        color: $color-black;
+        border-radius: 1.8rem;
+        display: flex;
+        padding: .5rem 1rem;
+        font-size: .8em;
+        font-weight: 500;
+        cursor: pointer;
+
+        i {
+            font-size: 1.25em;
+        }
+
+        div {
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            & {
+                top: 0;
+                right: 0;
+                height: 2rem;
+                font-size: 12px;
+            }
+        }
+    }
+
+    &__tooltip {
+        position: absolute;
+        display: flex;
+        flex-flow: column;
+        top: 3.5rem;
+        z-index: 2;
+        cursor: pointer;
+
+        div:first-child {
+            margin-bottom: .2rem;
+        }
+
+        div:nth-child(2) {
+            padding: .2rem 1rem;
+            border-radius: .5rem;
+            background-color: $color-brand-lighter;
+            color: $color-black;
+        }
+
+        @media (max-width: 600px) {
+            & {
+                top: 2rem;
+            }
+        }
     }
 
     .conversation-header-btn {
@@ -87,30 +149,26 @@
         cursor: pointer;
     }
 
-    .conversation-share div,
     .conversation-dashboard div {
         text-align: center;
-    }
-    .conversation-share div {
-        color: $color-accent;
     }
     .conversation-dashboard div {
         color: $color-black;
     }
-}
 
-@media only screen and (max-width: 320px) {
-    .conversation-header {
-        padding: 1.875rem 1.625rem 1.938rem 2rem;
-    }
+    @media (max-width: 900px) {
+        & {
+            padding: 1rem 0;
+        }
 
-    .conversation-header__text {
-        max-height: 62px;
-        overflow-x: scroll;
-    }
+        &__text {
+            max-height: 62px;
+            overflow-x: scroll;
+        }
 
-    .conversation-header__buttons {
-        right: 0;
+        .banner {
+            height: 258px;
+        }
     }
 
     .banner {

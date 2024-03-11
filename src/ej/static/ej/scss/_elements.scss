@@ -351,6 +351,7 @@ legend {
     @media only screen and (max-width: 900px) {
         & {
             grid-template-columns: 3% auto 3%;
+            grid-template-rows: auto auto;
         }
 
         &--padding {
