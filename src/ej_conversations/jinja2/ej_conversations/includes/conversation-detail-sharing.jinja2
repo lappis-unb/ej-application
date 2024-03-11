@@ -1,0 +1,20 @@
+<section class="conversation-sharing {{'conversation-sharing--full-width' if request.user.is_anonymous else ''}}"
+    onclick="copyToClipboard()">
+        <div class="conversation-sharing-content">
+            <div class="conversation-sharing-content__label">
+                <span>{{_("What your comunity thinks about this subject?")}}</span>
+            </div>
+            <div class="conversation-sharing-content__text">
+                <div><i class="fas fa-link"></i></div>
+                <span>{{_("Share this conversation")}}</span>
+            </div>
+        </div>
+</section>
+
+<script>
+    function copyToClipboard() {
+        navigator.clipboard.writeText(`${window.location.href}welcome`).then(() => {
+            showConfirmationDialogFor("#share-conversation-dialog-confirmation");
+        });
+    }
+</script>

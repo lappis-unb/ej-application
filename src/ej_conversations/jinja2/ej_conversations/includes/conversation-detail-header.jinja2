@@ -18,19 +18,34 @@
                         <div class="conversation-header__text">{{ conversation.text }}</div>
                     </div>
 {% endif %}
-                <div class="conversation-header__buttons">
-                    {% if request.user.has_perm("ej.can_moderate_conversation", conversation) %}
-                    <div class="conversation-dashboard conversation-header-btn"
-                        onclick="window.location.href='{{url('boards:dataviz-dashboard', **conversation.get_url_kwargs())}}'">
-                            <div>
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                        </div>
-                    {% endif %}
+                <div class="conversation-header__numbers">
+                    <div class="conversation-header__n_participants">
+                        <i class="fas fa-users"></i>
+                        <span>
+                            {{conversation.n_participants}}
+                        </span>
 
-                    <div class="conversation-share conversation-header-btn" onclick="copyToClipboard()">
-                        <div>
-                            <i class="fas fa-link"></i>
+                        <div id="conversation-header-participants"
+                            class="conversation-header__tooltip hide">
+                                <div class="triangle triangle--top triangle--white"></div>
+                                <div class="conversation-header__label">
+                                    {{_("participants")}}
+                                </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="conversation-header__pipe">&#124;</span>
+                    </div>
+                    <div class="conversation-header__n_votes">
+                        <i class="fas fa-vote-yea"></i>
+                        <span >{{conversation.n_votes}}</span>
+
+                        <div id="conversation-header-votes"
+                            class="conversation-header__tooltip hide">
+                                <div class="triangle triangle--top triangle--white"></div>
+                                <div class="conversation-header__label">
+                                    {{_("votes")}}
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -42,10 +57,33 @@
             </dialog>
         </section>
     </div>
+
 <script>
-    function copyToClipboard() {
-        navigator.clipboard.writeText(`${window.location.href}welcome`).then(() => {
-            showConfirmationDialogFor("#share-conversation-dialog-confirmation");
-        });
-    }
+    $(document).ready(function() {
+        $(".conversation-header__n_participants").on({
+            mouseenter: function() {
+                $("#conversation-header-participants").removeClass("hide");
+            },
+            mouseleave: function() {
+                $("#conversation-header-participants").addClass("hide");
+            },
+            click: function() {
+                let tooltip = $("#conversation-header-participants");
+                tooltip.toggleClass("hide");
+            }
+        })
+
+        $(".conversation-header__n_votes").on({
+            mouseenter: function() {
+                $("#conversation-header-votes").removeClass("hide");
+            },
+            mouseleave: function() {
+                $("#conversation-header-votes").addClass("hide");
+            },
+            click: function() {
+                let tooltip = $("#conversation-header-votes");
+                tooltip.toggleClass("hide");
+            }
+        })
+    })
 </script>

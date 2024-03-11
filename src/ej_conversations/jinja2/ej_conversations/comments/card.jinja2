@@ -1,14 +1,13 @@
-<div id="voting-card">
-    <div class="voting-card">
-            <div class="voting-card__header">
-                {% include 'ej_conversations/includes/conversation-progress.jinja2' %}
-                <a class="voting-card__label voting-card__add-comment"
-                hx-get="{{ url('boards:conversation-comment', **conversation.get_url_kwargs()) }}"
-                hx-target="#voting-card"
-                hx-swap="innerHTML">
-                    <i class="fa">&#xf055;</i> {{ _('Add comment') }}
-                </a>
-            </div>
+<div id="voting-card" class="voting-card">
+        <div class="voting-card__header">
+            {% include 'ej_conversations/includes/conversation-progress.jinja2' %}
+            <a class="voting-card__label--bold voting-card__label voting-card__add-comment"
+            hx-get="{{ url('boards:conversation-comment', **conversation.get_url_kwargs()) }}"
+            hx-target="#voting-card"
+            hx-swap="outerHTML">
+                <i class="fa">&#xf055;</i> {{ _('Add comment') }}
+            </a>
+        </div>
         {% if comment %}
             {% include 'ej_conversations/comments/voting-form.jinja2' %}
         {% else %}
@@ -18,21 +17,10 @@
                 </p>
             </div>
         {% endif %}
-        <span class="privacy-policy__title privacy-policy--margin">{{_("Questions about privacy?")}}<a onclick="togglePrivacyBox()">{{_("Understand how your data is used")}}</a></span>
-        <div id="privacy-box" class="hide">
-            <div class="privacy-policy__text">{{ privacy_policy }}</div>
-            <a class="privacy-policy__close-button privacy-policy--margin" onclick="togglePrivacyBox()">{{_("close")}}</a>
-        </div>
-    </div>
 </div>
 
 <script>
   window.onload = () => {
     addsNextCommentTransitionEvent();
-  }
-
-  function togglePrivacyBox() {
-    let box = $("#privacy-box")[0];
-    box.classList.toggle("hide");
   }
 </script>

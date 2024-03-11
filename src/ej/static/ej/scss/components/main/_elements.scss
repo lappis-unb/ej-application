@@ -133,6 +133,23 @@ i.fa, i.fas, i.fab, i.far {
     bottom: 30px; /* 30px from the bottom */
 }
 
+.triangle {
+    width: 0;
+    height: 0;
+    border: 0.46875rem solid transparent;
+    border-top: 0;
+    border-bottom: 0.8375rem solid $color-base-pink;
+    transform: rotate(-90deg);
+
+    &--top {
+        transform: unset;
+    }
+
+    &--white {
+        border-bottom-color: $color-brand-light;
+    }
+}
+
 
 /* Animations to fade the snackbar in and out */
 $toast-height: size(1.5);

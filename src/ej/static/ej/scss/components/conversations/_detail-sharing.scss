@@ -1,0 +1,72 @@
+.conversation-sharing {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 264px);
+    height: 3.75rem;
+    background-color: $color-brand;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &--full-width {
+        width: 100%;
+    }
+
+    &-content {
+        color: $color-white;
+        display: flex;
+        gap: 1.25rem;
+
+        &__text {
+            display: flex;
+            gap: 1rem;
+
+            div {
+                display: flex;
+                background-color: $color-white;
+                border-radius: 50%;
+                width: 1.5rem;
+                height: 1.5rem;
+                justify-content: center;
+
+                i  {
+                    color: $color-brand;
+                }
+            }
+
+            span {
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+        }
+
+        @media (max-width: 600px) {
+            & {
+                flex-flow: column;
+
+                &__text {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        & {
+            grid-row: 2;
+            grid-column: 1 / 4;
+            position: unset !important;
+            width: unset;
+            font-size: 14px;
+            height: 5.375rem;
+            text-align: center;
+            padding: 1rem;
+
+            &-content {
+                gap: .5rem;
+            }
+
+        }
+    }
+}

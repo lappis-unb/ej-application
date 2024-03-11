@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-10 18:15-0300\n"
+"POT-Creation-Date: 2024-03-11 12:50-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -125,7 +125,7 @@ msgstr "Roxa"
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:35 src/ej_conversations/models/conversation.py:48
+#: src/ej_boards/models.py:35 src/ej_conversations/models/conversation.py:47
 msgid "Title"
 msgstr "Título"
 
@@ -335,7 +335,7 @@ msgid "Created {n} votes"
 msgstr "{n} votos criados"
 
 #: src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:150
+#: src/ej_conversations/models/conversation.py:149
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -393,32 +393,32 @@ msgstr "Concorda"
 msgid "Disagree"
 msgstr "Discorda"
 
-#: src/ej_conversations/forms.py:23
+#: src/ej_conversations/forms.py:24
 msgid "Give your opinion here"
 msgstr "Dê a sua opinião aqui"
 
-#: src/ej_conversations/forms.py:24
+#: src/ej_conversations/forms.py:25
 msgid "Suggest a new comment"
 msgstr "Sugira um novo comentário"
 
-#: src/ej_conversations/forms.py:34 src/ej_conversations/tests/test_forms.py:69
+#: src/ej_conversations/forms.py:35 src/ej_conversations/tests/test_forms.py:69
 msgid "You already submitted this comment."
 msgstr "Você já enviou este comentário."
 
-#: src/ej_conversations/forms.py:63
+#: src/ej_conversations/forms.py:64
 msgid "Tags"
 msgstr "Temas"
 
-#: src/ej_conversations/forms.py:63
+#: src/ej_conversations/forms.py:64
 msgid "Tags, separated by commas."
 msgstr "Temas, separados por vírgula."
 
-#: src/ej_conversations/forms.py:67 src/ej_conversations/forms.py:70
-#: src/ej_conversations/models/conversation.py:101
+#: src/ej_conversations/forms.py:68 src/ej_conversations/forms.py:71
+#: src/ej_conversations/models/conversation.py:100
 msgid "Background image"
 msgstr "Imagem de fundo"
 
-#: src/ej_conversations/forms.py:104
+#: src/ej_conversations/forms.py:112
 #, fuzzy
 msgid "This title already exists!"
 msgstr "Esse título já existe."
@@ -448,35 +448,35 @@ msgstr "Número de telefone"
 msgid "Date joined"
 msgstr "data de ingresso"
 
-#: src/ej_conversations/models/comment.py:27
+#: src/ej_conversations/models/comment.py:26
 msgid "awaiting moderation"
 msgstr "aguardando moderação"
 
-#: src/ej_conversations/models/comment.py:28
+#: src/ej_conversations/models/comment.py:27
 msgid "approved"
 msgstr "aprovado"
 
-#: src/ej_conversations/models/comment.py:29
+#: src/ej_conversations/models/comment.py:28
 msgid "rejected"
 msgstr "rejeitado"
 
-#: src/ej_conversations/models/comment.py:44
+#: src/ej_conversations/models/comment.py:43
 msgid "Content"
 msgstr "Conteúdo"
 
-#: src/ej_conversations/models/comment.py:47
+#: src/ej_conversations/models/comment.py:46
 msgid "Body of text for the comment"
 msgstr "Corpo de texto do comentário"
 
-#: src/ej_conversations/models/comment.py:50
+#: src/ej_conversations/models/comment.py:49
 msgid "Rejection reason"
 msgstr "Motivo para rejeição"
 
-#: src/ej_conversations/models/comment.py:53
+#: src/ej_conversations/models/comment.py:52
 msgid "Rejection reason (free-form)"
 msgstr "Motivo para rejeição (livre)"
 
-#: src/ej_conversations/models/comment.py:56
+#: src/ej_conversations/models/comment.py:55
 msgid ""
 "You must provide a reason to reject a comment. Users will receive this "
 "feedback."
@@ -484,29 +484,33 @@ msgstr ""
 "Você deve fornecer uma razão para rejeitar um comentário. O autor do "
 "comentário verá este feedback."
 
-#: src/ej_conversations/models/comment.py:98
+#: src/ej_conversations/models/comment.py:103
 msgid "Comment is approved"
 msgstr "Comentário aprovado"
 
-#: src/ej_conversations/models/comment.py:100
+#: src/ej_conversations/models/comment.py:105
 msgid "Comment is pending moderation"
 msgstr "Comentário está com moderação pendente"
 
-#: src/ej_conversations/models/comment.py:120
+#: src/ej_conversations/models/comment.py:125
 msgid "Must give a reason to reject a comment"
 msgstr "Deve fornecer uma razão para rejeitar o comentário"
 
-#: src/ej_conversations/models/conversation.py:50
+#: src/ej_conversations/models/comment.py:138
+msgid "Cannot vote on pending comment"
+msgstr ""
+
+#: src/ej_conversations/models/conversation.py:49
 msgid "Short description used to create URL slugs (e.g. School system)."
 msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:53
+#: src/ej_conversations/models/conversation.py:52
 msgid "Question"
 msgstr "Pergunta"
 
-#: src/ej_conversations/models/conversation.py:55
+#: src/ej_conversations/models/conversation.py:54
 #, fuzzy
 msgid ""
 "What do you want to know from participants? The question is the central part "
@@ -515,68 +519,64 @@ msgstr ""
 "O que você quer saber dos participantes? A pergunta é a parte central da "
 "conversa, a partir dela você poderá elaborar comentários mais específicos."
 
-#: src/ej_conversations/models/conversation.py:63
+#: src/ej_conversations/models/conversation.py:62
 msgid "Only the author and administrative staff can edit this conversation."
 msgstr "Apenas o autor e o administrador podem editar esta conversa."
 
-#: src/ej_conversations/models/conversation.py:70
+#: src/ej_conversations/models/conversation.py:69
 msgid "Moderators can accept and reject comments."
 msgstr "Os moderadores podem aceitar e rejeitar comentários."
 
-#: src/ej_conversations/models/conversation.py:75
+#: src/ej_conversations/models/conversation.py:74
 msgid "Promote conversation?"
 msgstr "Promover conversa?"
 
-#: src/ej_conversations/models/conversation.py:78
+#: src/ej_conversations/models/conversation.py:77
 msgid "Promoted conversations appears in the main /conversations/ endpoint."
 msgstr "Conversas promovidas aparecem no mural principal /conversations."
 
-#: src/ej_conversations/models/conversation.py:82
+#: src/ej_conversations/models/conversation.py:81
 msgid "Hide conversation?"
 msgstr "Esconder conversa?"
 
-#: src/ej_conversations/models/conversation.py:85
+#: src/ej_conversations/models/conversation.py:84
 msgid ""
 "Hidden conversations does not appears in boards or in the main /"
 "conversations/ endpoint."
 msgstr "Conversas ocultas não aparecem no mural principal /conversations/."
 
-#: src/ej_conversations/models/conversation.py:91
+#: src/ej_conversations/models/conversation.py:90
 msgid "Configures how many anonymous votes participants can give."
 msgstr "Defina quantos votos anônimos cada participante pode dar."
 
-#: src/ej_conversations/models/conversation.py:92
+#: src/ej_conversations/models/conversation.py:91
 #, fuzzy
 msgid "Number of anonymous votes"
 msgstr "Quantidade de votos anônimos"
 
-#: src/ej_conversations/models/conversation.py:111
+#: src/ej_conversations/models/conversation.py:110
 msgid "A message to be presented to participants before starting voting."
 msgstr ""
 "Um texto que poderá ser apresentado antes da tela de votação. A página "
 "ficará na rota /welcome da conversa."
 
-#: src/ej_conversations/models/conversation.py:149
-#: src/ej_conversations/roles/conversations.py:141
+#: src/ej_conversations/models/conversation.py:148
+#: src/ej_conversations/roles/conversations.py:140
 #, fuzzy
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:152
+#: src/ej_conversations/models/conversation.py:151
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:153
+#: src/ej_conversations/models/conversation.py:152
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:265
+#: src/ej_conversations/models/conversation.py:264
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
-
-#: src/ej_conversations/models/conversation.py:357
-msgid "automatically rejected"
-msgstr "rejeitado automaticamente"
 
 #: src/ej_conversations/models/vote.py:11
 #, python-brace-format
@@ -628,22 +628,22 @@ msgstr "comentários não-moderados não podem receber votos"
 msgid "login"
 msgstr "entrar"
 
-#: src/ej_conversations/roles/conversations.py:118
+#: src/ej_conversations/roles/conversations.py:117
 #, python-brace-format
 msgid "{n} awaiting moderation"
 msgstr "{n} aguardando moderação"
 
-#: src/ej_conversations/roles/conversations.py:119
+#: src/ej_conversations/roles/conversations.py:118
 #, python-brace-format
 msgid "{n} of {m} comments"
 msgstr "{n} de {m} comentários"
 
-#: src/ej_conversations/roles/conversations.py:171
+#: src/ej_conversations/roles/conversations.py:170
 #, fuzzy
 msgid " comments"
 msgstr " comentários"
 
-#: src/ej_conversations/roles/conversations.py:173
+#: src/ej_conversations/roles/conversations.py:172
 msgid " of "
 msgstr " de "
 
@@ -672,7 +672,7 @@ msgstr "Campo não pode estar vazio!"
 msgid "The maximum file size must be 5MB"
 msgstr "O tamanho máximo do arquivo deve ser 5 MB"
 
-#: src/ej_conversations/views.py:180
+#: src/ej_conversations/views.py:176
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2092,7 +2092,7 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:24
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2343,7 +2343,6 @@ msgstr ""
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/voting-form.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:88
 #, fuzzy
 msgid " Comment "
@@ -2535,26 +2534,26 @@ msgstr ""
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:9
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:8
 #, fuzzy
 msgid "Add comment"
 msgstr "Adicionar comentário"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:17
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:16
 #, fuzzy
 msgid "You have already voted on all the comments."
 msgstr "Você já votou em todos os comentários."
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:17
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:16
 #, fuzzy
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
 msgid "Questions about privacy?"
 msgstr "Dúvidas sobre privacidade? "
 
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:21
+#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
 #, fuzzy
 msgid "Understand how your data is used"
 msgstr "Entenda como seus dados são utilizados"
@@ -2577,6 +2576,11 @@ msgstr "Voltar para conversa"
 #, fuzzy
 msgid "Thank you for voting."
 msgstr "Obrigado por votar."
+
+#: src/ej_conversations/jinja2/ej_conversations/comments/voting-form.jinja2:7
+#, fuzzy
+msgid "comment added by"
+msgstr "Comentário adicionado por"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/comments-form.jinja2:3
 msgid "Initial comments"
@@ -2624,10 +2628,33 @@ msgstr "Aviso:"
 msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:32
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:6
+#, fuzzy
+msgid "participants"
+msgstr "Participantes"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:47
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:23
+#, fuzzy
+msgid "votes"
+msgstr "votos"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:55
 #, fuzzy
 msgid "Link copied to clipboard"
 msgstr "Link copiado para a área de transferência"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-sharing.jinja2:5
+#, fuzzy
+msgid "What your comunity thinks about this subject?"
+msgstr "O que sua comunidade pensa sobre esse assunto?"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-sharing.jinja2:9
+#, fuzzy
+msgid "Share this conversation"
+msgstr "Compartilhe essa conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/editable-conversation-balloon.jinja2:4
 #, fuzzy
@@ -2824,17 +2851,6 @@ msgstr "participação por canal"
 #, fuzzy
 msgid "filter by:"
 msgstr "Filtrar por:"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:6
-#, fuzzy
-msgid "participants"
-msgstr "Participantes"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:8
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:23
-#, fuzzy
-msgid "votes"
-msgstr "votos"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:6
 #, fuzzy
@@ -4023,6 +4039,9 @@ msgstr "Logar com conta "
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
 
+#~ msgid "automatically rejected"
+#~ msgstr "rejeitado automaticamente"
+
 #~ msgid "Maximum size: 5mb"
 #~ msgstr "Tamanho máximo: 5mb"
 
@@ -4411,9 +4430,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #, fuzzy
 #~ msgid "Share the conversation link"
 #~ msgstr "Compartilhe o link da conversa"
-
-#~ msgid "What does your community think about this topic?"
-#~ msgstr "O que sua comunidade pensa sobre esse assunto?"
 
 #~ msgid "Login using {}"
 #~ msgstr "Logue usando {}"
