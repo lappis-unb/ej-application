@@ -1,12 +1,14 @@
+from datetime import date, datetime
+
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 from django.template.loader import get_template
-from sidekick import identity
-from datetime import datetime, date
+from django.utils.translation import gettext_lazy as _
 
-from ej.forms import EjModelForm, EjUserForm
-from .models import Conversation, Comment
+from ej.forms import EjModelForm
+from ej_tools.forms import CustomImageInputWidget
+
+from .models import Comment, Conversation
 
 
 class CommentForm(EjModelForm):
@@ -52,7 +54,7 @@ class ConversationDateWidget(forms.DateInput):
         return self.renderer.render(context)
 
 
-class ConversationForm(EjModelForm):
+class ConversationForm(forms.ModelForm):
     """
     Form used to create and edit conversations.
     """
@@ -60,6 +62,13 @@ class ConversationForm(EjModelForm):
     comments_count = forms.IntegerField(initial=3, required=False)
     tags = forms.CharField(
         label=_("Tags"), help_text=_("Tags, separated by commas."), required=False
+    )
+    background_image = forms.ImageField(
+        widget=CustomImageInputWidget(
+            attrs={"id": "background_input", "title": _("Background image")}
+        ),
+        required=False,
+        label=_("Background image"),
     )
 
     class Meta:
@@ -71,6 +80,7 @@ class ConversationForm(EjModelForm):
             "start_date",
             "end_date",
             "welcome_message",
+            "background_image",
         ]
         widgets = {
             "start_date": ConversationDateWidget,
@@ -85,6 +95,13 @@ class ConversationForm(EjModelForm):
             self.fields["tags"].initial = ", ".join(
                 self.instance.tags.values_list("name", flat=True)
             )
+
+    def clean_background_image(self, *args, **kwargs):
+        try:
+            background_image = self.data["background_image"]
+        except Exception:
+            background_image = self.cleaned_data["background_image"]
+        return background_image
 
     def clean_title(self, *args, **kwargs):
         title = self.cleaned_data["title"]

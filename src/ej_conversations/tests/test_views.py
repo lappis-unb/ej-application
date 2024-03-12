@@ -1,18 +1,29 @@
+from io import BytesIO
 import re
+from PIL import Image
+from pytest import raises
+import pytest
 
+from django.core.files.base import File
 from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import reverse
 from django.test import Client
+
 from ej_boards.models import Board
 from ej_conversations import create_conversation
 from ej_conversations.models import Comment, Conversation, FavoriteConversation
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
 from ej_users.models import User
-from pytest import raises
-import pytest
-
 from ..enums import Choice
+
+
+def get_image_file(name, ext="png", size=(50, 50), color=(256, 0, 0)):
+    file_obj = BytesIO()
+    image = Image.new("RGBA", size=size, color=color)
+    image.save(file_obj, ext)
+    file_obj.seek(0)
+    return File(file_obj, name=name)
 
 
 class ConversationSetup:
@@ -465,6 +476,34 @@ class TestConversationCreate(ConversationSetup):
         assert conversation.board == base_board
         assert conversation.author == admin_user
 
+    def test_custom_conversation_with_valid_form(self, base_board, base_user):
+        url = reverse(
+            "boards:conversation-create", kwargs={"board_slug": base_board.slug}
+        )
+        client = Client()
+        client.force_login(base_user)
+
+        background_image = get_image_file("image.png")
+
+        response = client.post(
+            url,
+            {
+                "title": "whatever",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+                "background_image": background_image,
+            },
+        )
+        assert response.status_code == 302
+        conversation = Conversation.objects.first()
+        assert response.url == reverse(
+            "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
+        )
+        assert conversation.is_promoted == False
+        assert conversation.board == base_board
+
 
 class TestConversationComments(ConversationSetup):
     def test_user_can_create_comments(self, logged_admin):
@@ -699,6 +738,41 @@ class TestConversationEdit(ConversationSetup):
         new_conversation.refresh_from_db()
         assert new_conversation.title == "bar"
         assert new_conversation.text == "conv"
+
+    def test_edit_custom_conversation_with_valid_form(
+        self, new_conversation, logged_admin, base_board
+    ):
+        url = reverse(
+            "boards:conversation-edit",
+            kwargs={
+                "board_slug": base_board.slug,
+                "conversation_id": new_conversation.id,
+                "slug": new_conversation.slug,
+            },
+        )
+        background_image = get_image_file("image.png")
+
+        response = logged_admin.post(
+            url,
+            {
+                "title": "bar",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+                "background_image": background_image,
+            },
+        )
+
+        new_conversation.refresh_from_db()
+
+        assert response.status_code == 302
+        assert response.url == reverse(
+            "boards:conversation-detail", kwargs=new_conversation.get_url_kwargs()
+        )
+        assert new_conversation.title == "bar"
+        assert new_conversation.text == "description"
+        assert new_conversation.background_image
 
 
 class TestConversationModerate(ConversationSetup):

@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView
+
 from ej.decorators import (
     can_acess_list_view,
     can_edit_conversation,
@@ -80,8 +81,10 @@ class ConversationCommonView:
         n_comments, n_user_final_votes, user_boards = self.get_statistics(
             conversation, user
         )
+        host = get_host_with_schema(self.request)
 
         return {
+            "background_image_url": conversation.get_background_image_url(host),
             "conversation": conversation,
             "comment": comment,
             "comment_form": self.form_class(conversation=conversation),
@@ -228,12 +231,6 @@ class ConversationDetailContentView(ConversationCommonView, DetailView):
     template_name = "ej_conversations/includes/conversation-detail-content.jinja2"
     ctx = {}
 
-    def get_context_data(self, *args, **kwargs):
-        return {
-            "host": get_host_with_schema(self.request),
-            **super().get_context_data(**kwargs),
-        }
-
 
 @method_decorator([check_conversation_overdue], name="dispatch")
 class ConversationDetailView(ConversationCommonView, DetailView):
@@ -241,12 +238,6 @@ class ConversationDetailView(ConversationCommonView, DetailView):
     model = Conversation
     template_name = "ej_conversations/conversation-detail.jinja2"
     ctx = {}
-
-    def get_context_data(self, *args, **kwargs):
-        return {
-            "host": get_host_with_schema(self.request),
-            **super().get_context_data(**kwargs),
-        }
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")
@@ -258,7 +249,14 @@ class ConversationFavoriteView(ConversationCommonView, DetailView):
         conversation: Conversation = self.get_object()
         request.user = User.get_or_create_from_session(conversation, request)
         self.ctx = handle_detail_favorite(request, conversation)
-        return render(request, self.template_name, self.get_context_data())
+        return render(
+            request,
+            self.template_name,
+            {
+                **self.get_context_data(),
+                "background_image_url": None,
+            },
+        )
 
 
 @method_decorator([check_conversation_overdue], name="dispatch")
@@ -290,12 +288,14 @@ class ConversationCreateView(CreateView):
     form_class = ConversationForm
 
     def post(self, request, board_slug, *args, **kwargs):
-        form = self.form_class(request=request)
+        form = self.form_class(request.POST, request.FILES)
         kwargs["board"] = self.get_board()
 
         if form.is_valid():
             with transaction.atomic():
-                conversation = form.save_comments(self.request.user, **kwargs)
+                conversation = form.save_comments(
+                    self.request.user, request.FILES, **kwargs
+                )
 
             return redirect(
                 reverse(
@@ -306,15 +306,15 @@ class ConversationCreateView(CreateView):
         return render(
             request,
             "ej_conversations/conversation-create.jinja2",
-            self.get_context_data(),
+            self.get_context_data(form),
         )
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, form=None, **kwargs):
         user = self.request.user
         user_boards = Board.objects.filter(owner=user)
 
         return {
-            "form": self.form_class(request=self.request),
+            "form": form or self.form_class(),
             "board": self.get_board(),
             "user_boards": user_boards,
         }
@@ -333,15 +333,15 @@ class ConversationEditView(UpdateView):
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
         conversation = self.get_object()
         board = Board.objects.get(slug=board_slug)
-        form = self.form_class(request=request, instance=conversation)
+        form = self.form_class(request.POST, request.FILES, instance=conversation)
 
-        if form.is_valid_post():
+        if form.is_valid():
             form.save(board=board, **kwargs)
             page = request.POST.get("next")
             url = self.get_redirect_url(conversation, page)
             return redirect(url)
 
-        return render(request, self.template_name, self.get_context_data())
+        return render(request, self.template_name, self.get_context_data(form))
 
     def get_redirect_url(self, conversation, page):
         if page == "stereotypes":
@@ -356,13 +356,13 @@ class ConversationEditView(UpdateView):
                 "boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()
             )
 
-    def get_context_data(self, **kwargs: Any):
+    def get_context_data(self, form=None, **kwargs: Any):
         conversation = self.get_object()
         user = self.request.user
 
         return {
             "conversation": conversation,
-            "form": self.form_class(request=self.request, instance=conversation),
+            "form": form or self.form_class(instance=conversation),
             "can_publish": user.has_perm("ej_conversations.can_publish_promoted"),
             "board": conversation.board,
         }

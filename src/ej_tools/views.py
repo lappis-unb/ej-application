@@ -123,7 +123,6 @@ class OpinionComponentView(UpdateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         opinion_component = self.get_object()
         if opinion_component:
-            background_url = opinion_component.background_image.name
             logo_url = opinion_component.logo_image.name
         else:
             background_url = None

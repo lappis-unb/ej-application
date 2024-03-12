@@ -4,7 +4,7 @@
 
 
 {% block content %}
-    <form method="POST" class="width-full">
+    <form method="POST" class="width-full" enctype="multipart/form-data">
         {{ csrf_input }}
         {% block balloon %}
             {% with create_mode=true %}
@@ -17,23 +17,14 @@
             <div class="conversation-form content-grid">
                 <div>
                     {# CONVERSATION FORM #}
-                    <h3 class="conversation-form__h3">{{ _('Details') }}</h3>
+                    <h1 class="text-accent">{{ _('Advanced settings') }}</h3>
                     <p class="helptext">
-                    {% trans %}The following fields composes the conversation structure. They will help you to customize the participation process.Some fields are optional and can be edited later.{% endtrans %}</p>
-                    <div>
-                        <h4 class="conversation-form__h4">{{_("Conversation about")}}</h4>
-                        <label>{{ form.title.label }}{{ form.title }}</label>
-                        {{ form.title.errors }}
-                        {{ form.non_field_errors() }}
-                    </div>
-                    <legend>{{ form.title.help_text }}</legend>
+                    {{_("Optional fields. The following information serves to facilitate 
+                        the identification and management of your conversation.")}}</p>
 
                     <h4 class="conversation-form__h4">{{_("Anonymous participation")}}</h4>
                     <div class="block">
-                        <div class="flex">
-                            <label for="">{{form.anonymous_votes_limit.label}}</label>
-                            <span class="helptext">&nbsp;({{_("optional")}})</span>
-                        </div>
+                        <label for="">{{form.anonymous_votes_limit.label}}</label>
                         {{form.anonymous_votes_limit}}
                         <legend>{{form.anonymous_votes_limit.help_text}}</legend>
                     </div>
@@ -44,38 +35,33 @@
                         <div>{{form.end_date}}</div>
                     </div>
 
-                    <h4 class="conversation-form__h4">{{_("Conversation welcome message")}}</h4>
-                    <div class="conversation-form__duration">
-                        <div>{{form.welcome_message}}</div>
-                    </div>
-                    <legend>{{form.welcome_message.help_text}}</legend>
-
-                    {% block initial_comments %}
-                        {# ADD COMMENTS #}
-                        <h4 class="conversation-form__h4">{{_("Initial comments")}}</h4>
-                        <p class="helptext">
-                            {{ _('Add as many comments as you like (including none).') }}{{ ' ' }}
-                            {{ _('Remember to give a minimum context and something for other users to explore.') }}{{ ' ' }}
-                            {{ _('You can add as many comments as you want later.') }}
-                        </p>
-                        <input type="hidden" name="comments_count" value="3">
-                        <div id="comment-list">
-                            {% for i in range(1, 4) %}
-                                <label>
-                                    {% trans %}Comment {{ i }}{% endtrans %}
-                                    <textarea maxlength="252" name="comment-{{ i }}"
-                                            placeholder="{{ _('Type your comment here') }} #{{ i }}"></textarea>
-                                </label>
-                            {% endfor %}
+                    <h4 class="conversation-form__h4">{{_("Customize")}}</h4>
+                    <div class="block">
+                        <label for="">{{form.background_image.label}}</label>
+                        <div class="opinion-col-2">
+                            <div class="form-component__drop_box">
+                                {{form.background_image}}
+                            </div>
                         </div>
+                        <legend>{{_("This image will be presented to your audience on the participation page, 
+                                allowing you to give more context to the researched topic")}}
+                        </legend>
+                    </div>
+                    {% if "background_image" in form.errors %}
+                        {{ form.errors["background_image"] }}
+                    {% endif %}
 
-                        <a class="uppercase semi-bold" id="add-more-comments" tabindex="0">
-                            <i class="fa fa-plus text-accent"></i> <span class="text-accent">{{ _('Add more comments') }}</span>
-                        </a>
-                    {% endblock %}
+                    <div class="conversation-form__welcome">
+                        <label>{{_("Text to be displayed as welcome")}}</label>
+                        <div class="conversation-form__welcome__text">
+                            {{form.welcome_message}}
+                        </div>
+                        <legend>{{_("This text will be presented to new participants who access 
+                            the shared link for this conversation")}}</legend>
+                    </div>
 
                     {% block conversation_form_button %}
-                        <div class="margin-xauto margin-y3">
+                        <div class="margin-xauto margin-y4 conversation-form__create-button">
                             <input class="is-primary button" type="submit" value="{{ _('Create conversation') }}">
                         </div>
                     {% endblock %}

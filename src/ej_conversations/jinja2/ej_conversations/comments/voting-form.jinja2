@@ -4,8 +4,13 @@
     </div>
 </dialog>
 
-<span class="voting-card__label">{% trans %} Comment {% endtrans %}</span><br>
-<div class="voting-card__comment"><p>{{ comment.content}}</p></div>
+<span class="voting-card__label">{{ _("comment added by") }} <span class="voting-card__label--underline">{{ comment.author.name }}</span></span><br>
+<div class="voting-card__comment">
+    <div class="voting-card__comment-avatar">
+        <img is-element="toggleProfile:click" src="{{ comment.author.profile.image_url }}">
+    </div>
+    <p>{{ comment.content}}</p>
+</div>
 <div>
     <form class="voting-form" hx-trigger="click delay:1.5s" hx-post="{{ url('boards:conversation-vote', **conversation.get_url_kwargs()) }}" hx-target="#voting-card" hx-swap="outerHTML">
         {{ csrf_input }}
