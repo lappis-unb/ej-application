@@ -1,6 +1,6 @@
 <div class="dropzone" id="{{ widget.name }}-div">
   <input accept="image/png, image/gif, image/jpeg" type="{{ widget.type }}" name="{{ widget.name }}" id="{{ widget.name }}">
-  <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}">
+  <input type="checkbox" name="{{ widget.name }}_clear" id="{{ widget.name }}_clear">
   {% if widget.value and is_valid_image %}
     <div id="{{ widget.name }}-uploaded">
       <div class="form-component">
@@ -71,7 +71,7 @@ dropZoneElement{{widget.attrs.id}}.bind("dragover", (event) => {
 
 dropZoneElement{{widget.attrs.id}}.bind("drop", (event) => {
   event.preventDefault();
-  
+
   const files = event.originalEvent.dataTransfer.files;
   if (files.length) {
     const imageInput = inputElement{{widget.attrs.id}};
@@ -114,8 +114,8 @@ function removeFile(){
     uploadedFileDiv.addClass("hide");
   }
 
-  const fileInput = $("#{{ widget.name }}");
-  fileInput.value = null;
+  const clearImageCheckbox = $("#{{ widget.name }}_clear")[0];
+  clearImageCheckbox.checked = true;
 
   changeClearCheckbox(true);
 }
