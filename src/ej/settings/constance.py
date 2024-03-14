@@ -1,12 +1,12 @@
-from boogie.configurations import Conf, env
+import os
 
 
-class ConstanceConf(Conf):
+class ConstanceConf:
     """
     Dynamic django settings, edit on admin page
     """
 
-    CONSTANCE_BACKEND = env("constance.backends.database.DatabaseBackend")
+    CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
     CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 
     def get_constance_config(self):
@@ -81,52 +81,50 @@ class ConstanceConf(Conf):
     }
 
     # Auxiliary options
-    EJ_MAX_BOARD_NUMBER = env(1, name="{attr}")
+    EJ_MAX_BOARD_NUMBER = os.getenv("{attr}", 1)
 
-    EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT = env(20, name="{attr}")
-    EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT = env(100000, name="{attr}")
+    EJ_LISTEN_TO_COMMUNITY_SIGNATURE_CONVERSATIONS_LIMIT = os.getenv("{attr}", 20)
+    EJ_LISTEN_TO_COMMUNITY_SIGNATURE_VOTE_LIMIT = os.getenv("{attr}", 100000)
 
-    EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT = env(21, name="{attr}")
-    EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT = env(100000, name="{attr}")
+    EJ_LISTEN_TO_CITY_SIGNATURE_CONVERSATIONS_LIMIT = os.getenv("{attr}", 21)
+    EJ_LISTEN_TO_CITY_SIGNATURE_VOTE_LIMIT = os.getenv("{attr}", 100000)
 
-    EJ_LISTEN_TO_CITY_YEARLY_SIGNATURE_VOTE_LIMIT = env(1000000000, name="{attr}")
-    EJ_LISTEN_TO_CITY_YEARLY_SIGNATURE_CONVERSATIONS_LIMIT = env(
-        1000000000, name="{attr}"
+    EJ_LISTEN_TO_CITY_YEARLY_SIGNATURE_VOTE_LIMIT = os.getenv("{attr}", 1000000000)
+    EJ_LISTEN_TO_CITY_YEARLY_SIGNATURE_CONVERSATIONS_LIMIT = os.getenv(
+        "{attr}", 1000000000
     )
 
-    EJ_PROFILE_STATE_CHOICES = env(
-        (
-            ("AC", "Acre"),
-            ("AL", "Alagoas"),
-            ("AP", "Amapá"),
-            ("AM", "Amazonas"),
-            ("BA", "Bahia"),
-            ("CE", "Ceará"),
-            ("DF", "Distrito Federal"),
-            ("ES", "Espírito Santo"),
-            ("GO", "Goiás"),
-            ("MA", "Maranhão"),
-            ("MT", "Mato Grosso"),
-            ("MS", "Mato Grosso do Sul"),
-            ("MG", "Minas Gerais"),
-            ("PA", "Pará"),
-            ("PB", "Paraíba"),
-            ("PR", "Paraná"),
-            ("PE", "Pernambuco"),
-            ("PI", "Piauí"),
-            ("RJ", "Rio de Janeiro"),
-            ("RN", "Rio Grande do Norte"),
-            ("RS", "Rio Grande do Sul"),
-            ("RO", "Rondônia"),
-            ("RR", "Roraima"),
-            ("SC", "Santa Catarina"),
-            ("SP", "São Paulo"),
-            ("SE", "Sergipe"),
-            ("TO", "Tocantins"),
-        ),
-        name="{attr}",
+    EJ_PROFILE_STATE_CHOICES = (
+        ("AC", "Acre"),
+        ("AL", "Alagoas"),
+        ("AP", "Amapá"),
+        ("AM", "Amazonas"),
+        ("BA", "Bahia"),
+        ("CE", "Ceará"),
+        ("DF", "Distrito Federal"),
+        ("ES", "Espírito Santo"),
+        ("GO", "Goiás"),
+        ("MA", "Maranhão"),
+        ("MT", "Mato Grosso"),
+        ("MS", "Mato Grosso do Sul"),
+        ("MG", "Minas Gerais"),
+        ("PA", "Pará"),
+        ("PB", "Paraíba"),
+        ("PR", "Paraná"),
+        ("PE", "Pernambuco"),
+        ("PI", "Piauí"),
+        ("RJ", "Rio de Janeiro"),
+        ("RN", "Rio Grande do Norte"),
+        ("RS", "Rio Grande do Sul"),
+        ("RO", "Rondônia"),
+        ("RR", "Roraima"),
+        ("SC", "Santa Catarina"),
+        ("SP", "São Paulo"),
+        ("SE", "Sergipe"),
+        ("TO", "Tocantins"),
     )
-    EJ_LANDING_PAGE_DOMAIN = env("/login", name="{attr}")
+
+    EJ_LANDING_PAGE_DOMAIN = os.getenv("{attr}", "/login")
 
     CKEDITOR_CONFIGS = {
         "default": {
