@@ -6,8 +6,8 @@ describe('The login page', () => {
   })
 
   it('Check our welcome for new user', () => {
-    cy.removesCypressUser()
     cy.registerUser()
     cy.get('.welcome h1').should('contain', 'Bem vindo à EJ')
+    cy.removesCypressUser()
   })
 })
