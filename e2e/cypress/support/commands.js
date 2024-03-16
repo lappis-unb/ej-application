@@ -19,10 +19,10 @@ Cypress.Commands.add('removesCypressUser', () => {
 
 Cypress.Commands.add('createConversation', () => {
     cy.get('a[title="Nova conversa"]').click()
-    cy.get('.conversation-balloon h1').should('contain', 'Criar conversa')
+    cy.get('.conversation-balloon h1').should('contain', 'Configurações básicas')
     cy.get('#id_text').type("O que você acha do avanço da inteligência artificial na sociedade moderna?")
     cy.get('input[name=tags]').type("IA,machine learning")
-    cy.get('input[name=title]').type("avanços da IA")
+    cy.get('input[name=title]').type("avanços da IA e2e")
     cy.get('#id_anonymous_votes_limit').type(2)
     cy.get('textarea[name=comment-1]').type("Todos os humanos serão substituidos por máquinas")
     cy.get('textarea[name=comment-2]').type("É o capitalismo se reinventando mais uma vez")
@@ -38,7 +38,7 @@ Cypress.Commands.add('removesCypressConversation', () => {
     cy.get('input[type="submit"]').click()
     cy.get('th[scope="row"] a[href="/admin/ej_conversations/conversation/"]').click()
     cy.get('a').contains('Hoje').click()
-    cy.get('tbody tr').first().get('.action-checkbox input[type="checkbox"]').click()
+    cy.get('a').contains("avanços da IA e2e").get('.action-checkbox input[type="checkbox"]').first().click()
     cy.get('select[name="action"]').select('delete_selected')
     cy.get('button[name="index"]').click()
     cy.get('input[type="submit"]').click()
