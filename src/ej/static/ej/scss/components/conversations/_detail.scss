@@ -548,8 +548,7 @@ $color-brand-conversation-form: rgba(48, 191, 215 , .15);
     }
 
     .conversation-form {
-        grid-template-columns: 3% auto 3%;
-        padding: 1.5rem;
+        grid-template-columns: minmax(4%, auto) minmax(auto, 1400px) minmax(4%, auto);
         &__create-button {
             text-align: center;
             float: none;

@@ -2,6 +2,12 @@
     background-position: center;
     height: 225px;
     position: relative;
+
+    @media (max-width: 900px) and (min-width: 321px) {
+        & {
+            height: 258px;
+        }
+    }
 }
 
 .conversation-header {
@@ -156,41 +162,30 @@
         color: $color-black;
     }
 
-    @media (max-width: 900px) {
+    @media only screen and (max-width: 320px) {
         & {
-            padding: 1rem 0;
+            padding: 1.875rem 1.625rem 1.938rem 2rem;
+    
+            &__text {
+                max-height: 64px;
+                overflow-y: scroll;
+            }
+        } 
+    }
+
+    @media (max-width: 900px) and (min-width: 321px) {
+        & {
+            padding: 1.875rem 1.625rem 1.938rem 2rem;
+    
+            &--default-img {
+                height: 258px;
+            }
+    
+            &__text {
+                max-height: 62px;
+                overflow-y: scroll;
+            }
         }
-
-        &__text {
-            max-height: 62px;
-            overflow-x: scroll;
-        }
-
-        .banner {
-            height: 258px;
-        }
     }
 
-    .banner {
-        height: 258px;
-    }
-}
-
-@media (max-width: 900px) and (min-width: 321px) {
-    .conversation-header {
-        padding: 1.875rem 1.625rem 1.938rem 2rem;
-    }
-
-    .conversation-header__text {
-        max-height: 62px;
-        overflow-x: scroll;
-    }
-
-    .conversation-header__buttons {
-        right: 0;
-    }
-
-    .banner {
-        height: 258px;
-    }
 }
