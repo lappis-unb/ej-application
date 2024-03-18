@@ -37,7 +37,6 @@ pytest:
 
 e2e:
     stage: tests
-    when: manual
     image: cypress/base:18.16.0
     script:
         - cd /builds/pencillabs/ej/ej-application/e2e
