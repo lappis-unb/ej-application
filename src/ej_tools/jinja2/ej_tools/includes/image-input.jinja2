@@ -2,6 +2,7 @@
   <div class="dropzone" id="{{ widget.name }}-div">
     <input accept="image/png, image/gif, image/jpeg" type="{{ widget.type }}" name="{{ widget.name }}" id="{{ widget.name }}">
     <input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}">
+    <input type="checkbox" name="{{ widget.name }}_clear" id="{{ widget.name }}_clear">
     {% if widget.value and is_valid_image %}
       <div id="{{ widget.name }}-uploaded">
         <div class="form-component form-component--uploaded">
@@ -65,79 +66,79 @@ let inputElement{{widget.attrs.id}} = $("#{{ widget.name }}");
 const uploadedFileDiv = $("#{{ widget.name }}-uploaded");
 
 function clickOnInput(inputId){
-  $(`#${inputId}`).click();
+    $(`#${inputId}`).click();
 }
 
 dropZoneElement{{widget.attrs.id}}.bind("dragover", (event) => {
-  event.preventDefault();
+    event.preventDefault();
 });
 
 dropZoneElement{{widget.attrs.id}}.bind("drop", (event) => {
-  event.preventDefault();
-  
-  event.originalEvent.dataTransfer.dropEffect = 'copy';
-  const files = event.originalEvent.dataTransfer.files;
-  if (files.length > 0) {
-    const imageInput = inputElement{{widget.attrs.id}};
-    imageInput.prop("files", files);
-    
-    showImageName(files[0].name, imageInput);
-    changeClearCheckbox(false);
-    changePreviewImgURL();
-  }
+    event.preventDefault();
+
+    event.originalEvent.dataTransfer.dropEffect = 'copy';
+    const files = event.originalEvent.dataTransfer.files;
+    if (files.length > 0) {
+        const imageInput = inputElement{{widget.attrs.id}};
+        imageInput.prop("files", files);
+
+        showImageName(files[0].name, imageInput);
+        changeClearCheckbox(false);
+        changePreviewImgURL();
+    }
 });
 
 inputElement{{widget.attrs.id}}.bind("change", (event) => {
-  const imageName = event.target.value;
+    const imageName = event.target.value;
 
-  if (imageName) {
-    showImageName(imageName, inputElement{{widget.attrs.id}});
-    changeClearCheckbox(false);
-    changePreviewImgURL();
-  }
+    if (imageName) {
+        showImageName(imageName, inputElement{{widget.attrs.id}});
+        changeClearCheckbox(false);
+        changePreviewImgURL();
+    }
 });
 
 function showImageName(name, input){
-  const parentElement = input.parent().parent();
-  const imageName = parentElement.find(".form-component__image-name");
+    const parentElement = input.parent().parent();
+    const imageName = parentElement.find(".form-component__image-name");
 
-  uploadedFileDiv.removeClass("hide");
-  imageName.html(name);
+    uploadedFileDiv.removeClass("hide");
+    imageName.html(name);
 
-  const emptyFileDiv = $("#{{ widget.name }}-empty");
-  if (!emptyFileDiv.hasClass("hide")) {
-    emptyFileDiv.addClass("hide");
-  }
+    const emptyFileDiv = $("#{{ widget.name }}-empty");
+    if (!emptyFileDiv.hasClass("hide")) {
+        emptyFileDiv.addClass("hide");
+    }
 }
 
 function removeFile(){
-  const imageName = $("#{{ widget.name }}-uploaded .form-component__image-name");
-  imageName.innerHTML = '';
+    const imageName = $("#{{ widget.name }}-uploaded .form-component__image-name");
+    imageName.innerHTML = '';
 
-  const emptyFileDiv = $("#{{ widget.name }}-empty");
-  if (emptyFileDiv.hasClass("hide")) {
-    emptyFileDiv.removeClass("hide");
-  }
+    const emptyFileDiv = $("#{{ widget.name }}-empty");
+    if (emptyFileDiv.hasClass("hide")) {
+        emptyFileDiv.removeClass("hide");
+    }
 
-  if (!uploadedFileDiv.hasClass("hide")) {
-    uploadedFileDiv.addClass("hide");
-  }
+    if (!uploadedFileDiv.hasClass("hide")) {
+        uploadedFileDiv.addClass("hide");
+    }
 
-  changeClearCheckbox(true);
+    changeClearCheckbox(true);
 }
 
 function changeClearCheckbox(value){
-  const clearCheckbox = $("#{{ widget.checkbox_id }}");
-  clearCheckbox.checked = value;
+    const clearCheckbox = $("#{{ widget.name }}_clear")[0];
+    clearCheckbox.checked = value;
 }
 
 function changePreviewImgURL() {
-  const imageInput = inputElement{{widget.attrs.id}}
-  const [file] = imageInput.prop("files")
-  if (file) {
-    const previewButton = $("#{{ widget.name }}-preview")
-    previewButton.attr("href", URL.createObjectURL(file));
-  }
+    const imageInput = inputElement{{widget.attrs.id}}
+    const [file] = imageInput.prop("files")
+    if (file) {
+        const previewButton = $("#{{ widget.name }}-preview")
+        previewButton.attr("href", URL.createObjectURL(file));
+    }
 }
 
 </script>
