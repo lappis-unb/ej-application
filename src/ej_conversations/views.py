@@ -219,7 +219,7 @@ class ConversationCommentView(ConversationCommonView, DetailView):
 
         return render(
             request,
-            "ej_conversations/comments/add-comment.jinja2",
+            self.template_name,
             self.get_context_data(),
         )
 
