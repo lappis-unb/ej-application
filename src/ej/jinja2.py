@@ -2,7 +2,6 @@ import random
 import string
 
 import hyperpython.jinja2
-from boogie.apps.fragments import fragment
 from django.apps import apps
 from django.conf import settings
 from django.contrib.messages import get_messages
@@ -53,7 +52,6 @@ def environment(autoescape=True, **options):
         generic_context=generic_context,
         get_messages=messages,
         # Available tags and components
-        fragment=context_fragment,
         render=html,
         tag=roles,
         blob=Blob,
@@ -143,11 +141,6 @@ def messages(ctx):
 
 
 @contextfunction
-def context_fragment(ctx, ref, **kwargs):
-    return fragment(ref, request=ctx.get("request"), **kwargs)
-
-
-@contextfunction
 def generic_context(ctx):
     """
     Renders the current context as a description list.
@@ -179,7 +172,6 @@ def generic_context(ctx):
         "service_worker",
         "generic_context",
         "render",
-        "fragment",
         "tag",
         "settings",
         *FUNCTIONS,
