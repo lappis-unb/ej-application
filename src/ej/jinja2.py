@@ -11,8 +11,6 @@ from django.utils.formats import date_format
 from django.utils.translation import get_language
 from hyperpython import html, Blob
 from jinja2 import Environment, StrictUndefined, contextfunction
-from markdown import markdown
-from markupsafe import Markup
 from sidekick import record
 
 from . import components
@@ -58,7 +56,6 @@ def environment(autoescape=True, **options):
         **FUNCTIONS,
     )
     env.filters.update(
-        markdown=lambda x: Markup(markdown(x)),
         pc=format_percent,
         salt=salt,
         **hyperpython.jinja2.filters,
