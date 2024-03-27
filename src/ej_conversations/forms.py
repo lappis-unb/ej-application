@@ -131,8 +131,10 @@ class ConversationForm(forms.ModelForm):
             conversation.set_overdue()
 
             # Save tags on the database
-            tags = self.cleaned_data["tags"].split(",")
-            conversation.tags.set(tags, clear=True)
+            tags = self.cleaned_data["tags"]
+            if not (tags.isspace() or tags == ""):
+                tags = tags.split(",")
+                conversation.tags.set(tags, clear=True)
 
         return conversation
 

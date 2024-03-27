@@ -187,6 +187,14 @@ class TestGetViews:
         data = api.get(path, format="json").data
         assert "card" in data[0]
 
+    def test_search_tag_in_text_contains(self, conversation):
+        tag = "tag"
+        conversation.tags.set([tag])
+        path = BASE_URL + f"/conversations/?is_promoted=true&text_contains={tag}"
+        api = authenticate_user_api({"email": "email@server.com", "password": "password"})
+        data = api.get(path, format="json").data
+        assert "card" in data[0]
+
     def test_get_vote_endpoint(self, vote):
         path = BASE_URL + f"/votes/{vote.id}/"
         api = authenticate_user_api({"email": "email@server.com", "password": "password"})

@@ -2,6 +2,10 @@
   display: none;
 }
 
+#public-conversations, #my-conversations {
+  grid-column: 1/4;
+}
+
 .move-icon {
   transform: rotate(-90deg);
 }
@@ -9,8 +13,15 @@
 .public-tag-header, .my-tag-header, .comments-tag-header {
     display: flex !important;
     place-items: baseline;
-    margin-top: 1.125rem;
+    background-color: $color-gray-deeper;
+    padding: 1rem;
     flex-flow: wrap;
+    row-gap: 0.75rem;
+    column-gap: 1.25rem;
+
+    button {
+      margin-bottom: unset !important;
+    }
 
     #public-tag-choice {
       width: auto;
@@ -23,6 +34,7 @@
     #my-tag-choice, #my-all-tags, .my-tag-header--add {
       display: none;
     }
+    
 
     .public-tag-header--add--not-allowed {
       cursor: not-allowed;
@@ -50,54 +62,46 @@
       flex-flow: wrap;
 
       &--selected {
-        background-color: $color-theme-dark-blue;
-        border: 1px solid $color-theme-dark-blue;
+        border: 1px solid $color-pink-light;
+        background-color: $color-pink-light;
         color: $color-white;
       }
 
       &--unselected {
         background-color: $color-white;
-        border: 1px solid $color-theme-dark-blue;
+        border: 1px solid $color-white;
         color: $color-theme-dark-blue;
       }
 
       &--selected, &--unselected {
         border-radius: 5px;
-        text-transform: lowercase;
-        font-size: 1rem;
+        font-size: 0.75rem;
         font-weight: 700;
         padding: 0 .75rem;
-        margin-right: 1.25rem;
+        height: 1.5rem;
+        line-height: 0;
       }
     }
 
-    &__all-conversations--unselected, &__all--unselected {
-      border: 1px solid $color-pink-light;
+    &__all--unselected {
+      border: 1px solid $color-white;
       background-color: $color-white;
       color: $color-pink-light;
     }
 
-    &__all-conversations--selected,  &__all--selected  {
+    &__all--selected  {
       border: 1px solid $color-pink-light;
       background-color: $color-pink-light;
       color: $color-white;
 
     }
 
-    &__all-conversations--unselected, &__all-conversations--selected,
     &__all--unselected,  &__all--selected  {
       border-radius: 5px;
-      text-transform: lowercase;
-      font-size: 1rem;
       font-weight: 700;
       padding: 0 .75rem;
-      margin-right: 1.25rem;
-    }
-
-
-    .my-tag-header__all-conversations--unselected,
-    .my-tag-header__all-conversations--selected {
-      margin-left: 0;
+      height: 1.5rem;
+      line-height: 0;
     }
 
     &__tooltip {
@@ -274,34 +278,38 @@
 }
 
 .input-container {
-  margin: 1.75rem 0;
+  background-color: $color-gray-brigther;
+  justify-content: space-between;
   display: flex;
   align-items: baseline;
   gap: 1.313rem;
+  padding: 1rem;
 
   &__filter-theme, &__filter-theme:hover {
     color: $color-theme-osf-light;
     font-family: "Work Sans";
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 700;
     line-height: 24px;
-    text-transform: lowercase;
+    text-transform: uppercase;
     display: flex;
   }
 
   &__search {
     border-radius: 5px !important;
-    border: 1px solid $color-complementary-gray !important;
+    border: 1px solid white !important;
     height: 2.25rem !important;
     box-sizing: border-box;
     background-position: 0.5rem 0.563rem !important;
     background-size: 1.25rem !important;
     background-repeat: no-repeat !important;
-    padding: 0.875rem 0px 0.75rem 1.75rem !important;
-    background: url('/static/img/icons/gray-search.svg');
-    width: 14.7rem !important;
+    padding: 0.6875rem 0px 0.6875rem 2.1875rem !important;
+    background: url('/static/img/icons/blue-search.svg');
+    width: 51.5% !important;
     color: $color-black;
+    margin: 0px !important;
+    font-size: 0.75rem !important;
 
     &::placeholder {
         color: $color-complementary-gray;
@@ -309,13 +317,11 @@
   }
 
   &__warn-message {
-    color: $color-pink-light;
-    font-size: 1rem;
-    font-style: italic;
-    font-weight: 500;
-    line-height: 20px;
+    color: $color-red-negative;
+    font-size: 0.75rem;
+    font-weight: 400;
     grid-template-columns: none;
-    margin-top: 1rem;
+    margin-top: 0.2rem;
   }
     @media (max-width: 875px) {
         & {
@@ -329,11 +335,17 @@
     }
 }
 
+.search-filter-container {
+  margin-bottom: 0.5rem;
+
+  @media (max-width: 875px) {
+    margin-bottom: 0rem;
+    grid-column: 1/4;
+  }
+}
+
 @media only screen and (max-width: 320px) {
   .public-tag-header, .my-tag-header, .comments-tag-header {
-    button {
-      margin-top: .75rem;
-    }
 
     #public-tag-choice {
       width: 80%;
@@ -342,21 +354,6 @@
 
     &--add {
       margin: 0px 0.7rem 0 0;
-    }
-
-    .public-tag-header__tags--selected,
-    .public-tag-header__tags--unselected,
-    .my-tag-header__tags--selected,
-    .my-tag-header__tags--unselected,
-    .comments-tag-header__tags--selected,
-    .comments-tag-header__tags--unselected,
-    .public-tag-header__all-conversations--unselected,
-    .public-tag-header__all-conversations--selected,
-    .my-tag-header__all-conversations--unselected,
-    .my-tag-header__all-conversations--selected,
-    .comments-tag-header__all--unselected,
-    .comments-tag-header__all--selected {
-      margin-right: .75rem;
     }
   }
 
@@ -393,32 +390,13 @@
 
 @media (max-width: 875px) and (min-width: 321px) {
   .public-tag-header, .my-tag-header, .comments-tag-header {
-    button {
-      margin-top: .75rem;
-    }
-
-    .public-tag-header__all-conversations--unselected,
-    .public-tag-header__all-conversations--selected,
-    .my-tag-header__all-conversations--unselected,
-    .my-tag-header__all-conversations--selected,
     .comments-tag-header__all--unselected,
     .comments-tag-header__all--selected {
       margin-left: initial;
       margin-right: 0.75rem;
     }
 
-    .public-tag-header__tags--selected,
-    .public-tag-header__tags--unselected,
-    .my-tag-header__tags--selected,
-    .my-tag-header__tags--unselected,
-    .comments-tag-header__tags--selected,
-    .comments-tag-header__tags--unselected {
-      margin-right: .75rem;
-    }
-
     &__tooltip {
-      display: inline-flex !important;
-
       &__arrow {
         bottom: 2.1rem;
         transform: rotate(90deg);
