@@ -29,7 +29,7 @@ pytest:
     script:
         - cd /builds/pencillabs/ej/ej-application
         - pip install poetry
-        - poetry install --only ci --no-root
+        - poetry install --with main,dev --no-root
         - poetry run inv docs
         - poetry run inv test
     tags:
