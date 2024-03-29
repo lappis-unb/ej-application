@@ -17,7 +17,7 @@ black:
     script:
         - /bin/bash -c "black --check ."
     tags:
-        - osf
+        - k8s
 
 pytest:
     stage: tests
@@ -33,18 +33,17 @@ pytest:
         - poetry run inv docs
         - poetry run inv test
     tags:
-        - osf
+        - k8s
 
 e2e:
     stage: tests
-    when: manual
     image: cypress/base:18.16.0
     script:
         - cd /builds/pencillabs/ej/ej-application/e2e
         - npm i
         - npx cypress run --config baseUrl=https://ejplatform.pencillabs.com.br
     tags:
-        - osf
+        - k8s
 
 build_dev_image:
     stage: build
@@ -52,16 +51,37 @@ build_dev_image:
         name: docker
         pull_policy: if-not-present
     before_script:
-        - apk update && apk add git
+        - apk update && apk add bash py3-pip
+        - docker info
     script:
-        - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
-        - cd core
-        - bin/pencilctl build ej -e dev -b develop -c prod --no-cache --push
+        - cd /builds/pencillabs/ej/ej-application
+        - python3 -m venv /tmp/venv &&  . /tmp/venv/bin/activate && pip install invoke django-environ
+        - . /tmp/venv/bin/activate && inv docker-build --tag ${CI_COMMIT_SHA} --registry registry.pencillabs.tec.br --no-cache
+        - . /tmp/venv/bin/activate && inv docker-push --tag ${CI_COMMIT_SHA} --registry registry.pencillabs.tec.br
     only:
         refs:
-            - develop
+            - k8s-pipeline
     tags:
-        - osf
+        - k8s
+
+deploy_dev_image:
+    stage: deploy
+    image:
+        name: python:3.8.18-slim-bullseye
+        pull_policy: if-not-present
+    before_script:
+        - apt update && apt install git curl -y
+    script:
+        - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+        - helm version
+        - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/pencillabs/infraestructure/helm-charts.git
+        - cd helm-charts
+        - helm upgrade ej-homolog ej -f ej/values-homolog.yaml --set server.image.tag="${CI_COMMIT_SHA}" --install --kubeconfig $K8S_CONFIG
+    only:
+        refs:
+            - k8s-pipeline
+    tags:
+        - k8s
 
 build_prod_image:
     stage: build
@@ -78,7 +98,7 @@ build_prod_image:
         refs:
             - prod
     tags:
-        - osf
+        - k8s
 
 deploy_to_dev:
     stage: deploy
@@ -95,4 +115,4 @@ deploy_to_dev:
         refs:
             - develop
     tags:
-        - osf
+        - k8s

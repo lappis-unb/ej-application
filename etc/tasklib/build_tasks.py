@@ -5,10 +5,35 @@ import environ
 
 try:
     from colorama import Fore, Style
-except Exception as exc:
-    pass
 
-from .base import directory, HELP_MESSAGES, exec_watch, manage, python
+    def reset_output_color():
+        return Style.RESET_ALL
+
+    def print_green(msg: str):
+        print(Fore.GREEN + msg + reset_output_color())
+
+    def print_yellow(msg: str):
+        print(Fore.YELLOW + msg + reset_output_color())
+
+    def print_red(msg: str):
+        print(Fore.RED + msg + reset_output_color())
+
+except Exception as exc:
+
+    def reset_output_color() -> None:
+        return None
+
+    def print_green(msg: str):
+        print(msg)
+
+    def print_yellow(msg: str):
+        print(msg)
+
+    def print_red(msg: str):
+        print(msg)
+
+
+from .base import directory, exec_watch, manage, python
 
 __all__ = ["build_assets", "docs", "i18n", "js", "sass"]
 
@@ -18,22 +43,6 @@ env = environ.Env(
 
 
 MINIFY_BINARY = f"{directory}/src/ej/static/ej/node_modules/.bin/minify"
-
-
-def reset_output_color():
-    return Style.RESET_ALL
-
-
-def print_green(msg: str):
-    print(Fore.GREEN + msg + reset_output_color())
-
-
-def print_yellow(msg: str):
-    print(Fore.YELLOW + msg + reset_output_color())
-
-
-def print_red(msg: str):
-    print(Fore.RED + msg + reset_output_color())
 
 
 @task

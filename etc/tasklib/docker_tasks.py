@@ -13,6 +13,7 @@ __all__ = [
     "docker_stop",
     "docker_rm",
     "docker_logs",
+    "docker_push",
 ]
 
 COMPOSE_BINARY = "docker compose"
@@ -34,7 +35,7 @@ def docker_up(ctx, dry_run=False, d=False):
 @task
 def docker_build(ctx, dry_run=False, no_cache=False, prod=False, registry="", tag=""):
     """
-    Build EJ web server image;
+    Build EJ web server image.
     By default, this command will install all EJ dependencies.
     """
     do = runner(ctx, dry_run, pty=True)
@@ -44,6 +45,17 @@ def docker_build(ctx, dry_run=False, no_cache=False, prod=False, registry="", ta
     argsList.append("--no-cache") if no_cache else False
     args: str = reduce(lambda x, y: x + " " + y, argsList)
     do(f"docker build {args} .")
+
+
+@task
+def docker_push(ctx, dry_run=False, registry="", tag=""):
+    """
+    Push EJ server Docker image to a public registry.
+    """
+    do = runner(ctx, dry_run, pty=True)
+    image = f"{registry}/ej-server" if registry else "docker-server"
+    tagged_image = f"{image}:{tag}" if tag else image
+    do(f"docker push {tagged_image}")
 
 
 @task
