@@ -30,16 +30,27 @@ Cypress.Commands.add('createConversation', () => {
     cy.get('input[type=submit]').click()
 })
 
+Cypress.Commands.add('createCustomConversation', () => {
+  cy.get('a[title="Nova conversa"]').click()
+  cy.get('#id_text').type("O que você acha do financiamento das praças públicas?")
+  cy.get('input[name=title]').type("praças públicas")
+  cy.get('input[name=tags]').type("infraestrutura")
+  cy.get('#id_anonymous_votes_limit').type(2)
+  cy.get('.conversation-form__custom-richtext label').should('contain', 'Texto a ser apresentado como boas-vindas')
+  cy.get('#id_ending_message').typeCkeditor("Muito obrigada pela participação, ela é muito importante.");
+  cy.get('input[type=submit]').click()
+})
+
 //Access Django admin painel to remove conversation.
-Cypress.Commands.add('removesCypressConversation', () => {
-    cy.visit('/admin')
+Cypress.Commands.add('removesCypressConversation', (conversation_title="avanços da IA e2e") => {
+   cy.visit('/admin')
     cy.get('#id_username').type(Cypress.env('adminCredentials')['email'], {force: true})
     cy.get('#id_password').type(Cypress.env('adminCredentials')['password'], {force: true})
     cy.get('input[type="submit"]').click({force: true})
     cy.get('th[scope="row"] a[href="/admin/ej_conversations/conversation/"]').click({force: true})
-    cy.get('a').contains("avanços da IA e2e").then(($elements)=>{
+    cy.get('a').contains(conversation_title).then(($elements)=>{
       if ($elements.length > 0) {
-        cy.get('a').contains("avanços da IA e2e").click({force: true})
+        cy.get('a').contains(conversation_title).click({force: true})
         cy.get('a[class=deletelink]').click({force: true})
         cy.get('input[type="submit"]').click({force: true})
       }
@@ -69,3 +80,14 @@ Cypress.Commands.add('login', () => {
     cy.get('input[type="email"]').type(`${Cypress.env("userCredentiails")["email"]}{enter}`)
     cy.get('input[type="password"]').type(`${Cypress.env("userCredentiails")["password"]}{enter}`)
 })
+
+
+Cypress.Commands.add('typeCkeditor', {
+  prevSubject: true,
+}, (prevSubject, html) => {
+ cy.get(prevSubject).invoke('attr', 'id').as('ckeditorInstance');
+
+ cy.get('@ckeditorInstance').then((id) => {
+   cy.state('window').CKEDITOR.instances[id].setData(html);
+ });
+});

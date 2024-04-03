@@ -85,6 +85,7 @@ class ConversationForm(forms.ModelForm):
             "end_date",
             "welcome_message",
             "background_image",
+            "ending_message",
         ]
         widgets = {
             "start_date": ConversationDateWidget,

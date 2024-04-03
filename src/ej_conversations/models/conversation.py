@@ -101,14 +101,21 @@ class Conversation(HasFavoriteMixin, CustomizeMenuMixin, TimeStampedModel):
         validators=[validate_file_size],
     )
 
-    objects = ConversationQuerySet.as_manager()
-    tags = TaggableManager(through="ConversationTag", blank=True)
-    votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
     welcome_message = RichTextField(
         blank=True,
         null=True,
         help_text=_("A message to be presented to participants before starting voting."),
     )
+
+    ending_message = RichTextField(
+        blank=True,
+        null=True,
+        help_text=_("Text to be presented to participants in the end of voting."),
+    )
+
+    objects = ConversationQuerySet.as_manager()
+    tags = TaggableManager(through="ConversationTag", blank=True)
+    votes = property(lambda self: Vote.objects.filter(comment__conversation=self))
 
     def set_overdue(self):
         """
