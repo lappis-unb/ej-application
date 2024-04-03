@@ -49,13 +49,22 @@
                         {{ form.errors["background_image"] }}
                     {% endif %}
 
-                    <div class="conversation-form__welcome">
+                    <div class="conversation-form__custom-richtext">
                         <label>{{_("Text to be displayed as welcome")}}</label>
-                        <div class="conversation-form__welcome__text">
+                        <div class="conversation-form__custom-richtext__text">
                             {{form.welcome_message}}
                         </div>
                         <legend>{{_("This text will be presented to new participants who access 
                             the shared link for this conversation")}}</legend>
+                    </div>
+
+                    <div class="conversation-form__custom-richtext">
+                        <label>{{_("Text to be presented at the end of the collection")}}</label>
+                        <div class="conversation-form__custom-richtext__text">
+                            {{form.ending_message}}
+                        </div>
+                        <legend>{{_("This text will be presented to participants who have 
+                            completed the collection")}}</legend>
                     </div>
 
                     {% block conversation_form_button %}
