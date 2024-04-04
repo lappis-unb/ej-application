@@ -61,7 +61,7 @@ build_dev_image:
         - . /tmp/venv/bin/activate && inv docker-push --tag ${CI_COMMIT_SHA} --registry registry.pencillabs.tec.br
     only:
         refs:
-            - k8s-pipeline
+            - develop
     tags:
         - k8s
 
@@ -80,7 +80,7 @@ deploy_dev_image:
         - helm upgrade ej-homolog ej -f ej/values-homolog.yaml --set server.image.tag="${CI_COMMIT_SHA}" --install --kubeconfig $K8S_CONFIG
     only:
         refs:
-            - k8s-pipeline
+            - develop
     tags:
         - k8s
 
