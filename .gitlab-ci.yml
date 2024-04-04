@@ -72,8 +72,8 @@ deploy_dev_image:
         pull_policy: if-not-present
     before_script:
         - apt update && apt install git curl -y
-    script:
         - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    script:
         - helm version
         - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/pencillabs/infraestructure/helm-charts.git
         - cd helm-charts
@@ -98,22 +98,5 @@ build_prod_image:
     only:
         refs:
             - prod
-    tags:
-        - k8s
-
-deploy_to_dev:
-    stage: deploy
-    image:
-        name: docker
-        pull_policy: if-not-present
-    before_script:
-        - apk update && apk add git
-    script:
-        - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
-        - cd core
-        - bin/pencilctl deploy ej -e dev -c prod
-    only:
-        refs:
-            - develop
     tags:
         - k8s
