@@ -1,14 +1,14 @@
 describe('Managing custom conversation', () => {
     beforeEach(() => {
       cy.registerUser();
-  
+
       cy.url().then(($url) => {
         if($url == `${Cypress.config('baseUrl')}/profile/tour/`) {
           cy.get('form a[hx-post="/profile/tour/?step=skip"]').click()
         }
       })
     });
-    
+
     it('test check custom final voting message', () => {
       cy.createCustomConversation();
       cy.get('.voting-card__message').contains("Muito obrigada pela participação, ela é muito importante.");

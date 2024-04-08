@@ -1,3 +1,3 @@
-from ej.tests.conftest import patch_jinja2
+from ej.tests.pytest.conftest import patch_jinja2
 
 patch_jinja2()

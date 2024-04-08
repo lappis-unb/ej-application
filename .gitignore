@@ -123,7 +123,8 @@ src/*/static/*/css/
 src/*/static/*/js/
 src/*/static/*/.parcel-cache
 
-e2e/node_modules
+src/ej/tests/e2e/node_modules
+src/ej/tests/e2e/cypress/screenshots
 
 # Third party apps
 src/ej_pencillabs
