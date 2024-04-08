@@ -61,7 +61,7 @@
         .attr("fill", d => d.data.fill)
         .attr("d", arc)
         .append("title")
-        .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`)
+        .text(d => `${d.data.name}: ${d.data.value? d.data.value.toLocaleString(): 'desconhecido'}`)
 
         svg.append("g")
             .attr("font-family", "sans-serif")
