@@ -1,94 +1,55 @@
 {% macro search_filter(all_tags, participated_tags, name, has_filtered_tag, host, api_args) %}
-    <div class="input-container">
-        <input class="input-container__search" type="search"
-            placeholder="{{_('Search conversation')}}"
-            onkeyup="{{name}}filterConversationByTagAndName(this);"
-        >
-        <a class="input-container__filter-theme" onclick="{{name}}filterByTheme()">
-            {{_("Filter by theme")}}
-            <i id="{{name}}filter-icon" class="fa fa-chevron-left"></i>
-        </a>
-    </div>
-
-    <div id="{{name}}-tag-buttons">
-        <input list="{{name}}-all-tags" id="{{name}}-tag-choice" name="{{name}}-tag-choice" placeholder="{{ _('Find a theme') }}">
-        <datalist id="{{name}}-all-tags">
-            {% for tag in all_tags %}
-                {% if not tag in participated_tags %}
-                    <option value="{{tag}}">
-                {% endif %}
-            {% endfor %}
-        </datalist>
-
-        <a class="{{name}}-tag-header--add" id="{{name}}-tag-input-button" onclick="{{name}}addInputTag()">
-            <i class="fa fa-chevron-right fa-2xl"></i>
-        </a>
-        <button id="{{name}}-all-conversations-button"
-                class="{{name}}-tag-header__all-conversations--selected"
-                onclick="{{name}}changeStateAllConversations()"
-                data-selected="true">
-                {{ _('All') }}
-        </button>
-
-        {% for tag in participated_tags %}
-            <button class="{{name}}-tag-header__tags--unselected" onclick="{{name}}changeStateTag(this)" data-selected="false">{{tag}}</button>
-        {% endfor %}
-    </div>
-
-    {% if participated_tags and not has_filtered_tag %}
-        <div class="{{name}}-tag-header__tooltip" id="{{name}}-tag-tooltip">
-            <div class="{{name}}-tag-header__tooltip__arrow"></div>
-            {{ _('Select to view conversations within that topic.') }}
+    <div class="search-filter-container">
+        <div class="input-container">
+            <input class="input-container__search" type="search"
+                id="search-input-{{name}}"
+                placeholder="{{_('Search by key word or theme')}}"
+                onkeyup="{{name}}filterConversationByTagAndName(this);"
+            >
+            <a class="input-container__filter-theme">
+                {{_("Filter by theme")}}
+                <i id="{{name}}filter-icon" class="fa fa-chevron-left"></i>
+            </a>
         </div>
-    {% endif %}
+
+        <div id="{{name}}-tag-buttons">
+            <datalist id="{{name}}-all-tags">
+                {% for tag in all_tags %}
+                    {% if not tag in participated_tags %}
+                        <option value="{{tag}}">
+                    {% endif %}
+                {% endfor %}
+            </datalist>
+
+            <button id="{{name}}-all-conversations-button"
+                    class="{{name}}-tag-header__tags--selected"
+                    onclick="{{name}}changeStateAllConversations()"
+                    data-selected="true">
+                    {{ _('All') }}
+            </button>
+
+            {% for tag in participated_tags %}
+                <button class="{{name}}-tag-header__tags--unselected" onclick="{{name}}changeStateTag(this)" data-selected="false">{{tag}}</button>
+            {% endfor %}
+        </div>
+
+        {% if participated_tags and not has_filtered_tag %}
+            <div class="{{name}}-tag-header__tooltip" id="{{name}}-tag-tooltip">
+                <div class="{{name}}-tag-header__tooltip__arrow"></div>
+                {{ _('Select to view conversations within that topic.') }}
+            </div>
+        {% endif %}
+    </div>
 
     <script>
 
+    $('.input-container__filter-theme').on('click', () => {
+        filterByTheme("{{name}}");
+    })
+
     let {{name}}selectedTags = [];
-    const {{name}}allTags = {{ all_tags|safe }};
 
     $("#{{name}}-tag-tooltip").insertAfter($(".{{name}}-tag-header__tags--unselected:first"));
-
-    const {{name}}tagInputElement = document.querySelector("#{{name}}-tag-choice");
-    {{name}}tagInputElement.addEventListener("keyup", {{name}}tagInputCheckIfExists);
-
-    function {{name}}tagInputCheckIfExists(event){
-        const {{name}}tagInputButton = document.querySelector("#{{name}}-tag-input-button");
-        if (!{{name}}allTags.includes(event.target.value)){
-            {{name}}tagInputButton.classList.add("public-tag-header--add--not-allowed");
-        }
-        else {
-            if ({{name}}tagInputButton.classList.contains("public-tag-header--add--not-allowed")) {
-                {{name}}tagInputButton.classList.remove("public-tag-header--add--not-allowed");
-            }
-        }
-    }
-
-    function {{name}}removeTooltip() {
-        $(".{{name}}-tag-header__tags--unselected").insertBefore($(".{{name}}-tag-header__tooltip"));
-        $(".{{name}}-tag-header__tooltip").hide();
-        document.removeEventListener("click", {{name}}removeTooltip);
-    }
-
-    function {{name}}addInputTag(){
-        const tagButtonsDiv = document.getElementById("{{name}}-tag-buttons");
-        const inputField = document.getElementById("{{name}}-tag-choice");
-        const typedTag = inputField.value;
-        if ({{name}}allTags.includes(typedTag)){
-            {{name}}selectedTags.push(typedTag);
-            tagButtonsDiv.innerHTML = tagButtonsDiv.innerHTML + `<button class="{{name}}-tag-header__tags--selected" onclick="{{name}}changeStateTag(this)" data-selected="true">${typedTag}</button>`;
-            {{name}}getConversationByTag();
-        }
-        else { return }
-
-        const allConversationsButton = document.getElementById("{{name}}-all-conversations-button");
-        const isAllSelected = JSON.parse(allConversationsButton.dataset.selected);
-        if (isAllSelected){
-            {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__all-conversations--selected", "{{name}}-tag-header__all-conversations--unselected");
-            allConversationsButton.dataset.selected = !isAllSelected;
-        }
-        document.querySelector(`#{{name}}-all-tags option[value='${typedTag}']`).remove();
-    }
 
     function {{name}}changeStateTag(currentTag){
         const isSelected = JSON.parse(currentTag.dataset.selected);
@@ -104,7 +65,7 @@
             allConversationsButton = document.getElementById("{{name}}-all-conversations-button");
             const isAllSelected = JSON.parse(allConversationsButton.dataset.selected);
             if(isAllSelected){
-                {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__all-conversations--selected", "{{name}}-tag-header__all-conversations--unselected");
+                {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__tags--selected", "{{name}}-tag-header__tags--unselected");
                 allConversationsButton.dataset.selected = false;
             }
             {{name}}selectedTags.push(tagName);
@@ -112,6 +73,16 @@
         }
         currentTag.dataset.selected = !isSelected;
         {{name}}getConversationByTag();
+        clearInputValue("search-input-{{name}}")
+    }
+    
+    function clearInputValue(input_id) {
+        document.getElementById(input_id).value = "";
+    }
+
+    function removeErrorMessage(name) {
+        let cardsDiv = document.getElementById(`${name}-current-cards`);
+        cardsDiv.classList.remove("input-container__warn-message");
     }
 
     function {{name}}getConversationByTag(){
@@ -120,6 +91,7 @@
             data: {"tags": {{name}}selectedTags, {{api_args}}: true },
             traditional: true,
             success: (retrievedConversations) => {
+                removeErrorMessage("{{name}}");
                 if (retrievedConversations.length == 0) {
                     {{name}}changeStateAllConversations();
                 } else {
@@ -135,6 +107,7 @@
             url: "{{ host }}/api/v1/conversations",
             data: { {{api_args}}: true },
             success: (retrievedConversations) => {
+                removeErrorMessage("{{name}}");
                 {{name}}updateConversations(retrievedConversations)
             }
         });
@@ -144,7 +117,7 @@
         allConversationsButton = document.getElementById("{{name}}-all-conversations-button");
         const isSelected = JSON.parse(allConversationsButton.dataset.selected);
         if (isSelected){
-            {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__all-conversations--selected", "{{name}}-tag-header__all-conversations--unselected");
+            {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__tags--selected", "{{name}}-tag-header__tags--unselected");
             {{name}}getConversationByTag();
         }
         else {
@@ -158,7 +131,7 @@
             {{name}}selectedTags = [];
             {{name}}getPromotedConversations();
 
-            {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__all-conversations--unselected", "{{name}}-tag-header__all-conversations--selected");
+            {{name}}replaceClass(allConversationsButton, "{{name}}-tag-header__tags--unselected", "{{name}}-tag-header__tags--selected");
         }
 
         allConversationsButton.dataset.selected = !isSelected;
@@ -199,22 +172,24 @@
         });
     }
 
-    let {{name}}hasViewedTooltip = false;
-
-    function {{name}}checkTooltipStatus() {
-        if(!{{name}}hasViewedTooltip){
-            setTimeout( () => {
-                $(document).on("click", document, {{name}}removeTooltip); 
-                {{name}}hasViewedTooltip = true;
-            }, 100);
-        }
+    function removeTooltip(type) {
+        $(`.${type}-tag-header__tags--unselected`).insertBefore($(`.${type}-tag-header__tooltip`));
+        $(`.${type}-tag-header__tooltip`).hide();
+        document.removeEventListener("click", () => removeTooltip(type));
     }
-    function {{name}}filterByTheme() {
-        let sectionTags = document.getElementById("{{name}}-tag-buttons");
-        let filterIconTheme = document.getElementById("{{name}}filter-icon");
-        sectionTags.classList.toggle("{{name}}-tag-header");
+
+    function checkTooltipStatus(type) {
+        setTimeout( () => {
+            $(document).on("click", document, () => removeTooltip(type)); 
+        
+        }, 100);
+    }
+    function filterByTheme(type) {
+        let sectionTags = document.getElementById(`${type}-tag-buttons`);
+        let filterIconTheme = document.getElementById(`${type}filter-icon`);
+        sectionTags.classList.toggle(`${type}-tag-header`);
         filterIconTheme.classList.toggle("move-icon");
-        {{name}}checkTooltipStatus();
+        checkTooltipStatus(type);
     }
     </script>
 

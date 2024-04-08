@@ -135,8 +135,5 @@ class EjClient(Client):
     def get_html(self, *args, **kwargs):
         return Blob(self.get_data(*args, **kwargs))
 
-    def get_soup(self, *args, **kwargs):
-        return bs4.BeautifulSoup(self.get_data(*args, **kwargs))
-
 
 client = EjClient()

@@ -34,15 +34,29 @@ da conversa. Estes comentários irão para moderação, antes de ficarem dispon�
    Tela de adição de comentários apresentada aos usuários comuns.
 
 
-Compartilhndo uma conversa
---------------------------
+Compartilhando uma conversa
+---------------------------
 
-É possível compartilhar o link para a conversa utilizando o botão de compartilhamento, disponível ao lado
-do título da conversa. Qualquer pessoa que clicar no link será redirecionado para a tela de participação e poderá
-votar mesmo estando deslogado, caso o criador da conversa tenha configurado a participação anônima, nos `campos
+É possível compartilhar o link para a conversa clicando no texto "COMPARTILHE ESSA CONVERSA", disponível no final 
+da página de participação. Nesse caso, o link será copiado para a área de transferência e poderá ser compartilhado 
+com outros usuários. Os usuários poderão acessar e votar mesmo estando deslogado, caso o criador da 
+conversa tenha configurado a participação anônima, nos `campos
 opcionais da conversa <creating-conversation.html#campos-opcionais>`_.
 
 .. figure:: ../images/conversation-share-btn.png
    :align: center
 
    Botão de compartilhamento de uma conversa
+
+
+Acessando estatísticas de uma conversa
+--------------------------------------
+
+Na lateral direita do *banner*, é possível ver informações sobre a conversa que você está participando.
+A primeira informação do *card* mostra o número de participantes que votaram na conversa e a segunda informação mostra 
+o número total de votos que a conversa recebeu de todos os participantes.
+
+.. figure:: ../images/conversation-statistics.png
+   :align: center
+
+   Card de dados da conversa

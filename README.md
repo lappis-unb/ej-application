@@ -69,6 +69,9 @@ EJ uses Pytest_:
 
     $ inv docker-test
 
+Beyond unit and integration tests, EJ also has e2e tests implemented with [Cypress](https://www.cypress.io/).
+Check `src/ej/tests/e2e/README.md` for more informations.
+
 ## Documentation
 
 After configuring local environment, the next step is reading our documentation. It can be generated with:

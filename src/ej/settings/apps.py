@@ -24,7 +24,6 @@ class InstalledAppsConf(Base, EjOptions):
     ]
 
     third_party_apps = [
-        "boogie.apps.fragments",
         "taggit",
         "rules",
         "allauth",

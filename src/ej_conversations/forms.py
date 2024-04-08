@@ -71,6 +71,10 @@ class ConversationForm(forms.ModelForm):
         label=_("Background image"),
     )
 
+    # auxiliary form field to clean background_image when necessary
+    # background_image_clear is not saved on database.
+    background_image_clear = forms.BooleanField(required=False)
+
     class Meta:
         model = Conversation
         fields = [
@@ -81,6 +85,7 @@ class ConversationForm(forms.ModelForm):
             "end_date",
             "welcome_message",
             "background_image",
+            "ending_message",
         ]
         widgets = {
             "start_date": ConversationDateWidget,
@@ -97,11 +102,9 @@ class ConversationForm(forms.ModelForm):
             )
 
     def clean_background_image(self, *args, **kwargs):
-        try:
-            background_image = self.data["background_image"]
-        except Exception:
-            background_image = self.cleaned_data["background_image"]
-        return background_image
+        if self.data.get("background_image_clear"):
+            return ""
+        return self.cleaned_data["background_image"]
 
     def clean_title(self, *args, **kwargs):
         title = self.cleaned_data["title"]
@@ -129,8 +132,10 @@ class ConversationForm(forms.ModelForm):
             conversation.set_overdue()
 
             # Save tags on the database
-            tags = self.cleaned_data["tags"].split(",")
-            conversation.tags.set(tags, clear=True)
+            tags = self.cleaned_data["tags"]
+            if not (tags.isspace() or tags == ""):
+                tags = tags.split(",")
+                conversation.tags.set(tags, clear=True)
 
         return conversation
 

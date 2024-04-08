@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 12:50-0300\n"
+"POT-Creation-Date: 2024-04-08 15:06-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -45,7 +45,7 @@ msgstr "Escolha um arquivo"
 msgid "No file chosen"
 msgstr "Nenhum arquivo selecionado"
 
-#: src/ej/jinja2.py:204
+#: src/ej/jinja2.py:193
 msgid "This template defines no extra variables"
 msgstr "Este template não define variáveis extras"
 
@@ -335,7 +335,7 @@ msgid "Created {n} votes"
 msgstr "{n} votos criados"
 
 #: src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:149
+#: src/ej_conversations/models/conversation.py:156
 msgid "Conversations"
 msgstr "Conversas"
 
@@ -418,7 +418,7 @@ msgstr "Temas, separados por vírgula."
 msgid "Background image"
 msgstr "Imagem de fundo"
 
-#: src/ej_conversations/forms.py:112
+#: src/ej_conversations/forms.py:115
 #, fuzzy
 msgid "This title already exists!"
 msgstr "Esse título já existe."
@@ -554,27 +554,32 @@ msgstr "Defina quantos votos anônimos cada participante pode dar."
 msgid "Number of anonymous votes"
 msgstr "Quantidade de votos anônimos"
 
-#: src/ej_conversations/models/conversation.py:110
+#: src/ej_conversations/models/conversation.py:107
 msgid "A message to be presented to participants before starting voting."
 msgstr ""
 "Um texto que poderá ser apresentado antes da tela de votação. A página "
 "ficará na rota /welcome da conversa."
 
-#: src/ej_conversations/models/conversation.py:148
+#: src/ej_conversations/models/conversation.py:113
+#, fuzzy
+msgid "Text to be presented to participants in the end of voting."
+msgstr "Texto que será apresentado no final da votação."
+
+#: src/ej_conversations/models/conversation.py:155
 #: src/ej_conversations/roles/conversations.py:140
 #, fuzzy
 msgid "Conversation"
 msgstr "Conversa"
 
-#: src/ej_conversations/models/conversation.py:151
+#: src/ej_conversations/models/conversation.py:158
 msgid "Can publish promoted conversations"
 msgstr "Pode publicar conversas promovidas"
 
-#: src/ej_conversations/models/conversation.py:152
+#: src/ej_conversations/models/conversation.py:159
 msgid "Can moderate comments in any conversation"
 msgstr "Pode moderar comentários em qualquer conversa"
 
-#: src/ej_conversations/models/conversation.py:264
+#: src/ej_conversations/models/conversation.py:271
 msgid "User does not have permission to create a promoted conversation."
 msgstr "Usuário não tem permissão para criar uma conversa promovida."
 
@@ -651,7 +656,7 @@ msgstr " de "
 msgid "Participate"
 msgstr "Participar"
 
-#: src/ej_conversations/tests/test_api.py:221
+#: src/ej_conversations/tests/test_api.py:229
 msgid "Authentication credentials were not provided."
 msgstr ""
 
@@ -2092,7 +2097,6 @@ msgid "you haven't created groups yet"
 msgstr "você ainda não criou grupos"
 
 #: src/ej_clusters/jinja2/ej_clusters/includes/conclusion-action-modal.jinja2:6
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:23
 #, fuzzy
 msgid "close"
 msgstr "fechar"
@@ -2317,7 +2321,7 @@ msgstr "Duração da conversa"
 msgid "Customize"
 msgstr "Personalize"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:46
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:44
 msgid ""
 "This image will be presented to your audience on the participation page, \n"
 "                                allowing you to give more context to the "
@@ -2326,11 +2330,11 @@ msgstr ""
 "Essa imagem será apresentada para o seu público na página de participação, "
 "permitindo dar mais contexto ao tema pesquisado."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:55
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:53
 msgid "Text to be displayed as welcome"
 msgstr "Texto a ser apresentado como boas-vindas"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:59
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:57
 #, fuzzy
 msgid ""
 "This text will be presented to new participants who access \n"
@@ -2339,16 +2343,29 @@ msgstr ""
 "Esse texto será apresentado para os novos participantes que acessarem o link "
 "compartilhado dessa conversa."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:65
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:62
+#, fuzzy
+msgid "Text to be presented at the end of the collection"
+msgstr "Texto a ser apresentado no final da votação"
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:66
+#, fuzzy
+msgid ""
+"This text will be presented to participants who have \n"
+"                            completed the collection"
+msgstr ""
+"Esse texto será apresentado para os participantes que finalizarem a coleta."
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:72
 msgid "Create conversation"
 msgstr "Criar conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:88
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:95
 #, fuzzy
 msgid " Comment "
 msgstr "Comentário"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:89
+#: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:96
 #: src/ej_conversations/jinja2/ej_conversations/includes/comments-form.jinja2:16
 msgid "Type your comment here"
 msgstr "Escreva seu comentário aqui"
@@ -2548,15 +2565,6 @@ msgstr "Você já votou em todos os comentários."
 #, fuzzy
 msgid "Thank you for your participation!"
 msgstr "Obrigada pela sua participação!"
-
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
-msgid "Questions about privacy?"
-msgstr "Dúvidas sobre privacidade? "
-
-#: src/ej_conversations/jinja2/ej_conversations/comments/card.jinja2:20
-#, fuzzy
-msgid "Understand how your data is used"
-msgstr "Entenda como seus dados são utilizados"
 
 #: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:13
 msgid "Congratulations!"
@@ -3165,24 +3173,24 @@ msgstr "Meus Votos"
 msgid "My Comments"
 msgstr "Meus Comentários"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:42
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:41
 #, fuzzy
 msgid "You have not created any conversations."
 msgstr "Você ainda não criou nenhuma conversa."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:48
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:47
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:68
 #, fuzzy
 msgid "You haven't voted in any conversations yet."
 msgstr "Você ainda não votou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:82
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:81
 #, fuzzy
 msgid "You haven't commented in any conversations yet."
-msgstr "Você ainda não comentou em nenhuma conversa!"
+msgstr "Você ainda não comentou em nenhuma conversa."
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
 msgid "pending"
@@ -3192,26 +3200,21 @@ msgstr "esperando"
 msgid "Contributions"
 msgstr "Contribuições"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:4
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:6
 #, fuzzy
-msgid "Search conversation"
-msgstr "Buscar conversa"
+msgid "Search by key word or theme"
+msgstr "Busca por palavra chave ou tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:8
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:10
 #, fuzzy
 msgid "Filter by theme"
 msgstr "Filtrar por tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:14
-#, fuzzy
-msgid "Find a theme"
-msgstr "Encontre um tema"
-
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:30
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:28
 msgid "All"
 msgstr "Todas"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:41
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:39
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
@@ -3408,8 +3411,8 @@ msgstr ""
 "Conversa integrada com uma instância do Mautic. Para remover integração, "
 "clique no botão ao lado da URL abaixo."
 
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:12
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:28
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:13
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:29
 #: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:7
 #: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:12
 msgid "Remove"
@@ -3442,8 +3445,8 @@ msgstr "Habilitar Integração"
 msgid "Preview Template"
 msgstr "Visualizar Template"
 
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:15
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:31
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:16
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:32
 #: src/ej_tools/jinja2/ej_tools/modal-preview-mailing.jinja2:5
 #: src/ej_tools/jinja2/ej_tools/modal-preview-mailing.jinja2:10
 #, fuzzy
@@ -3661,21 +3664,21 @@ msgstr "Iniciar coleta"
 msgid "When should I use the opinion bot?"
 msgstr "Quando eu devo utilizar o bot de opinião?"
 
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:7
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:23
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:9
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:25
 #, fuzzy
 msgid "Current image:"
 msgstr "Imagem atual:"
 
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:47
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:49
 msgid "Click to upload or drag and drop the file into this area"
 msgstr "Clique para fazer upload ou arraste e solte o arquivo nessa área"
 
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:51
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:53
 msgid "Maximum size: 5mb // Suggested dimensions: 1400x200px"
 msgstr "Tamanho máximo: 5mb // Dimensões sugeridas: 1400x200px"
 
-#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:55
+#: src/ej_tools/jinja2/ej_tools/includes/image-input.jinja2:57
 #, fuzzy
 msgid "Choose file"
 msgstr "Encontrar arquivo"
@@ -4038,6 +4041,13 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#~ msgid "Questions about privacy?"
+#~ msgstr "Dúvidas sobre privacidade? "
+
+#, fuzzy
+#~ msgid "Understand how your data is used"
+#~ msgstr "Entenda como seus dados são utilizados"
 
 #~ msgid "automatically rejected"
 #~ msgstr "rejeitado automaticamente"

@@ -12,10 +12,14 @@
             {% include 'ej_conversations/comments/voting-form.jinja2' %}
         {% else %}
             <div class="voting-card__message">
-                <p>
-                {{ _("You have already voted on all the comments.") }} {{_("Thank you for your participation!") }}
-                </p>
-            </div>
+                {% if conversation.ending_message %}
+                    {{conversation.ending_message|safe}}
+                {% else %}
+                    <p>
+                    {{ _("You have already voted on all the comments.") }} {{_("Thank you for your participation!") }}
+                    </p>
+                {% endif %}
+            </div> 
         {% endif %}
 </div>
 

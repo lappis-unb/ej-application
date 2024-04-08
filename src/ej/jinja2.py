@@ -2,7 +2,6 @@ import random
 import string
 
 import hyperpython.jinja2
-from boogie.apps.fragments import fragment
 from django.apps import apps
 from django.conf import settings
 from django.contrib.messages import get_messages
@@ -12,8 +11,6 @@ from django.utils.formats import date_format
 from django.utils.translation import get_language
 from hyperpython import html, Blob
 from jinja2 import Environment, StrictUndefined, contextfunction
-from markdown import markdown
-from markupsafe import Markup
 from sidekick import record
 
 from . import components
@@ -53,14 +50,12 @@ def environment(autoescape=True, **options):
         generic_context=generic_context,
         get_messages=messages,
         # Available tags and components
-        fragment=context_fragment,
         render=html,
         tag=roles,
         blob=Blob,
         **FUNCTIONS,
     )
     env.filters.update(
-        markdown=lambda x: Markup(markdown(x)),
         pc=format_percent,
         salt=salt,
         **hyperpython.jinja2.filters,
@@ -143,11 +138,6 @@ def messages(ctx):
 
 
 @contextfunction
-def context_fragment(ctx, ref, **kwargs):
-    return fragment(ref, request=ctx.get("request"), **kwargs)
-
-
-@contextfunction
 def generic_context(ctx):
     """
     Renders the current context as a description list.
@@ -179,7 +169,6 @@ def generic_context(ctx):
         "service_worker",
         "generic_context",
         "render",
-        "fragment",
         "tag",
         "settings",
         *FUNCTIONS,

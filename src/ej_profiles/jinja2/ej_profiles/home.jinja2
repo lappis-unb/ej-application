@@ -25,9 +25,8 @@
             _('My Comments'): '#contribution-comments'}, class_='width-full') }}
     </div>
 
-    <div id="public-conversations">
+    <div id="public-conversations" class="content-grid">
         {{ search_filter(all_tags, participated_tags, "public", has_filtered_tag, host, "is_promoted") }}
-
         <div class="alternate-cards" id="public-current-cards">
             {% for conversation in public_conversations %}
                 <div class="margin-y3">{{ conversation|role('card', button_text=_("Participate")) }}</div>
@@ -35,7 +34,7 @@
         </div>
     </div>
 
-    <div id="my-conversations" class="my_conversations">
+    <div id="my-conversations" class="my_conversations content-grid">
         {% if created_conversations %}
             {{ search_filter(my_tags, my_tags, "my", has_filtered_tag, host, "is_author") }}
         {% else %}
@@ -66,7 +65,7 @@
 
 {% macro render_conversations(conversations) %}
     {% if not conversations %}
-        <p class="contribution-votes__message">{{_("You haven't voted in any conversations yet.")}}</p>
+        <p class="contribution-votes__message contribution-votes__message--no-margin-top">{{_("You haven't voted in any conversations yet.")}}</p>
     {% endif %}
     {% for conversation in conversations %}
         <div id="current-votes">
@@ -78,7 +77,7 @@
 {% endmacro %}
 
 {% macro render_comments(comments) %}
-    {% if not comments %}
+    {% if comments.count() <= 0 %}
         <p class="contribution-votes__message">{{_("You haven't commented in any conversations yet.")}}</p>
     {% else %}
         {% include 'ej_profiles/includes/comments-tags-filter.jinja2' %}

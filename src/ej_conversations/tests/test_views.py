@@ -494,6 +494,7 @@ class TestConversationCreate(ConversationSetup):
                 "comments_count": 0,
                 "anonymous_votes_limit": 0,
                 "background_image": background_image,
+                "ending_message": "ending message",
             },
         )
         assert response.status_code == 302
@@ -503,6 +504,58 @@ class TestConversationCreate(ConversationSetup):
         )
         assert conversation.is_promoted == False
         assert conversation.board == base_board
+
+    def test_conversation_with_custom_ending_message(self, base_board, base_user):
+        url = reverse(
+            "boards:conversation-create", kwargs={"board_slug": base_board.slug}
+        )
+        client = Client()
+        client.force_login(base_user)
+
+        client.post(
+            url,
+            {
+                "title": "whatever",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+                "background_image": "",
+                "ending_message": "ending message",
+            },
+        )
+        conversation = Conversation.objects.first()
+        detail_url = reverse(
+            "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
+        )
+        response = client.get(detail_url)
+        assert b"ending message" in response.content
+
+    def test_conversation_with_default_ending_message(self, base_board, base_user):
+        url = reverse(
+            "boards:conversation-create", kwargs={"board_slug": base_board.slug}
+        )
+        client = Client()
+        client.force_login(base_user)
+
+        client.post(
+            url,
+            {
+                "title": "whatever",
+                "tags": "tag",
+                "text": "description",
+                "comments_count": 0,
+                "anonymous_votes_limit": 0,
+                "background_image": "",
+                "ending_message": "",
+            },
+        )
+        conversation = Conversation.objects.first()
+        detail_url = reverse(
+            "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
+        )
+        response = client.get(detail_url)
+        assert b"You have already voted on all the comments." in response.content
 
 
 class TestConversationComments(ConversationSetup):
@@ -761,6 +814,7 @@ class TestConversationEdit(ConversationSetup):
                 "comments_count": 0,
                 "anonymous_votes_limit": 0,
                 "background_image": background_image,
+                "ending_message": "ending message",
             },
         )
 
@@ -773,6 +827,7 @@ class TestConversationEdit(ConversationSetup):
         assert new_conversation.title == "bar"
         assert new_conversation.text == "description"
         assert new_conversation.background_image
+        assert new_conversation.ending_message == "ending message"
 
 
 class TestConversationModerate(ConversationSetup):

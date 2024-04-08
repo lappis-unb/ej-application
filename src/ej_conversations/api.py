@@ -11,6 +11,7 @@ from ej.permissions import (
     IsAuthenticatedCreationView,
     IsViewRetrieve,
 )
+from django.db.models import Q
 from ej.viewsets import RestAPIBaseViewSet
 from ej_conversations.models import Conversation, Comment, Vote
 from ej_conversations.serializers import (
@@ -210,7 +211,9 @@ class ConversationViewSet(RestAPIBaseViewSet):
         queryset = is_promoted_queryset.filter(tags__name__in=tags).distinct()
 
         if text_contains:
-            queryset = queryset.filter(text__icontains=text_contains)
+            queryset = queryset.filter(
+                Q(text__icontains=text_contains) | Q(tags__name__icontains=text_contains)
+            ).distinct()
         serializer = ParticipantConversationSerializer(
             queryset, many=True, context={"request": request}
         )
@@ -219,8 +222,8 @@ class ConversationViewSet(RestAPIBaseViewSet):
     def get_promoted_conversations(self, request, is_promoted_queryset, text_contains):
         if text_contains:
             is_promoted_queryset = is_promoted_queryset.filter(
-                text__icontains=text_contains
-            )
+                Q(text__icontains=text_contains) | Q(tags__name__icontains=text_contains)
+            ).distinct()
         serializer = ParticipantConversationSerializer(
             is_promoted_queryset, many=True, context={"request": request}
         )
@@ -232,7 +235,9 @@ class ConversationViewSet(RestAPIBaseViewSet):
             queryset = queryset.filter(tags__name__in=tags).distinct()
 
         if text_contains:
-            queryset = queryset.filter(text__icontains=text_contains)
+            queryset = queryset.filter(
+                Q(text__icontains=text_contains) | Q(tags__name__icontains=text_contains)
+            ).distinct()
         serializer = ParticipantConversationSerializer(
             queryset, many=True, context={"request": request}
         )
