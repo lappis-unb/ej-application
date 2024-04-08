@@ -1,8 +1,9 @@
 stages:
     - style
-    - tests
+    - unit tests
     - build
     - deploy
+    - e2e tests
 
 variables:
     GITLAB_EJ_TOKEN: "gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct"
@@ -20,7 +21,7 @@ black:
         - k8s
 
 pytest:
-    stage: tests
+    stage: unit tests
     image:
         name: python:3.8.18-slim-bullseye
         pull_policy: if-not-present
@@ -32,17 +33,6 @@ pytest:
         - poetry install --with main,dev --no-root
         - poetry run inv docs
         - poetry run inv test
-    tags:
-        - k8s
-
-e2e:
-    stage: tests
-    when: manual
-    image: cypress/base:18.16.0
-    script:
-        - cd /builds/pencillabs/ej/ej-application/e2e
-        - npm i
-        - npx cypress run --config baseUrl=https://ejplatform.pencillabs.com.br
     tags:
         - k8s
 
@@ -83,6 +73,20 @@ deploy_dev_image:
             - develop
     tags:
         - k8s
+
+e2e:
+    stage: e2e tests
+    image: cypress/base:18.16.0
+    before_script:
+        - apt update && apt install curl -y
+    script:
+        - cd /builds/pencillabs/ej/ej-application/src/ej/tests/e2e
+        - ./run.sh https://ejplatform.pencillabs.tec.br
+    tags:
+        - k8s
+    only:
+        refs:
+            - develop
 
 build_prod_image:
     stage: build
