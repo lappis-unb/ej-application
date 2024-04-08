@@ -132,9 +132,10 @@
 }
 
 .comments-tag-header {
-  margin-top: 1.5rem;
-  height: 2.25rem;
-  margin-bottom: 1.5rem;
+  background-color: unset !important;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+  padding: 0;
 
   &--no-margin {
     margin-left: 0;
@@ -163,6 +164,10 @@
     font-weight: 500;
     line-height: normal;
     margin-left: 0;
+
+    &--no-margin-top {
+      margin-top: 0;
+    }
   }
 }
 
@@ -183,7 +188,7 @@
 
 .contribution-votes {
   &__card {
-    margin: 2rem 0 0 0;
+    margin: 1.75rem 0 0 0;
     display: grid;
     grid-template-columns: auto auto;
     grid-column-gap: 1.938rem;
@@ -358,8 +363,6 @@
   }
 
   .comments-tag-header {
-    margin-bottom: 5.5rem;
-
     #all-comments-button {
       margin-left: 0;
     }
@@ -390,11 +393,6 @@
 
 @media (max-width: 875px) and (min-width: 321px) {
   .public-tag-header, .my-tag-header, .comments-tag-header {
-    .comments-tag-header__all--unselected,
-    .comments-tag-header__all--selected {
-      margin-left: initial;
-      margin-right: 0.75rem;
-    }
 
     &__tooltip {
       &__arrow {
@@ -410,10 +408,6 @@
     &__add {
       padding-bottom: 1.5rem;
     }
-  }
-
-  .comments-tag-header {
-    margin-bottom: 5.5rem;
   }
 
   #comments-current-cards {

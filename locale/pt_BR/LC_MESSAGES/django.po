@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-21 22:29-0300\n"
+"POT-Creation-Date: 2024-04-08 15:06-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -45,7 +45,7 @@ msgstr "Escolha um arquivo"
 msgid "No file chosen"
 msgstr "Nenhum arquivo selecionado"
 
-#: src/ej/jinja2.py:204
+#: src/ej/jinja2.py:193
 msgid "This template defines no extra variables"
 msgstr "Este template não define variáveis extras"
 
@@ -506,7 +506,7 @@ msgstr ""
 "Uma breve descrição sobre essa conversa. Isso é usado internamente para "
 "criar identificadores de URL (slugs. Ex: sistema de ensino)"
 
-#: src/ej_conversations/models/conversation.py:51
+#: src/ej_conversations/models/conversation.py:52
 msgid "Question"
 msgstr "Pergunta"
 
@@ -656,7 +656,7 @@ msgstr " de "
 msgid "Participate"
 msgstr "Participar"
 
-#: src/ej_conversations/tests/test_api.py:221
+#: src/ej_conversations/tests/test_api.py:229
 msgid "Authentication credentials were not provided."
 msgstr ""
 
@@ -3173,24 +3173,24 @@ msgstr "Meus Votos"
 msgid "My Comments"
 msgstr "Meus Comentários"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:42
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:41
 #, fuzzy
 msgid "You have not created any conversations."
 msgstr "Você ainda não criou nenhuma conversa."
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:48
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:47
 msgid "Gerenciar!"
 msgstr ""
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:69
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:68
 #, fuzzy
 msgid "You haven't voted in any conversations yet."
 msgstr "Você ainda não votou em nenhuma conversa!"
 
-#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:82
+#: src/ej_profiles/jinja2/ej_profiles/home.jinja2:81
 #, fuzzy
 msgid "You haven't commented in any conversations yet."
-msgstr "Você ainda não comentou em nenhuma conversa!"
+msgstr "Você ainda não comentou em nenhuma conversa."
 
 #: src/ej_profiles/jinja2/ej_profiles/includes/comments-tags-filter.jinja2:19
 msgid "pending"
@@ -3200,21 +3200,21 @@ msgstr "esperando"
 msgid "Contributions"
 msgstr "Contribuições"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:5
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:6
 #, fuzzy
 msgid "Search by key word or theme"
 msgstr "Busca por palavra chave ou tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:9
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:10
 #, fuzzy
 msgid "Filter by theme"
 msgstr "Filtrar por tema"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:27
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:28
 msgid "All"
 msgstr "Todas"
 
-#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:38
+#: src/ej_profiles/jinja2/ej_profiles/includes/search-filter.jinja2:39
 msgid "Select to view conversations within that topic."
 msgstr "Selecione para ver as conversas dentro deste tema."
 
