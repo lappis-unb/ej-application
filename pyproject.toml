@@ -49,6 +49,7 @@ django-ckeditor = "6.3.2"
 colorama = "^0.4.6"
 django-boogie = {git = "https://gitlab.com/pencillabs/ej/django-boogie.git", rev = "fixes-python38"}
 importlib-metadata = "^7.1.0"
+argon2-cffi = "^23.1.0"
 
 [tool.poetry.dev-dependencies]
 bs4 = "^0.0.1"
