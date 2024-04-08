@@ -48,14 +48,31 @@ Cypress.Commands.add('removesCypressConversation', (conversation_title="avanços
     cy.get('#id_password').type(Cypress.env('adminCredentials')['password'], {force: true})
     cy.get('input[type="submit"]').click({force: true})
     cy.get('th[scope="row"] a[href="/admin/ej_conversations/conversation/"]').click({force: true})
+    cy.get('a').contains('Hoje').click()
     cy.get('a').contains(conversation_title).then(($elements)=>{
       if ($elements.length > 0) {
         cy.get('a').contains(conversation_title).click({force: true})
         cy.get('a[class=deletelink]').click({force: true})
         cy.get('input[type="submit"]').click({force: true})
       }
-    })    
+    })
     cy.get("#logout-form").submit({force: true})
+})
+
+Cypress.Commands.add('removesBannerConversation', () => {
+  cy.visit('/admin')
+  cy.get('#id_username').type(Cypress.env('adminCredentials')['email'], {force: true})
+  cy.get('#id_password').type(Cypress.env('adminCredentials')['password'], {force: true})
+  cy.get('input[type="submit"]').click({force: true})
+  cy.get('th[scope="row"] a[href="/admin/ej_conversations/conversation/"]').click({force: true})
+  cy.get('a').contains("educacao e2e").then(($elements)=>{
+    if ($elements.length > 0) {
+      cy.get('a').contains("educacao e2e").click({force: true})
+      cy.get('a[class=deletelink]').click({force: true})
+      cy.get('input[type="submit"]').click({force: true})
+    }
+  })
+  cy.get("#logout-form").submit({force: true})
 })
 
 //Register new user using EJ form
@@ -76,11 +93,10 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('login', () => {
-    cy.visit('/')
+    cy.visit('/login')
     cy.get('input[type="email"]').type(`${Cypress.env("userCredentiails")["email"]}{enter}`)
     cy.get('input[type="password"]').type(`${Cypress.env("userCredentiails")["password"]}{enter}`)
 })
-
 
 Cypress.Commands.add('typeCkeditor', {
   prevSubject: true,

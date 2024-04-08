@@ -41,4 +41,25 @@ describe('Managing a conversaion', () => {
     cy.get('#id_content').type("Um comentário do Cypress na conversa de IA")
     cy.get('.modal__buttons button[type=submit]').click()
   })
+
+  it('create conversation with banner', () => {
+    cy.login()
+    cy.get('a[title="Nova conversa"]').click()
+    cy.get('#id_text').type("Que medidas devem ser feitas para melhorar a educação de jovens e adolescentes?")
+    cy.get('input[name=title]').type("educacao e2e")
+    cy.get('input[name=tags]').type("edu")
+    cy.get('#id_anonymous_votes_limit').type(2)
+    cy.get('textarea[name=comment-1]').type("O Brasil deve financiar alunos carentes com vagas em escolas particulares.")
+    cy.get('textarea[name=comment-2]').type("É necessário um currículo e testes unificados.")
+    cy.get('textarea[name=comment-3]').type("Jovens devem possuir atividades extra-classe regulares em museus, parques, bibliotecas, etc.")
+    cy.get('label[for="background_image"]').selectFile('cypress/fixtures/rect-desktop.png')
+    cy.get('input[type=submit]').click({force: true})
+    
+    let conv_url = ""
+    cy.url().then(($url) => {
+      cy.visit($url)
+      // verificar se o banner foi setado corretamente
+    })
+  })
+
 })
