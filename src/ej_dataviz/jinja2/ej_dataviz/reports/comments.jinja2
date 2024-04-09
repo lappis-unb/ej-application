@@ -8,8 +8,6 @@
 
         <div class="margin-y3 comment-report">
             <div class="comment-report__comments" id="comments">
-                {# pagination-macro.jinja2 listens to form events to control pagination reset when filters are applied. #}
-                {# checks resetPageOnFilter function for the implementation. #}
                 <form hx-get="{{url("dataviz:comments-filter", **{"conversation_id": conversation.id, "slug": conversation.slug})}}"
                     hx-swap="outerHTML"
                     hx-target="#comments-table-container"
