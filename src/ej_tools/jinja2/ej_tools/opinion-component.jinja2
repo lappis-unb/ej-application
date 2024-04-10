@@ -33,12 +33,18 @@
 						{% include 'ej_tools/includes/opinion-component-avatar-info.jinja2' %}
 						<div class="opinion-col-2">
 							<span class="opinion-col-2__subtitle">
-								{{_("You can customize your collection using a message tailored to your audience.")}}
+								{{_("You can customize your collection using a background image and/or a logo, as well as a message tailored to your audience.")}}
 							</span><br>
 
 							<form method="POST" enctype="multipart/form-data" id="opinion-component-form" class="form-component">
 								{{ csrf_input }}
 								{{ opinion_component_form.conversation.as_hidden() }}
+								<div class="form-component__drop_box">
+									{% if "logo_image" in opinion_component_form.errors %}
+										{{ opinion_component_form.errors["logo_image"] }}
+									{% endif %}
+									{{opinion_component_form.logo_image}}
+								</div>
 
 								<div class="form-component__message">
 									<label class="form-component__message__label" for="custom-message">{{_("Your message")}}</label>
