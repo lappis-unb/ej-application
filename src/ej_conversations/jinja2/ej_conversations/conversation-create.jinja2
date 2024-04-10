@@ -38,23 +38,15 @@
                     <h4 class="conversation-form__h4">{{_("Customize")}}</h4>
                     <div class="block">
                         <label for="">{{form.background_image.label}}</label>
-                            {{form.background_image}}
-                        <legend>{{_("This image will be presented to your audience on the participation page, 
+                        <div class="opinion-col-2">
+                                {{form.background_image}}
+                        </div>
+                        <legend>{{_("This image will be presented to your audience on the participation page,
                                 allowing you to give more context to the researched topic")}}
                         </legend>
                     </div>
                     {% if "background_image" in form.errors %}
                         {{ form.errors["background_image"] }}
-                    {% endif %}
-
-                    <div class="block">
-                        <label for="">{{form.logo_image.label}}</label>
-                            {{form.logo_image}}
-                        <legend>{{_("This image will be presented to your audience on the welcome page")}}
-                        </legend>
-                    </div>
-                    {% if "logo_image" in form.errors %}
-                        {{ form.errors["logo_image"] }}
                     {% endif %}
 
                     <div class="conversation-form__custom-richtext">
