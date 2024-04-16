@@ -11,7 +11,7 @@
                 <form hx-get="{{url("dataviz:comments-filter", **{"conversation_id": conversation.id, "slug": conversation.slug})}}"
                     hx-swap="outerHTML"
                     hx-target="#comments-table-container"
-                    hx-trigger="clustersChanged delay:0.5s, orderChanged delay:0.5s, pageChanged, keyup delay:1s"
+                    hx-trigger="clustersChanged delay:0.5s, orderChanged delay:0.5s, sort delay:0.5s, pageChanged, keyup delay:1s"
                     onkeypress="return event.keyCode != 13;" id="comment-filters-form" action="GET">
                         {% include 'ej_dataviz/reports/includes/comments/filters.jinja2' %}
                         {% include 'ej_dataviz/reports/includes/comments/table.jinja2' %}
