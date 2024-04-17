@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 21:10-0300\n"
+"POT-Creation-Date: 2024-04-11 19:40-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1788,7 +1788,6 @@ msgstr "conversas"
 
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:5
 msgid "Showing"
 msgstr "Mostrando"
 
@@ -1802,7 +1801,6 @@ msgstr "a"
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-progress.jinja2:8
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:5
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:20
 msgid "of"
 msgstr "de"
 
@@ -3035,47 +3033,38 @@ msgstr "Relatório de Participantes"
 msgid "Export"
 msgstr "Exportar"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:5
+msgid "Exhibiting"
+msgstr "Exibindo"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:52
+#, fuzzy
+msgid "Back to top"
+msgstr "Voltar para o topo"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/voting-modal-export.jinja2:11
+msgid "or"
+msgstr "ou"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/filters.jinja2:8
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/filters-macro.jinja2:9
 #, fuzzy
 msgid "Search for key word"
 msgstr "Procure por palavra-chave"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/filters.jinja2:13
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/filters-macro.jinja2:14
 #, fuzzy
 msgid "Order by"
 msgstr "ordenar por"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/filters.jinja2:18
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/filters-macro.jinja2:19
 #, fuzzy
 msgid "creation date"
 msgstr "data de criação"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/filters.jinja2:28
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/filters-macro.jinja2:29
 #, fuzzy
 msgid "Filter by clusters"
 msgstr "Filtrar por grupos"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:12
-#, fuzzy
-msgid "first"
-msgstr "Primeiro"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:20
-#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:10
-msgid "Page"
-msgstr "Página"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/pagination-macro.jinja2:28
-msgid "last"
-msgstr "Ultimo"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/voting-modal-export.jinja2:11
-msgid "or"
-msgstr "ou"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/table.jinja2:8
 #, fuzzy
@@ -3778,6 +3767,10 @@ msgstr ""
 msgid "Integrations table"
 msgstr "Tabela de integrações"
 
+#: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:10
+msgid "Page"
+msgstr "Página"
+
 #: src/ej_tools/jinja2/ej_tools/webchat/form-integration.jinja2:38
 msgid "new page"
 msgstr "nova página"
@@ -4043,6 +4036,13 @@ msgstr "Logar com conta "
 #: src/ej_users/jinja2/ej_users/includes/terms.jinja2:6
 msgid "By clicking, you agree with our user terms."
 msgstr "Ao clicar, você concorda com nossos termos de uso."
+
+#, fuzzy
+#~ msgid "first"
+#~ msgstr "Primeiro"
+
+#~ msgid "last"
+#~ msgstr "Ultimo"
 
 #~ msgid "Boards are separate spaces that you can put your own conversations."
 #~ msgstr "Murais são espaços separados onde você pode guardar suas conversas."
