@@ -1831,7 +1831,7 @@ msgid "User"
 msgstr "Usuário"
 
 #: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:16
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/users.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/users.jinja2:16
 #, fuzzy
 msgid "users"
 msgstr "usuários"
@@ -2641,7 +2641,7 @@ msgstr "Participantes"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:47
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:8
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:23
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:25
 #, fuzzy
 msgid "votes"
 msgstr "votos"
@@ -2999,17 +2999,17 @@ msgstr "votação no período"
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:11
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:13
 #, fuzzy
 msgid "agreed"
 msgstr "concordam"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:15
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:17
 #, fuzzy
 msgid "disagreed"
 msgstr "discordam"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:21
 #, fuzzy
 msgid "skip"
 msgstr "pular"
@@ -3022,13 +3022,13 @@ msgstr "Nuvem de palavras"
 msgid "Generating word cloud. Please wait..."
 msgstr "Criando nuvem de palavras. Espere..."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/users.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/users.jinja2:9
 #, fuzzy
 msgid "Users report"
 msgstr "Relatório de Participantes"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/export-data.jinja2:16
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/voting-modal-export.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/export-data.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/export-data.jinja2:18
 #, fuzzy
 msgid "Export"
 msgstr "Exportar"
