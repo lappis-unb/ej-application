@@ -1,5 +1,6 @@
 {% extends 'ej_conversations/base.jinja2' %}
 {% from "ej_tools/includes/help-card.jinja2" import help_card %}
+{% from "ej/includes/tabs.jinja2" import tabs %}
 
 {% block metaOG2 %}
 
@@ -21,14 +22,10 @@
 			<h3 class="h3 h3--space">{{_("Collection Link")}}</h3>
 			<span class="helptext">{{_("Customize and start a collection with EJ's built-in opinion component.")}}</span>
 			<div class="tabs-space">
-				{{ tabs({
-					_('Customization'): '#customization',
-					_('Generate code'): '#generate-code',
-					}, class_='width-full')
-				}}
+				{{ tabs({ _('Customization'): 'customization', _('Generate code'): 'generate-code'}) }}
 			</div>
 			<div class="tools-divider opinion-divider">
-				<div id="customization">
+				<div id="customization" class="tabs__tab-content">
 					<div class="opinion-col-1">
 						{% include 'ej_tools/includes/opinion-component-avatar-info.jinja2' %}
 						<div class="opinion-col-2">
@@ -60,7 +57,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="generate-code">
+				<div id="generate-code" class="tabs__tab-content">
 					<div class="opinion-col-1">
 						{% include 'ej_tools/includes/opinion-component-avatar-info.jinja2' %}
 						<div class="opinion-col-2">
