@@ -39,7 +39,7 @@ i.fa, i.fas, i.fab, i.far {
     > * {
         border-bottom: 0.25rem solid transparent;
     }
-    a {
+    div,a {
         font-weight: bold;
         color: $color-navigation-header-text;
         white-space: nowrap;
@@ -55,12 +55,22 @@ i.fa, i.fas, i.fab, i.far {
     border-bottom: 1px solid $color-theme-report-gray;
     justify-content: flex-start;
 
-    a {
+    div, a {
         margin-right: 2.625rem;
         padding-bottom: 1.125rem;
     }
+    div {
+        cursor: pointer;
+    }
     &--scroll-x {
         overflow-x: scroll;
+    }
+    &__tab-content {
+        display: none !important;
+
+        &--active {
+            display: grid !important;
+        }
     }
 }
 
