@@ -92,12 +92,10 @@
             </div>
         </div>
 
-        <div class="margin-y2">
-            {{ tabs({_('Pending'): 'moderate-pending',
-                    _('Approved'): 'moderate-approved',
-                    _('Rejected'): 'moderate-rejected',
-                    _('Add'): 'moderate-add'}) }}
-        </div>
+        {{ tabs({_('Pending'): 'moderate-pending',
+                _('Approved'): 'moderate-approved',
+                _('Rejected'): 'moderate-rejected',
+                _('Add'): 'moderate-add'}, classes='margin-y2 tabs--scroll-x') }}
 
         {{ show_comments(pending, conversation, csrf_input, 'pending') }}
         {{ show_comments(approved, conversation, csrf_input, 'approved') }}

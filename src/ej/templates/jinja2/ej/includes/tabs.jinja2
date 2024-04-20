@@ -1,12 +1,14 @@
-{% macro tabs(nav_items) %}
+{% macro tabs(nav_items, classes='') %}
 
-<nav class="tabs">
-    {% for key, id in nav_items.items() %}
-        <div tabindex="0" role="tab" id={{id}}-tab onclick="showTab('{{id}}')">{{key}}</div>
-    {% endfor %}
-</nav>
+<div class="tabs {{classes}}">
+    <div class="tabs-container">
+        {% for key, id in nav_items.items() %}
+            <div tabindex="0" role="tab" id={{id}}-tab onclick="showTab('{{id}}')">{{key}}</div>
+        {% endfor %}
+    </div>
+</div>
 
-<script defer>
+<script>
     const activeTabContentCssClass = "tabs__tab-content--active";
 
     function showTab(tabId) {

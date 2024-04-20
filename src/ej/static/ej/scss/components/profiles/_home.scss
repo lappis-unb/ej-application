@@ -408,6 +408,10 @@
     &__add {
       padding-bottom: 1.5rem;
     }
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;  /* Safari and Chrome */
+    }
   }
 
   #comments-current-cards {
