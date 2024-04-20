@@ -3,7 +3,7 @@
 <div class="tabs {{classes}}">
     <div class="tabs-container">
         {% for key, id in nav_items.items() %}
-            <div tabindex="0" role="tab" id={{id}}-tab onclick="showTab('{{id}}')">{{key}}</div>
+            <a tabindex="0" role="tab" id={{id}}-tab onclick="showTab('{{id}}')">{{key}}</a>
         {% endfor %}
     </div>
 </div>

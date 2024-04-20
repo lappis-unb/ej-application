@@ -47,6 +47,7 @@ i.fa, i.fas, i.fab, i.far {
     @extend .uppercase;
     justify-content: flex-start;
     border-bottom: 1px solid $color-theme-report-light-gray;
+
     scrollbar-width: none;
     &::-webkit-scrollbar {
         display: none;  /* Safari and Chrome */
@@ -63,12 +64,9 @@ i.fa, i.fas, i.fab, i.far {
         }
     }
 
-    div, a {
+    a {
         margin-right: 2.625rem;
         padding-bottom: 1.125rem;
-    }
-
-    div {
         cursor: pointer;
         text-align: center;
         width: 100%;
