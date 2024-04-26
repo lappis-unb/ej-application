@@ -19,8 +19,13 @@ reports_urlpatterns = [
     ),
     path(
         report_url + "users/",
-        views_report.UserReportDetailView.as_view(),
+        views_report.UsersReportDetailView.as_view(),
         name="users",
+    ),
+    path(
+        report_url + "users/filter",
+        views_report.UsersReportFilterView.as_view(),
+        name="users-filter",
     ),
 ]
 
