@@ -302,9 +302,6 @@ class TestConversationDetail(ConversationSetup):
 
         client = Client()
 
-        conversation_url = reverse(
-            "boards:conversation-detail", kwargs=first_conversation.get_url_kwargs()
-        )
         conversation_vote_url = reverse(
             "boards:conversation-vote", kwargs=first_conversation.get_url_kwargs()
         )
@@ -412,7 +409,7 @@ class TestConversationCreate(ConversationSetup):
         assert response.url == "/userboard/conversations/1/whatever/"
 
         conversation = Conversation.objects.first()
-        assert conversation.is_promoted == False
+        assert not conversation.is_promoted
         assert conversation.board == base_board
 
     def test_user_should_not_create_conversation_on_another_users_board(
@@ -515,7 +512,7 @@ class TestConversationCreate(ConversationSetup):
         assert response.url == reverse(
             "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
         )
-        assert conversation.is_promoted == False
+        assert not conversation.is_promoted
         assert conversation.board == base_board
 
     def test_custom_conversation_with_mandatory_fields(self, base_board, base_user):
@@ -542,7 +539,7 @@ class TestConversationCreate(ConversationSetup):
         assert response.url == reverse(
             "boards:conversation-detail", kwargs=conversation.get_url_kwargs()
         )
-        assert conversation.is_promoted == False
+        assert not conversation.is_promoted
         assert conversation.board == base_board
 
     def test_conversation_with_custom_ending_message(self, base_board, base_user):
@@ -749,7 +746,7 @@ class TestConversationComments(ConversationSetup):
         client = Client()
         client.login(email="user1@email.br", password="password")
         conversation = create_conversation("foo", "conv1", user, board=board)
-        comment = conversation.create_comment(
+        conversation.create_comment(
             author=user, content="comment to check", status="approved"
         )
         url = f"/{board.slug}/conversations/{conversation.id}/{conversation.slug}/comments/check/"
@@ -1179,7 +1176,7 @@ class TestPrivateConversations(ConversationRecipes):
         second_conversation,
         third_conversation,
     ):
-        user_url = f"/userboard/conversations/"
+        user_url = "/userboard/conversations/"
 
         client = Client()
         client.login(email="tester@email.br", password="password")
@@ -1205,7 +1202,7 @@ class TestPrivateConversations(ConversationRecipes):
         first_conversation,
         second_conversation,
     ):
-        admin_url = f"/adminboard/conversations/"
+        admin_url = "/adminboard/conversations/"
         anonymous_user = Client()
         response = anonymous_user.get(admin_url)
         assert response.status_code == 302
@@ -1219,14 +1216,14 @@ class TestPrivateConversations(ConversationRecipes):
         first_conversation,
         second_conversation,
     ):
-        user_url = f"/userboard/conversations/"
+        user_url = "/userboard/conversations/"
         response = logged_admin.get(user_url)
 
         assert len(response.context["conversations"]) == 2
         assert first_conversation in response.context["conversations"]
         assert second_conversation in response.context["conversations"]
 
-        admin_url = f"/adminboard/conversations/"
+        admin_url = "/adminboard/conversations/"
         client = Client()
         client.login(email="tester@email.br", password="password")
         response = client.get(admin_url)
@@ -1285,7 +1282,7 @@ class TestPublicConversations(ConversationRecipes):
         not_promoted_conversation,
         hiden_conversation,
     ):
-        url = f"/conversations/"
+        url = "/conversations/"
         response = logged_admin.get(url)
 
         board1 = Board.objects.get(slug="admintestcom")
@@ -1312,11 +1309,11 @@ class TestPublicConversations(ConversationRecipes):
         not_promoted_conversation,
         hiden_conversation,
     ):
-        url = f"/conversations/"
+        url = "/conversations/"
         client = Client()
         response = client.get(url)
 
         assert response.status_code == 200
         assert response.context["user_boards"] == []
         assert promoted_conversation in response.context["conversations"]
-        assert response.context["conversations"][0].is_hidden == True
+        assert response.context["conversations"][0].is_hidden

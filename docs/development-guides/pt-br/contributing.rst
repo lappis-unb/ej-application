@@ -126,6 +126,15 @@ tente implementar a solução da issue da forma mais "pythonica" possível.
 A equipe adota a ferramenta `Black <https://github.com/psf/black>`_ como padrão de
 formatação de código Python.
 
+*******************
+Analisador estático
+*******************
+
+A EJ usa o analisador estático `Ruff <https://github.com/astral-sh/ruff>`_ para manter a qualidade do 
+código e evitar erros comuns no desenvolvimento de software. Para executar o Ruff, conecte-se ao 
+container Django, usando o comando ``inv docker-attach`` e, dentro do container, execute o comando ``ruff check``.
+
+
 ****************************
 Boas práticas de programação
 ****************************

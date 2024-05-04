@@ -1,7 +1,6 @@
 from django.core.paginator import Paginator
 from django.views.generic import DetailView
 from sidekick import import_later
-from django.utils.translation import gettext_lazy as _
 
 from ej.decorators import can_access_dataviz_class_view
 from ej_conversations.models import Conversation, Comment

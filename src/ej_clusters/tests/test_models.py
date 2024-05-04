@@ -1,8 +1,4 @@
 from ej_clusters.mommy_recipes import ClusterRecipes
-from ej_clusters.models.cluster import Cluster
-from ej_clusters.models.stereotype import Stereotype
-from ej_conversations.models.vote import Vote
-from ej_users.models import User
 
 
 class TestClusterization(ClusterRecipes):

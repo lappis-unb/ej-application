@@ -1,7 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import PermissionDenied
 from rest_framework.authtoken.models import Token
-from django.shortcuts import reverse
 
 
 class AbstractTool:
@@ -138,7 +137,7 @@ class OpinionComponentTool(AbstractTool):
         if request.user.is_authenticated and request.user.id == conversation.author.id:
             try:
                 author_token = Token.objects.get(user=conversation.author)
-            except Exception as e:
+            except Exception:
                 author_token = Token.objects.create(user=conversation.author)
         return author_token
 

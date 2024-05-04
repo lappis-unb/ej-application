@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from boogie import models
-from django.db import models as django_models
 from boogie.fields import EnumField
 from .vote_queryset import VoteQuerySet
 from ..enums import Choice

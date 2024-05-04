@@ -1,5 +1,4 @@
 import pytest
-from django.test import Client
 from ej_users.models import User
 from ej_dataviz.models import ToolsLinksHelper
 from ej_clusters.enums import ClusterStatus
@@ -45,33 +44,6 @@ class TestToolsLinksHelper:
 
 
 class TestReport(ClusterRecipes):
-    @pytest.fixture
-    def logged_client(self):
-        user = User.objects.get(email="author@domain.com")
-        client = Client()
-        client.force_login(user)
-        return client
-
-    @pytest.fixture
-    def conversation_with_votes(self, conversation, board, author_db):
-        user1 = User.objects.create_user("user1@email.br", "password")
-        user2 = User.objects.create_user("user2@email.br", "password")
-        user3 = User.objects.create_user("user3@email.br", "password")
-
-        conversation.author = author_db
-        board.owner = author_db
-        board.save()
-        conversation.board = board
-        conversation.save()
-
-        comment = conversation.create_comment(
-            author_db, "aa", status="approved", check_limits=False
-        )
-        comment.vote(user1, "agree")
-        comment.vote(user2, "agree")
-        comment.vote(user3, "disagree")
-        return conversation
-
     @pytest.fixture
     def conversation_with_comments(self, conversation, board, author_db):
         user1 = User.objects.create_user("user1@email.br", "password")

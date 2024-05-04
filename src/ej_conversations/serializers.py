@@ -210,7 +210,7 @@ class VoteSerializer(BaseApiSerializer):
             skipped_vote.analytics_utm = vote.analytics_utm
             skipped_vote.save()
             return skipped_vote
-        except Exception as e:
+        except Exception:
             pass
         if vote.id is None:
             vote.author = user
@@ -229,5 +229,5 @@ def create_mautic_contact_from_author(request, vote):
         mautic_client = MauticClient(conversation_mautic)
         create_contact_from_author = mautic_client.create_contact(request, vote)
         return create_contact_from_author
-    except:
+    except Exception:
         pass
