@@ -141,7 +141,7 @@ class TestReportRoutes(ClusterRecipes):
         url = reverse(
             "boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs()
         )
-        url = url + f"?startDate=2021-10-13&endDate=2021-10-06"
+        url = url + "?startDate=2021-10-13&endDate=2021-10-06"
         response = logged_client.get(url)
         assert json.loads(response.content) == {
             "error": "end date must be gratter then start date."
@@ -164,19 +164,19 @@ class TestReportRoutes(ClusterRecipes):
             "error": "end date and start date should be passed as a parameter."
         }
 
-        url = base_url + f"?startDate=2021-10-06"
+        url = base_url + "?startDate=2021-10-06"
         response = logged_client.get(url)
         assert json.loads(response.content) == {
             "error": "end date and start date should be passed as a parameter."
         }
 
-        url = base_url + f"?endDate=2021-10-13"
+        url = base_url + "?endDate=2021-10-13"
         response = logged_client.get(url)
         assert json.loads(response.content) == {
             "error": "end date and start date should be passed as a parameter."
         }
 
-    def test_conversation_has_stereotypes(
+    def test_board_owner_can_view_dataviz_dashboard(
         self, conversation, board, author_db, logged_client
     ):
         conversation.author = author_db
@@ -195,8 +195,8 @@ class TestReportRoutes(ClusterRecipes):
         url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(url)
         assert (
-            not "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
-            in response.content.decode()
+            "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
+            not in response.content.decode()
         )
 
     def test_get_page(self, conversation_with_comments, logged_client):
