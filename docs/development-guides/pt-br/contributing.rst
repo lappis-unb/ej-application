@@ -115,6 +115,7 @@ Algumas práticas que adotamos:
 - Evitar utilizar ``padding`` e ``margin`` para posicionar elementos na tela.
 - Nunca definir cores de forma *hardcoded* nos arquivos scss. Sempre reutilizar as variáveis do arquivo ``_config.scss``.
 - Priorizar a estruturação de media queries dentro da própria classe do elemento. Este método é conhecido como `Media Query Bubbling <https://www.creativebloq.com/how-to/how-to-structure-media-queries-in-sass>`_.
+- Priorizar utilização de métodos do Jquery ao invés de métodos nativos do javascript. Apesar dos métodos nativos apresentarem maior `performance <https://in.indeed.com/career-advice/career-development/javascript-vs-jquery>`_, o Jquery oferece `algumas comodidades <https://learn.jquery.com/using-jquery-core/jquery-object/>`_.
 - Caso você tenha alguma dúvida sobre o protótipo de alta fidelidade relacionado à sua issue, pergunte para a pessoa mentora ou a designer.
 
 *****************
