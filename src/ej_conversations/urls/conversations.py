@@ -71,6 +71,11 @@ urlpatterns = [
         name="create",
     ),
     path(
+        f"{conversation_url}/delete/",
+        views.ConversationDeleteView.as_view(),
+        name="delete",
+    ),
+    path(
         "update-favorite-boards/",
         views.update_favorite_boards,
         name="update-favorite-boards",

@@ -8,10 +8,11 @@ from django.core.files.base import File
 from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import reverse
 from django.test import Client
+from django.template.exceptions import TemplateDoesNotExist
 
 from ej_boards.models import Board
 from ej_conversations import create_conversation
-from ej_conversations.models import Comment, Conversation, FavoriteConversation
+from ej_conversations.models import Comment, Conversation, FavoriteConversation, Vote
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations.utils import votes_counter
 from ej_users.models import User
@@ -991,6 +992,94 @@ class TestConversationEdit(ConversationSetup):
         )
         assert new_conversation.title == "bar"
         assert new_conversation.text == "description"
+
+
+class TestConversationDelete(ConversationSetup):
+    @pytest.fixture
+    def conversation_with_comments(self, conversation, base_board, base_user):
+        user1 = User.objects.create_user("user1@email.br", "password")
+        user2 = User.objects.create_user("user2@email.br", "password")
+        user3 = User.objects.create_user("user3@email.br", "password")
+
+        conversation.author = base_user
+        base_board.owner = base_user
+        base_board.save()
+        conversation.board = base_board
+        conversation.save()
+
+        comment = conversation.create_comment(
+            base_user, "aa", status="approved", check_limits=False
+        )
+
+        conversation.create_comment(
+            base_user, "aaa", status="approved", check_limits=False
+        )
+        conversation.create_comment(
+            base_user, "aaaa", status="approved", check_limits=False
+        )
+
+        comment.vote(user1, "agree")
+        comment.vote(user2, "agree")
+        comment.vote(user3, "agree")
+
+        conversation.save()
+        return conversation
+
+    def test_get_access_delete_conversation_view(
+        self, base_user, conversation_with_comments
+    ):
+        url = conversation_with_comments.patch_url("conversation:delete")
+
+        client = Client()
+        client.force_login(base_user)
+
+        with pytest.raises(TemplateDoesNotExist):
+            client.get(url)
+        assert Conversation.objects.filter(id=conversation_with_comments.id).exists()
+
+    def test_delete_conversation_with_no_permission(self, conversation_with_comments):
+        url = conversation_with_comments.patch_url("conversation:delete")
+        user1 = User.objects.create_user("user1@email.com", "password")
+
+        client = Client()
+        client.force_login(user1)
+        response = client.post(url)
+
+        assert response.status_code == 302
+        assert "/login/" in response.url
+        assert Conversation.objects.filter(id=conversation_with_comments.id).exists()
+
+    def test_delete_conversation(self, base_user, conversation_with_comments):
+        url = conversation_with_comments.patch_url("conversation:delete")
+
+        client = Client()
+        client.force_login(base_user)
+        response = client.post(url)
+
+        comments_ids = list(conversation_with_comments.comments)
+        votes_ids = list(conversation_with_comments.votes)
+
+        assert response.status_code == 302
+        assert response.url == "/userboard/conversations/"
+        assert not Conversation.objects.filter(id=conversation_with_comments.id).exists()
+        assert not Comment.objects.filter(id__in=comments_ids).exists()
+        assert not Vote.objects.filter(id__in=votes_ids).exists()
+
+    def test_admin_delete_conversation(self, admin_user, conversation_with_comments):
+        url = conversation_with_comments.patch_url("conversation:delete")
+
+        client = Client()
+        client.force_login(admin_user)
+        response = client.post(url)
+
+        comments_ids = list(conversation_with_comments.comments)
+        votes_ids = list(conversation_with_comments.votes)
+
+        assert response.status_code == 302
+        assert response.url == "/userboard/conversations/"
+        assert not Conversation.objects.filter(id=conversation_with_comments.id).exists()
+        assert not Comment.objects.filter(id__in=comments_ids).exists()
+        assert not Vote.objects.filter(id__in=votes_ids).exists()
 
 
 class TestConversationModerate(ConversationSetup):
