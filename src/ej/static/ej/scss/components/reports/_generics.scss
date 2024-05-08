@@ -106,6 +106,7 @@
             gap: 1rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
 
             @media (max-width: 1200px) {
                 & {
@@ -156,7 +157,7 @@
         .ordering {
             display: flex;
             align-items: baseline;
-            gap: .5rem;
+            gap: 1rem;
             
             select {
                 cursor: pointer;
@@ -166,6 +167,7 @@
                 min-width: 15em;
                 background-color: $color-white;
                 padding-right: 1rem;
+                border-right: 8px solid transparent;
 
                 @media (max-width: 500px) {
                     min-width: unset;
@@ -174,7 +176,6 @@
         }
 
         .clusters-container {
-            padding-top: .6rem;
             display: flex;
         }
 
@@ -210,8 +211,8 @@
             font-size: 0.75em;
             
             #sort-up-icon {
-                top: 0.5rem;
-                right: -0.3rem;
+                top: 0.35rem;
+                right: -0.05rem;
             }
 
             #sort-down-icon {
