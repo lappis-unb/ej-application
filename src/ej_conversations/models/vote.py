@@ -15,7 +15,7 @@ VOTE_VALUES = {v: k for k, v in VOTE_NAMES.items()}
 
 class VoteChannels:
     TELEGRAM = "telegram"
-    WHATSAPP = "twilio"
+    WHATSAPP = "whatsapp"
     OPINION_COMPONENT = "opinion_component"
     RASA_WEBCHAT = "socketio"
     RASAX = "rasa"
@@ -54,7 +54,6 @@ class Vote(models.Model):
         choices=VoteChannels.choices(),
         default=VoteChannels.UNKNOWN,
     )
-    analytics_utm = models.JSONField(blank=True, null=True)
     objects = VoteQuerySet.as_manager()
 
     class Meta:
