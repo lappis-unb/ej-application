@@ -72,17 +72,6 @@ class VoteViewSet(RestAPIBaseViewSet):
         IsAuthenticatedCreationView | IsAuthor | IsSuperUser | IsAdminUser,
     )
 
-    def list(self, request):
-        if request.user.is_superuser:
-            queryset = Vote.objects.all()
-        else:
-            queryset = Vote.objects.filter(author=request.user)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def delete_hook(self, request, instance):
-        delete_vote(request, instance)
-
 
 class ConversationViewSet(RestAPIBaseViewSet):
     queryset = Conversation.objects.all()

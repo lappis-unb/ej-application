@@ -404,31 +404,6 @@ class TestApiRoutes:
     def test_post_vote(self, api, comment, user):
         path = BASE_URL + "/votes/"
         post_data = {
-            "analytics_utm": {
-                "utm_campaign": 1,
-                "utm_test": "test",
-            },
-            "choice": 1,
-            "comment": comment.id,
-            "channel": "telegram",
-        }
-
-        # Non authenticated user
-        assert api.post(path, post_data) == self.AUTH_ERROR
-
-        # Authenticated user
-        token = Token.objects.create(user=user)
-        _api = APIClient()
-        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-        _api.post(path, post_data, format="json")
-
-        vote = comment.votes.last()
-
-        assert vote.analytics_utm == {"utm_campaign": 1, "utm_test": "test"}
-
-    def test_post_vote_without_analytics_utm(self, api, comment, user):
-        path = BASE_URL + "/votes/"
-        post_data = {
             "choice": 0,
             "comment": comment.id,
             "channel": "socketio",
@@ -440,22 +415,14 @@ class TestApiRoutes:
         _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
         _api.post(path, post_data, format="json")
 
-        vote = comment.votes.last()
-        assert vote.analytics_utm is None
-
-        post_data["analytics_utm"] = {}
         _api.post(path, post_data, format="json")
 
         vote = comment.votes.last()
-        assert vote.analytics_utm == {}
+        assert vote
 
     def test_post_skipped_vote(self, api, comment, user):
         path = BASE_URL + "/votes/"
         post_data = {
-            "analytics_utm": {
-                "utm_campaign": 1,
-                "utm_test": "test",
-            },
             "choice": 0,
             "comment": comment.id,
             "channel": "telegram",
@@ -469,71 +436,21 @@ class TestApiRoutes:
         _api.post(path, post_data, format="json")
 
         post_data = {
-            "analytics_utm": {
-                "utm_campaign": 2,
-            },
             "choice": 1,
             "comment": comment.id,
             "channel": "telegram",
         }
 
         vote = comment.votes.last()
-        assert vote.analytics_utm == {"utm_campaign": 1, "utm_test": "test"}
 
         _api.post(path, post_data, format="json")
 
         vote = comment.votes.last()
-        assert vote.analytics_utm == {
-            "utm_campaign": 2,
-        }
-
-    def test_delete_vote(self, comment, user, admin_user, other_user):
-        path = BASE_URL + "/votes/"
-        post_data = {
-            "analytics_utm": {
-                "utm_campaign": 1,
-                "utm_test": "test",
-            },
-            "choice": 0,
-            "comment": comment.id,
-            "channel": "opinion_component",
-        }
-
-        # Authenticated normal user
-        token = Token.objects.create(user=user)
-        _api = APIClient()
-        _api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-
-        # Creates a vote
-        _api.post(path, post_data, format="json")
-        vote = Vote.objects.first()
         assert vote
-
-        path = path + f"{vote.id}/"
-        response = _api.delete(path, HTTP_AUTHORIZATION=f"Token {token.key}")
-        assert response.status_code == 403
-
-        # User try to delete another user vote
-        token3 = Token.objects.create(user=other_user)
-        _api.credentials(HTTP_AUTHORIZATION="Token " + token3.key)
-        response = _api.delete(path, HTTP_AUTHORIZATION=f"Token {token3.key}")
-        assert response.status_code == 403
-
-        # Authenticated superuser
-        token2 = Token.objects.create(user=admin_user)
-        _api.credentials(HTTP_AUTHORIZATION="Token " + token2.key)
-        response = _api.delete(path, HTTP_AUTHORIZATION=f"Token {token2.key}")
-        assert response.status_code == 204
-        vote = Vote.objects.first()
-        assert not vote
 
     def test_update_vote(self, comment, user):
         path = BASE_URL + "/votes/"
         post_data = {
-            "analytics_utm": {
-                "utm_campaign": 1,
-                "utm_test": "test",
-            },
             "choice": 1,
             "comment": comment.id,
             "channel": "telegram",
@@ -551,7 +468,7 @@ class TestApiRoutes:
 
         # Updates the vote
         path = path + f"{vote.id}/"
-        update_data = {"choice": "-1", "analytics_utm": {"utm_test": "updated test"}}
+        update_data = {"choice": "-1"}
         _api.put(
             path,
             data=update_data,
@@ -560,7 +477,6 @@ class TestApiRoutes:
         )
 
         vote = Vote.objects.first()
-        assert vote.analytics_utm == {"utm_test": "updated test"}
         assert vote.choice == Choice.DISAGREE
 
 

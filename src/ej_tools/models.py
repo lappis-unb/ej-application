@@ -75,6 +75,7 @@ class OpinionComponent(models.Model):
         return ""
 
 
+# TODO: Removes this implementation
 class ConversationMautic(models.Model):
     """
     Allows correlation between a conversation and an instance of Mautic

@@ -59,7 +59,7 @@ class BotsWhatsappTool(AbstractTool):
         self.name: str = "WhatsApp"
         self.description: str = _(
             "Whatsapp user will interact with the bot in the private chat."
-            + "Use Twilio as a broker for connection."
+            + "Use WhatsApp Cloud API for connection."
         )
         self.share: str = _(
             "I am the virtual assistant for the EJ platform. Empurrando Juntos, or EJ Platform, "
