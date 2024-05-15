@@ -254,7 +254,7 @@ def create_stereotype_coords(
             "name", index="users"
         )
         if labels.shape != (0, 0):
-            table["cluster"] = labels.loc[labels.index.values is not None]
+            table["cluster"] = labels.loc[labels.index.values != None]  # noqa: E711
             table["cluster"].fillna(__("*Unknown*"), inplace=True)
             kwargs["labels"] = labels
 
