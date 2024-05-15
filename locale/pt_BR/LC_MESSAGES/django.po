@@ -1088,34 +1088,34 @@ msgstr "O domínio do site que hospeda o webchat do rasa bot."
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
 
-#: src/ej_tools/models.py:84
+#: src/ej_tools/models.py:83
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:85
+#: src/ej_tools/models.py:84
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:86
+#: src/ej_tools/models.py:85
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:87
+#: src/ej_tools/models.py:86
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:89
+#: src/ej_tools/models.py:88
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:89
+#: src/ej_tools/models.py:88
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:162
+#: src/ej_tools/models.py:161
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
@@ -1129,21 +1129,21 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:187
+#: src/ej_tools/models.py:186
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:212
+#: src/ej_tools/models.py:211
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:262
+#: src/ej_tools/models.py:261
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:302
+#: src/ej_tools/models.py:301
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
@@ -1860,7 +1860,7 @@ msgid ""
 "who vote similarly tend to be in the same group."
 msgstr ""
 "Usamos os votos para classificar usuários de acordo com suas opiniões. "
-"Usuários que votam de forma parecida, tendem a estar no mesmo grupo"
+"Usuários que votam de forma parecida, tendem a estar no mesmo grupo."
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:14
 #, python-format
