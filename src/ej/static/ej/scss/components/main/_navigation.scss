@@ -127,7 +127,7 @@ body {
     margin: 0 0.625rem;
 
     &--darker {
-        border-top: 1px solid #BABABA;
+        border-top: 1px solid $color-theme-report-gray;
     }
 }
 
@@ -342,7 +342,7 @@ body {
         border-bottom: none;
     }
     .add-button {
-        color: #30bfd3;
+        color: $color-brand;
     }
     .board-list {
         overflow-x: hidden;
@@ -358,7 +358,7 @@ body {
             }
         }
         li.selected-board {
-            background-color: #C4C4C4;
+            background-color: $color-navigation-header;
             margin: 0rem -2rem 0rem -2rem;
             padding: 0rem 2rem 0rem 2rem;
         }
@@ -398,7 +398,7 @@ body {
             transform: rotate(180deg);
         }
         .selected {
-            background: #c4c4c4;
+            background: $color-navigation-header;
         }
         .show {
             display: block;
@@ -426,7 +426,7 @@ body {
     top: 3rem;
     right: 0;
     background: $color-white;
-    border: 1px solid #C4C4C4;
+    border: 1px solid $color-navigation-header;
     box-sizing: border-box;
     padding: 0;
     border-radius: .2rem;
@@ -497,21 +497,116 @@ body {
     a {font-weight: bold}
 }
 
+.menu-section {
+    &__title {
+        margin-bottom: 1.4375rem !important;
+        color: $color-accent;
+        font-weight: 400;
+        font-size: 1em;
+    }
+}
+
+.conversation-menu {
+    display: grid;
+    grid-template-columns: 0.75rem auto 0.75rem;
+    
+    .grid-column-2 {
+        grid-column: 2;
+    }
+    
+    &__links {
+        padding: 2.25rem 0 1.75rem;
+        border-bottom: 1px solid $color-navigation-header;
+    }
+    
+    &__avatar {
+        width: 3rem;
+        height: 3rem;
+        max-width: unset !important;
+        display: flex;
+        border-radius: 50%;
+        object-fit: cover;
+        border-style: none;
+        margin-bottom: 1rem;
+    }
+
+    &__username {
+        font-size: 1rem;
+        color: $color-gray-darker;
+        line-height: 1.17rem;
+    }
+
+    &__conversation-text {
+        font-size: 1.25em;
+        color: $color-theme-dark-blue;
+        line-height: 1.46rem;
+        max-height: 6rem;
+        overflow: hidden;
+        margin-top: 2.625rem;
+        margin-bottom: 2.375rem;
+    }
+
+    &__conversation-share {
+        cursor: pointer;
+        i {
+            color: $color-theme-dark-blue;
+        }
+        span {
+            color: $color-theme-dark-blue;
+            font-weight: 500;
+            margin-left: 0.375rem;
+        }
+    }
+
+    &__conversation-info {
+        margin-bottom: 1.4375rem;
+        line-height: 1.17rem;
+        
+        i {
+            color: $color-gray-darker;
+        }
+        span {
+            text-transform: lowercase;
+            color: $color-gray-darker;
+            font-weight: 500;
+        }
+    }
+
+    &__user-section {
+        padding-bottom: 4.25rem;
+        margin-top: 1.76rem;
+        border-bottom: 1px solid $color-navigation-header;
+    }
+
+    &__item {
+        li {
+            padding: 0.32rem 0 0.32rem 0.25rem;
+            box-sizing: content-box;
+        }
+    }
+
+}
+
 .participant-menu {
     display: grid;
     grid-template-columns: 1rem auto 1.75rem;
 
+    &__item {
+        li {
+            padding: 0.32rem 0 0.32rem 1.438rem;
+            box-sizing: content-box;
+        }
+    }
+
+}
+
+.participant-menu, .conversation-menu {
     &__item {
         overflow: hidden;
         text-overflow: ellipsis;
         grid-column: 1/4;
         color: $color-accent;
         font-size: 1em;
-
-        li {
-            padding: 0.32rem 0 0.32rem 1.438rem;
-            box-sizing: content-box;
-        }
 
         &--column-2 {
             grid-column: 2/3;
