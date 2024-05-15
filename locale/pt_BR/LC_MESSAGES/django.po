@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-14 11:17-0300\n"
+"POT-Creation-Date: 2024-05-14 19:43-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1212,8 +1212,8 @@ msgid ""
 "Whatsapp user will interact with the bot in the private chat.Use WhatsApp "
 "Cloud API for connection."
 msgstr ""
-"O usuário do whatsapp irá interagir com o bot no privado. Utiliza o WhatsApp Cloud API "
-"para conexão."
+"O usuário do whatsapp irá interagir com o bot no privado. Utiliza o WhatsApp "
+"Cloud API para conexão."
 
 #: src/ej_tools/tools.py:65
 #, fuzzy
@@ -2605,12 +2605,14 @@ msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:32
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:16
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:6
 #, fuzzy
 msgid "participants"
 msgstr "Participantes"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:47
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:20
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:8
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:25
 #, fuzzy
@@ -2716,9 +2718,10 @@ msgstr "Nova conversa"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:7
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:7
 #, fuzzy
 msgid "Home"
-msgstr "Início"
+msgstr "Home"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:30
 msgid "Back to conversations"
@@ -2771,16 +2774,19 @@ msgstr "Relatório de participantes"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:112
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:33
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:34
 msgid "Help"
 msgstr "Ajuda"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:114
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:35
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:36
 msgid "Tour"
 msgstr "Tour"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:115
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:36
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:37
 msgid "Documentation"
 msgstr "Documentação"
 
@@ -2857,6 +2863,21 @@ msgstr "Comentários com menos de três caracteres não serão adicionados."
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-show-comments.jinja2:36
 msgid "No comments left"
 msgstr "Não há mais comentários"
+
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:13
+#, fuzzy
+msgid "About the conversation"
+msgstr "Sobre a conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:24
+#, fuzzy
+msgid "Share"
+msgstr "Compartilhe"
+
+#: src/ej_conversations/jinja2/ej_conversations/menu/conversation.jinja2:30
+#, fuzzy
+msgid "created by"
+msgstr "Criada por"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:2
 #, fuzzy
