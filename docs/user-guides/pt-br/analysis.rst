@@ -44,7 +44,7 @@ Relatório de comentários
 O relatório de comentários permite analisar a performance dos comentários,
 tanto no geral (considerando todos os participantes) tanto por grupo de opinião.
 É possível filtrar os comentarios pelo conteúdo, pelo nível de concordância, discordância,
-convergência entre outros. Também é possível exportar os dados apresentados, caso o usuário
+convergência, participação, entre outros. Também é possível exportar os dados apresentados, caso o usuário
 queira utilizar outras ferramentas de *dataviz* para realizar suas análises. É possível exportar
 os dados nos formatos "csv" e "json".
 
