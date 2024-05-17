@@ -135,24 +135,28 @@ class TestCommentsReport(TestReport):
         assert comments_df.iloc[[0]].get("agree").item() == 100
         assert comments_df.iloc[[0]].get("disagree").item() == 0
         assert comments_df.iloc[[0]].get("skipped").item() == 0
+        assert comments_df.iloc[[0]].get("convergence").item() == 100
         assert comments_df.iloc[[0]].get("participation").item() == 100
 
         assert comments_df.iloc[[1]].get("content").item() == "aaa"
         assert round(comments_df.iloc[[1]].get("agree").item(), 1) == 33.3
         assert round(comments_df.iloc[[1]].get("disagree").item(), 1) == 66.7
         assert comments_df.iloc[[1]].get("skipped").item() == 0
+        assert round(comments_df.iloc[[1]].get("convergence").item(), 1) == 33.3
         assert comments_df.iloc[[1]].get("participation").item() == 100
 
         assert comments_df.iloc[[2]].get("content").item() == "aaaa"
         assert round(comments_df.iloc[[2]].get("agree").item(), 1) == 0
         assert round(comments_df.iloc[[2]].get("disagree").item(), 1) == 100
         assert comments_df.iloc[[2]].get("skipped").item() == 0
+        assert comments_df.iloc[[2]].get("convergence").item() == 100
         assert comments_df.iloc[[2]].get("participation").item() == 100
 
         assert comments_df.iloc[[3]].get("content").item() == "test"
         assert round(comments_df.iloc[[3]].get("agree").item(), 1) == 0
         assert round(comments_df.iloc[[3]].get("disagree").item(), 1) == 100
         assert comments_df.iloc[[3]].get("skipped").item() == 0
+        assert round(comments_df.iloc[[3]].get("convergence").item(), 1) == 100
         assert round(comments_df.iloc[[3]].get("participation").item(), 1) == 33.3
 
         assert comments_df.iloc[[4]].get("content").item() == "comment without vote"

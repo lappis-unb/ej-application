@@ -1088,34 +1088,34 @@ msgstr "O domínio do site que hospeda o webchat do rasa bot."
 msgid "a conversation can have a maximum of five domains"
 msgstr "Uma conversa pode ter no máximo cinco links integrados."
 
-#: src/ej_tools/models.py:83
+#: src/ej_tools/models.py:84
 msgid "Client ID"
 msgstr "Chave pública"
 
-#: src/ej_tools/models.py:84
+#: src/ej_tools/models.py:85
 #, fuzzy
 msgid "Client Secret"
 msgstr "Chave secreta"
 
-#: src/ej_tools/models.py:85
+#: src/ej_tools/models.py:86
 #, fuzzy
 msgid "Mautic Access Token"
 msgstr "Token de acesso"
 
-#: src/ej_tools/models.py:86
+#: src/ej_tools/models.py:87
 #, fuzzy
 msgid "Refresh Token"
 msgstr "Atualizar token"
 
-#: src/ej_tools/models.py:88
+#: src/ej_tools/models.py:89
 msgid "Mautic URL"
 msgstr "URL do Mautic"
 
-#: src/ej_tools/models.py:88
+#: src/ej_tools/models.py:89
 msgid "Generated Url from Mautic."
 msgstr "Url gerada no Mautic."
 
-#: src/ej_tools/models.py:161
+#: src/ej_tools/models.py:162
 msgid "Client not found."
 msgstr "Chave do Mautic não encontrada"
 
@@ -1129,21 +1129,21 @@ msgstr ""
 "Não foi possível localizar uma instância do Mautic com a URL fornecida. "
 "Verifique sua url do Mautic e a url de redirecionamento na página do Mautic."
 
-#: src/ej_tools/models.py:186
+#: src/ej_tools/models.py:187
 msgid "Couldn't generate tokens."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:211
+#: src/ej_tools/models.py:212
 #, fuzzy
 msgid "Couldn't generate new token."
 msgstr "Não foi possível gerar os tokens."
 
-#: src/ej_tools/models.py:261
+#: src/ej_tools/models.py:262
 #, fuzzy
 msgid "There was an error connection to mautic server, please check your url."
 msgstr "Houve um erro na conexao com o Mautic, por favor verifique a URL."
 
-#: src/ej_tools/models.py:301
+#: src/ej_tools/models.py:302
 msgid "Couldn't create a new contact in Mautic."
 msgstr ""
 
@@ -3077,20 +3077,22 @@ msgstr "Comentário"
 msgid "Skipped"
 msgstr "Pulados"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/table.jinja2:13
-#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/users/table.jinja2:13
-#, fuzzy
-msgid "Participation index"
-msgstr "Índice de participação"
-
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/table.jinja2:12
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/table.jinja2:56
 msgid "Convergence"
-msgstr "Convergëncia"
+msgstr "Convergência"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/table.jinja2:13
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/comments/table.jinja2:57
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/users/table.jinja2:56
 #, fuzzy
 msgid "Participation"
-msgstr "participação"
+msgstr "Participação"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/reports/includes/users/table.jinja2:13
+#, fuzzy
+msgid "Participation index"
+msgstr "Participação"
 
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:16
 #: src/ej_profiles/jinja2/ej_profiles/edit.jinja2:26
