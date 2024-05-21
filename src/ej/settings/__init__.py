@@ -106,14 +106,18 @@ class Conf(
 
     DB_HOST = os.getenv("DB_HOST", "db")
     if DB_HOST != "db":
+        DB_NAME = os.getenv("DB_NAME", "ej")
+        DB_USER = os.getenv("DB_USER", "ej")
+        DB_PASSWORD = os.getenv("DB_PASSWORD", "ej")
+        DB_PORT = os.getenv("DB_PORT", 5432)
         DATABASES = {
             "default": {
                 "ENGINE": "django.db.backends.postgresql",
-                "NAME": "ej",
-                "USER": "ej",
-                "PASSWORD": "ej",
+                "NAME": DB_NAME,
+                "USER": DB_USER,
+                "PASSWORD": DB_PASSWORD,
                 "HOST": DB_HOST,
-                "PORT": 5432,
+                "PORT": DB_PORT,
             }
         }
 
