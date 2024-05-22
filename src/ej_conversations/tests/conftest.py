@@ -8,6 +8,18 @@ from django.contrib.auth.models import AnonymousUser
 from ej_conversations import create_conversation
 from ej_users.models import User
 
+from rest_framework.test import APIClient
+
+API_V1_URL = "/api/v1"
+
+
+def get_authorized_api_client(user_info):
+    api = APIClient()
+    response = api.post(API_V1_URL + "/login/", user_info, format="json")
+    access_token = response.json()["access_token"]
+    api.credentials(HTTP_AUTHORIZATION="Bearer " + access_token)
+    return api
+
 
 @pytest.fixture
 def user(db):
