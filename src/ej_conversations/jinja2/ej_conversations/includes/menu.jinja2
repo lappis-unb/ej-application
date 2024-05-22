@@ -14,7 +14,10 @@
     </div>
 
     <hr class="nav-divider">
-
+    <div class="menu-section__conversation-text">
+        <span>{{conversation.text}}</span>
+    </div>
+    
     <ul class="nav-header">
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
             <li class="menu-item">
