@@ -20,6 +20,7 @@ from ej_dataviz.utils import (
     get_comments_dataframe,
     get_user_dataframe,
 )
+from ej_conversations.enums import RejectionReason
 
 
 class TestToolsLinksHelper:
@@ -69,6 +70,18 @@ class TestReport(ClusterRecipes):
             author_db, "test", status="approved", check_limits=False
         )
 
+        conversation.create_comment(
+            author_db,
+            "rejected comment",
+            status="rejected",
+            check_limits=False,
+            rejection_reason=RejectionReason.INCOMPLETE_TEXT,
+        )
+
+        conversation.create_comment(
+            author_db, "pending comment", status="pending", check_limits=False
+        )
+
         comment.vote(user1, "agree")
         comment.vote(user2, "agree")
         comment.vote(user3, "agree")
@@ -94,6 +107,14 @@ class TestCommentsReport(TestReport):
         assert comments_df.iloc[[2]].get("group").item() == ""
         assert comments_df.iloc[[3]].get("group").item() == ""
         assert len(comments_df.index) == 4
+
+    def test_get_comments_dataframe_should_only_return_approved_comments(
+        self, conversation_with_comments
+    ):
+        comments_df = get_comments_dataframe(conversation_with_comments, "")
+        assert len(comments_df.index) == 4
+        assert len(comments_df[comments_df["content"] == "rejected comment"]) == 0
+        assert len(comments_df[comments_df["content"] == "pending comment"]) == 0
 
     def test_get_comments_dataframe_for_comments_without_votes(
         self, conversation_with_comments, author_db

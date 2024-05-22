@@ -94,7 +94,8 @@ class CommentQuerySet(ConversationMixin, WordCloudQuerySet):
         The resulting dataframe has the 'content', 'author', 'agree', 'disagree'
         'skipped', 'convergence' and 'participation' columns.
         """
-        annotated_comments = self.get_annotated_comments()
+        approved_comments = self.approved()
+        annotated_comments = approved_comments.get_annotated_comments()
         comments_df = annotated_comments.dataframe()
         stats = comment_statistics(
             annotated_comments,
