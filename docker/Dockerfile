@@ -15,8 +15,10 @@ RUN touch /etc/apt/preferences.d/nodejs && \
     echo "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" > /etc/apt/preferences.d/nodejs
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt install nodejs -y
 RUN curl -sSL https://install.python-poetry.org | python3 -
-RUN poetry config virtualenvs.create false
+RUN /root/.local/bin/poetry config virtualenvs.create false
 COPY ./ /ej-application
 WORKDIR ej-application
 # Installs main and dev groups dependencies
-RUN poetry install --with main,dev --no-root
+RUN /root/.local/bin/poetry install --with main,dev --no-root
+
+
