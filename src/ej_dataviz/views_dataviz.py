@@ -192,21 +192,24 @@ def votes_over_time(request, conversation_id, **kwargs):
         end_date = make_aware(
             datetime.datetime.fromisoformat(end_date)
         )  # # convert js naive date
-    else:
-        return JsonResponse(
-            {"error": "end date and start date should be passed as a parameter."}
-        )
-
-    if start_date > end_date:
-        return JsonResponse({"error": "end date must be gratter then start date."})
-
-    try:
+        if start_date > end_date:
+            return JsonResponse({"error": "end date must be gratter then start date."})
         votes = conversation.time_interval_votes(start_date, end_date)
-        return JsonResponse({"data": list(votes)})
-    except Exception as e:
-        print("Could not generate D3js data")
-        print(e)
-        return JsonResponse({})
+        return JsonResponse({"data": votes})
+    else:
+        first_vote = conversation.votes.first()
+        last_vote = conversation.votes.last()
+        start_date, end_date = ["", ""]
+        votes = []
+        if first_vote and last_vote:
+            votes = conversation.time_interval_votes(
+                first_vote.created, last_vote.created
+            )
+            start_date = first_vote.created.isoformat()
+            end_date = last_vote.created.isoformat()
+        return JsonResponse(
+            {"data": votes, "start_date": start_date, "end_date": end_date}
+        )
 
 
 # ==============================================================================
