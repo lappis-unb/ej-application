@@ -160,6 +160,19 @@ class TestReportRoutes(ClusterRecipes):
         assert data[6]["value"] == 0
         assert data[7]["value"] == 3
 
+    def test_time_chart_without_dates_but_with_votes(
+        self, conversation_with_votes, logged_client
+    ):
+        conversation = conversation_with_votes
+        url = reverse(
+            "boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs()
+        )
+        response = logged_client.get(url)
+        data = json.loads(response.content)
+
+        assert data["start_date"] == conversation.votes.first().created.isoformat()
+        assert data["end_date"] == conversation.votes.last().created.isoformat()
+
     def test_should_return_error_if_start_date_is_bigger_than_end_date(
         self, conversation, board, author_db, logged_client
     ):
@@ -178,7 +191,7 @@ class TestReportRoutes(ClusterRecipes):
             "error": "end date must be gratter then start date."
         }
 
-    def test_missing_params_should_return_error(
+    def test_time_chart_without_dates(
         self, conversation, board, author_db, logged_client
     ):
         conversation.author = author_db
@@ -192,19 +205,9 @@ class TestReportRoutes(ClusterRecipes):
         )
         response = logged_client.get(base_url)
         assert json.loads(response.content) == {
-            "error": "end date and start date should be passed as a parameter."
-        }
-
-        url = base_url + "?startDate=2021-10-06"
-        response = logged_client.get(url)
-        assert json.loads(response.content) == {
-            "error": "end date and start date should be passed as a parameter."
-        }
-
-        url = base_url + "?endDate=2021-10-13"
-        response = logged_client.get(url)
-        assert json.loads(response.content) == {
-            "error": "end date and start date should be passed as a parameter."
+            "data": [],
+            "start_date": "",
+            "end_date": "",
         }
 
     def test_board_owner_can_view_dataviz_dashboard(

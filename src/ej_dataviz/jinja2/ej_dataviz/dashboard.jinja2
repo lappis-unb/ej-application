@@ -21,9 +21,7 @@
 
             {% include 'ej_dataviz/dashboard/clusters.jinja2' %}
 
-            <div class="scatter-section flex wrap center-grid">
-                {% include 'ej_dataviz/dashboard/scatter.jinja2' %}
-            </div>
+            {% include 'ej_dataviz/dashboard/scatter.jinja2' %}
             {% with comments_statistics = conversation.statistics().get('comments') %}
                 {% include 'ej_dataviz/dashboard/comments.jinja2' %}
                 {% include 'ej_dataviz/dashboard/comment-participants.jinja2' %}
