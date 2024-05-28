@@ -163,7 +163,8 @@ body {
     &__links {
         display: flex;
         gap: 2.219rem;
-        padding: 2.25rem 0 1.75rem 0.625rem;
+        padding: 2.25rem 0 1.75rem;
+        border-bottom: 1px solid $color-gray-darker;
 
         a {
             font-weight: 600;
@@ -177,12 +178,13 @@ body {
 
             i {
                 font-size: 1.188em;
+                margin-left: 0;
             }
         }
     }
 
     .nav-header {
-        padding: 2.156rem 0.75rem 0;
+        padding-top: 2.156rem;
         #board-name i {
             display: none;
         }
@@ -507,10 +509,12 @@ body {
     }
 
     &__conversation-text {
-        margin-left: 0.625rem;
         margin-top: 2.25rem;
-        max-height: 6rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
         overflow: hidden;
+        text-overflow: ellipsis;
         
         span {
             max-height: 6rem;
@@ -518,6 +522,10 @@ body {
             color: $color-theme-dark-blue;
             line-height: 1.46rem;
         }
+    }
+
+    &__help-section {
+        margin-bottom: 2.8rem !important;
     }
 }
 
@@ -613,7 +621,7 @@ body {
 
 .participant-menu {
     display: grid;
-    grid-template-columns: 1rem auto 1.75rem;
+    grid-template-columns: 0.75rem auto 0.75rem;
 
     &__item {
         li {
@@ -625,6 +633,10 @@ body {
 }
 
 .participant-menu, .conversation-menu {
+    .grid-column-2 {
+        grid-column: 2;
+    }
+
     &__item {
         overflow: hidden;
         text-overflow: ellipsis;
