@@ -1,4 +1,4 @@
-<div class="channels-chart margin-y3">
+<div class="channels-chart">
     <div class="channels-chart__header">
         <h2 class="charts-section__title">{{ _('channel participation') }}</h3>
         <div class="participant-filter">
@@ -25,16 +25,16 @@
     function renderChannelsChart() {
         let channels = [data[0].name, data[1].name, data[2].name, data[3].name, data[4].name];
         let values = [
-            {value: data[0].value, itemStyle: {color: "#0088cc"}},
-            {value: data[1].value, itemStyle: {color: "#128c7e"}},
-            {value: data[2].value, itemStyle: {color: "#ff3e72"}},
-            {value: data[3].value, itemStyle: {color: "#7758B3"}},
-            {value: data[4].value, itemStyle: {color: "#c4c4c4"}}
+            {value: data[0].value},
+            {value: data[1].value},
+            {value: data[2].value},
+            {value: data[3].value},
+            {value: data[4].value}
         ]
 
         let chart = echarts.init($('#channels-chart')[0]);
         let options = {
-            color: [, , , , ],
+            color: "#0088cc",
             tooltip: {
                 trigger: 'axis'
             },
@@ -70,7 +70,7 @@
             {name: "WhatsApp", value: option.whatsapp, fill: "#128c7e" },
             {name: "EJ", value: option.ej, fill: "#7758B3" },
             {name: "{{_('Opinion Component')}}", value: option.opinion_component, fill: "#ff3e72" },
-            {name: "Unknown", value: option.unknown, fill: "#c4c4c4" },
+            {name: "{{_('Unknown')}}", value: option.unknown, fill: "#c4c4c4" },
         ]
     }
 

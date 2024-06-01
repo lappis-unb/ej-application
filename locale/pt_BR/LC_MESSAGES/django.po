@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-29 20:52-0300\n"
+"POT-Creation-Date: 2024-05-31 12:32-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -601,7 +601,7 @@ msgstr ""
 #: src/ej_conversations/models/vote.py:34
 #, fuzzy
 msgid "Unknown"
-msgstr "*Desconhecido*"
+msgstr "Desconhecido"
 
 #: src/ej_conversations/models/vote.py:47
 msgid "Agree, disagree or skip"
@@ -693,13 +693,13 @@ msgstr ""
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/ej_dataviz/constants.py:185 src/ej_dataviz/views_dataviz.py:66
-#: src/ej_dataviz/views_dataviz.py:81
+#: src/ej_dataviz/constants.py:185 src/ej_dataviz/views_dataviz.py:82
+#: src/ej_dataviz/views_dataviz.py:97
 msgid "Gender"
 msgstr "Gênero"
 
-#: src/ej_dataviz/constants.py:195 src/ej_dataviz/views_dataviz.py:67
-#: src/ej_dataviz/views_dataviz.py:82 src/ej_profiles/models.py:32
+#: src/ej_dataviz/constants.py:195 src/ej_dataviz/views_dataviz.py:83
+#: src/ej_dataviz/views_dataviz.py:98 src/ej_profiles/models.py:32
 #: src/ej_profiles/tests/test_models.py:61
 msgid "Race"
 msgstr "Raça"
@@ -726,78 +726,78 @@ msgstr "Dados do PCA"
 msgid "You!"
 msgstr "Você!"
 
-#: src/ej_dataviz/views_dataviz.py:69 src/ej_dataviz/views_dataviz.py:84
+#: src/ej_dataviz/views_dataviz.py:85 src/ej_dataviz/views_dataviz.py:100
 msgid "https://en.wikipedia.org/wiki/Principal_component_analysis"
 msgstr "https://pt.wikipedia.org/wiki/An%C3%A1lise_de_componentes_principais"
 
-#: src/ej_dataviz/views_dataviz.py:105
+#: src/ej_dataviz/views_dataviz.py:121
 msgid "Not enough data"
 msgstr "Não há dados suficientes"
 
-#: src/ej_dataviz/views_dataviz.py:281
+#: src/ej_dataviz/views_dataviz.py:297
 msgid "agree"
 msgstr "concorda"
 
-#: src/ej_dataviz/views_dataviz.py:282
+#: src/ej_dataviz/views_dataviz.py:298
 msgid "author"
 msgstr "autor"
 
-#: src/ej_dataviz/views_dataviz.py:283
+#: src/ej_dataviz/views_dataviz.py:299
 msgid "author_id"
 msgstr "autor_id"
 
-#: src/ej_dataviz/views_dataviz.py:284
+#: src/ej_dataviz/views_dataviz.py:300
 msgid "choice"
 msgstr "escolha"
 
-#: src/ej_dataviz/views_dataviz.py:285
+#: src/ej_dataviz/views_dataviz.py:301
 #, fuzzy
 msgid "cluster"
 msgstr "Grupos"
 
-#: src/ej_dataviz/views_dataviz.py:286
+#: src/ej_dataviz/views_dataviz.py:302
 #, fuzzy
 msgid "cluster_id"
 msgstr "Grupo_id"
 
-#: src/ej_dataviz/views_dataviz.py:287
+#: src/ej_dataviz/views_dataviz.py:303
 #, fuzzy
 msgid "comment"
 msgstr "comentário"
 
-#: src/ej_dataviz/views_dataviz.py:288
+#: src/ej_dataviz/views_dataviz.py:304
 msgid "comment_id"
 msgstr "comentário_id"
 
-#: src/ej_dataviz/views_dataviz.py:289
+#: src/ej_dataviz/views_dataviz.py:305
 msgid "convergence"
 msgstr "convergência"
 
-#: src/ej_dataviz/views_dataviz.py:290
+#: src/ej_dataviz/views_dataviz.py:306
 msgid "disagree"
 msgstr "discorda"
 
-#: src/ej_dataviz/views_dataviz.py:291 src/ej_profiles/enums.py:71
+#: src/ej_dataviz/views_dataviz.py:307 src/ej_profiles/enums.py:71
 msgid "email"
 msgstr "email"
 
-#: src/ej_dataviz/views_dataviz.py:292
+#: src/ej_dataviz/views_dataviz.py:308
 msgid "id"
 msgstr "id"
 
-#: src/ej_dataviz/views_dataviz.py:293 src/ej_profiles/enums.py:70
+#: src/ej_dataviz/views_dataviz.py:309 src/ej_profiles/enums.py:70
 msgid "name"
 msgstr "nome"
 
-#: src/ej_dataviz/views_dataviz.py:294
+#: src/ej_dataviz/views_dataviz.py:310
 msgid "participation"
 msgstr "participação"
 
-#: src/ej_dataviz/views_dataviz.py:295
+#: src/ej_dataviz/views_dataviz.py:311
 msgid "skipped"
 msgstr "pulados"
 
-#: src/ej_dataviz/views_dataviz.py:296
+#: src/ej_dataviz/views_dataviz.py:312
 #, fuzzy
 msgid "channel"
 msgstr "canal"
@@ -1911,7 +1911,7 @@ msgstr "Comentários positivos"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:73
 msgid "No positive comments in cluster"
-msgstr "Nenhum comentário positivo no grupo"
+msgstr "Nenhum comentário positivo e relativo no grupo"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:77
 msgid "Negative comments"
@@ -2625,6 +2625,7 @@ msgstr "Esta conversa está oculta."
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:32
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:16
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:7
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:52
 #, fuzzy
 msgid "participants"
 msgstr "Participantes"
@@ -2887,6 +2888,26 @@ msgstr "Não há mais comentários"
 msgid "channel participation"
 msgstr "participação por canal"
 
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:56
+#, fuzzy
+msgid "Relevant positive comments"
+msgstr "Comentários positivos mais relevantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:57
+#, fuzzy
+msgid "No positive comments in this cluster"
+msgstr "Nenhum comentário positivo no grupo"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:61
+#, fuzzy
+msgid "Relevant negative comments"
+msgstr "Comentários negativos mais relevantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:62
+#, fuzzy
+msgid "No relevant negative comments in this cluster"
+msgstr "Nenhum comentário negativo e relevante no grupo"
+
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:6
 #, fuzzy
 msgid "Opinion Groups"
@@ -2902,26 +2923,30 @@ msgstr "No grupo"
 msgid "agree with"
 msgstr "concorda que"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:23
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:22
+msgid "Click on the cluster for more information."
+msgstr "Clique no cluster para mais informações."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:26
 #, fuzzy
 msgid "Manage groups"
 msgstr "Gerenciar grupos"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:30
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:33
 #, fuzzy
 msgid "Your conversation does not have personas."
 msgstr "Sua conversa ainda não possui personas definidas."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:31
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:34
 #, fuzzy
 msgid "Without personas, it's not possible to create opinion groups."
 msgstr "Sem personas, não é possível gerar os grupos de opinião."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:32
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:35
 msgid "After modeling groups, you can check then here."
 msgstr "Depois de modelar os grupos, você terá uma visão geral deles aqui."
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:36
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/clusters.jinja2:39
 #, fuzzy
 msgid "Creates groups"
 msgstr "Criar grupo"

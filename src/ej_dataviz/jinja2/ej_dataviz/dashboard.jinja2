@@ -30,6 +30,18 @@
 
         </section>
 
+        <div class="hide"
+            hx-trigger="showClusterData from:body"
+            hx-vals="js:{cluster_id: event.detail.cluster_id}"
+            hx-get="{{url("dataviz:cluster-detail", **{"conversation_id": conversation.id, "slug": conversation.slug})}}"
+            hx-target="#cluster-details"
+            hx-on::after-request='showClusterModal()'
+            >
+        </div>
+        <div id="cluster-details" class="hide">
+            {% include 'ej_dataviz/dashboard/cluster-detail.jinja2' %}
+        </div>
+
     {% endblock %}
     </div>
 {% endblock %}

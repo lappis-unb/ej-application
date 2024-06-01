@@ -355,20 +355,20 @@ body {
         &__chevron-transition {
             transform: rotate(-90deg);
         }
-    
+
         &__toggle-section {
             display: flex !important;
             justify-content: space-between;
             padding-left: 0.75rem;
             padding-right: 0.75rem;
         }
-    
+
         #board-chevron-icon {
             color: $color-gray-darker;
             margin: 0;
         }
     }
-        
+
     .board-list {
         li {
             display: flex;
@@ -396,9 +396,6 @@ body {
                 text-indent: unset;
                 margin-bottom: unset;
             }
-            #isexpanded3 {
-                display: none;
-            }
         }
         div {
             display: flex;
@@ -418,9 +415,6 @@ body {
                 margin-left: 3.4em;
             }
         }
-        #isexpanded3:checked + label > i {
-            transform: rotate(180deg);
-        }
         .selected {
             background: $color-navigation-header;
         }
@@ -431,6 +425,17 @@ body {
             display: none;
         }
     }
+}
+
+#isexpanded3,
+.isexpanded-cluster-comments {
+    display: none !important;
+}
+
+#isexpanded3:checked + label > i,
+.isexpanded-cluster-comments:checked + label > i
+{
+    transform: rotate(180deg);
 }
 
 #show-profile-menu {
@@ -536,7 +541,7 @@ body {
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
-        
+
         span {
             max-height: 6rem;
             font-size: 1.25em;
@@ -553,12 +558,12 @@ body {
     @media only screen and (max-width: 900px){
         grid-template-columns: 5% auto 5%;
     }
-    
+
     &__links {
         padding: 2.25rem 0 1.75rem;
         border-bottom: 1px solid $color-navigation-header;
     }
-    
+
     &__avatar {
         width: 3rem;
         height: 3rem;
@@ -602,7 +607,7 @@ body {
     &__conversation-info {
         margin-bottom: 1.4375rem;
         line-height: 1.17rem;
-        
+
         i {
             color: $color-gray-darker;
         }
@@ -638,20 +643,20 @@ body {
         }
     }
 
-    button {
-        width: 100%;
-        border-radius: 0.3125rem;
-        height: 2.625rem;
-        text-transform: none;
-        background-color: $color-theme-dark-blue;
-        border-color: $color-theme-dark-blue;
-        font-size: 1em;
-        font-weight: 400;
-    }
-
     &__buttons-container {
         margin-top: 3.5rem;
         margin-bottom: 3.5rem;
+
+        button {
+            width: 100%;
+            border-radius: 0.3125rem;
+            height: 2.625rem;
+            text-transform: none;
+            background-color: $color-theme-dark-blue;
+            border-color: $color-theme-dark-blue;
+            font-size: 1em;
+            font-weight: 400;
+        }
     }
 }
 
