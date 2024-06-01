@@ -1,11 +1,8 @@
 import datetime
 import json
+from django.core.exceptions import ValidationError
 
-from django.test import RequestFactory
-from django.test import Client
 from django.urls import reverse
-from ej_clusters.models.stereotype_vote import StereotypeVote
-from ej_conversations.enums import Choice
 import pytest
 
 from ej.testing import UrlTester
@@ -13,12 +10,13 @@ from ej_clusters.enums import ClusterStatus
 from ej_clusters.models.cluster import Cluster
 from ej_clusters.models.clusterization import Clusterization
 from ej_clusters.models.stereotype import Stereotype
-from ej_clusters.mommy_recipes import ClusterRecipes
+from ej_clusters.models.stereotype_vote import StereotypeVote
+from ej_conversations.enums import Choice
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_dataviz.models import (
     CommentsReportClustersFilter,
-    ReportOrderByFilter,
     CommentsReportSearchFilter,
+    ReportOrderByFilter,
     UsersReportClustersFilter,
     UsersReportSearchFilter,
 )
@@ -27,7 +25,6 @@ from ej_dataviz.utils import (
     get_comments_dataframe,
     get_user_dataframe,
 )
-from ej_users.models import User
 
 BASE_URL = "/api/v1"
 
@@ -39,100 +36,58 @@ class TestRoutes(ConversationRecipes, UrlTester):
         "/conversations/1/conversation/dashboard/",
     ]
 
-    @pytest.fixture
-    def data(self, conversation, board, author_db):
-        conversation.author = author_db
-        board.owner = author_db
-        board.save()
-        conversation.board = board
-        conversation.save()
 
-
-class TestReportRoutes(ClusterRecipes):
-    @pytest.fixture
-    def request_factory(self):
-        return RequestFactory()
-
-    @pytest.fixture
-    def admin_user(self, db):
-        admin_user = User.objects.create_superuser("admin@test.com", "pass")
-        admin_user.save()
-        return admin_user
-
-    @pytest.fixture
-    def request_as_admin(self, request_factory, admin_user):
-        request = request_factory
-        request.user = admin_user
-        return request
-
-    @pytest.fixture
-    def logged_client(self):
-        user = User.objects.get(email="author@domain.com")
-        client = Client()
-        client.force_login(user)
-        return client
-
-    @pytest.fixture()
-    def conversation_with_votes(self, conversation, board, author_db):
-        user1 = User.objects.create_user("user1@email.br", "password")
-        user2 = User.objects.create_user("user2@email.br", "password")
-        user3 = User.objects.create_user("user3@email.br", "password")
-
-        conversation.author = author_db
-        board.owner = author_db
-        board.save()
-        conversation.board = board
-        conversation.save()
-
-        comment = conversation.create_comment(
-            author_db, "aa", status="approved", check_limits=False
+class TestClusterDetailView:
+    def test_cluster_detail_view_bad_request(self, cluster, logged_client):
+        conversation = cluster.conversation
+        url = reverse(
+            "dataviz:cluster-detail",
+            kwargs={"conversation_id": conversation.id, "slug": conversation.slug},
         )
-        comment.vote(user1, "agree")
-        comment.vote(user2, "agree")
-        comment.vote(user3, "disagree")
-        return conversation
-
-    @pytest.fixture
-    def conversation_with_comments(self, conversation, board, author_db):
-        user1 = User.objects.create_user("user1@email.br", "password")
-        user2 = User.objects.create_user("user2@email.br", "password")
-        user3 = User.objects.create_user("user3@email.br", "password")
-
-        conversation.author = author_db
-        board.owner = author_db
-        board.save()
-        conversation.board = board
-        conversation.save()
-
-        comment = conversation.create_comment(
-            author_db, "aa", status="approved", check_limits=False
-        )
-        comment2 = conversation.create_comment(
-            author_db, "aaa", status="approved", check_limits=False
-        )
-        comment3 = conversation.create_comment(
-            author_db, "aaaa", status="approved", check_limits=False
-        )
-        comment4 = conversation.create_comment(
-            author_db, "test", status="approved", check_limits=False
+        with pytest.raises(ValidationError) as validation_error:
+            logged_client.get(url)
+        assert (
+            validation_error.value.args[0]
+            == "cluster_id parameter was not passed to ClusterDetailView"
         )
 
-        comment.vote(user1, "agree")
-        comment.vote(user2, "agree")
-        comment.vote(user3, "agree")
+    def test_cluster_detail_view_with_wrong_cluster_id(self, cluster, logged_client):
+        conversation = cluster.conversation
+        url = reverse(
+            "dataviz:cluster-detail",
+            kwargs={
+                "conversation_id": conversation.id,
+                "slug": conversation.slug,
+            },
+        )
+        with pytest.raises(ValidationError) as validation_error:
+            logged_client.get(url, {"cluster_id": "123456789"})
+        assert (
+            validation_error.value.args[0] == "could not find cluster with id 123456789"
+        )
 
-        comment2.vote(user1, "agree")
-        comment2.vote(user2, "disagree")
-        comment2.vote(user3, "disagree")
+    def test_cluster_detail_view_with_cluster_id(self, cluster, logged_client):
+        conversation = cluster.conversation
+        url = reverse(
+            "dataviz:cluster-detail",
+            kwargs={
+                "conversation_id": conversation.id,
+                "slug": conversation.slug,
+            },
+        )
+        response = logged_client.get(url, {"cluster_id": cluster.id})
 
-        comment3.vote(user1, "disagree")
-        comment3.vote(user2, "disagree")
-        comment3.vote(user3, "disagree")
+        assert response.context["cluster"]
+        assert response.context["cluster"].name == cluster.name
 
-        comment4.vote(user1, "disagree")
-        conversation.save()
-        return conversation
+        assert response.context["conversation"]
+        assert response.context["conversation"].title == conversation.title
 
+        assert response.context["cluster_relevant_agreed_comments"] == []
+        assert response.context["cluster_relevant_disagred_comments"] == []
+
+
+class TestReportRoutes:
     def test_should_get_count_of_votes_in_a_period_of_time(
         self, conversation_with_votes, logged_client
     ):
@@ -174,10 +129,8 @@ class TestReportRoutes(ClusterRecipes):
         assert data["end_date"] == conversation.votes.last().created.isoformat()
 
     def test_should_return_error_if_start_date_is_bigger_than_end_date(
-        self, conversation, board, author_db, logged_client
+        self, conversation, board, logged_client
     ):
-        conversation.author = author_db
-        board.owner = author_db
         board.save()
         conversation.board = board
         conversation.save()
@@ -191,11 +144,7 @@ class TestReportRoutes(ClusterRecipes):
             "error": "end date must be gratter then start date."
         }
 
-    def test_time_chart_without_dates(
-        self, conversation, board, author_db, logged_client
-    ):
-        conversation.author = author_db
-        board.owner = author_db
+    def test_time_chart_without_dates(self, conversation, board, logged_client):
         board.save()
         conversation.board = board
         conversation.save()
@@ -211,10 +160,8 @@ class TestReportRoutes(ClusterRecipes):
         }
 
     def test_board_owner_can_view_dataviz_dashboard(
-        self, conversation, board, author_db, logged_client
+        self, conversation, board, logged_client
     ):
-        conversation.author = author_db
-        board.owner = author_db
         board.save()
         conversation.board = board
         conversation.save()
@@ -223,7 +170,9 @@ class TestReportRoutes(ClusterRecipes):
             conversation=conversation, cluster_status=ClusterStatus.ACTIVE
         )
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
-        stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=author_db)
+        stereotype, _ = Stereotype.objects.get_or_create(
+            name="name", owner=conversation.author
+        )
         cluster.stereotypes.add(stereotype)
 
         url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
@@ -239,59 +188,45 @@ class TestReportRoutes(ClusterRecipes):
         url = f"{base_url}?page=1"
 
         response = logged_client.get(url)
-        comments = list(response.context["page"])
+        comments = list(response.context_data["page"])
         assert conversation_with_comments.comments.all()[0].content == comments[0][0]
         assert conversation_with_comments.comments.all()[1].content == comments[1][0]
         assert conversation_with_comments.comments.all()[2].content == comments[2][0]
         assert conversation_with_comments.comments.all()[3].content == comments[3][0]
 
-    def test_conversation_has_stereotypes(self, cluster_db, stereotype_vote):
-        cluster_db.stereotypes.add(stereotype_vote.author)
-        cluster_db.users.add(cluster_db.clusterization.conversation.author)
-        cluster_db.save()
-        clusterization = Clusterization.objects.filter(
-            conversation=cluster_db.conversation
-        )
+    def test_conversation_has_stereotypes(self, cluster, stereotype_vote):
+        cluster.stereotypes.add(stereotype_vote.author)
+        cluster.users.add(cluster.clusterization.conversation.author)
+        cluster.save()
+        clusterization = Clusterization.objects.filter(conversation=cluster.conversation)
         assert conversation_has_stereotypes(clusterization)
 
     def test_get_dashboard_with_clusters(
-        self, cluster_db, stereotype_vote, comment, vote, logged_client
+        self, cluster, stereotype_vote, comment, logged_client
     ):
-        """
-        EJ has several recipes for create objects for testing.
-        cluster_db creates objects based on ej_clusters/mommy_recipes.py and testing/fixture_class.py.
-        calling cluster_db on method signature creates and cluster belonging to a conversation and clusterization.
-        """
-        cluster_db.stereotypes.add(stereotype_vote.author)
-        cluster_db.users.add(cluster_db.clusterization.conversation.author)
-        cluster_db.save()
-        conversation = cluster_db.conversation
+        cluster.stereotypes.add(stereotype_vote.author)
+        cluster.users.add(cluster.clusterization.conversation.author)
+        cluster.save()
+        conversation = cluster.conversation
         comment = conversation.create_comment(
             conversation.author, "aa", status="approved", check_limits=False
         )
         comment.vote(conversation.author, "agree")
         comment.save()
-        dashboard_url = reverse(
-            "boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()
-        )
-        response = logged_client.get(dashboard_url)
+        url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
+        response = logged_client.get(url)
         assert response.status_code == 200
-        assert response.context["biggest_cluster_data"].get("name") == "cluster"
+        assert response.context["biggest_cluster_data"].get("name") == "My Cluster"
         assert response.context["biggest_cluster_data"].get("content") == comment.content
         assert response.context["biggest_cluster_data"].get("percentage")
 
     def test_get_dashboard_without_clusters(
-        self, cluster_db, stereotype_vote, logged_client
+        self, cluster, stereotype_vote, logged_client
     ):
-        """
-        EJ has several recipes for creating objects for testing.
-        cluster_db creates objects based on ej_clusters/mommy_recipes.py and testing/fixture_class.py.
-        calling cluster_db on method signature creates an cluster belonging to a conversation and clusterization.
-        """
-        cluster_db.stereotypes.add(stereotype_vote.author)
-        cluster_db.users.add(cluster_db.clusterization.conversation.author)
-        cluster_db.save()
-        conversation = cluster_db.conversation
+        cluster.stereotypes.add(stereotype_vote.author)
+        cluster.users.add(cluster.clusterization.conversation.author)
+        cluster.save()
+        conversation = cluster.conversation
         dashboard_url = reverse(
             "boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs()
         )

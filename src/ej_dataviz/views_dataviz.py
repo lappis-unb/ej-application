@@ -5,18 +5,22 @@ from logging import getLogger
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.text import slugify
 from django.utils.translation import gettext as _, gettext_lazy as _
+from django.views.generic import DetailView
 from sidekick import import_later
 
 from ej.decorators import can_access_dataviz, can_view_report_details
+from ej_clusters.models.cluster import Cluster
 from ej_clusters.models.clusterization import Clusterization
 from ej_conversations.models import Conversation
 from ej_conversations.utils import check_promoted
 from ej_dataviz.models import ToolsLinksHelper
 from ej_tools.utils import get_host_with_schema
+from django.core.cache import cache
 
 from .constants import *
 from .utils import (
@@ -42,6 +46,40 @@ app_name = "ej_dataviz"
 User = get_user_model()
 
 
+class ClusterDetailView(DetailView):
+    template_name = "ej_dataviz/dashboard/cluster-detail.jinja2"
+    model = Cluster
+
+    def get_object(self, queryset=None):
+        cluster_id = self.request.GET.get("cluster_id")
+        if not cluster_id:
+            raise ValidationError(
+                "cluster_id parameter was not passed to ClusterDetailView"
+            )
+        try:
+            return Cluster.objects.get(id=cluster_id)
+        except Exception:
+            raise ValidationError(f"could not find cluster with id {cluster_id}")
+
+    def get_context_data(self, **kwargs):
+        cluster = self.get_object()
+        cluster_relevant_agreed_comments = cache.get_or_set(
+            f"cluster_{cluster.id}_relevant_agreed_comments",
+            cluster.separate_comments()[0],
+        )
+        cluster_relevant_disagred_comments = cache.get_or_set(
+            f"cluster_{cluster.id}_relevant_disagred_comments",
+            cluster.separate_comments()[1],
+        )
+        conversation = cluster.conversation
+        return {
+            "cluster": cluster,
+            "cluster_relevant_agreed_comments": cluster_relevant_agreed_comments,
+            "cluster_relevant_disagred_comments": cluster_relevant_disagred_comments,
+            "conversation": conversation,
+        }
+
+
 @can_access_dataviz
 def index(request, conversation_id, **kwargs):
     conversation = Conversation.objects.get(id=conversation_id)
@@ -55,7 +93,7 @@ def index(request, conversation_id, **kwargs):
         request, conversation, clusterization
     )
 
-    render_context = {
+    context = {
         "conversation": conversation,
         "can_view_detail": can_view_detail,
         "statistics": statistics,
@@ -70,7 +108,7 @@ def index(request, conversation_id, **kwargs):
         "current_page": "dashboard",
     }
 
-    return render(request, "ej_dataviz/dashboard.jinja2", render_context)
+    return render(request, "ej_dataviz/dashboard.jinja2", context=context)
 
 
 @can_access_dataviz
