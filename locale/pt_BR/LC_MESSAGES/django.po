@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-31 12:32-0300\n"
+"POT-Creation-Date: 2024-05-31 16:03-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1531,7 +1531,7 @@ msgstr "Varíaveis de contexto"
 
 #: src/ej/templates/jinja2/ej/includes/full-profile-menu.jinja2:5
 #: src/ej/templates/jinja2/ej/includes/header.jinja2:28
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:18
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:20
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:8
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:9
@@ -1558,6 +1558,7 @@ msgid "Manage"
 msgstr "Gerenciar"
 
 #: src/ej/templates/jinja2/ej/includes/full-profile-menu.jinja2:14
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:30
 #, fuzzy
 msgid "EJ Environment"
 msgstr "Ambiente EJ"
@@ -1587,7 +1588,7 @@ msgstr "Voltar para a página inicial"
 msgid "Profile picture"
 msgstr "Foto de perfil"
 
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:25
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:40
 #: src/ej_users/jinja2/account/index.jinja2:17
 #: src/ej_users/jinja2/account/logout.jinja2:2
 #: src/ej_users/jinja2/account/logout.jinja2:16
