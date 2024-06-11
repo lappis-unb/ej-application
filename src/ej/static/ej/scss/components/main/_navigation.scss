@@ -325,6 +325,13 @@ body {
     display: none !important;
 }
 
+.isexpanded-cluster-comments {
+    &--overflow {
+        overflow: scroll;
+        max-height: 50vh;
+    }
+}
+
 #isexpanded3:checked + label > i,
 .isexpanded-cluster-comments:checked + label > i
 {
