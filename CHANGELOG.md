@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [3.3.1] - Jun 12, 2024
+
+### Changed
+
+- Fixes conversation time chart start_date and end_date.
+- Renames user default board to "Explorar".
+- When voting as a persona, the comment will stay at the same position.
+- Fixes participation page overflow.
+- Adds to the documentation a reference to an EJ thesis developed by an UnB student.
+- Improves navigation menu interface, based on Figma prototypes.
+
 ## [3.3.0] - Jun 3, 2024
 
 ### Added
