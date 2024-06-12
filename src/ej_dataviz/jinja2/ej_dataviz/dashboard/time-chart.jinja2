@@ -22,17 +22,14 @@
 <script>
 
  function formatDate(unformatedDate, locale="") {
-
     unformatedDate = new Date(unformatedDate);
-
     let Day = unformatedDate.getUTCDate() >= 10 ? unformatedDate.getUTCDate() : `0${unformatedDate.getUTCDate()}`;
-    let Month = unformatedDate.getUTCMonth() >= 10 ? unformatedDate.getUTCMonth() : `0${unformatedDate.getUTCMonth()}`;
+    let Month = unformatedDate.getUTCMonth() + 1 >= 10 ? unformatedDate.getUTCMonth() + 1 : `0${unformatedDate.getUTCMonth() + 1}`;
     let Year = unformatedDate.getFullYear();
 
-     if (locale) {
-        return `${Day}/${Month}/${Year}`;
-     }
-
+    if (locale) {
+       return `${Day}/${Month}/${Year}`;
+    }
     return `${Year}-${Month}-${Day}`;
  }
 
@@ -77,11 +74,9 @@ function setDateFilter(startDate, endDate) {
     $('#start-date')[0].value = formatDate(startDate);
 }
 
-
 function listenToDateChanges() {
     let startDateInput = $("#start-date")[0];
     let endDateInput = $("#end-date")[0];
-
     startDateInput.onchange = updateVisualization
     endDateInput.onchange = updateVisualization
 }
