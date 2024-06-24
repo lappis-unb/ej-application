@@ -94,6 +94,22 @@ class UsersViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
 
 
+    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path="user",)
+    def get_user(self, request):
+        email = request.query_params.get('email')
+        secret_id = request.query_params.get('secret_id')
+
+        if email:
+            user = get_object_or_404(User, email=email)
+        elif secret_id:
+            user = get_object_or_404(User, secret_id=secret_id)
+        else:
+            return Response({"error": "Email ou secret_id é necessário."}, status=400)
+
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
+    
+
     def handle_unique_secret_id_error(self, serializer, request):
         if serializer.errors.get("secret_id")[0].code == "invalid":
             anonymous_user = User.objects.get(secret_id=request.data["secret_id"])
