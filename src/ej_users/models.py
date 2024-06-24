@@ -44,6 +44,10 @@ class User(AbstractUser):
         max_length=128, blank=True, null=True, unique=True, help_text=_("Unique ID")
     )
 
+    anonymous = models.BooleanField(
+        default=False, help_text=_("Anonymous user"), verbose_name=_("Anonymous user")
+    )
+
     objects = UserManager()
 
     class Meta:
