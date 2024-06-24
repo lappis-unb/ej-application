@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser
@@ -92,6 +93,7 @@ class UsersViewSet(viewsets.ModelViewSet):
 
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
 
+
     def handle_unique_secret_id_error(self, serializer, request):
         if serializer.errors.get("secret_id")[0].code == "invalid":
             anonymous_user = User.objects.get(secret_id=request.data["secret_id"])
@@ -105,7 +107,7 @@ class UsersViewSet(viewsets.ModelViewSet):
                 return Response(serializer.errors, status=400)
             
             user = serializer.save()
-            user = self.check_profile_and_convert(anonymous_user, user, request)
+            self.check_profile_and_convert(anonymous_user, user, request)
             return self.build_user_response(user)
         return None
 
@@ -118,9 +120,13 @@ class UsersViewSet(viewsets.ModelViewSet):
         user_secret = User.objects.get(secret_id=request.data["secret_id"])
         user_email = User.objects.get(email=request.data["email"])
         if user_secret != user_email:
-            user = convert_anonymous_participation_to_regular_user(user_secret, user_email)
-            user.save()
-            return self.build_user_response(user)
+            user_secret.secret_id = None
+            user_secret.save()
+            user_email.secret_id = request.data["secret_id"]
+            user_email.save()
+            
+            self.check_profile_and_convert(user_secret, user_email, request)
+            return self.build_user_response(user_email)
         return None
     
     def build_user_response(self, user):
@@ -130,6 +136,7 @@ class UsersViewSet(viewsets.ModelViewSet):
             "name": user.name,
             "email": user.email,
             "secret_id": user.secret_id,
+            "anonymous": user.anonymous,
             **tokens.data,
         }
 
@@ -142,11 +149,11 @@ class UsersViewSet(viewsets.ModelViewSet):
             if secret_id_error and not email_error:
                 response = self.handle_unique_secret_id_error(serializer, request)
                 if response:
-                    return Response(self.build_user_response(user))
+                    return Response(response)
             elif secret_id_error and email_error and email_error[0].code == "invalid":
                 response = self.handle_invalid_email_error(request)
                 if response:
-                    return Response(self.build_user_response(user))
+                    return Response(response)
             return Response(serializer.errors, status=400)
 
         user = serializer.save()
