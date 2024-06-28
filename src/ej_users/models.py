@@ -63,7 +63,7 @@ class User(AbstractUser):
             board_default = Board(
                 slug=instance.email,
                 owner=instance,
-                title="My Board",
+                title=_("Explore"),
                 description="Default user board",
                 palette="brand",
             )

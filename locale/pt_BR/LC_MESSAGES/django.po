@@ -1922,7 +1922,7 @@ msgstr "Comentários positivos"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:73
 msgid "No positive comments in cluster"
-msgstr "Nenhum comentário positivo e relativo no grupo"
+msgstr "Nenhum comentário positivo e relevante no grupo"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:77
 msgid "Negative comments"
@@ -1940,27 +1940,27 @@ msgstr "Gerenciar personas"
 msgid "Mark the votes for each stereotype in your conversation."
 msgstr "Marque os votos para cada persona na sua conversa."
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:165
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:163
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/stereotype-given-votes.jinja2:32
 #, fuzzy
 msgid "Clear vote"
 msgstr "Limpar voto"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:176
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:174
 msgid "There are no personas defined for this conversation"
 msgstr "Não existem personas definidas para esta conversa"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:178
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:176
 #, fuzzy
 msgid "Start by"
 msgstr "Comece"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:180
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:178
 #, fuzzy
 msgid "creating personas"
 msgstr "criando personas"
 
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:181
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes.jinja2:179
 #, fuzzy
 msgid "for this conversation."
 msgstr "para esta conversa."
@@ -2019,7 +2019,7 @@ msgstr "Salvar edições"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit/edit-cluster-form.jinja2:42
 #: src/ej_clusters/jinja2/ej_clusters/includes/stereotypes-menu.jinja2:4
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:57
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:59
 msgid "Manage personas"
 msgstr "Gerenciar personas"
 
@@ -2634,7 +2634,7 @@ msgid "This conversation is hidden."
 msgstr "Esta conversa está oculta."
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:32
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:16
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:20
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:7
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:53
 #, fuzzy
@@ -2642,7 +2642,7 @@ msgid "participants"
 msgstr "Participantes"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/conversation-detail-header.jinja2:47
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:20
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:24
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/channels-chart.jinja2:9
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:25
 #, fuzzy
@@ -2664,42 +2664,42 @@ msgstr "O que sua comunidade pensa sobre esse assunto?"
 msgid "Share this conversation"
 msgstr "Compartilhe essa conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:8
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:9
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:18
 #, fuzzy
 msgid "Home"
-msgstr "Home"
+msgstr "Inicio"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:13
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:17
 #, fuzzy
 msgid "About the conversation"
 msgstr "Sobre a conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:24
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:28
 #, fuzzy
 msgid "Share"
 msgstr "Compartilhe"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:30
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:34
 #, fuzzy
 msgid "created by"
 msgstr "Criada por"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:34
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:114
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:40
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:116
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:25
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:36
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:116
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:42
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:118
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:27
 msgid "Tour"
 msgstr "Tour"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:37
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:117
+#: src/ej_conversations/jinja2/ej_conversations/includes/conversation-menu.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:119
 #: src/ej_conversations/jinja2/ej_conversations/includes/participant-menu.jinja2:28
 msgid "Documentation"
 msgstr "Documentação"
@@ -2786,50 +2786,50 @@ msgstr "Encontrar arquivo"
 msgid "New Conversation"
 msgstr "Nova conversa"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:34
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:36
 msgid "Back to conversations"
 msgstr "Voltar para conversas"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:41
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:43
 #, fuzzy
 msgid "Collect opinions"
 msgstr "Coletar opiniões"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:43
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:45
 #: src/ej_profiles/jinja2/ej_profiles/includes/tour-page3.jinja2:16
 #, fuzzy
 msgid "Dashboard"
 msgstr "Painel"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:44
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:46
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/voting.jinja2:5
 msgid "Voting"
 msgstr "Votação"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:47
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:49
 msgid "Manage Comments"
 msgstr "Gerenciar comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:53
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:55
 msgid "Model and Analyze"
 msgstr "Modelar e Analisar"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:56
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:58
 #, fuzzy
 msgid "Create/Edit groups"
 msgstr "Criar/Editar grupos"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:70
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:72
 msgid "Reports"
 msgstr "Relatórios"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:78
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:80
 #: src/ej_dataviz/jinja2/ej_dataviz/reports/comments.jinja2:8
 #, fuzzy
 msgid "Comments report"
 msgstr "Relatório de comentários"
 
-#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:85
+#: src/ej_conversations/jinja2/ej_conversations/includes/menu.jinja2:87
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/participants.jinja2:8
 #, fuzzy
 msgid "Participants report"
@@ -2907,7 +2907,7 @@ msgstr "Comentários positivos mais relevantes"
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:58
 #, fuzzy
 msgid "No positive comments in this cluster"
-msgstr "Nenhum comentário positivo no grupo"
+msgstr "Nenhum comentário positivo e relevante no grupo"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/dashboard/cluster-detail.jinja2:62
 #, fuzzy
@@ -3022,7 +3022,7 @@ msgstr "Carregando dados..."
 msgid "Vote period"
 msgstr "votação no período"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/time-chart.jinja2:18
+#: src/ej_dataviz/jinja2/ej_dataviz/dashboard/time-chart.jinja2:19
 msgid "end date must be gratter then start date"
 msgstr "data de fim deve ser maior que data de inicio"
 
