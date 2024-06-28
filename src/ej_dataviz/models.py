@@ -35,6 +35,7 @@ class ReportClustersFilter:
                 pass
         dataframe_utils = self.get_dataframe_utils(df)
         clusters = get_clusters(self.conversation)
+
         return dataframe_utils.filter_by_cluster(clusters, self.clusters_filters)
 
     def get_dataframe(self, conversation: Conversation, cluster_name: str = ""):
@@ -105,11 +106,12 @@ class ReportOrderByFilter:
         order,
         report_df: pd.DataFrame,
         ascending=False,
+        default_order: str = "comment",
     ):
         self.order = order
         self.report_df = report_df
         self.ascending = ascending
-        self.default_order = "comment"
+        self.default_order = default_order
 
     def filter(self):
         """
