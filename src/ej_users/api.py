@@ -64,7 +64,7 @@ class TokenViewSet(viewsets.ViewSet):
         serializer = UserAuthSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
-        
+
         user = None
         try:
             if "secret_id" in request.data:
@@ -72,16 +72,22 @@ class TokenViewSet(viewsets.ViewSet):
             elif "email" in request.data:
                 user = User.objects.get(email=request.data["email"])
             else:
-                return Response({"error": _("Email or secret_id is required.")}, status=400)
+                return Response(
+                    {"error": _("Email or secret_id is required.")}, status=400
+                )
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=404)
-        
+
         if user and not user.check_password(request.data["password"]):
             return Response({"error": _("The password is incorrect")}, status=400)
-        
+
         try:
             tokens = EJTokens(user)
-            response_data = {"name": user.name, "email": user.email, **tokens.data} if "secret_id" in request.data else tokens.data
+            response_data = (
+                {"name": user.name, "email": user.email, **tokens.data}
+                if "secret_id" in request.data
+                else tokens.data
+            )
             return Response(response_data)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
@@ -93,11 +99,15 @@ class UsersViewSet(viewsets.ModelViewSet):
 
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
 
-
-    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path="user",)
+    @action(
+        detail=False,
+        methods=["get"],
+        permission_classes=[AllowAny],
+        url_path="user",
+    )
     def get_user(self, request):
-        email = request.query_params.get('email')
-        secret_id = request.query_params.get('secret_id')
+        email = request.query_params.get("email")
+        secret_id = request.query_params.get("secret_id")
 
         if email:
             user = get_object_or_404(User, email=email)
@@ -108,20 +118,19 @@ class UsersViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(user)
         return Response(serializer.data)
-    
 
     def handle_unique_secret_id_error(self, serializer, request):
         if serializer.errors.get("secret_id")[0].code == "invalid":
             anonymous_user = User.objects.get(secret_id=request.data["secret_id"])
             anonymous_user.secret_id = None
             anonymous_user.save()
-            
+
             serializer = self.get_serializer(data=request.data)
             if not serializer.is_valid():
                 anonymous_user.secret_id = request.data["secret_id"]
                 anonymous_user.save()
                 return Response(serializer.errors, status=400)
-            
+
             user = serializer.save()
             self.check_profile_and_convert(anonymous_user, user, request)
             return self.build_user_response(user)
@@ -140,11 +149,11 @@ class UsersViewSet(viewsets.ModelViewSet):
             user_secret.save()
             user_email.secret_id = request.data["secret_id"]
             user_email.save()
-            
+
             self.check_profile_and_convert(user_secret, user_email, request)
             return self.build_user_response(user_email)
         return None
-    
+
     def build_user_response(self, user):
         tokens = EJTokens(user)
         return {

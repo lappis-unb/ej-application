@@ -57,25 +57,24 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         if anonymous_user_query.exists():
             try:
                 anonymous_user = anonymous_user_query.first()
-                convert_anonymous_participation_to_regular_user(
-                    anonymous_user, user
-                )
+                convert_anonymous_participation_to_regular_user(anonymous_user, user)
                 log.info(f"anonymous user participation converted to {email} user")
             except Exception as e:
                 log.error(f"Could not find anonymous user. Error: {e}")
         return user
 
+
 def convert_anonymous_participation_to_regular_user(anonymous_user, user):
-        log.info("Converting anonymous participation to regular user")
-        anonymous_votes = anonymous_user.votes.all()
-        anonymous_comments = anonymous_user.comments.all()
-        for vote in anonymous_votes:
-            vote.author = user
-            vote.save()
-        for comment in anonymous_comments:
-            comment.author = user
-            comment.save()
-        anonymous_user.profile.delete()
-        anonymous_user.delete()
-        log.info("Anonymous participation converted to regular user")
-        return user
+    log.info("Converting anonymous participation to regular user")
+    anonymous_votes = anonymous_user.votes.all()
+    anonymous_comments = anonymous_user.comments.all()
+    for vote in anonymous_votes:
+        vote.author = user
+        vote.save()
+    for comment in anonymous_comments:
+        comment.author = user
+        comment.save()
+    anonymous_user.profile.delete()
+    anonymous_user.delete()
+    log.info("Anonymous participation converted to regular user")
+    return user

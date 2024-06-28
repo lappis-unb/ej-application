@@ -18,7 +18,15 @@ class UsersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "name", "email", "password", "password_confirm", "secret_id", "anonymous"]
+        fields = [
+            "id",
+            "name",
+            "email",
+            "password",
+            "password_confirm",
+            "secret_id",
+            "anonymous",
+        ]
 
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
@@ -29,12 +37,12 @@ class UsersSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=data).exists():
             raise serializers.ValidationError(_("Email already exists"))
         return data
-    
+
     def validate_secret_id(self, data):
         if User.objects.filter(secret_id=data).exists():
             raise serializers.ValidationError(_("Secret ID already exists"))
         return data
-    
+
     def validate_anonymous(self, data):
         if data:
             return data
@@ -47,10 +55,10 @@ class UsersSerializer(serializers.ModelSerializer):
         )
         if "secret_id" in validated_data:
             user.secret_id = validated_data["secret_id"]
-        
+
         if "anonymous" in validated_data:
             user.anonymous = validated_data["anonymous"]
-        
+
         user.set_password(validated_data["password"])
         user.save()
         return user
@@ -62,5 +70,3 @@ class UserAuthSerializer(serializers.Serializer):
         required=True, write_only=True, style={"input_type": "password"}
     )
     secret_id = serializers.CharField(required=False)
-    
-
