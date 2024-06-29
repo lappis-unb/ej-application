@@ -349,6 +349,21 @@ class TestApiRoutes:
         del data["created"]
         assert data == comment_data
 
+    def test_post_comment_with_disabled_option(self, api, conversation, user):
+        comments_path = API_V1_URL + "/comments/"
+        comment_data = dict(COMMENT, status="pending")
+        conversation.participants_can_add_comments = False
+        conversation.save()
+        post_data = dict(
+            content=comment_data["content"],
+            conversation=conversation.id,
+        )
+
+        # Authenticated user
+        api = get_authorized_api_client({"email": user.email, "password": "password"})
+        response = api.post(comments_path, post_data, format="json")
+        assert response.status_code == 403
+
     def test_delete_comment(self, conversation, user):
         comments_path = API_V1_URL + "/comments/"
         comment_data = dict(COMMENT, status="pending")
