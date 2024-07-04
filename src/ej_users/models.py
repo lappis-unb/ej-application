@@ -95,6 +95,9 @@ class User(AbstractUser):
             )
         return user
 
+    def get_dummy_password(self):
+        return self.email.split("@")[0]
+
 
 class PasswordResetToken(TimeStampedModel):
     """
