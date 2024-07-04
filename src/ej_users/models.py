@@ -39,6 +39,7 @@ class User(AbstractUser):
         help_text=_("Agree with privacy policy"),
         verbose_name=_("Agree with privacy policy"),
     )
+    secret_id = models.CharField(unique=True, null=True, max_length=200)
 
     objects = UserManager()
 
