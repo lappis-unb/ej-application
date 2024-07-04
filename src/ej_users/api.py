@@ -3,6 +3,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
+from django.db.models import Q
+
 
 from ej_profiles.models import Profile
 from ej_users.serializers import UserAuthSerializer, UsersSerializer
@@ -66,7 +68,10 @@ class TokenViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=400)
 
         try:
-            user = User.objects.get(email=request.data["email"])
+            user = User.objects.get(
+                Q(email=request.data["email"])
+                | Q(secret_id=request.data.get("secret_id", ""))
+            )
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
@@ -86,6 +91,19 @@ class UsersViewSet(viewsets.ModelViewSet):
     serializer_class = UsersSerializer
 
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
+
+    def update(self, request, pk=None):
+        try:
+            if type(pk) == int:
+                user = User.objects.get(id=pk)
+            else:
+                user = User.objects.get(secret_id=pk)
+            email = request.data.get("email", user.email)
+            user.email = email
+            user.save()
+        except Exception as e:
+            raise e
+        return Response({"status": "ok"}, status=200)
 
     def create(self, request, pk=None):
         serializer = self.get_serializer(data=request.data)
