@@ -98,6 +98,9 @@ class User(AbstractUser):
     def has_more_than_one_board(self):
         return self.boards.count() > 1
 
+    def get_dummy_password(self):
+        return self.email.split("@")[0]
+
 
 class PasswordResetToken(TimeStampedModel):
     """

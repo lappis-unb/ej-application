@@ -75,7 +75,9 @@ class TokenViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
-        checked_password = user.check_password(request.data["password"])
+        checked_password = user.check_password(
+            request.data["password"]
+        ) or user.check_password(user.get_dummy_password())
         if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
 
@@ -93,16 +95,35 @@ class UsersViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
 
     def update(self, request, pk=None):
-        try:
-            if type(pk) == int:
+
+        user = None
+
+        if type(pk) == int:
+            try:
                 user = User.objects.get(id=pk)
-            else:
+            except Exception as e:
+                raise e
+        else:
+            try:
                 user = User.objects.get(secret_id=pk)
-            email = request.data.get("email", user.email)
-            user.email = email
-            user.save()
-        except Exception as e:
-            raise e
+            except Exception as e:
+                raise e
+
+        email = request.data.get("email")
+        main_user_exists = User.objects.filter(email=email)
+        if user and main_user_exists:
+            main_user = User.objects.get(email=email)
+            if getattr(user, "secret_id"):
+                main_user.secret_id = user.secret_id
+                main_user.set_password(user.get_dummy_password())
+                main_user = User.objects._convert_anonymous_participation_to_regular_user(
+                    user, main_user
+                )
+                main_user.save()
+            else:
+                user.email = email
+                user.save()
+
         return Response({"status": "ok"}, status=200)
 
     def create(self, request, pk=None):

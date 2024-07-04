@@ -51,12 +51,22 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         anonymous_votes = anonymous_user.votes.all()
         anonymous_comments = anonymous_user.comments.all()
         for vote in anonymous_votes:
-            vote.author = user
-            vote.save()
+            try:
+                vote.author = user
+                vote.save()
+            except Exception:
+                pass
         for comment in anonymous_comments:
-            comment.author = user
-            comment.save()
-        anonymous_user.profile.delete()
+            try:
+                comment.author = user
+                comment.save()
+            except Exception:
+                pass
+        anonymous_user.votes.all().delete()
+        try:
+            anonymous_user.profile.delete()
+        except Exception:
+            pass
         anonymous_user.delete()
         return user
 

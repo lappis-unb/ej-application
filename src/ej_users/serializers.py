@@ -28,6 +28,11 @@ class UsersSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(_("Email already exists"))
         return data
 
+    def validate_secret_id(self, data):
+        if User.objects.filter(secret_id=data).exists():
+            raise serializers.ValidationError(_("Secret ID already exists"))
+        return data
+
     def create(self, validated_data):
         secret_id = validated_data.get("secret_id", "")
         user = User(
