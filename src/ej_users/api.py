@@ -20,7 +20,6 @@ from typing import Any
 
 @dataclass
 class EJTokens:
-
     """
     Manage EJ API authentication tokens.
     """
@@ -98,16 +97,16 @@ class UsersViewSet(viewsets.ModelViewSet):
 
         user = None
 
-        if type(pk) == int:
+        if pk.isdigit():
             try:
                 user = User.objects.get(id=pk)
             except Exception as e:
-                raise e
+                return Response({"error": str(e)}, status=404)
         else:
             try:
                 user = User.objects.get(secret_id=pk)
             except Exception as e:
-                raise e
+                return Response({"error": str(e)}, status=404)
 
         email = request.data.get("email")
         main_user_exists = User.objects.filter(email=email)
