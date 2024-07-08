@@ -129,7 +129,7 @@ class UsersViewSet(viewsets.ModelViewSet):
         self.check_profile(user, request)
         tokens = EJTokens(user)
         response = {"id": user.id, "name": user.name, "email": user.email, **tokens.data}
-        return Response(response)
+        return Response(response, status=201)
 
     def check_profile(self, user, request):
         phone_number = request.data.get("phone_number", None)
