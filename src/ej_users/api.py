@@ -94,25 +94,19 @@ class UsersViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
 
     def update(self, request, pk=None):
-
-        user = None
-
-        if pk.isdigit():
-            try:
+        try:
+            if pk.isdigit():
                 user = User.objects.get(id=pk)
-            except Exception as e:
-                return Response({"error": str(e)}, status=404)
-        else:
-            try:
+            else:
                 user = User.objects.get(secret_id=pk)
-            except Exception as e:
-                return Response({"error": str(e)}, status=404)
+        except User.DoesNotExist as e:
+            return Response({"error": str(e)}, status=404)
 
         email = request.data.get("email")
-        main_user_exists = User.objects.filter(email=email)
+        main_user_exists = User.objects.filter(email=email).exists()
         if user and main_user_exists:
             main_user = User.objects.get(email=email)
-            if getattr(user, "secret_id"):
+            if user.secret_id:
                 main_user.secret_id = user.secret_id
                 main_user.set_password(user.get_dummy_password())
                 main_user = User.objects._convert_anonymous_participation_to_regular_user(
