@@ -61,7 +61,6 @@ class TokenViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def token(self, request):
-
         serializer = UserAuthSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=400)
@@ -74,9 +73,7 @@ class TokenViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
-        checked_password = user.check_password(
-            request.data["password"]
-        ) or user.check_password(user.get_dummy_password())
+        checked_password = user.check_password(request.data["password"])
         if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
 
@@ -84,7 +81,7 @@ class TokenViewSet(viewsets.ViewSet):
             tokens = EJTokens(user)
             return Response(tokens.data)
         except Exception as e:
-            return Response({"error": e}, status=500)
+            return Response({"error": str(e)}, status=500)
 
 
 class UsersViewSet(viewsets.ModelViewSet):
