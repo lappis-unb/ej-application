@@ -8,21 +8,36 @@ import json
 class UserType(Enum):
     ANONYMOUS = "anonymous"
     AUTH = "auth"
+    AUTH_LINKED = "auth_linked"
+    ANOTHER_AUTH_LINKED = "another_auth_linked"
 
 
 class UserFake:
+    OFFICIAL_PASSWORD = "OiPNMcJ£]£]A4_>N,Ng@dx~s>?XCb^4E'idea5HHVvJ8:IP5"
     USERS = {
         UserType.ANONYMOUS: {
             "name": "anonymous user",
             "email": "anonymous@mail.com",
-            "password": "pass123",
-            "password_confirm": "pass123",
+            "password": OFFICIAL_PASSWORD,
+            "password_confirm": OFFICIAL_PASSWORD,
         },
         UserType.AUTH: {
-            "name": "Giovanni Giampauli",
-            "email": "giovanni@mail.com",
+            "name": "Auth User",
+            "email": "auth.user@mail.com",
             "password": "pass123@123",
             "password_confirm": "pass123@123",
+        },
+        UserType.AUTH_LINKED: {
+            "name": "Auth User",
+            "email": "auth.user@mail.com",
+            "password": OFFICIAL_PASSWORD,
+            "password_confirm": OFFICIAL_PASSWORD,
+        },
+        UserType.ANOTHER_AUTH_LINKED: {
+            "name": "Another User",
+            "email": "another.user@mail.com",
+            "password": OFFICIAL_PASSWORD,
+            "password_confirm": OFFICIAL_PASSWORD,
         },
     }
 
@@ -40,12 +55,21 @@ class EJRequests:
 
         if secret_id:
             data["secret_id"] = secret_id
+        else:
+            data.pop("secret_id", None)
 
         response = self.client.post(
-            API_V1_URL + "/login/",
+            API_V1_URL + "/token/",
             data=data,
             content_type="application/json",
         )
+
+        if response.status_code != 200:
+            response_data = response.json()
+            raise Exception(response_data)
+
+        assert response.status_code == 200
+
         response_data = response.json()
         return response_data["access_token"]
 
@@ -55,6 +79,8 @@ class EJRequests:
 
         if secret_id:
             data["secret_id"] = secret_id
+        else:
+            data.pop("secret_id", None)
 
         response = self.client.post(
             API_V1_URL + "/users/",
@@ -75,7 +101,7 @@ class EJRequests:
 
     def update_user(self, user_type: UserType, secret_id, token):
         user = UserFake.USERS[user_type]
-        data = {"email": user["email"]}
+        data = {"email": user["email"], "password": user["password"]}
 
         response = self.client.put(
             API_V1_URL + f"/users/{secret_id}/",
@@ -245,7 +271,7 @@ class TestUserAPI:
         assert user.email == UserFake.USERS[UserType.AUTH]["email"]
         assert user.secret_id == SECRET_ID
 
-    def test_create_auth_user(self, client, db):
+    def test_create_auth_user_and_link(self, client, db):
         ej_requests = EJRequests(client)
         SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
@@ -260,9 +286,7 @@ class TestUserAPI:
         access_token = ej_requests.get_token(UserType.AUTH)
 
         # Link secret_id to auth user
-        response = ej_requests.update_user(
-            SECRET_ID, access_token, {"email": UserFake.USERS[UserType.AUTH]["email"]}
-        )
+        response = ej_requests.update_user(UserType.AUTH_LINKED, SECRET_ID, access_token)
         assert response.status_code == 200
 
         user = User.objects.get(secret_id=SECRET_ID)
@@ -294,10 +318,53 @@ class TestUserAPI:
 
     def test_get_token_by_secret_id_after_link(self, client, db):
         ej_requests = EJRequests(client)
-        SECRET_ID = "123456"
+        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
+        # Create anonymous user
         response = ej_requests.create_user(UserType.ANONYMOUS, secret_id=SECRET_ID)
         assert response.status_code == 201
 
+        # Create auth user
+        response = ej_requests.create_user(UserType.AUTH)
+        assert response.status_code == 201
+
+        access_token = ej_requests.get_token(UserType.AUTH)
+
+        # Link secret_id to auth user
+        response = ej_requests.update_user(UserType.AUTH_LINKED, SECRET_ID, access_token)
+        assert response.status_code == 200
+
+        # Get token by secret_id
         access_token = ej_requests.get_token(UserType.ANONYMOUS, secret_id=SECRET_ID)
+
         assert access_token
+
+    def test_user_try_linked_to_auth_user(self, client, db):
+        ej_requests = EJRequests(client)
+        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
+
+        # Create anonymous user
+        response = ej_requests.create_user(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        assert response.status_code == 201
+
+        # Create auth user
+        response = ej_requests.create_user(UserType.AUTH)
+        assert response.status_code == 201
+
+        access_token = ej_requests.get_token(UserType.AUTH)
+
+        # Link secret_id to auth user
+        response = ej_requests.update_user(UserType.AUTH_LINKED, SECRET_ID, access_token)
+        assert response.status_code == 200
+
+        # Create another user
+        response = ej_requests.create_user(UserType.ANOTHER_AUTH_LINKED)
+        assert response.status_code == 201
+
+        # Try link secret_id to another user
+        access_token = ej_requests.get_token(UserType.ANOTHER_AUTH_LINKED)
+
+        response = ej_requests.update_user(
+            UserType.ANOTHER_AUTH_LINKED, SECRET_ID, access_token
+        )
+        assert response.status_code == 403
