@@ -66,10 +66,13 @@ class TokenViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=400)
 
         try:
-            user = User.objects.get(
-                Q(email=request.data["email"])
-                | Q(secret_id=request.data.get("secret_id", ""))
-            )
+            if request.data.get("secret_id"):
+                user = User.objects.get(
+                    Q(email=request.data["email"])
+                    | Q(secret_id=request.data.get("secret_id"))
+                )
+            else:
+                user = User.objects.get(email=request.data["email"])
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
