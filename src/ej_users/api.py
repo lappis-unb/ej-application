@@ -76,9 +76,7 @@ class TokenViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
-        checked_password = user.check_password(
-            request.data["password"]
-        ) or user.check_password(user.get_dummy_password())
+        checked_password = user.check_password(request.data["password"])
 
         if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
@@ -109,20 +107,36 @@ class UsersViewSet(viewsets.ModelViewSet):
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=404)
 
-        email = request.data.get("email")
+        try:
+            email = request.data.get("email")
+            password = request.data.get("password")
+        except KeyError:
+            return Response({"error": _("Email and password are required")}, status=400)
+
+        check_password = user.check_password(password)
+        if not check_password:
+            return Response({"error": _("The password is incorrect")}, status=400)
+
+        if user.is_linked:
+            return Response(
+                {"error": _("User is already linked to another account.")}, status=403
+            )
+
         main_user_exists = User.objects.filter(email=email).exists()
-        if user and main_user_exists:
+        if not main_user_exists:
+            user.email = email
+            user.set_password(password)
+            user.is_linked = True
+            user.save()
+        else:
             main_user = User.objects.get(email=email)
-            if user.secret_id:
-                main_user.secret_id = user.secret_id
-                main_user.set_password(user.get_dummy_password())
-                main_user = User.objects._convert_anonymous_participation_to_regular_user(
-                    user, main_user
-                )
-                main_user.save()
-            else:
-                user.email = email
-                user.save()
+            main_user.secret_id = user.secret_id
+            main_user.set_password(password)
+            main_user = User.objects._convert_anonymous_participation_to_regular_user(
+                user, main_user
+            )
+            main_user.is_linked = True
+            main_user.save()
 
         return Response({"status": "ok"}, status=200)
 

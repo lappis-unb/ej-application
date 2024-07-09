@@ -41,6 +41,8 @@ class User(AbstractUser):
     )
     secret_id = models.CharField(unique=True, null=True, max_length=200)
 
+    is_linked = models.BooleanField(default=False)
+
     objects = UserManager()
 
     class Meta:
