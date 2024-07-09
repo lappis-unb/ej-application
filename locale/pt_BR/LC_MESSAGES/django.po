@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 18:21-0300\n"
+"POT-Creation-Date: 2024-07-09 18:21-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1314,15 +1314,23 @@ msgstr "Permissões"
 msgid "Important dates"
 msgstr "Datas importantes"
 
-#: src/ej_users/api.py:71
+#: src/ej_users/api.py:77
 #, fuzzy
 msgid "User was not found."
 msgstr "O usuário não foi encontrado."
 
-#: src/ej_users/api.py:75
+#: src/ej_users/api.py:82 src/ej_users/api.py:118
 #, fuzzy
 msgid "The password is incorrect"
 msgstr "A senha está incorreta"
+
+#: src/ej_users/api.py:114
+msgid "Email and password are required"
+msgstr ""
+
+#: src/ej_users/api.py:124 src/ej_users/api.py:136
+msgid "User is already linked to another account."
+msgstr ""
 
 #: src/ej_users/apps.py:7
 msgid "Users"
@@ -1336,7 +1344,7 @@ msgstr "Senha"
 msgid "Password confirmation"
 msgstr "Confirmação de senha"
 
-#: src/ej_users/forms.py:62 src/ej_users/serializers.py:22
+#: src/ej_users/forms.py:62 src/ej_users/serializers.py:23
 msgid "Passwords do not match"
 msgstr "As senhas não são iguais"
 
@@ -1465,21 +1473,26 @@ msgstr "Termos de uso"
 msgid "Agree with privacy policy"
 msgstr "Política de privacidade"
 
-#: src/ej_users/models.py:58
+#: src/ej_users/models.py:61
 msgid "Explore"
 msgstr "Explorar"
 
-#: src/ej_users/models.py:104
+#: src/ej_users/models.py:110
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:151
+#: src/ej_users/models.py:157
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: src/ej_users/serializers.py:27
+#: src/ej_users/serializers.py:28
 #, fuzzy
 msgid "Email already exists"
+msgstr "Identificador já existe."
+
+#: src/ej_users/serializers.py:33
+#, fuzzy
+msgid "Secret ID already exists"
 msgstr "Identificador já existe."
 
 #: src/ej_users/views/account.py:58
