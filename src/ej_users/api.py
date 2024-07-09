@@ -76,7 +76,10 @@ class TokenViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
-        checked_password = user.check_password(request.data["password"])
+        checked_password = user.check_password(
+            request.data["password"]
+        ) or user.check_password(user.get_dummy_password())
+
         if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
 
@@ -91,7 +94,11 @@ class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
 
-    permission_classes_by_action = {"create": [AllowAny], "list": [IsAdminUser]}
+    permission_classes_by_action = {
+        "create": [AllowAny],
+        "update": [AllowAny],
+        "list": [IsAdminUser],
+    }
 
     def update(self, request, pk=None):
         try:
