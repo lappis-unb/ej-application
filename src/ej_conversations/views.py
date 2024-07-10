@@ -178,6 +178,7 @@ class BoardConversationsView(ConversationView):
             "board": board,
             "user_boards": user_boards,
             "current_page": board.slug,
+            "can_delete_board": user.has_more_than_one_board(),
         }
 
 

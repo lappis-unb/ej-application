@@ -23,12 +23,15 @@
     &__container {
         @extend .pad-4;
         position: relative;
-        min-width: 25rem;
         z-index: 1250;
         background-color: $color-modal-background;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         text-align: center;
         border-radius: .5rem;
+
+        @media (max-width: 380px) {
+            width: inherit !important;
+        }
 
         h3 {
             color: $color-black-alternative;
@@ -75,12 +78,6 @@
         &--lg {
             @extend .modal__container;
             min-width: 45rem;
-        }
-
-        &-center-content {
-            padding: 4.375rem 3.75rem;
-            min-width: 25rem;
-            text-align: center;
         }
 
         &--quick-action {
@@ -173,6 +170,12 @@
         }
     }
 
+    &__btn-board-delete {
+        margin-bottom: 1.30rem !important;
+        width: 17.5625rem !important;
+        height: 3.25rem !important;
+    }
+
     &__btn-alternative {
         display: grid;
         grid-template-columns: auto auto;
@@ -199,6 +202,26 @@
         &--gray {
             background-color: $color-gray-darker;
         }
+
+    }
+
+    &__btn-board {
+        a {
+            color: $color-gray-dark !important;
+        }
+        button {
+            text-transform: lowercase;
+            font-size: 1em;
+            font-weight: 500;
+            border-radius: 11.2rem;
+        }
+    }
+
+    &__question {
+        margin: unset;
+        font-size: 1em;
+        font-weight: 500;
+        color: $color-black !important;
     }
 
     &--full-screen-mobile {
