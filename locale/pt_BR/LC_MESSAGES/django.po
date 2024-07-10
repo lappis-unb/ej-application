@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 18:21-0300\n"
+"POT-Creation-Date: 2024-07-05 14:44-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -158,7 +158,7 @@ msgstr "Identificador inválido."
 msgid "Slug cannot contain a backslash character."
 msgstr "O identificador não pode conter uma barra."
 
-#: src/ej_boards/views.py:68
+#: src/ej_boards/views.py:75
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
@@ -1469,11 +1469,11 @@ msgstr "Política de privacidade"
 msgid "Explore"
 msgstr "Explorar"
 
-#: src/ej_users/models.py:104
+#: src/ej_users/models.py:107
 msgid "User token"
 msgstr "Token do usuário"
 
-#: src/ej_users/models.py:151
+#: src/ej_users/models.py:154
 msgid "Anonymous"
 msgstr "Anônimo"
 
@@ -2116,6 +2116,7 @@ msgstr "Editar persona:"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotypes/edit.jinja2:26
 #: src/ej_conversations/jinja2/ej_conversations/includes/delete-confimation-modal.jinja2:14
+#: src/ej_conversations/jinja2/ej_conversations/includes/remove-board-section.jinja2:10
 msgid "Delete"
 msgstr "Excluir"
 
@@ -2211,7 +2212,8 @@ msgstr[1] "Você pode postar até %(n)s comentários."
 msgid "Send"
 msgstr "Enviar"
 
-#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:31
+#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:27
+#, fuzzy
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -2386,6 +2388,7 @@ msgstr "Comentário Excluído"
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:53
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:68
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:83
+#: src/ej_conversations/jinja2/ej_conversations/includes/delete-board-modal.jinja2:5
 #, fuzzy
 msgid "Are you sure about this action?"
 msgstr "Você tem certeza dessa ação?"
@@ -2705,6 +2708,23 @@ msgstr "Tour"
 msgid "Documentation"
 msgstr "Documentação"
 
+#: src/ej_conversations/jinja2/ej_conversations/includes/delete-board-modal.jinja2:6
+msgid ""
+"Take some atention, deleting the board will remove all conversations "
+"associated with it."
+msgstr "Atenção, excluir o mural irá apagar todas as conversas "
+"pertencentes a ele."
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/delete-board-modal.jinja2:12
+#, fuzzy
+msgid "yes, delete board"
+msgstr "sim, excluir mural"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/delete-board-modal.jinja2:16
+#, fuzzy
+msgid "no, go back"
+msgstr "não, voltar"
+
 #: src/ej_conversations/jinja2/ej_conversations/includes/delete-confimation-modal.jinja2:5
 #, fuzzy
 msgid "Are you sure?"
@@ -2840,6 +2860,11 @@ msgstr "Relatório de participantes"
 #, fuzzy
 msgid "Welcome, "
 msgstr "Boas vindas, "
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/remove-board-section.jinja2:5
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:35
+msgid "Edit"
+msgstr "Editar"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/tab-moderate-add-comments.jinja2:13
 msgid ""
@@ -3525,10 +3550,6 @@ msgstr "Apenas comentários com menos de 100 caracteres podem ser selecionados."
 #, fuzzy
 msgid "You don't have enough approved comments"
 msgstr "Você não tem comentários aprovados suficientes"
-
-#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:35
-msgid "Edit"
-msgstr "Editar"
 
 #: src/ej_tools/jinja2/ej_tools/telegram.jinja2:25
 #, fuzzy
@@ -4822,9 +4843,6 @@ msgstr "Ao clicar, você concorda com nossos termos de uso."
 #~ msgstr "Painel"
 
 #~ msgid "Back"
-#~ msgstr "Voltar"
-
-#~ msgid "Go back"
 #~ msgstr "Voltar"
 
 #~ msgid "Erase"

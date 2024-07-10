@@ -32,6 +32,11 @@ urlpatterns = [
         views.BoardBaseView.as_view(),
         name="board-base",
     ),
+    path(
+        "<slug:board_slug>/delete/",
+        views.BoardDeleteView.as_view(),
+        name="board-delete",
+    ),
 ]
 
 #   When app uses django views, we use patched_register_app_routes

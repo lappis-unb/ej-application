@@ -44,6 +44,12 @@ label + select + br {
 .inline-grid {
     display: inline-grid;
 }
+.align-center {
+    align-items: center;
+}
+.justify-center {
+    justify-content: center;
+}
 
 
 input + .helptext,

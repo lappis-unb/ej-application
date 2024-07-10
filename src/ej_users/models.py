@@ -94,6 +94,9 @@ class User(AbstractUser):
             )
         return user
 
+    def has_more_than_one_board(self):
+        return self.boards.count() > 1
+
 
 class PasswordResetToken(TimeStampedModel):
     """
