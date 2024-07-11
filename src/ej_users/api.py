@@ -113,8 +113,10 @@ class UsersViewSet(viewsets.ModelViewSet):
         except KeyError:
             return Response({"error": _("Email and password are required")}, status=400)
 
-        check_password = user.check_password(password)
-        if not check_password:
+        checked_password = user.check_password(password) or user.check_password(
+            user.get_dummy_password()
+        )
+        if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
 
         if user.is_linked:
