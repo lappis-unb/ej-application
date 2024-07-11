@@ -21,7 +21,6 @@ from ej_dataviz.models import (
     UsersReportSearchFilter,
 )
 from ej_dataviz.utils import (
-    conversation_has_stereotypes,
     get_comments_dataframe,
     get_user_dataframe,
 )
@@ -193,13 +192,6 @@ class TestReportRoutes:
         assert conversation_with_comments.comments.all()[1].content == comments[1][0]
         assert conversation_with_comments.comments.all()[2].content == comments[2][0]
         assert conversation_with_comments.comments.all()[3].content == comments[3][0]
-
-    def test_conversation_has_stereotypes(self, cluster, stereotype_vote):
-        cluster.stereotypes.add(stereotype_vote.author)
-        cluster.users.add(cluster.clusterization.conversation.author)
-        cluster.save()
-        clusterization = Clusterization.objects.filter(conversation=cluster.conversation)
-        assert conversation_has_stereotypes(clusterization)
 
     def test_get_dashboard_with_clusters(
         self, cluster, stereotype_vote, comment, logged_client

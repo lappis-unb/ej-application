@@ -128,6 +128,10 @@ def get_urlpatterns():
         #  Global stereotype and cluster management
         path("conversations/", include("ej_clusters.urls.clusters", namespace="cluster")),
         path(
+            "conversations/",
+            include("ej_clusters.urls.stereotype_votes", namespace="stereotype-votes"),
+        ),
+        path(
             "stereotypes/",
             include("ej_clusters.urls.stereotypes", namespace="stereotypes"),
         ),

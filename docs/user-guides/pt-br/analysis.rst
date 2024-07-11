@@ -101,15 +101,25 @@ Para criar uma persona, acesse a página de uma conversa e no menu lateral cliqu
    Acesso à criação/edição de grupos
 
 Criada a persona, você poderá definir como essa persona se comporta na conversa em questão. Isso é feito
-simulando os votos da persona nos comentários da conversa. Esse processo é feito no painel "Gerenciar personas", que também pode ser acessado no menu lateral da conversa. Essa simulação é o que chamamos de modelagem e é
+simulando os votos da persona nos comentários da conversa. É possível também editar e excluir a persona, além de visualizar o agrupamento destas personas por meio de gráfico de bolha. 
+Esses processos são feitos no painel "Gerenciar personas", que também pode ser acessado no menu lateral da conversa. Essa simulação é o que chamamos de modelagem e é
 a partir dela que os grupos de opinião serão formados.
 
 
-.. figure:: ../images/personas-voting.png
+.. figure:: ../images/gerenciar-personas-form.png
+   :align: center
+
+   Suporte à edição de nome e descrição da persona
+
+.. figure:: ../images/gerenciar-personas-votos.png
    :align: center
 
    Painel de modelagem das personas
 
+.. figure:: ../images/gerenciar-personas-grupos.png
+   :align: center
+
+   Gráfico de bolhas que expressa os grupos de opinião 
 
 Algorítmos
 -----------

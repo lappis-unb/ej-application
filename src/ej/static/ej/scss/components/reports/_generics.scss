@@ -28,6 +28,10 @@
         font-size: 12px;
         font-weight: 600;
     }
+
+    &--full-width {
+        grid-column: 1 / 4;
+    }
 }
 
 #report-filters-form {

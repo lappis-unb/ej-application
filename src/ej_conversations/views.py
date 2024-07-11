@@ -349,7 +349,7 @@ class ConversationEditView(UpdateView):
     def get_redirect_url(self, conversation, page):
         if page == "stereotypes":
             args = conversation.get_url_kwargs()
-            return reverse("boards:cluster-stereotype_votes", kwargs=args)
+            return reverse("boards:stereotype-votes-list", kwargs=args)
         elif page == "moderate":
             return conversation.patch_url("conversation:moderate")
         elif conversation.is_promoted:
