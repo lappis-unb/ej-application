@@ -10,7 +10,7 @@ from ej_profiles.models import Profile
 from ej_users.serializers import UserAuthSerializer, UsersSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import User
+from .models import User, ChannelsUserManager
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -76,8 +76,9 @@ class TokenViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=500)
 
-        checked_password = user.check_password(request.data["password"])
-
+        checked_password = ChannelsUserManager.check_channels_password(
+            user, request.data.get("password")
+        )
         if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
 
@@ -99,23 +100,17 @@ class UsersViewSet(viewsets.ModelViewSet):
     }
 
     def update(self, request, pk=None):
+
+        if pk.isdigit():
+            return Response(status=501)
+
         try:
-            if pk.isdigit():
-                user = User.objects.get(id=pk)
-            else:
-                user = User.objects.get(secret_id=pk)
+            user: User = User.objects.get(secret_id=pk)
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=404)
 
-        try:
-            email = request.data.get("email")
-            password = request.data.get("password")
-        except KeyError:
-            return Response({"error": _("Email and password are required")}, status=400)
+        checked_password = user.get_jwt_password()
 
-        checked_password = user.check_password(password) or user.check_password(
-            user.get_dummy_password()
-        )
         if not checked_password:
             return Response({"error": _("The password is incorrect")}, status=400)
 
@@ -124,21 +119,8 @@ class UsersViewSet(viewsets.ModelViewSet):
                 {"error": _("User is already linked to another account.")}, status=403
             )
 
-        main_user_exists = User.objects.filter(email=email).exists()
-        if not main_user_exists:
-            user.email = email
-            user.set_password(password)
-            user.is_linked = True
-            user.save()
-        else:
-            main_user = User.objects.get(email=email)
-            main_user.secret_id = user.secret_id
-            main_user.set_password(password)
-            main_user = User.objects._convert_anonymous_participation_to_regular_user(
-                user, main_user
-            )
-            main_user.is_linked = True
-            main_user.save()
+        email = request.data.get("email")
+        ChannelsUserManager.merge_default_user_with(user, email)
 
         return Response({"status": "ok"}, status=200)
 
