@@ -69,7 +69,7 @@ class TokenViewSet(viewsets.ViewSet):
             if request.data.get("secret_id"):
                 user = User.objects.get(
                     Q(email=request.data["email"])
-                    | Q(secret_id=request.data.get("secret_id"))
+                    | Q(secret_id=User.encode_secret_id(request.data.get("secret_id")))
                 )
             else:
                 user = User.objects.get(email=request.data["email"])
@@ -105,14 +105,10 @@ class UsersViewSet(viewsets.ModelViewSet):
             return Response(status=501)
 
         try:
-            user: User = User.objects.get(secret_id=pk)
+            user: User = User.objects.get(secret_id=User.encode_secret_id(pk))
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=404)
 
-        checked_password = user.get_jwt_password()
-
-        if not checked_password:
-            return Response({"error": _("The password is incorrect")}, status=400)
 
         if user.is_linked:
             return Response(
