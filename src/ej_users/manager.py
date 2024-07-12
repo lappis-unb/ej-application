@@ -48,21 +48,8 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         return self.create_user(email, password, **extra_fields)
 
     def _convert_anonymous_participation_to_regular_user(self, anonymous_user, user):
-        anonymous_votes = anonymous_user.votes.all()
-        anonymous_comments = anonymous_user.comments.all()
-        for vote in anonymous_votes:
-            try:
-                vote.author = user
-                vote.save()
-            except Exception:
-                pass
-        for comment in anonymous_comments:
-            try:
-                comment.author = user
-                comment.save()
-            except Exception:
-                pass
-        anonymous_user.votes.all().delete()
+        anonymous_user.votes.all().update(author=user)
+        anonymous_user.comments.all().update(author=user)
         try:
             anonymous_user.profile.delete()
         except Exception:
