@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from logging import getLogger
+from typing import Text
 
 from boogie.apps.users.models import AbstractUser
 from django.utils.text import slugify
@@ -10,6 +11,11 @@ from model_utils.models import TimeStampedModel
 
 from .manager import UserManager
 from .utils import random_name, token_factory
+
+import jwt
+import os
+
+JWT_SECRET = os.getenv("JWT_SECRET")
 
 log = getLogger("ej")
 
@@ -39,6 +45,7 @@ class User(AbstractUser):
         help_text=_("Agree with privacy policy"),
         verbose_name=_("Agree with privacy policy"),
     )
+    # The secret_id field enables EJ to identify a person voting on different channels.
     secret_id = models.CharField(unique=True, null=True, max_length=200)
 
     is_linked = models.BooleanField(default=False)
@@ -97,8 +104,64 @@ class User(AbstractUser):
             )
         return user
 
-    def get_dummy_password(self):
-        return self.email.split("@")[0]
+    def get_jwt_password(self):
+        if not self.secret_id:
+            return None
+        return jwt.encode({"secret_id": self.secret_id}, JWT_SECRET, algorithm="HS256")
+
+    def set_jwt_password(self):
+        if not self.secret_id:
+            raise Exception
+        self.set_password(
+            jwt.encode({"secret_id": self.secret_id}, JWT_SECRET, algorithm="HS256")
+        )
+
+
+class ChannelsUserManager:
+    @staticmethod
+    def check_channels_password(user: User, password: Text) -> bool:
+        """
+        check user password using the request data password field.
+        If the password is not valid, try to recreate the user password using the JWT_SECRET
+        variable with the secret_id field.
+
+        The secret_id field enables EJ to identify a person voting on different channels.
+        """
+        default_password_is_valid = user.check_password(password)
+        if default_password_is_valid:
+            return True
+        jwt_password = user.get_jwt_password()
+        return user.check_password(jwt_password)
+
+    @staticmethod
+    def merge_default_user_with(
+        secret_id_user: User,
+        email: Text,
+    ):
+        """
+        Try to find user using email argument and check if it exists. If so,
+        merge it with secret_id_user user.
+
+        If not, updates secret_id_user with email argument.
+
+        This is a necessary step to keep the consistence of the database, because a person
+        can vote on different channels, but must have only one user on EJ.
+        """
+        user_query = User.objects.filter(email=email)
+        if not user_query.exists():
+            secret_id_user.email = email
+            secret_id_user.set_jwt_password()
+            secret_id_user.is_linked = True
+            secret_id_user.save()
+        else:
+            user = user_query.first()
+            user.secret_id = secret_id_user.secret_id
+            user.set_jwt_password()
+            user = User.objects._convert_anonymous_participation_to_regular_user(
+                secret_id_user, user
+            )
+            user.is_linked = True
+            user.save()
 
 
 class PasswordResetToken(TimeStampedModel):
