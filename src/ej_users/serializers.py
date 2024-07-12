@@ -34,11 +34,10 @@ class UsersSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        secret_id = validated_data.get("secret_id", "")
         user = User(
             email=validated_data["email"],
             name=validated_data["name"],
-            secret_id=secret_id,
+            secret_id=User.encode_secret_id(validated_data.get("secret_id", "")),
         )
         user.set_password(validated_data["password"])
         user.save()

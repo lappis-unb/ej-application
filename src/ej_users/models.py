@@ -117,9 +117,16 @@ class User(AbstractUser):
     def set_jwt_password(self):
         if not self.secret_id:
             raise Exception
-        self.set_password(
-            jwt.encode({"secret_id": self.secret_id}, JWT_SECRET, algorithm="HS256")
-        )
+        self.set_password(User.decode_secret_id(self.secret_id))
+
+    @staticmethod
+    def encode_secret_id(secret_id):
+        return jwt.encode({"secret_id": secret_id}, JWT_SECRET, algorithm="HS256")
+
+    @staticmethod
+    def decode_secret_id(secret_id):
+        decoded_secret_id = jwt.decode(secret_id, JWT_SECRET, algorithms=["HS256"])
+        return decoded_secret_id.get("secret_id")
 
 
 class ChannelsUserManager:
@@ -135,8 +142,9 @@ class ChannelsUserManager:
         default_password_is_valid = user.check_password(password)
         if default_password_is_valid:
             return True
-        jwt_password = user.get_jwt_password()
-        return user.check_password(jwt_password)
+        if user.secret_id:
+            return user.check_password(user.secret_id)
+        return False
 
     @staticmethod
     def merge_default_user_with(
@@ -160,8 +168,7 @@ class ChannelsUserManager:
             secret_id_user.save()
         else:
             user = user_query.first()
-            user.secret_id = secret_id_user.secret_id
-            user.set_jwt_password()
+            secret_id_user.set_jwt_password()
             user = User.objects._convert_anonymous_participation_to_regular_user(
                 secret_id_user, user
             )
