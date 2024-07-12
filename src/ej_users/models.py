@@ -147,33 +147,32 @@ class ChannelsUserManager:
         return False
 
     @staticmethod
-    def merge_default_user_with(
-        secret_id_user: User,
+    def merge_unique_user_with(
+        temporary_user: User,
         email: Text,
     ):
         """
-        Try to find user using email argument and check if it exists. If so,
-        merge it with secret_id_user user.
-
-        If not, updates secret_id_user with email argument.
+        Try to find unique_user using email argument and check if it exists. If so,
+        merge it with  temporary_user. If not, updates temporary_user email and password.
 
         This is a necessary step to keep the consistence of the database, because a person
         can vote on different channels, but must have only one user on EJ.
         """
-        user_query = User.objects.filter(email=email)
-        if not user_query.exists():
-            secret_id_user.email = email
-            secret_id_user.set_jwt_password()
-            secret_id_user.is_linked = True
-            secret_id_user.save()
+        unique_user_query = User.objects.filter(email=email)
+        if not unique_user_query.exists():
+            temporary_user.email = email
+            temporary_user.set_jwt_password()
+            temporary_user.is_linked = True
+            temporary_user.save()
         else:
-            user = user_query.first()
-            secret_id_user.set_jwt_password()
-            user = User.objects._convert_anonymous_participation_to_regular_user(
-                secret_id_user, user
+            unique_user = unique_user_query.first()
+            unique_user.secret_id = temporary_user.secret_id
+            unique_user.set_jwt_password()
+            unique_user = User.objects._convert_anonymous_participation_to_regular_user(
+                temporary_user, unique_user
             )
-            user.is_linked = True
-            user.save()
+            unique_user.is_linked = True
+            unique_user.save()
 
 
 class PasswordResetToken(TimeStampedModel):

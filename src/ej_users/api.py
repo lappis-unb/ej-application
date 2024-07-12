@@ -105,18 +105,17 @@ class UsersViewSet(viewsets.ModelViewSet):
             return Response(status=501)
 
         try:
-            user: User = User.objects.get(secret_id=User.encode_secret_id(pk))
+            temporary_user: User = User.objects.get(secret_id=User.encode_secret_id(pk))
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=404)
 
-
-        if user.is_linked:
+        if temporary_user.is_linked:
             return Response(
                 {"error": _("User is already linked to another account.")}, status=403
             )
 
         email = request.data.get("email")
-        ChannelsUserManager.merge_default_user_with(user, email)
+        ChannelsUserManager.merge_unique_user_with(temporary_user, email)
 
         return Response({"status": "ok"}, status=200)
 
