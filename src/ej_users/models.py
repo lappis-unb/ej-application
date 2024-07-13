@@ -143,7 +143,7 @@ class ChannelsUserManager:
         if default_password_is_valid:
             return True
         if user.secret_id:
-            return user.check_password(user.secret_id)
+            return user.check_password(User.decode_secret_id(user.secret_id))
         return False
 
     @staticmethod
