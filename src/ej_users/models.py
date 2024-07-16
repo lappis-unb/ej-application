@@ -109,10 +109,6 @@ class User(AbstractUser):
 
     def get_dummy_password(self):
         return self.email.split("@")[0]
-    def get_jwt_password(self):
-        if not self.secret_id:
-            return None
-        return jwt.encode({"secret_id": self.secret_id}, JWT_SECRET, algorithm="HS256")
 
     def set_jwt_password(self):
         if not self.secret_id:
