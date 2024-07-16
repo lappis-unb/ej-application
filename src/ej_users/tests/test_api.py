@@ -2,7 +2,6 @@ from ej_users.models import User
 from ej_conversations.tests.conftest import API_V1_URL
 from rest_framework.test import APIClient
 from enum import Enum
-import json
 
 
 class UserType(Enum):
