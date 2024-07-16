@@ -10,7 +10,7 @@ from ej_profiles.models import Profile
 from ej_users.serializers import UserAuthSerializer, UsersSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import User, ChannelsUserManager
+from .models import User, UserSecretIdManager
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -83,7 +83,7 @@ class TokenViewSet(viewsets.ViewSet):
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=404)
 
-        checked_password = ChannelsUserManager.check_channels_password(
+        checked_password = UserSecretIdManager.check_password(
             user, request.data.get("password")
         )
         if not checked_password:
@@ -112,7 +112,7 @@ class UsersViewSet(viewsets.ModelViewSet):
             return Response(status=501)
 
         try:
-            temporary_user: User = User.objects.get(secret_id=User.encode_secret_id(pk))
+            temporary_user: User = UserSecretIdManager.get_user(pk)
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=404)
 
@@ -121,10 +121,9 @@ class UsersViewSet(viewsets.ModelViewSet):
                 {"error": _("User is already linked to another account.")}, status=403
             )
 
-        ChannelsUserManager.merge_unique_user_with(
+        UserSecretIdManager.merge_unique_user_with(
             temporary_user, request.data.get("email")
         )
-
         return Response({"status": "ok"}, status=200)
 
     def create(self, request, pk=None):

@@ -127,6 +127,9 @@ class EJRequests:
 
 
 class TestUserAPI:
+
+    SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
+
     def test_generate_access_token(self, db, user):
         api = APIClient()
         response = api.post(
@@ -261,22 +264,22 @@ class TestUserAPI:
 
     def test_create_user_with_secret_id(self, client, db):
         ej_requests = EJRequests(client)
-        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
-        response = ej_requests.create_user(UserType.AUTH, secret_id=SECRET_ID)
+        response = ej_requests.create_user(UserType.AUTH, secret_id=TestUserAPI.SECRET_ID)
         assert response.status_code == 201
 
         user = User.objects.get(email=UserFake.USERS[UserType.AUTH]["email"])
         assert user.name == UserFake.USERS[UserType.AUTH]["name"]
         assert user.email == UserFake.USERS[UserType.AUTH]["email"]
-        assert user.secret_id == SECRET_ID
+        assert User.decode_secret_id(user.secret_id) == TestUserAPI.SECRET_ID
 
     def test_create_auth_user_and_link(self, client, db):
         ej_requests = EJRequests(client)
-        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
         # Create anonymous user
-        response = ej_requests.create_user(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        response = ej_requests.create_user(
+            UserType.ANONYMOUS, secret_id=TestUserAPI.SECRET_ID
+        )
         assert response.status_code == 201
 
         # Create auth user
@@ -286,18 +289,20 @@ class TestUserAPI:
         access_token = ej_requests.get_token(UserType.AUTH)
 
         # Link secret_id to auth user
-        response = ej_requests.update_user(UserType.AUTH_LINKED, SECRET_ID, access_token)
+        response = ej_requests.update_user(
+            UserType.AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
+        )
         assert response.status_code == 200
 
-        user = User.objects.get(secret_id=SECRET_ID)
+        user = User.objects.get(secret_id=User.encode_secret_id(TestUserAPI.SECRET_ID))
         assert user.name == UserFake.USERS[UserType.AUTH]["name"]
         assert user.email == UserFake.USERS[UserType.AUTH]["email"]
-        assert user.secret_id == SECRET_ID
+        assert user.secret_id == User.encode_secret_id(TestUserAPI.SECRET_ID)
 
         user = User.objects.get(email=UserFake.USERS[UserType.AUTH]["email"])
         assert user.name == UserFake.USERS[UserType.AUTH]["name"]
         assert user.email == UserFake.USERS[UserType.AUTH]["email"]
-        assert user.secret_id == SECRET_ID
+        assert user.secret_id == User.encode_secret_id(TestUserAPI.SECRET_ID)
 
         user = None
         try:
@@ -308,20 +313,24 @@ class TestUserAPI:
 
     def test_get_token_by_secret_id(self, client, db):
         ej_requests = EJRequests(client)
-        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
-        response = ej_requests.create_user(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        response = ej_requests.create_user(
+            UserType.ANONYMOUS, secret_id=TestUserAPI.SECRET_ID
+        )
         assert response.status_code == 201
 
-        access_token = ej_requests.get_token(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        access_token = ej_requests.get_token(
+            UserType.ANONYMOUS, secret_id=TestUserAPI.SECRET_ID
+        )
         assert access_token
 
     def test_get_token_by_secret_id_after_link(self, client, db):
         ej_requests = EJRequests(client)
-        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
         # Create anonymous user
-        response = ej_requests.create_user(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        response = ej_requests.create_user(
+            UserType.ANONYMOUS, secret_id=TestUserAPI.SECRET_ID
+        )
         assert response.status_code == 201
 
         # Create auth user
@@ -331,20 +340,25 @@ class TestUserAPI:
         access_token = ej_requests.get_token(UserType.AUTH)
 
         # Link secret_id to auth user
-        response = ej_requests.update_user(UserType.AUTH_LINKED, SECRET_ID, access_token)
+        response = ej_requests.update_user(
+            UserType.AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
+        )
         assert response.status_code == 200
 
         # Get token by secret_id
-        access_token = ej_requests.get_token(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        access_token = ej_requests.get_token(
+            UserType.ANONYMOUS, secret_id=TestUserAPI.SECRET_ID
+        )
 
         assert access_token
 
     def test_user_try_linked_to_auth_user(self, client, db):
         ej_requests = EJRequests(client)
-        SECRET_ID = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
 
         # Create anonymous user
-        response = ej_requests.create_user(UserType.ANONYMOUS, secret_id=SECRET_ID)
+        response = ej_requests.create_user(
+            UserType.ANONYMOUS, secret_id=TestUserAPI.SECRET_ID
+        )
         assert response.status_code == 201
 
         # Create auth user
@@ -354,7 +368,9 @@ class TestUserAPI:
         access_token = ej_requests.get_token(UserType.AUTH)
 
         # Link secret_id to auth user
-        response = ej_requests.update_user(UserType.AUTH_LINKED, SECRET_ID, access_token)
+        response = ej_requests.update_user(
+            UserType.AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
+        )
         assert response.status_code == 200
 
         # Create another user
@@ -365,6 +381,6 @@ class TestUserAPI:
         access_token = ej_requests.get_token(UserType.ANOTHER_AUTH_LINKED)
 
         response = ej_requests.update_user(
-            UserType.ANOTHER_AUTH_LINKED, SECRET_ID, access_token
+            UserType.ANOTHER_AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
         )
         assert response.status_code == 403
