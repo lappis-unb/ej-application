@@ -15,7 +15,7 @@ from .utils import random_name, token_factory
 import jwt
 import os
 
-JWT_SECRET = os.getenv("JWT_SECRET")
+JWT_SECRET = os.getenv("JWT_SECRET", "dummysecret")
 
 log = getLogger("ej")
 
@@ -110,18 +110,25 @@ class User(AbstractUser):
         self.set_password(User.decode_secret_id(self.secret_id))
 
     @staticmethod
-    def encode_secret_id(secret_id):
+    def encode_secret_id(secret_id: Text) -> Text:
         return jwt.encode({"secret_id": secret_id}, JWT_SECRET, algorithm="HS256")
 
     @staticmethod
-    def decode_secret_id(secret_id):
+    def decode_secret_id(secret_id: Text) -> Text:
         decoded_secret_id = jwt.decode(secret_id, JWT_SECRET, algorithms=["HS256"])
         return decoded_secret_id.get("secret_id")
 
 
-class ChannelsUserManager:
+class UserSecretIdManager:
     @staticmethod
-    def check_channels_password(user: User, password: Text) -> bool:
+    def get_user(secret_id: Text) -> User:
+        """
+        Get user using encoded secret_id.
+        """
+        return User.objects.get(secret_id=User.encode_secret_id(secret_id))
+
+    @staticmethod
+    def check_password(user: User, password: Text) -> bool:
         """
         check user password using the request data password field.
         If the password is not valid, try to recreate the user password using the JWT_SECRET
