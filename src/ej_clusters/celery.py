@@ -1,9 +1,5 @@
-import os
 from celery import Celery
 from django.conf import settings
-
-# Set the default Django settings module for the 'celery' program.
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ej.settings")
 
 # Use the name of the RabbitMQ container as the hostname.
 broker_url = "pyamqp://guest@rabbitmq//"
