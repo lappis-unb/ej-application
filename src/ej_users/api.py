@@ -28,6 +28,7 @@ class EJTokens:
     access_token: str = ""
     refresh_token: str = ""
     data = {}
+    user_data = {}
 
     def __post_init__(self):
         refresh = RefreshToken.for_user(self.user)
@@ -36,6 +37,12 @@ class EJTokens:
         self.data = {
             "access_token": self.access_token,
             "refresh_token": self.refresh_token,
+        }
+        self.user_data = {
+            "id": self.user.id,
+            "name": self.user.name,
+            "email": self.user.email,
+            **self.data,
         }
 
 
@@ -74,7 +81,7 @@ class TokenViewSet(viewsets.ViewSet):
             else:
                 user = User.objects.get(email=request.data["email"])
         except User.DoesNotExist:
-            return Response({"error": _("User was not found.")}, status=500)
+            return Response({"error": _("User was not found.")}, status=404)
 
         checked_password = ChannelsUserManager.check_channels_password(
             user, request.data.get("password")
@@ -114,8 +121,9 @@ class UsersViewSet(viewsets.ModelViewSet):
                 {"error": _("User is already linked to another account.")}, status=403
             )
 
-        email = request.data.get("email")
-        ChannelsUserManager.merge_unique_user_with(temporary_user, email)
+        ChannelsUserManager.merge_unique_user_with(
+            temporary_user, request.data.get("email")
+        )
 
         return Response({"status": "ok"}, status=200)
 
@@ -128,8 +136,7 @@ class UsersViewSet(viewsets.ModelViewSet):
         user = serializer.save()
         self.check_profile(user, request)
         tokens = EJTokens(user)
-        response = {"id": user.id, "name": user.name, "email": user.email, **tokens.data}
-        return Response(response, status=201)
+        return Response(tokens.user_data, status=201)
 
     def check_profile(self, user, request):
         phone_number = request.data.get("phone_number", None)
