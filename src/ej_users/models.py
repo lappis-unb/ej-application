@@ -178,9 +178,7 @@ class UserSecretIdManager:
         else:
             unique_user = unique_user_query.first()
             secret_id = temporary_user.secret_id
-            unique_user = User.objects._convert_anonymous_participation_to_regular_user(
-                temporary_user, unique_user
-            )
+            User.objects.merge_users(temporary_user, unique_user)
             unique_user.secret_id = secret_id
             unique_user.set_jwt_password()
             unique_user.is_linked = True
