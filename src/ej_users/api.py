@@ -36,6 +36,7 @@ class EJTokens:
         self.data = {
             "access_token": self.access_token,
             "refresh_token": self.refresh_token,
+            "has_completed_registration": self.user.has_completed_registration,
         }
         self.user_data = {
             "id": self.user.id,

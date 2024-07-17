@@ -13,10 +13,19 @@ class UsersSerializer(serializers.ModelSerializer):
         required=True, write_only=True, style={"input_type": "password"}, max_length=128
     )
     secret_id = serializers.CharField(required=False, max_length=200)
+    has_completed_registration = serializers.BooleanField(required=False, default=True)
 
     class Meta:
         model = User
-        fields = ["id", "name", "email", "password", "password_confirm", "secret_id"]
+        fields = [
+            "id",
+            "name",
+            "email",
+            "password",
+            "password_confirm",
+            "secret_id",
+            "has_completed_registration",
+        ]
 
     def validate(self, data):
         if data["password"] != data["password_confirm"]:
@@ -38,6 +47,7 @@ class UsersSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
             name=validated_data["name"],
             secret_id=User.encode_secret_id(validated_data.get("secret_id", "")),
+            has_completed_registration=validated_data["has_completed_registration"],
         )
         user.set_password(validated_data["password"])
         user.save()
