@@ -1,19 +1,19 @@
 from datetime import datetime, timedelta
 from logging import getLogger
-from typing import Text
+import os
+from typing import Dict, Text
 
 from boogie.apps.users.models import AbstractUser
-from django.utils.text import slugify
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+import jwt
 from model_utils.models import TimeStampedModel
 
 from .manager import UserManager
 from .utils import random_name, token_factory
-
-import jwt
-import os
 
 JWT_SECRET = os.getenv("JWT_SECRET", "dummysecret")
 
@@ -127,18 +127,25 @@ class User(AbstractUser):
 
 class UserSecretIdManager:
     @staticmethod
-    def get_user(secret_id: Text) -> User:
+    def get_user(request_data: Dict) -> User:
         """
-        Get user using encoded secret_id.
+        Get user using encoded secret_id or email.
+
+        request_data must have email or secret_id keys to get_user returns an User instance.
         """
-        return User.objects.get(secret_id=User.encode_secret_id(secret_id))
+        email = request_data.get("email")
+        secret_id = request_data.get("secret_id")
+        secret_id_query = {}
+        if secret_id:
+            secret_id_query = {"secret_id": User.encode_secret_id(secret_id)}
+        return User.objects.get(Q(email=email) | Q(**secret_id_query))
 
     @staticmethod
     def check_password(user: User, password: Text) -> bool:
         """
         check user password using the request data password field.
-        If the password is not valid, try to recreate the user password using the JWT_SECRET
-        variable with the secret_id field.
+        If the password is invalid, try to recreate the user password using the JWT_SECRET
+        key with the secret_id field.
 
         The secret_id field enables EJ to identify a person voting on different channels.
         """
@@ -167,15 +174,18 @@ class UserSecretIdManager:
             temporary_user.set_jwt_password()
             temporary_user.is_linked = True
             temporary_user.save()
+            return temporary_user
         else:
             unique_user = unique_user_query.first()
-            unique_user.secret_id = temporary_user.secret_id
-            unique_user.set_jwt_password()
+            secret_id = temporary_user.secret_id
             unique_user = User.objects._convert_anonymous_participation_to_regular_user(
                 temporary_user, unique_user
             )
+            unique_user.secret_id = secret_id
+            unique_user.set_jwt_password()
             unique_user.is_linked = True
             unique_user.save()
+            return unique_user
 
 
 class PasswordResetToken(TimeStampedModel):

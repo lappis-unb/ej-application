@@ -8,6 +8,7 @@ from django.contrib.auth.models import AnonymousUser
 from ej_conversations import create_conversation
 from ej_boards.models import Board
 from ej_users.models import User
+from ej_users.tests.conftest import user
 
 from rest_framework.test import APIClient
 
@@ -20,18 +21,6 @@ def get_authorized_api_client(user_info):
     access_token = response.json()["access_token"]
     api.credentials(HTTP_AUTHORIZATION="Bearer " + access_token)
     return api
-
-
-@pytest.fixture
-def user(db):
-    user = User.objects.create_user("email@server.com", "password")
-    user.board_name = "testboard"
-
-    # TODO: Fix this dirty way to set user permissions
-    user.has_perm = lambda x, y=None: True
-
-    user.save()
-    return user
 
 
 @pytest.fixture

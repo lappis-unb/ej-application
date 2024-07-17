@@ -3,7 +3,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
-from django.db.models import Q
 
 
 from ej_profiles.models import Profile
@@ -73,13 +72,7 @@ class TokenViewSet(viewsets.ViewSet):
             return Response(serializer.errors, status=400)
 
         try:
-            if request.data.get("secret_id"):
-                user = User.objects.get(
-                    Q(email=request.data["email"])
-                    | Q(secret_id=User.encode_secret_id(request.data.get("secret_id")))
-                )
-            else:
-                user = User.objects.get(email=request.data["email"])
+            user = UserSecretIdManager.get_user(request.data)
         except User.DoesNotExist:
             return Response({"error": _("User was not found.")}, status=404)
 
@@ -112,7 +105,7 @@ class UsersViewSet(viewsets.ModelViewSet):
             return Response(status=501)
 
         try:
-            temporary_user: User = UserSecretIdManager.get_user(pk)
+            temporary_user: User = UserSecretIdManager.get_user({"secret_id": pk})
         except User.DoesNotExist as e:
             return Response({"error": str(e)}, status=404)
 

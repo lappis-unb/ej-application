@@ -98,7 +98,7 @@ class EJRequests:
         )
         return response
 
-    def update_user(self, user_type: UserType, secret_id, token):
+    def update_user(self, user_type: UserType, secret_id):
         user = UserFake.USERS[user_type]
         data = {"email": user["email"], "password": user["password"]}
 
@@ -106,7 +106,6 @@ class EJRequests:
             API_V1_URL + f"/users/{secret_id}/",
             data=data,
             content_type="application/json",
-            HTTP_AUTHORIZATION=f"Bearer {token}",
         )
         return response
 
@@ -285,12 +284,8 @@ class TestUserAPI:
         response = ej_requests.create_user(UserType.AUTH)
         assert response.status_code == 201
 
-        access_token = ej_requests.get_token(UserType.AUTH)
-
         # Link secret_id to auth user
-        response = ej_requests.update_user(
-            UserType.AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
-        )
+        response = ej_requests.update_user(UserType.AUTH_LINKED, TestUserAPI.SECRET_ID)
         assert response.status_code == 200
 
         user = User.objects.get(secret_id=User.encode_secret_id(TestUserAPI.SECRET_ID))
@@ -336,12 +331,8 @@ class TestUserAPI:
         response = ej_requests.create_user(UserType.AUTH)
         assert response.status_code == 201
 
-        access_token = ej_requests.get_token(UserType.AUTH)
-
         # Link secret_id to auth user
-        response = ej_requests.update_user(
-            UserType.AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
-        )
+        response = ej_requests.update_user(UserType.AUTH_LINKED, TestUserAPI.SECRET_ID)
         assert response.status_code == 200
 
         # Get token by secret_id
@@ -364,22 +355,29 @@ class TestUserAPI:
         response = ej_requests.create_user(UserType.AUTH)
         assert response.status_code == 201
 
-        access_token = ej_requests.get_token(UserType.AUTH)
-
         # Link secret_id to auth user
-        response = ej_requests.update_user(
-            UserType.AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
-        )
+        response = ej_requests.update_user(UserType.AUTH_LINKED, TestUserAPI.SECRET_ID)
         assert response.status_code == 200
 
         # Create another user
         response = ej_requests.create_user(UserType.ANOTHER_AUTH_LINKED)
         assert response.status_code == 201
 
-        # Try link secret_id to another user
-        access_token = ej_requests.get_token(UserType.ANOTHER_AUTH_LINKED)
-
         response = ej_requests.update_user(
-            UserType.ANOTHER_AUTH_LINKED, TestUserAPI.SECRET_ID, access_token
+            UserType.ANOTHER_AUTH_LINKED, TestUserAPI.SECRET_ID
         )
         assert response.status_code == 403
+
+    def test_external_service_try_to_update_nonexistent_user(self, client, db):
+        ej_requests = EJRequests(client)
+
+        response = ej_requests.update_user(UserType.AUTH_LINKED, TestUserAPI.SECRET_ID)
+        assert response.status_code == 404
+
+    def test_external_service_try_to_request_token_for_nonexistent_user(self, client, db):
+        response = client.post(
+            API_V1_URL + "/token/",
+            data={"email": "noexistentuser@mail.com", "password": "invalidpassword"},
+            content_type="application/json",
+        )
+        assert response.status_code == 404

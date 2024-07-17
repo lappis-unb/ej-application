@@ -48,6 +48,8 @@ class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
         return self.create_user(email, password, **extra_fields)
 
     def _convert_anonymous_participation_to_regular_user(self, anonymous_user, user):
+        anonymous_user.boards.all().update(owner=user)
+        anonymous_user.conversations.all().update(author=user)
         anonymous_user.votes.all().update(author=user)
         anonymous_user.comments.all().update(author=user)
         try:
