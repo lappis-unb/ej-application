@@ -172,6 +172,7 @@ class UserSecretIdManager:
             temporary_user.email = email
             temporary_user.set_jwt_password()
             temporary_user.is_linked = True
+            temporary_user.has_completed_registration = True
             temporary_user.save()
             return temporary_user
         else:
@@ -181,6 +182,7 @@ class UserSecretIdManager:
             unique_user.secret_id = secret_id
             unique_user.set_jwt_password()
             unique_user.is_linked = True
+            unique_user.has_completed_registration = True
             unique_user.save()
             return unique_user
 
