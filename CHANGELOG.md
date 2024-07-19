@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [3.5.0] - Jul 19, 2024
+
+### Added
+
+- Adds new users API endpoint to update an user using the secret_id field.
+- Exposes the anonymous_votes_limit field on conversation API.
+- Adds new form for managing personas and clusters.
+- Allows an user to delete a board.
+
+### Changed
+
+- Refactors token endpoint to returns an access_token using the secret_id field.
+
 ## [3.4.0] - Jun 29, 2024
 
 ### Added
