@@ -107,7 +107,12 @@ class ConversationSerializer(BaseApiSerializer):
 class PartialConversationSerializer(BaseApiSerializer):
     class Meta:
         model = Conversation
-        fields = ["text", "statistics", "participants_can_add_comments"]
+        fields = [
+            "text",
+            "statistics",
+            "participants_can_add_comments",
+            "anonymous_votes_limit",
+        ]
 
 
 class ParticipantConversationSerializer(BaseApiSerializer):
