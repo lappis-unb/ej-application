@@ -22,6 +22,8 @@ docs/_build/
 dist/
 htmlcov/
 node_modules/
+.venv
+tmp/
 
 
 # Database and secrets
