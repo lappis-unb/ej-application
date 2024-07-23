@@ -44,7 +44,15 @@ class InstalledAppsConf(Base, EjOptions):
         "anymail",
         "ckeditor",
         "django_celery_beat",
+        "ej_clusters",
     ]
+
+    CELERY_BROKER_URL = env('pyamqp://guest@rabbitmq//', name='CELERY_BROKER_URL')
+    CELERY_RESULT_BACKEND = env('rpc://', name='CELERY_RESULT_BACKEND')
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_TIMEZONE = 'UTC'
 
     def get_django_contrib_apps(self):
         return [*super().get_django_contrib_apps(), "django.contrib.flatpages"]
@@ -84,3 +92,4 @@ class InstalledAppsConf(Base, EjOptions):
         if self.ENVIRONMENT == "production":
             apps = ["gunicorn", *apps]
         return apps
+        

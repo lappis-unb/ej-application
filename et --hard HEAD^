@@ -1,0 +1,259 @@
+[33mcommit af838ea1ab66d11e3fe9a01a67c2ad2cfd1265bb[m[33m ([m[1;36mHEAD -> [m[1;32msetup-celery[m[33m)[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Mon Jul 22 16:52:55 2024 -0300
+
+    DELETE THIS COMMIT AND COMMIT YOUR CHANGES
+
+[33mcommit c2a7d4512b1776f32beae93c8c72a8703130903a[m[33m ([m[1;31morigin/setup-celery[m[33m)[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Mon Jul 22 16:47:53 2024 -0300
+
+    git: update gitignore
+
+[33mcommit f46e3def17b71b315b2adad8fbf2951c75a62f55[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Mon Jul 22 16:47:41 2024 -0300
+
+    refactor: remove comments
+
+[33mcommit 2931b14cd6ee9481283be616a046d3bc34a2190c[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:58:28 2024 -0300
+
+    refactor: change to execute em parallel
+
+[33mcommit cca22e9b25da9cc4264e78575c25a820944fd6ac[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:58:11 2024 -0300
+
+    refactor: delete obsolet code
+
+[33mcommit 41ac47d588bf4d5fe837039157ae9f6920fd178a[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:52:03 2024 -0300
+
+    django.po
+
+[33mcommit 60191273b42a3fdbe797f92feee07d469b4628bc[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:51:53 2024 -0300
+
+    docker: create network and rabbitMQ
+
+[33mcommit 5da48e268415a2c04bc0a8d558b03b755b860d75[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:51:28 2024 -0300
+
+    feat: create script to run celery
+
+[33mcommit 068f0e380fffad4edd1a394652ad42a4e2999e03[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:51:07 2024 -0300
+
+    feat: config test to celery
+
+[33mcommit bf367254d47bdb18c997067cf8f0a9dbc5a33c92[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:50:03 2024 -0300
+
+    env: set new var
+
+[33mcommit 03f0a9764fc5bad510092b6688cc9308eece49c9[m
+Author: Giovanni Giampauli <giovanni.acg@gmail.com>
+Date:   Tue Jul 16 02:49:12 2024 -0300
+
+    config: add news lib
+
+[33mcommit 50479073255cb6ae6620b46567e1b9d4e35bc358[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Sat Jun 29 14:20:48 2024 -0300
+
+    Releases version 3.4.0
+
+[33mcommit a37dffea66d6210c559837286153d6b302a56acc[m
+Merge: cce76098 69425895
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Sat Jun 29 16:51:26 2024 +0000
+
+    Merge branch 'adds-drf-permission-for-new-comments-issue-1464' into 'develop'
+    
+    Adds DRF permission for new comments
+    
+    See merge request pencillabs/ej/ej-application!334
+
+[33mcommit 69425895e6e48c553e8be3ed16f43cc54778caf5[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Sat Jun 29 16:51:26 2024 +0000
+
+    Adds DRF permission for new comments
+
+[33mcommit cce76098bc95060a936c22c4c140b4b9ec94f0b9[m
+Merge: b34e7ae4 08e14d83
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Fri Jun 28 21:33:16 2024 +0000
+
+    Merge branch 'adds-option-to-disable-comments-issue-1464' into 'develop'
+    
+    Adds a checkbox to disable participants from adding comments
+    
+    See merge request pencillabs/ej/ej-application!333
+
+[33mcommit 08e14d8380db42720a768599307573b443b87565[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Fri Jun 28 21:33:16 2024 +0000
+
+    Adds a checkbox to disable participants from adding comments
+
+[33mcommit b34e7ae421ae771f74c28463dc5ec67093bf5d0e[m
+Merge: 939d977f 920c6177
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Fri Jun 28 16:23:36 2024 +0000
+
+    Merge branch 'add-user-email-to-users-report-issue-1466' into 'develop'
+    
+    Add user email to users report
+    
+    See merge request pencillabs/ej/ej-application!331
+
+[33mcommit 920c617765cddbf907fbaebc9c30322f515382ae[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Fri Jun 28 16:23:36 2024 +0000
+
+    Add user email to users report
+
+[33mcommit 939d977fc1cbc466c8bd0ca65e4ea32567c3d964[m
+Merge: 09d6d5e1 81d071c5
+Author: Shayane <shayaneliebe@gmail.com>
+Date:   Tue Jun 25 23:22:42 2024 +0000
+
+    Merge branch 'add-shadow-to-menu-1455' into 'develop'
+    
+    add box shadow
+    
+    See merge request pencillabs/ej/ej-application!329
+
+[33mcommit 09d6d5e19e43e48153d9185dd707d815d47634cb[m
+Merge: 93132a58 2202811c
+Author: Shayane <shayaneliebe@gmail.com>
+Date:   Tue Jun 25 23:08:01 2024 +0000
+
+    Merge branch 'add-alternative-email-server-1431' into 'develop'
+    
+    Add alternative email server 1431
+    
+    See merge request pencillabs/ej/ej-application!326
+
+[33mcommit 2202811ca6d58f06eb61c38e287b76fe5b71dbce[m
+Author: Cristiane Naves Cardoso <cristianenavescardoso09@gmail.com>
+Date:   Tue Jun 25 23:08:00 2024 +0000
+
+    Add alternative email server 1431
+
+[33mcommit 81d071c52a443517ea6667d52906a5bc37812e1a[m
+Author: Cristiane Naves <cristianenavescardoso09@gmail.com>
+Date:   Fri Jun 21 15:34:14 2024 -0300
+
+    add box shadow
+
+[33mcommit 93132a586416fe06277a33957788ebc1fa6635d0[m
+Merge: 28a9835d 541283b9
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Thu Jun 20 21:30:03 2024 +0000
+
+    Merge branch 'upgrade-to-python-39' into 'develop'
+    
+    Upgrades EJ to python 3.9
+    
+    See merge request pencillabs/ej/ej-application!325
+    
+    Co-authored-by: Negrah <negrahcodejam@gmail.com>
+
+[33mcommit 541283b9ed17e8fbd89fd4ad8c54cc7f294c8c33[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Thu Jun 20 21:30:03 2024 +0000
+
+    Upgrades EJ to python 3.9
+
+[33mcommit 28a9835d570d129deea39f67d79c2036bf2f29f0[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Wed Jun 12 11:01:35 2024 -0300
+
+    feat: releases version 3.3.1
+
+[33mcommit 18212b94548eba1e5fc688de97c538cddcf8f314[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Tue Jun 11 22:47:38 2024 -0300
+
+    fix: time-chart date values
+
+[33mcommit c3968bb27c749ea3baa8c2e9600a74cd7491d515[m
+Merge: 235aa13b c584f8fe
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Tue Jun 11 00:26:22 2024 +0000
+
+    Merge branch 'improves-conversation-panel-issue-1451' into 'develop'
+    
+    Fixes conversation time-chart position
+    
+    See merge request pencillabs/ej/ej-application!324
+
+[33mcommit c584f8fea6879aa4d2920c6632d8428e439aea58[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Tue Jun 11 00:26:21 2024 +0000
+
+    Fixes conversation time-chart position
+
+[33mcommit 235aa13ba4a3465650ef195c92eb90d75a8d1925[m
+Merge: 0fe74e63 584bb3d7
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Mon Jun 10 23:50:51 2024 +0000
+
+    Merge branch 'fixes-welcome-menu-issue-1456' into 'develop'
+    
+    Refactoring EJ menus to improve CSS code reuse
+    
+    See merge request pencillabs/ej/ej-application!323
+
+[33mcommit 584bb3d749bced3124b10cd044cf5047af414916[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Mon Jun 10 23:50:50 2024 +0000
+
+    Refactoring EJ menus to improve CSS code reuse
+
+[33mcommit 0fe74e63395d6ea7f90eeb06a81359784049ec24[m
+Merge: 123d55d3 55666b96
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Fri Jun 7 19:29:17 2024 +0000
+
+    Merge branch 'order-manage-persona-vote-1453' into 'develop'
+    
+    Fix usability bug when modeling personas 1453
+    
+    See merge request pencillabs/ej/ej-application!322
+
+[33mcommit 55666b963271479208d16939973b2a5f3442e9fa[m
+Author: Shayane <shayaneliebe@gmail.com>
+Date:   Fri Jun 7 19:29:17 2024 +0000
+
+    Fix usability bug when modeling personas 1453
+
+[33mcommit 123d55d3749b2a3876677a98a7fdd4b8e117d554[m
+Author: David Carlos <ddavidcarlos1392@gmail.com>
+Date:   Thu Jun 6 21:08:48 2024 -0300
+
+    docs: adds UnB thesis about EJ
+
+[33mcommit 27ee3444103288f986046776505b1e6adcac6ae1[m[33m ([m[1;33mtag: test[m[33m)[m
+Merge: ff997ad2 375b5143
+Author: Shayane <shayaneliebe@gmail.com>
+Date:   Tue Jun 4 20:30:35 2024 +0000
+
+    Merge branch 'change-board-name-1420' into 'develop'
+    
+    change board name
+    
+    See merge request pencillabs/ej/ej-application!319
+
+[33mcommit 375b5143168061c7d1f8a50f9de8037b7aa97b68[m
+Author: Cristiane Naves Cardoso <cristianenavescardoso09@gmail.com>
+Date:   Tue Jun 4 20:30:34 2024 +0000

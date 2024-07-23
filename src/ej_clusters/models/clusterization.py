@@ -14,6 +14,8 @@ from ..utils import cluster_shapes, use_transaction
 from .querysets import ClusterizationManager
 from .stereotype import Stereotype
 from .stereotype_vote import StereotypeVote
+from ..tasks import update_clusterization  
+
 
 NOT_GIVEN = object()
 log = getLogger("ej")
@@ -92,6 +94,8 @@ class Clusterization(TimeStampedModel):
                 if self.cluster_status == ClusterStatus.PENDING_DATA:
                     self.cluster_status = ClusterStatus.ACTIVE
                 self.save()
+        update_clusterization.delay(self.id, force)
+
 
     def get_stereotypes(self):
         return {
