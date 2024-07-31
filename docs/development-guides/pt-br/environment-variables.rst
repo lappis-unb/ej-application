@@ -98,3 +98,33 @@ EJ_MAX_COMMENTS_PER_CONVERSATION (2):
 EJ_PROFILE_EXCLUDE_FIELDS:
     Lista de campos que não serão mostrados no perfil do usuário.
 
+
+Gunicorn
+========
+
+Configuração do Gunicorn. Mais sobre cada parâmetro nos docs do Gunicorn:
+<https://docs.gunicorn.org/en/stable/settings.html>
+
+GUNICORN_WORKERS:
+    Quantidade de workers do Gunicorn.
+
+GUNICORN_THREADS:
+    Quantidade de threads de cada worker do Gunicorn.
+    Só funciona caso `GUNICORN_WORKER_CLASS` seja `gthread`.
+
+GUNICORN_WORKER_CONNECTIONS:
+    Quantidade máxima de conexões por worker. Cada thread pode processar qualquer conexão
+    do worker.
+
+GUNICORN_BACKLOG:
+    Número máximo de conexões "pending".
+
+GUNICORN_KEEP_ALIVE:
+    O número de segundos a esperar por requisições em uma conexão Keep-Alive.
+
+GUNICORN_WORKER_CLASS:
+    O tipo de worker a ser utilizado. Por enquanto, os únicos tipos suportados são
+    `gthread` e `sync`.
+
+GUNICORN_LOG_LEVEL:
+    A granularidade dos logs. Pode ser 'debug', 'info', 'warning', 'error' ou 'critical'.
