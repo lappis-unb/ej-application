@@ -99,6 +99,15 @@ EJ_PROFILE_EXCLUDE_FIELDS:
     Lista de campos que não serão mostrados no perfil do usuário.
 
 
+Modo de execução
+----------------
+
+SERVER_MODE (web):
+    O valor pode ser "web" ou "api". Caso seja "api", é esperado que somente a API do EJ
+    esteja disponível, sem a interface gráfica. Por exemplo, caso o valor seja "api", a
+    necessidade de se compilar os arquivos estáticos antes de subir o EJ é eliminada.
+
+
 Gunicorn
 ========
 
@@ -128,3 +137,4 @@ GUNICORN_WORKER_CLASS:
 
 GUNICORN_LOG_LEVEL:
     A granularidade dos logs. Pode ser 'debug', 'info', 'warning', 'error' ou 'critical'.
+
