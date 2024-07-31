@@ -178,26 +178,53 @@ class TestGetViews:
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": None,
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
 
     def test_search_conversation(self, conversation):
         path = (
             API_V1_URL
-            + f"/conversations/?is_promoted=true&text_contains={conversation.text}"
+            + f"/conversations/?is_promoted=true&search_text={conversation.text}"
         )
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
+
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": None,
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
 
     def test_search_inexistent_conversation(self, conversation):
-        path = API_V1_URL + "/conversations/?is_promoted=true&text_contains=asdfghjkl"
+        path = API_V1_URL + "/conversations/?is_promoted=true&search_text=asdfghjkl"
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
+        data = api.get(path).data
         assert data == []
 
     def test_get_conversation_by_tags(self, conversation):
@@ -207,18 +234,46 @@ class TestGetViews:
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
 
-    def test_search_tag_in_text_contains(self, conversation):
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": "tag",
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
+
+    def test_search_tag_in_search_text(self, conversation):
         tag = "tag"
         conversation.tags.set([tag])
-        path = API_V1_URL + f"/conversations/?is_promoted=true&text_contains={tag}"
+        path = API_V1_URL + f"/conversations/?is_promoted=true&search_text={tag}"
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
+
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": "tag",
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
 
     def test_get_vote_endpoint(self, vote):
         path = API_V1_URL + f"/votes/{vote.id}/"
