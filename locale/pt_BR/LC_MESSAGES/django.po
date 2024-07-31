@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-10 19:05-0300\n"
+"POT-Creation-Date: 2024-07-18 22:13-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -647,13 +647,13 @@ msgstr " comentários"
 msgid " of "
 msgstr " de "
 
-#: src/ej_conversations/serializers.py:122
+#: src/ej_conversations/serializers.py:229 src/ej_conversations/views.py:167
 msgid "Participate"
 msgstr "Participar"
 
-#: src/ej_conversations/tests/test_api.py:250
+#: src/ej_conversations/tests/test_api.py:305
 msgid "Authentication credentials were not provided."
-msgstr ""
+msgstr "Credenciais de autenticação não foram fornecidas."
 
 #: src/ej_conversations/utils.py:108
 msgid "This conversation is now favorite."
@@ -672,7 +672,12 @@ msgstr "Campo não pode estar vazio!"
 msgid "The maximum file size must be 5MB"
 msgstr "O tamanho máximo do arquivo deve ser 5 MB"
 
-#: src/ej_conversations/views.py:177
+#: src/ej_conversations/views.py:186
+#, fuzzy
+msgid "Manage!"
+msgstr "Gerenciar!"
+
+#: src/ej_conversations/views.py:225
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -1796,7 +1801,6 @@ msgstr "Mostrando"
 #: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
 #: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:32
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/paginationedit.jinja2:48
 msgid "to"
 msgstr "a"
 
@@ -2165,16 +2169,12 @@ msgstr "Salvar edições"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:32
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/paginationedit.jinja2:48
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/paginationedit.jinja2:52
 #, fuzzy
 msgid "showing"
 msgstr "Exibindo"
 
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:32
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/paginationedit.jinja2:48
-#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/paginationedit.jinja2:52
 msgid "from"
 msgstr "de"
 
@@ -2312,11 +2312,6 @@ msgstr "Conversas hospedadas"
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
-
-#: src/ej_conversations/jinja2/ej_conversations/board-conversations-list.jinja2:60
-#, fuzzy
-msgid "Manage!"
-msgstr "Gerenciar!"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-create.jinja2:20
 #, fuzzy
