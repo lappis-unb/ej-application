@@ -210,6 +210,34 @@ class TestUserAPI:
         )
         assert response.status_code == 400
 
+    def test_create_users_with_null_secret_id(self, client, db):
+        response = client.post(
+            API_V1_URL + "/users/",
+            data={
+                "name": "tester 1",
+                "email": "tester1@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+            },
+            content_type="application/json",
+        )
+
+        assert response.status_code == 201
+        assert not User.objects.get(email="tester1@example.com").secret_id
+
+        response = client.post(
+            API_V1_URL + "/users/",
+            data={
+                "name": "tester 2",
+                "email": "tester2@example.com",
+                "password": "pass123",
+                "password_confirm": "pass123",
+            },
+            content_type="application/json",
+        )
+        assert response.status_code == 201
+        assert not User.objects.get(email="tester2@example.com").secret_id
+
     def test_get_token_after_user_registration(self, client, db):
         response = client.post(
             API_V1_URL + "/users/",
