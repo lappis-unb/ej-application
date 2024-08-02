@@ -8,7 +8,6 @@ with built-in machine learning algorithm to generate opinion groups from partici
 You can visit EJ at [https://www.ejplatform.org](https://www.ejplatform.org).
 For detailed information on developing and using our system, please refer to the [documentation](https://www.ejplatform.org/docs/).
 For contributions, issues or feature requests join us on [https://gitlab.com/pencillabs/ej/ej-application](https://gitlab.com/pencillabs/ej/ej-application).
-The below steps works well with linux or Windows machine, for MacOS steps are mentioned below after **Tests**
 
 # Getting started with Docker
 
