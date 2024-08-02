@@ -1,3 +1,5 @@
+import pytest
+from ej_conversations.enums import Choice
 from ej_users.models import User
 from ej_conversations.tests.conftest import API_V1_URL
 from rest_framework.test import APIClient
@@ -209,6 +211,38 @@ class TestUserAPI:
             content_type="application/json",
         )
         assert response.status_code == 400
+
+    def test_merge_users_with_empty_votes(
+        self, client, db, conversation, user, another_user
+    ):
+        comment_1 = conversation.create_comment(another_user, "my comment 1", "approved")
+        comment_2 = conversation.create_comment(another_user, "my comment 2", "approved")
+        comment_3 = conversation.create_comment(another_user, "my comment 3", "approved")
+        comment_4 = conversation.create_comment(another_user, "my comment 4", "approved")
+        comment_1.vote(author=another_user, choice=Choice.DISAGREE)
+        comment_2.vote(author=another_user, choice=Choice.DISAGREE)
+        comment_3.vote(author=another_user, choice=Choice.AGREE)
+        comment_4.vote(author=another_user, choice=Choice.SKIP)
+        user = User.objects.merge_users(another_user, user)
+        assert user.votes.all().count() == 4
+        with pytest.raises(Exception):
+            User.objects.get(id=another_user.id)
+
+    def test_merge_users_with_equal_votes(
+        self, client, db, conversation, user, another_user
+    ):
+        comment_1 = conversation.create_comment(another_user, "my comment 1", "approved")
+        comment_2 = conversation.create_comment(another_user, "my comment 2", "approved")
+        comment_3 = conversation.create_comment(another_user, "my comment 3", "approved")
+        comment_1.vote(author=another_user, choice=Choice.DISAGREE)
+        comment_2.vote(author=another_user, choice=Choice.DISAGREE)
+        comment_1.vote(author=user, choice=Choice.AGREE)
+        comment_3.vote(author=user, choice=Choice.AGREE)
+        user = User.objects.merge_users(another_user, user)
+        assert user.votes.all().count() == 3
+        assert user.votes.get(comment__id=comment_1.id).choice == Choice.AGREE
+        with pytest.raises(Exception):
+            User.objects.get(id=another_user.id)
 
     def test_create_users_with_null_secret_id(self, client, db):
         response = client.post(
