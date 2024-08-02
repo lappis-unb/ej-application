@@ -71,12 +71,9 @@ If you are using a Mac on intel chip the above process may work for you, if not 
 You will have to setup a virtual machine (Linux), prefer UTM for apple silicon as virtual box for apple silicon is still unstable and crash every 15 min as of May2024.
 If want to setup a virtual machine on intel chip mac , even Virtual box is good choice.
 Follow "https://dev.to/ruanbekker/how-to-run-a-amd64-bit-linux-vm-on-a-mac-m1-51cp", for VM setup. Then normally download all dependency(git,python,Pip,docker,code-editor) on virtual device. 
-1. Clone branch upgrade-to-python-39
-```sh
-git clone --branch upgrade-to-python-39 https://gitlab.com/pencillabs/ej/ej-application.git
-```
-2. To setup the docker [Docker compose Plugin](https://docs.docker.com/engine/install/debian/#installation-methods)
-3. Install invoke and django environment 
+
+1. To setup the docker [Docker compose Plugin](https://docs.docker.com/engine/install/debian/#installation-methods)
+2. Install invoke and django environment 
 ```sh
     pip3 install invoke==2.0.0 django-environ --user
 ```
@@ -84,11 +81,11 @@ git clone --branch upgrade-to-python-39 https://gitlab.com/pencillabs/ej/ej-appl
 ```sh
     sudo python3 -m pip install invoke==2.0.0 django-environ
 ```
-4. Run a docker command before final build 
+3. Run a docker command before final build 
 ```python
     docker-build --no-cache  
 ```
-5. Run inv tasks for final build
+4. Run inv tasks for final build
 ```sh
      inv docker-up
 ```
