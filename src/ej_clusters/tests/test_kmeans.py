@@ -1,7 +1,6 @@
-import pytest
+import unittest
 from numpy.testing import assert_almost_equal, assert_equal
 from sidekick import import_later
-
 from ej_clusters.math import kmeans
 
 np = import_later("numpy")
@@ -13,29 +12,25 @@ DATA = np.array(
 )
 
 
-class TestAuxiliaryMathFunctions:
-    @pytest.fixture
-    def a(self):
-        return STEREOTYPES[0].copy()
+class TestAuxiliaryMathFunctions(unittest.TestCase):
+    def setUp(self):
+        self.a = STEREOTYPES[0].copy()
+        self.b = STEREOTYPES[1].copy()
 
-    @pytest.fixture
-    def b(self):
-        return STEREOTYPES[1].copy()
+    def test_euclidean_distance(self):
+        self.assertEqual(kmeans.euclidean_distance(self.a, self.a), 0)
+        self.assertEqual(kmeans.euclidean_distance(self.b, self.b), 0)
+        assert_almost_equal(kmeans.euclidean_distance(self.a, self.b), np.sqrt(12))
 
-    def test_euclidean_distance(self, a, b):
-        assert kmeans.euclidean_distance(a, a) == 0
-        assert kmeans.euclidean_distance(b, b) == 0
-        assert_almost_equal(kmeans.euclidean_distance(a, b), np.sqrt(12))
+    def test_l1_distance(self):
+        self.assertEqual(kmeans.l1_distance(self.a, self.a), 0)
+        self.assertEqual(kmeans.l1_distance(self.b, self.b), 0)
+        self.assertEqual(kmeans.l1_distance(self.a, self.b), 6.0)
 
-    def test_l1_distance(self, a, b):
-        assert kmeans.l1_distance(a, a) == 0
-        assert kmeans.l1_distance(b, b) == 0
-        assert kmeans.l1_distance(a, b) == 6.0
-
-    def test_euclidean_distance_non_zero(self, a, b):
-        assert kmeans.euclidean_distance_non_zero(a, a) == 0
-        assert kmeans.euclidean_distance_non_zero(b, b) == 0
-        assert_almost_equal(kmeans.euclidean_distance_non_zero(a, b), np.sqrt(12 / 3))
+    def test_euclidean_distance_non_zero(self):
+        self.assertEqual(kmeans.euclidean_distance_non_zero(self.a, self.a), 0)
+        self.assertEqual(kmeans.euclidean_distance_non_zero(self.b, self.b), 0)
+        assert_almost_equal(kmeans.euclidean_distance_non_zero(self.a, self.b), np.sqrt(12 / 3))
         assert_almost_equal(
             kmeans.euclidean_distance_non_zero([0, 1, 0], [-1, -1, 0]), 2.0
         )
@@ -49,7 +44,7 @@ class TestAuxiliaryMathFunctions:
         assert_almost_equal(centroids, expected)
 
 
-class TestKmeansWithStereotypes:
+class TestKmeansWithStereotypes(unittest.TestCase):
     def test_run_with_stereotypes(self):
         labels, centroids = kmeans.kmeans_stereotypes(DATA, STEREOTYPES)
         assert_equal(labels, [0, 0, 0, 1, 1, 1])
@@ -65,17 +60,17 @@ class TestKmeansWithStereotypes:
         assert_equal(labels, [0, 0, 0, 1, 1, 1])
 
 
-class TestKmeans:
+class TestKmeans(unittest.TestCase):
     def test_kmeans(self):
         labels, _centroids = kmeans.kmeans(DATA, 2, n_runs=5)
         labels = list(labels)
 
         # K-means is invariant by label permutations, hence we can always have two
         # different classifications
-        assert labels == [0, 0, 0, 1, 1, 1] or labels == [1, 1, 1, 0, 0, 0]
+        self.assertTrue(labels == [0, 0, 0, 1, 1, 1] or labels == [1, 1, 1, 0, 0, 0])
 
     def test_kmeans_requires_k_gt_n(self):
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             kmeans.kmeans(DATA, len(DATA) + 1, n_runs=5)
 
     def test_trivial_classification_if_number_of_clusters_equal_to_number_of_samples(
@@ -88,4 +83,8 @@ class TestKmeans:
     def test_kmeans_convergence(self):
         # If no guidance is given, convergence is unlikely to happen
         labels, clusters = kmeans.kmeans(DATA, 2, max_iter=1, n_runs=2)
-        assert (labels != [0, 0, 0, 1, 1, 1]).any()
+        self.assertTrue((labels != [0, 0, 0, 1, 1, 1]).any())
+
+
+if __name__ == '__main__':
+    unittest.main()

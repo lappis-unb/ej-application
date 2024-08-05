@@ -6,9 +6,9 @@ Once the API stabilizes, it will be implemented in Cython and will move to an
 external package.
 """
 import random
+from joblib import Parallel, delayed
 from sidekick import import_later
-
-np = import_later("numpy")
+import numpy as np
 
 
 def kmeans(data, k, n_runs=10, **kwargs):
@@ -172,12 +172,12 @@ def compute_distance_matrix(data, centroids, distance=None):
     n_samples, n_features = data.shape
     k = len(centroids)
     distance = distance or euclidean_distance
-    distances = np.empty([n_samples, k])
-    for i, sample in enumerate(data):
-        for j, centroid in enumerate(centroids):
-            distances[i, j] = distance(sample, centroid)
-    return distances
 
+    def distance_row(sample):
+        return np.array([distance(sample, centroid) for centroid in centroids])
+
+    distances = Parallel(n_jobs=-1)(delayed(distance_row)(sample) for sample in data)
+    return np.array(distances)
 
 def compute_centroids(data, labels, k, aggregator=None):
     """
