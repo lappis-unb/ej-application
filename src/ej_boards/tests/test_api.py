@@ -66,6 +66,7 @@ class TestGetBoards(ConversationRecipes):
             "description": "Description",
             "conversations": [
                 {
+                    "id": 1,
                     "text": "foo",
                     "statistics": {
                         "votes": {"agree": 0, "disagree": 0, "skip": 0, "total": 0},
@@ -95,6 +96,7 @@ class TestGetBoards(ConversationRecipes):
                     },
                     "participants_can_add_comments": True,
                     "anonymous_votes_limit": 0,
+                    "links": {"self": "/api/v1/boards/1/conversations/1/"},
                 }
             ],
         }
@@ -103,3 +105,62 @@ class TestGetBoards(ConversationRecipes):
         path = API_V1_URL + "/boards/1/"
         result = api.get(path)
         assert result.data == BOARD
+
+    @pytest.mark.django_db
+    def test_boards_endpoint_with_conversations_id(
+        self, user, board, conversation_with_board
+    ):
+        CONVERSATION_BOARD = {
+            "id": 1,
+            "text": "foo",
+            "statistics": {
+                "votes": {"agree": 0, "disagree": 0, "skip": 0, "total": 0},
+                "comments": {
+                    "approved": 0,
+                    "rejected": 0,
+                    "pending": 0,
+                    "total": 0,
+                },
+                "participants": {"voters": 0, "commenters": 0},
+                "channel_votes": {
+                    "webchat": 0,
+                    "telegram": 0,
+                    "whatsapp": 0,
+                    "opinion_component": 0,
+                    "unknown": 0,
+                    "ej": 0,
+                },
+                "channel_participants": {
+                    "webchat": 0,
+                    "telegram": 0,
+                    "whatsapp": 0,
+                    "opinion_component": 0,
+                    "unknown": 0,
+                    "ej": 0,
+                },
+            },
+            "participants_can_add_comments": True,
+            "anonymous_votes_limit": 0,
+            "links": {"self": "/api/v1/boards/1/conversations/1/"},
+        }
+
+        api = get_authorized_api_client({"email": user.email, "password": "password"})
+        path = API_V1_URL + "/boards/1/conversations/1/"
+        result = api.get(path)
+        assert result.data == CONVERSATION_BOARD
+
+    @pytest.mark.django_db
+    def test_boards_endpoint_with_invalid_conversations_id(self, user, board):
+        api = get_authorized_api_client({"email": user.email, "password": "password"})
+        path = API_V1_URL + "/boards/1/conversations/112039012/"
+        result = api.get(path)
+        assert result.status_code == 404
+
+    @pytest.mark.django_db
+    def test_boards_endpoint_with_valid_conversation_id_invalid_board(
+        self, user, board, conversation_with_board
+    ):
+        api = get_authorized_api_client({"email": user.email, "password": "password"})
+        path = API_V1_URL + "/boards/1123213/conversations/1/"
+        result = api.get(path)
+        assert result.status_code == 404

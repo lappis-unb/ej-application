@@ -114,6 +114,26 @@ class PartialConversationSerializer(BaseApiSerializer):
         ]
 
 
+class BoardConversationSerializer(BaseApiSerializer):
+    links = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Conversation
+        fields = [
+            "id",
+            "text",
+            "statistics",
+            "participants_can_add_comments",
+            "anonymous_votes_limit",
+            "links",
+        ]
+
+    def get_links(self, obj):
+        return {
+            "self": reverse("v1-boards-conversations", args=[obj.board.id, obj.id]),
+        }
+
+
 class CommentSerializer(BaseApiSerializer):
     links = serializers.SerializerMethodField()
 

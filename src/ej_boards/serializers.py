@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 from .models import Board
 
-from ej_conversations.serializers import PartialConversationSerializer
+from ej_conversations.serializers import BoardConversationSerializer
 
 
 class BoardSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class BoardSerializer(serializers.ModelSerializer):
 
 
 class BoardDetailSerializer(BoardSerializer):
-    conversations = PartialConversationSerializer(source="conversation_set", many=True)
+    conversations = BoardConversationSerializer(source="conversation_set", many=True)
 
     class Meta:
         model = Board
