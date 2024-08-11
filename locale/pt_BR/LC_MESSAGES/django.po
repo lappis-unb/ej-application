@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 02:19-0300\n"
+"POT-Creation-Date: 2024-08-11 11:02-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -236,7 +236,7 @@ msgstr ""
 "{name} (conversa \"{conversation}\", {n} usuários\n"
 ")"
 
-#: src/ej_clusters/models/clusterization.py:125
+#: src/ej_clusters/models/clusterization.py:129
 msgid "Error"
 msgstr "Erro"
 
