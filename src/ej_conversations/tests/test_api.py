@@ -49,10 +49,11 @@ class TestGetViews:
     def test_conversations_endpoint_not_authenticated(self, conversation, api):
         path = API_V1_URL + f"/conversations/{conversation.id}/"
         data = api.get(path)
-        assert len(data) == 3
+        assert len(data) == 4
         assert data.get("text") == conversation.text
         assert data.get("statistics")
         assert data.get("participants_can_add_comments")
+        assert data.get("anonymous_votes_limit")
 
     def test_conversations_endpoint_other_user(self, conversation, other_user):
         path = API_V1_URL + f"/conversations/{conversation.id}/"
@@ -61,10 +62,11 @@ class TestGetViews:
         )
 
         data = api.get(path, format="json").data
-        assert len(data) == 3
+        assert len(data) == 4
         assert data.get("text") == conversation.text
         assert data.get("statistics")
         assert data.get("participants_can_add_comments")
+        assert data.get("anonymous_votes_limit")
 
     def test_comments_endpoint(self, comment):
         path = API_V1_URL + f"/comments/{comment.id}/"
@@ -176,26 +178,53 @@ class TestGetViews:
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": None,
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
 
     def test_search_conversation(self, conversation):
         path = (
             API_V1_URL
-            + f"/conversations/?is_promoted=true&text_contains={conversation.text}"
+            + f"/conversations/?is_promoted=true&search_text={conversation.text}"
         )
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
+
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": None,
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
 
     def test_search_inexistent_conversation(self, conversation):
-        path = API_V1_URL + "/conversations/?is_promoted=true&text_contains=asdfghjkl"
+        path = API_V1_URL + "/conversations/?is_promoted=true&search_text=asdfghjkl"
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
+        data = api.get(path).data
         assert data == []
 
     def test_get_conversation_by_tags(self, conversation):
@@ -205,18 +234,46 @@ class TestGetViews:
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
 
-    def test_search_tag_in_text_contains(self, conversation):
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": "tag",
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
+
+    def test_search_tag_in_search_text(self, conversation):
         tag = "tag"
         conversation.tags.set([tag])
-        path = API_V1_URL + f"/conversations/?is_promoted=true&text_contains={tag}"
+        path = API_V1_URL + f"/conversations/?is_promoted=true&search_text={tag}"
         api = get_authorized_api_client(
             {"email": "email@server.com", "password": "password"}
         )
-        data = api.get(path, format="json").data
-        assert "card" in data[0]
+
+        expected_data = {
+            "url": "/emailservercom/conversations/1/title/",
+            "title": "title",
+            "text": "test",
+            "author": "email@server.com",
+            "is_hidden": False,
+            "first_tag": "tag",
+            "n_approved_comments": 0,
+            "n_final_votes": 0,
+            "n_favorites": 0,
+            "button_text": "Participate",
+        }
+
+        data = api.get(path).data
+        assert expected_data == data[0]
 
     def test_get_vote_endpoint(self, vote):
         path = API_V1_URL + f"/votes/{vote.id}/"
