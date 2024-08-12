@@ -146,7 +146,7 @@ class ConversationViewSet(RestAPIBaseViewSet):
     @action(detail=True, url_path="user-statistics")
     def user_statistics(self, request, pk):
         conversation = self.get_object()
-        response = conversation.statistics_for_user(request.user)
+        response = request.user.profile.conversation_statistics(conversation)
         return Response(response)
 
     @action(detail=True, url_path="approved-comments")
