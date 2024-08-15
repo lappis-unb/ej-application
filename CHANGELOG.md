@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.0] - August 12, 2024
+
+### Added
+
+- Add an environment variable to disable returning skipped votes. This affects the API and the web platform.
+- Add a new form for creating personas.
+
+### Changed
+
+- Returns the conversation's id in the board endpoint.
 
 ## [3.6.0] - August 01, 2024
 
