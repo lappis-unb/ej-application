@@ -338,6 +338,7 @@ class ConversationCreateView(CreateView):
     form_class = ConversationForm
 
     def post(self, request, board_slug, *args, **kwargs):
+        print("POST -> ConversationCreateView")
         form = self.form_class(request.POST, request.FILES)
         kwargs["board"] = self.get_board()
 
@@ -360,9 +361,9 @@ class ConversationCreateView(CreateView):
         )
 
     def get_context_data(self, form=None, **kwargs):
+        print("GET -> ConversationCreateView")
         user = self.request.user
         user_boards = Board.objects.filter(owner=user)
-
         return {
             "form": form or self.form_class(),
             "board": self.get_board(),
@@ -381,6 +382,7 @@ class ConversationEditView(UpdateView):
     form_class = ConversationForm
 
     def post(self, request, conversation_id, slug, board_slug, *args, **kwargs):
+        print("POST -> ConversationEditView")
         conversation = self.get_object()
         board = Board.objects.get(slug=board_slug)
         form = self.form_class(request.POST, request.FILES, instance=conversation)
@@ -407,9 +409,10 @@ class ConversationEditView(UpdateView):
             )
 
     def get_context_data(self, form=None, **kwargs: Any):
+        print("GET -> ConversationEditView")
         conversation = self.get_object()
         user = self.request.user
-
+        print("form_class", self.form_class)
         return {
             "conversation": conversation,
             "form": form or self.form_class(instance=conversation),

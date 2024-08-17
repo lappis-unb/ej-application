@@ -92,6 +92,8 @@ class ConversationForm(forms.ModelForm):
             "title",
             "text",
             "anonymous_votes_limit",
+            "send_profile_question",
+            "votes_to_send_profile_question",
             "start_date",
             "end_date",
             "welcome_message",
