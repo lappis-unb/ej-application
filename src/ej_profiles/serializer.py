@@ -4,6 +4,7 @@ from .enums import Race, Gender, Region
 
 
 class ProfileSerializer(serializers.Serializer):
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
     phone_number = serializers.CharField(max_length=20, required=False)
     race = serializers.ChoiceField(
         choices=[(tag.value, tag) for tag in Race], required=False
@@ -19,6 +20,7 @@ class ProfileSerializer(serializers.Serializer):
     class Meta:
         model = Profile
         fields = [
+            "user",
             "phone_number",
             "race",
             "gender",
