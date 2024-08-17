@@ -1,3 +1,16 @@
+
+"""
+To benchmark the performance of the compute_cluster_affinities function:
+
+1. Open a terminal.
+2. Navigate to the directory containing this file.
+cd /ej-application/src/ej_clusters/math
+3. Execute the following command:
+   python3 benchmark_data.py
+
+This will run the benchmark and print the execution times for both the original 
+and refactored versions of the function.
+"""
 import timeit
 
 # Setup code for original data.py
@@ -34,3 +47,4 @@ print(f"Original execution time: {execution_time_original} seconds")
 # Measure execution time for the refactored version
 execution_time_refactored = timeit.timeit(test_code, setup=setup_code_refactored, number=1000)
 print(f"Refactored execution time: {execution_time_refactored} seconds")
+
