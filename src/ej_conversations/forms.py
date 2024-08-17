@@ -85,6 +85,8 @@ class ConversationForm(forms.ModelForm):
         required=False,
         label=_("Logo"),
     )
+    send_profile_question = forms.BooleanField(initial=False, required=False)
+    votes_to_send_profile_question = forms.IntegerField(initial=0, required=False)
 
     class Meta:
         model = Conversation
