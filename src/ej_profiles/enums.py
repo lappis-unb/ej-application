@@ -6,6 +6,7 @@ from environ import ImproperlyConfigured
 _race_enums = getattr(settings, "EJ_PROFILE_RACE_CHOICES", None)
 _gender_enums = getattr(settings, "EJ_PROFILE_GENDER_CHOICES", None)
 _not_filed = getattr(settings, "EJ_NOT_FILLED_MARK", "---------")
+_region_enums = getattr(settings, "EJ_PROFILE_REGION_CHOICES", None)
 
 # Here we fool the IntEnum metaclass into believing that items of a list are
 # methods
@@ -27,12 +28,27 @@ class Race(IntEnum):
             locals()[_k()] = _v()
 
 
+class Region(IntEnum):
+    NOT_FILLED = 0, _not_filed
+
+    if _region_enums is None:
+        NORTH = 1, _("North")
+        NORTHEAST = 2, _("Northeast")
+        MIDWEST = 3, _("Midwest")
+        SOUTHEAST = 4, _("Southeast")
+        SOUTH = 5, _("South")
+    else:
+        for _k, _v in _to_thunks(_region_enums.items()):
+            locals()[_k()] = _v()
+
+
 class Gender(IntEnum):
     NOT_FILLED = 0, _not_filed
 
     if _gender_enums is None:
         FEMALE = 1, _("Female")
         MALE = 2, _("Male")
+        NO_BINARY = 3, _("Non-binary")
         OTHER = 20, _("Other")
     else:
         for _k, _v in _to_thunks(_gender_enums.items()):

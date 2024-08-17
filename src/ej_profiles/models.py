@@ -18,7 +18,7 @@ import toolz
 from ej_conversations.models import Comment, Conversation, ConversationTag
 from ej_conversations.models.vote import Vote
 
-from .enums import Gender, Race, STATE_CHOICES_MAP
+from .enums import Gender, Race, STATE_CHOICES_MAP, Region
 from .utils import years_from
 
 SocialAccount = import_later("allauth.socialaccount.models:SocialAccount")
@@ -39,6 +39,7 @@ class Profile(models.Model):
     gender_other = models.CharField(_("User provided gender"), max_length=50, blank=True)
     birth_date = models.DateField(_("Birth Date"), null=True, blank=True)
     country = models.CharField(_("Country"), blank=True, max_length=50)
+    region = EnumField(Region, _("Region"), default=Region.NOT_FILLED)
     state = models.CharField(_("State"), blank=True, max_length=3)
     city = models.CharField(_("City"), blank=True, max_length=140)
     biography = models.TextField(_("Biography"), blank=True)
