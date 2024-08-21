@@ -191,7 +191,7 @@ class Profile(models.Model):
             conversations=self.user.conversations.count(),
         )
 
-    def conversation_statistics(self, conversation):
+    def conversation_statistics(self, conversation: Conversation):
         """
         Get information about user.
         """
@@ -209,6 +209,9 @@ class Profile(models.Model):
             else:
                 given_votes = user_votes.count()
 
+        send_profile_questions = conversation.send_profile_question
+        votes_to_send_profile_questions = conversation.votes_to_send_profile_question
+
         e = 1e-50  # for numerical stability
         return {
             "votes": given_votes,
@@ -216,6 +219,8 @@ class Profile(models.Model):
             "participation_ratio": given_votes / (approved_comments + e),
             "total_comments": approved_comments,
             "comments": given_votes,
+            "send_profile_questions": send_profile_questions,
+            "votes_to_send_profile_questions": votes_to_send_profile_questions,
         }
 
     def badges(self):
