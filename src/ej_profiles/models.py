@@ -193,7 +193,7 @@ class Profile(models.Model):
 
     def conversation_statistics(self, conversation: Conversation):
         """
-        Get information about user.
+        Return the profile statistics in the conversation.
         """
         approved_comments = conversation.comments.filter(
             status=Comment.STATUS.approved
