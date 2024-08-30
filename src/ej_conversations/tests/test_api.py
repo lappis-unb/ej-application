@@ -145,6 +145,12 @@ class TestGetViews:
         del data["created"]
         assert data
 
+    def test_unauthenticated_random_comments_endpoint(self, comment, api_client):
+        conversation = comment.conversation
+        path = API_V1_URL + f"/conversations/{conversation.id}/random-comment/"
+        data = api_client.get(path, format="json").data
+        assert data["content"] == conversation.approved_comments.first().content
+
     def test_random_comment_with_id_endpoint(self, comments):
         comment = comments[1]
         path = (
